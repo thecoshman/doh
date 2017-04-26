@@ -6,7 +6,9 @@ use reqwest::{Response, IntoUrl, Client, Url};
 use reqwest::header::UserAgent;
 use itertools::Itertools;
 use tabwriter::TabWriter;
+use std::path::Path;
 use std::{cmp, fmt};
+use std::fs::File;
 use getch::Getch;
 use time::Tm;
 
@@ -51,7 +53,7 @@ fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
 /// Key|Result
 /// ---|------
 /// Any key | stop paging
-pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &str, input: &Getch, term_size: (usize, usize)) -> io::Result<()> {
+pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &str, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
     const END_MESSAGE_RAW_LEN: usize = 31 + 4 + 22 + 2 + 1 + 2 + 1;
 
     let (tx, ty) = term_size;
@@ -59,7 +61,16 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
     let mut outlines: Vec<String> = vec![];
 
     let mut line = String::new();
-    while try!(reader.read_line(&mut line)) != 0 {
+    while match reader.read_line(&mut line) {
+        Ok(read) => read != 0,
+        Err(e) => {
+            return if e.kind() == io::ErrorKind::InvalidData {
+                Ok(false)
+            } else {
+                Err(e)
+            };
+        }
+    } {
         line = line.replace(&['\r', '\n'][..], "").replace('\t', &TAB_SPACING);
         if line.is_empty() {
             outlines.push(String::new());
@@ -101,7 +112,7 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
     }
 
     try!(writeln!(writer));
-    Ok(())
+    Ok(true)
 }
 
 
@@ -132,6 +143,7 @@ impl ListContext {
     /// -------|-------
     /// Enter/Right Arrow | enter highlighted entry
     /// Escape/`'Q'`/`'q'` | end
+    /// `'D'`/`'d'` | download file
     /// Up Arrow | move selection 1 entry up
     /// Down Arrow | move selection 1 entry down
     /// Left Arrow | go up one level, if not at root
@@ -140,9 +152,16 @@ impl ListContext {
     ///
     /// If the entry is a directory, on the next loop the selected subdirectory wll be listed.
     ///
-    /// If the entry is a file, its contents are paged, see [`paging_copy()`](fn.paging_copy.html).
+    /// If the entry is a UTF-8 file, its contents are paged, see [`paging_copy()`](fn.paging_copy.html).
     ///
-    /// TODO: Non-UTF-8 file support.
+    /// If the entry is a non-UTF-8 file, it is [downloaded](#downloading-files).
+    ///
+    /// ### Downloading files
+    ///
+    /// The user is shown a file picker and let choose where to download the file to,
+    /// then the file is downloaded and saved to the specified location.
+    ///
+    /// The file isn't saved if the user cancels the picker.
     pub fn one_loop<W: Write>(&mut self, mut out: &mut W, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
         try!(writeln!(out, "Contents of {}:", self.cururl));
         let mut resp = download(self.cururl.clone());
@@ -162,7 +181,10 @@ impl ListContext {
         };
 
         if data.is_file {
-            try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], &input, term_size));
+            if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], &input, term_size)) {
+                try!(writeln!(out, "<Not UTF-8, select download destination>"));
+                try!(self.download_file(out));
+            }
             self.cururl = parent_url(&self.cururl);
         } else {
             self.files = RemoteFile::from_response(data);
@@ -188,6 +210,10 @@ impl ListContext {
         match try!(input.getch()) {
             GETCH_ENTER => Ok((self.select(), false)),
             GETCH_ESC | b'q' | b'Q' => Ok((true, true)),
+            b'd' | b'D' => {
+                try!(self.download_file(out));
+                Ok((false, false))
+            }
             GETCH_ARROW_PREFIX => {
                 match try!(input.getch()) {
                     GETCH_ARROW_UP => {
@@ -239,6 +265,16 @@ impl ListContext {
         } else {
             false
         }
+    }
+
+    fn download_file<W: Write>(&self, out: &mut W) -> io::Result<()> {
+        let f = Path::new(&self.cururl.path()[1..]);
+        if let Some(outp) = term::save_file_picker(f.file_name().unwrap(), f.extension()) {
+            try!(writeln!(out, "<Downloading to {}...>", outp.display()));
+            try!(io::copy(&mut download_raw(self.cururl.clone()), &mut try!(File::create(&outp))));
+            try!(writeln!(out, "<Done!>"));
+        }
+        Ok(())
     }
 }
 

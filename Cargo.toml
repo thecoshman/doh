@@ -27,6 +27,9 @@ time = "0.1"
 kernel32-sys = "0.2"
 winapi = "0.2"
 
+[target.'cfg(not(target_os="windows"))'.dependencies]
+tinyfiledialogs = "2.5"
+
 
 [[bin]]
 name = "doh"
