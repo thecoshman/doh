@@ -1,0 +1,22 @@
+[package]
+name = "doh"
+description = "D'Oh - Directories Over HTTP"
+repository = "https://github.com/thecoshman/doh"
+readme = "README.md"
+keywords = ["http", "client", "https", "file", "directory"]
+categories = ["network-programming", "web-programming::http-client"]
+license = "MIT"
+# Remember to also update in appveyor.yml
+version = "0.1.0"
+# Remember to also update in http.md
+authors = ["thecoshman <thecoshman@gmail.com>",
+           "nabijaczleweli <nabijaczleweli@gmail.com>"]
+
+[dependencies]
+reqwest = "0.5"
+
+
+[[bin]]
+name = "doh"
+test = false
+doc = false

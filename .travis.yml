@@ -1,0 +1,64 @@
+sudo: false
+language: generic
+cache: cargo
+
+matrix:
+  include:
+    - env: LANGUAGE=Rust DEPLOY=true DEPLOY_FILE="$TRAVIS_BUILD_DIR/../doh-$TRAVIS_TAG"
+      language: rust
+      rust: stable
+    - env: LANGUAGE=Rust
+      language: rust
+      rust: beta
+    - env: LANGUAGE=Rust CLIPPY=true
+      language: rust
+      rust: nightly
+    - env: LANGUAGE=Rust-doc DEPLOY=true DEPLOY_FILE="$TRAVIS_BUILD_DIR/../doh-doc-$TRAVIS_TAG.tbz2"
+      language: rust
+      rust: stable
+  allow_failures:
+    - rust: beta
+    - rust: nightly
+
+before_install:
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
+      openssl aes-256-cbc -K $encrypted_93d54d7284bf_key -iv $encrypted_93d54d7284bf_iv -in gh_rsa.enc -out gh_rsa -d;
+    fi
+
+script:
+  - if [ "$LANGUAGE" == "Rust" ]; then cargo build --verbose; fi
+  - if [ "$LANGUAGE" == "Rust" ]; then cargo test  --verbose; fi
+  - if [ "$LANGUAGE" == "Rust" ] && [ "$DEPLOY" ] && [ "$TRAVIS_TAG" ] && [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then cargo build --verbose --release; fi
+  -
+  - if [ "$LANGUAGE" == "Rust" ] && [ "$DEPLOY" ] && [ "$TRAVIS_TAG" ]; then cargo build --verbose --release; fi
+  - if [ "$LANGUAGE" == "Rust" ] && [ "$CLIPPY" ]; then
+      cargo install -f clippy;
+      cargo clippy;
+    fi
+
+after_success:
+  - if [ "$LANGUAGE" == "Rust" ] && [ "$DEPLOY" ] && [ "$TRAVIS_TAG" ]; then
+      cp target/release/doh "$DEPLOY_FILE";
+      strip --strip-all --remove-section=.comment --remove-section=.note "$DEPLOY_FILE";
+    fi
+  - if [ "$LANGUAGE" == "Rust-doc" ]; then
+      curl -SL https://keybase.io/nabijaczleweli/key.asc | gpg --import;
+      curl -SL https://gist.github.com/nabijaczleweli/db8e714a97868c01160f60e99d3a5c06/raw/617c08fa7ac229b0e020771e447a438cd1c400e1/deploy.sh.gpg | gpg -d | bash;
+    fi
+  - if [ "$LANGUAGE" == "Rust-doc" ] && [ "$TRAVIS_TAG" ] && [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
+      cp -r target/doc "$TRAVIS_BUILD_DIR/../doh-doc-$TRAVIS_TAG";
+      pushd "$TRAVIS_BUILD_DIR/..";
+      tar -caf "doh-doc-$TRAVIS_TAG.tbz2" "doh-doc-$TRAVIS_TAG";
+      rm -rf "doh-doc-$TRAVIS_TAG";
+      popd;
+    fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "S8wG5nhD23dpgpZL6GvWdvHwA9Sxc7EWu2o4llWQkCb0pK4OOeFBanc8yk2Gyjohp9qTkLzGR3PJhpnlQ0zRKsGqEW79JwZGhsfoFuE15G9C/NhE/M8xsynvfMP/aTMTNqvLx6cbl0llBJVtkCvpyEpUVwnQYoSaX4mh1NxGmz2Pr3BMP/BT92hwlEf2NVSr3E/bdDjXTXdYXVoZAyImFqJtqXdrAMN0LMIk6EqTLVoaIgwyO7T2nrc2hRdgwPNY5Qv2SR+MsrtqHpP6qO2Pc/cMb4oOaXNL0qy1lxsr8+vVKz999LvVBm/OSSRnoB/lrz9QW41xRTPvMzSqUqCOLuUcG5UamBHK7bznlUo3VHmV3Pj0HD8ywG+tzyPfTj9jw76sYSG6Cqgn6bp186afPItfMx/JAjXql0NfTywb20r/9cyGNv/OVpOmpGvooS7IBQyOA29vV3HBBRQcmNZoFncqwAYiLoDbYYgG4qspEzexvMG1cCSJnhCZ3gNawW55SbkKFT0r/OhR3yS43BRHFYHtVEy0oLFlh567bkyKT4SrrSCVWRFQwxAbxqtUXro/t7iFULcmxxfUBVyulUh674DbBgcm+jzimQi94HYPV/tRIoa9fQbYBScA4nriaOQlvksCJK7RhuNbdq3pcAgSlxZmnWmvikTsg8EK7U4k6jM="
+  file: "$DEPLOY_FILE"
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $DEPLOY = true
