@@ -14,6 +14,8 @@ authors = ["thecoshman <thecoshman@gmail.com>",
 
 [dependencies]
 reqwest = "0.5"
+clap = "2.23"
+url = "1.4"
 
 
 [[bin]]

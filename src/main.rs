@@ -1,6 +1,9 @@
 extern crate reqwest;
+extern crate doh;
 
 
 fn main() {
-    println!("{:#?}", reqwest::get("https://google.com"));
+    let opts = doh::Options::parse();
+    println!("{:#?}", opts);
+    println!("{:#?}", reqwest::get(opts.remote_dir));
 }
