@@ -1,4 +1,4 @@
-# D'Oh [![Build status](https://travis-ci.org/thecoshman/doh.svg)](https://travis-ci.org/thecoshman/doh) [![Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Crates.io version](http://meritbadge.herokuapp.com/doh)](https://crates.io/crates/doh)
+# D'Oh [![Travis build status](https://travis-ci.org/thecoshman/doh.svg)](https://travis-ci.org/thecoshman/doh) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/026kpokdphbsjyxc?svg=true)](https://ci.appveyor.com/project/thecoshman/doh) [![Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Crates.io version](http://meritbadge.herokuapp.com/doh)](https://crates.io/crates/doh)
 D'Oh - Directories Over HTTP
 
 CURL is great, it's probably what you want. There is a wee tiny chance though that you don't like the interface it offers, all the ugly html.

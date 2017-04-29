@@ -13,9 +13,16 @@ authors = ["thecoshman <thecoshman@gmail.com>",
            "nabijaczleweli <nabijaczleweli@gmail.com>"]
 
 [dependencies]
+serde_derive = "0.9"
 reqwest = "0.5"
+serde = "0.9"
 clap = "2.23"
+time = "0.1"
+mime = "0.2"
 url = "1.4"
+
+[dev-dependencies]
+serde_json = "0.9"
 
 
 [[bin]]
