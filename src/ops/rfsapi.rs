@@ -1,8 +1,8 @@
 use time::Tm;
 use mime::Mime;
 use reqwest::HyperError;
+use util::parse_rfc3339;
 use std::fmt::{self, Write};
-use self::super::util::parse_rfc3339;
 use reqwest::header::{HeaderFormat, Header};
 use serde::ser::{SerializeMap, Serializer, Serialize};
 use serde::de::{self, Deserializer, Deserialize, MapVisitor, SeqVisitor, Visitor};
@@ -11,7 +11,8 @@ use serde::de::{self, Deserializer, Deserialize, MapVisitor, SeqVisitor, Visitor
 static RAW_FILE_DATA_FIELDS: &[&str] = &["mime_type", "name", "last_modified", "size", "is_file"];
 
 
-/// Header to specify when doing a request for the Raw Filesystem API.
+/// Header to specify when doing a request for the Raw Filesystem API,
+/// designated by "X-Raw-Filesystem-API".
 ///
 /// If RFSAPI is supported, the server should return the header.
 #[derive(Eq, PartialEq, Ord, PartialOrd, Debug, Clone, Hash, Copy)]
@@ -104,14 +105,14 @@ impl Serialize for RawFileData {
         try!(map.serialize_entry("name", &self.name));
         try!(map.serialize_entry("last_modified",
                                  &self.last_modified
-                                      .to_utc()
-                                      .strftime(if self.last_modified.tm_nsec == 0 {
-                                                    "%Y-%m-%dT%H:%M:%SZ"
-                                                } else {
-                                                    "%Y-%m-%dT%H:%M:%S.%fZ"
-                                                })
-                                      .unwrap()
-                                      .to_string()));
+                                     .to_utc()
+                                     .strftime(if self.last_modified.tm_nsec == 0 {
+                                         "%Y-%m-%dT%H:%M:%SZ"
+                                     } else {
+                                         "%Y-%m-%dT%H:%M:%S.%fZ"
+                                     })
+                                     .unwrap()
+                                     .to_string()));
         try!(map.serialize_entry("size", &self.size));
         try!(map.serialize_entry("is_file", &self.is_file));
         map.end()
@@ -136,19 +137,19 @@ impl Visitor for RawFileDataVisitor {
 
     fn visit_seq<V: SeqVisitor>(self, mut seq: V) -> Result<RawFileData, V::Error> {
         Ok(RawFileData {
-               mime_type: {
-                   let mt: String = try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(0, &self)));
-                   try!(mt.parse()
-                            .map_err(|_| de::Error::invalid_value(de::Unexpected::Str(&mt), &"valid MIME type")))
-               },
-               name: try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(1, &self))),
-               last_modified: {
-                   let lm: String = try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(0, &self)));
-                   try!(parse_rfc3339(&lm).map_err(|_| de::Error::invalid_value(de::Unexpected::Str(&lm), &"RRC3339 timestamp")))
-               },
-               size: try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(3, &self))),
-               is_file: try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(4, &self))),
-           })
+            mime_type: {
+                let mt: String = try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(0, &self)));
+                try!(mt.parse()
+                    .map_err(|_| de::Error::invalid_value(de::Unexpected::Str(&mt), &"valid MIME type")))
+            },
+            name: try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(1, &self))),
+            last_modified: {
+                let lm: String = try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(0, &self)));
+                try!(parse_rfc3339(&lm).map_err(|_| de::Error::invalid_value(de::Unexpected::Str(&lm), &"RRC3339 timestamp")))
+            },
+            size: try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(3, &self))),
+            is_file: try!(try!(seq.visit()).ok_or_else(|| de::Error::invalid_length(4, &self))),
+        })
     }
 
     fn visit_map<V: MapVisitor>(self, mut map: V) -> Result<RawFileData, V::Error> {
@@ -165,7 +166,7 @@ impl Visitor for RawFileDataVisitor {
                     }
                     let nv: String = try!(map.visit_value());
                     mime_type = Some(try!(nv.parse::<Mime>()
-                                              .map_err(|_| de::Error::invalid_value(de::Unexpected::Str(&nv), &"valid MIME type"))));
+                        .map_err(|_| de::Error::invalid_value(de::Unexpected::Str(&nv), &"valid MIME type"))));
                 }
                 "name" => {
                     if name.is_some() {
@@ -197,11 +198,11 @@ impl Visitor for RawFileDataVisitor {
         }
 
         Ok(RawFileData {
-               mime_type: try!(mime_type.ok_or_else(|| de::Error::missing_field("mime_type"))),
-               name: try!(name.ok_or_else(|| de::Error::missing_field("name"))),
-               last_modified: try!(last_modified.ok_or_else(|| de::Error::missing_field("last_modified"))),
-               size: try!(size.ok_or_else(|| de::Error::missing_field("size"))),
-               is_file: try!(is_file.ok_or_else(|| de::Error::missing_field("is_file"))),
-           })
+            mime_type: try!(mime_type.ok_or_else(|| de::Error::missing_field("mime_type"))),
+            name: try!(name.ok_or_else(|| de::Error::missing_field("name"))),
+            last_modified: try!(last_modified.ok_or_else(|| de::Error::missing_field("last_modified"))),
+            size: try!(size.ok_or_else(|| de::Error::missing_field("size"))),
+            is_file: try!(is_file.ok_or_else(|| de::Error::missing_field("is_file"))),
+        })
     }
 }

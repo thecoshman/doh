@@ -14,6 +14,8 @@ authors = ["thecoshman <thecoshman@gmail.com>",
 
 [dependencies]
 serde_derive = "0.9"
+lazy_static = "0.2"
+tabwriter = "1.0"
 reqwest = "0.5"
 serde = "0.9"
 clap = "2.23"
