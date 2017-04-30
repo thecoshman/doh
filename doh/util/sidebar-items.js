@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["parse_rfc3339","Parse an RFC3339 string into a timespec."]]});
+initSidebarItems({"fn":[["human_readable_size","Construct string representing a human-readable size."],["parent_url","Get a URL that is canonically considered a \"parent\" to the specified one, or the specified URL if it is a root URL."],["parse_rfc3339","Parse an RFC3339 string into a timespec."]],"static":[["USER_AGENT","The app name and version to use with User-Agent request header."]]});

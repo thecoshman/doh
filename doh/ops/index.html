@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/doh/ops.rs.html#1-207' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/doh/ops/mod.rs.html#1-154' title='goto source code'>[src]</a></span></h1>
 <h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -69,7 +69,30 @@
                            <td><a class="struct" href="struct.RawFsApiHeader.html"
                                   title='struct doh::ops::RawFsApiHeader'>RawFsApiHeader</a></td>
                            <td class='docblock-short'>
-                                <p>Header to specify when doing a request for the Raw Filesystem API.</p>
+                                <p>Header to specify when doing a request for the Raw Filesystem API,
+designated by &quot;X-Raw-Filesystem-API&quot;.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.RemoteFile.html"
+                                  title='struct doh::ops::RemoteFile'>RemoteFile</a></td>
+                           <td class='docblock-short'>
+                                <p>Parsed <code>RawFileData</code> entry, prepared for end-user usage.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.download.html"
+                                  title='fn doh::ops::download'>download</a></td>
+                           <td class='docblock-short'>
+                                <p>GET a resource with the RFSAPI header, auto-unpacking GZip.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.download_raw.html"
+                                  title='fn doh::ops::download_raw'>download_raw</a></td>
+                           <td class='docblock-short'>
+                                <p>GET a resource normally, auto-unpacking GZip.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

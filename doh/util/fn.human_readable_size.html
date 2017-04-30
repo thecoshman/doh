@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `doh` crate.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, doh">
+    <meta name="description" content="API documentation for the Rust `human_readable_size` fn in crate `doh`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, human_readable_size">
 
-    <title>doh - Rust</title>
+    <title>doh::util::human_readable_size - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     
     
 </head>
-<body class="rustdoc mod">
+<body class="rustdoc fn">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'></p><script>window.sidebarCurrent = {name: 'doh', ty: 'mod', relpath: '../'};</script>
+        <p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>util</a></p><script>window.sidebarCurrent = {name: 'human_readable_size', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -44,35 +44,15 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>doh</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>doh</a>::<wbr><a href='index.html'>util</a>::<wbr><a class="fn" href=''>human_readable_size</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/doh/lib.rs.html#1-18' title='goto source code'>[src]</a></span></h1>
-<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="ops/index.html"
-                                  title='mod doh::ops'>ops</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="util/index.html"
-                                  title='mod doh::util'>util</a></td>
-                           <td class='docblock-short'>
-                                <p>Module containing various utility functions.</p>
-                           </td>
-                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Options.html"
-                                  title='struct doh::Options'>Options</a></td>
-                           <td class='docblock-short'>
-                                <p>Representation of the application&#39;s all configurable values.</p>
-                           </td>
-                       </tr></table></section>
+               </span><a class='srclink' href='../../src/doh/util.rs.html#75-95' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn human_readable_size(s: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></pre><div class='docblock'><p>Construct string representing a human-readable size.</p>
+
+<p>Stolen, adapted and inlined from <a href="http://filesizejs.com">fielsize.js</a>.</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -126,11 +106,11 @@
     
 
     <script>
-        window.rootPath = "../";
+        window.rootPath = "../../";
         window.currentCrate = "doh";
     </script>
-    <script src="../jquery.js"></script>
-    <script src="../main.js"></script>
-    <script defer src="../search-index.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

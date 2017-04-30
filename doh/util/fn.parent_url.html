@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang">
+    <meta name="description" content="API documentation for the Rust `parent_url` fn in crate `doh`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, parent_url">
 
-    <title>lib.rs.html -- source</title>
+    <title>doh::util::parent_url - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc source">
+<body class="rustdoc fn">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        
+        <p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>util</a></p><script>window.sidebarCurrent = {name: 'parent_url', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,45 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
-<span id="2"> 2</span>
-<span id="3"> 3</span>
-<span id="4"> 4</span>
-<span id="5"> 5</span>
-<span id="6"> 6</span>
-<span id="7"> 7</span>
-<span id="8"> 8</span>
-<span id="9"> 9</span>
-<span id="10">10</span>
-<span id="11">11</span>
-<span id="12">12</span>
-<span id="13">13</span>
-<span id="14">14</span>
-<span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-</pre><pre class="rust ">
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">reqwest</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">clap</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">time</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">mime</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">url</span>;
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>doh</a>::<wbr><a href='index.html'>util</a>::<wbr><a class="fn" href=''>parent_url</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/doh/util.rs.html#110-113' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn parent_url(u: &amp;<a class="struct" href="../../url/struct.Url.html" title="struct url::Url">Url</a>) -&gt; <a class="struct" href="../../url/struct.Url.html" title="struct url::Url">Url</a></pre><div class='docblock'><p>Get a URL that is canonically considered a &quot;parent&quot; to the specified one, or the specified URL if it is a root URL.</p>
 
-<span class="kw">mod</span> <span class="ident">options</span>;
-
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ops</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">util</span>;
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">options</span>::<span class="ident">Options</span>;
-</pre>
-</section>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="string">&quot;https://google.com/search/capitalism&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
+           <span class="string">&quot;https://google.com/search&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="string">&quot;https://google.com/search&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
+           <span class="string">&quot;https://google.com&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="string">&quot;https://google.com&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
+           <span class="string">&quot;https://google.com&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());</pre>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
