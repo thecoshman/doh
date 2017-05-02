@@ -48,14 +48,29 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/doh/ops/mod.rs.html#1-154' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+               </span><a class='srclink' href='../../src/doh/ops/mod.rs.html#1-370' title='goto source code'>[src]</a></span></h1>
+<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="term/index.html"
+                                  title='mod doh::ops::term'>term</a></td>
+                           <td class='docblock-short'>
+                                <p>Windows and non-Windows terminal utilities.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.FilesetData.html"
                                   title='struct doh::ops::FilesetData'>FilesetData</a></td>
                            <td class='docblock-short'>
                                 <p>Basic RFSAPI response returned by the server.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ListContext.html"
+                                  title='struct doh::ops::ListContext'>ListContext</a></td>
+                           <td class='docblock-short'>
+                                <p>Main context used to list a server.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -93,6 +108,14 @@ designated by &quot;X-Raw-Filesystem-API&quot;.</p>
                                   title='fn doh::ops::download_raw'>download_raw</a></td>
                            <td class='docblock-short'>
                                 <p>GET a resource normally, auto-unpacking GZip.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.paging_copy.html"
+                                  title='fn doh::ops::paging_copy'>paging_copy</a></td>
+                           <td class='docblock-short'>
+                                <p>Copy <code>label</code>led data from <code>reader</code> to <code>writer</code>, stopping each screen, wrapping at <code>term_size</code>,
+polling <code>input</code> for instructions.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

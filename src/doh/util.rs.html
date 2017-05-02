@@ -156,17 +156,143 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Module containing various utility functions.</span>
 
 
-<span class="kw">use</span> <span class="ident">time</span>::{<span class="self">self</span>, <span class="ident">Tm</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">f64</span>, <span class="ident">cmp</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">Url</span>;
+<span class="kw">use</span> <span class="ident">time</span>::{<span class="self">self</span>, <span class="ident">Tm</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">iter</span>, <span class="ident">f64</span>, <span class="ident">cmp</span>};
 
 
-<span class="doccomment">/// The app name and version to use with User-Agent request header.</span>
-<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">USER_AGENT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;D&#39;Oh/&quot;</span>, <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>));
+<span class="doccomment">/// App name and version to use with User-Agent request header.</span>
+<span class="kw">pub</span> <span class="kw">static</span> <span class="ident">USER_AGENT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;D&#39;Oh/&quot;</span>, <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>));
+
+<span class="doccomment">/// Byte returned by `getch()` for Enter.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ENTER</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="string">b&#39;\r&#39;</span>;
+<span class="doccomment">/// Byte returned by `getch()` for Escape.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ESC</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="string">b&#39;\x1B&#39;</span>;
+<span class="doccomment">/// First byte returned by `getch()` for any arrow key.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ARROW_PREFIX</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">224</span>;
+<span class="doccomment">/// Second byte returned by `getch()` for up arrow key.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ARROW_UP</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">72</span>;
+<span class="doccomment">/// Second byte returned by `getch()` for down arrow key.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ARROW_DOWN</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">80</span>;
+<span class="doccomment">/// Second byte returned by `getch()` for left arrow key.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ARROW_LEFT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">75</span>;
+<span class="doccomment">/// Second byte returned by `getch()` for right arrow key.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GETCH_ARROW_RIGHT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">77</span>;
+
+<span class="doccomment">/// Amount of spaces to expand tabs to.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Provided by @Ell, so flame him.</span>
+<span class="doccomment">/// &lt;span title=&quot;:noel:&quot;&gt;![:noel:](https://cdn.discordapp.com/emojis/230277422006796288.png)&lt;/span&gt;</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TAB_WIDTH</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="macro">lazy_static</span><span class="macro">!</span> {
+    <span class="doccomment">/// Filler to replace tabs with of length [`TAB_WIDTH`](constant.TAB_WIDTH.html).</span>
+    <span class="kw">pub</span> <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">TAB_SPACING</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="string">&#39; &#39;</span>).<span class="ident">take</span>(<span class="ident">TAB_WIDTH</span>).<span class="ident">collect</span>();
+}
+
+
+<span class="doccomment">/// A RAII guard object, calling a function when it&#39;s created and when it&#39;s destroyed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Turn off cursor for the object&#39;s lifetime, then turn it back on.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use doh::util::RaiiGuard;</span>
+<span class="doccomment">/// # fn cursor_visibility(_: bool) {}</span>
+<span class="doccomment">/// let _cursor = RaiiGuard::new(|| cursor_visibility(false),</span>
+<span class="doccomment">///                              || cursor_visibility(true));</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// println!(&quot;There is no cursor here.&quot;);</span>
+<span class="doccomment">/// println!(&quot;Normally you&#39;d use this if you had nonechoing keyboard input.&quot;);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// println!(&quot;After this scope ends, the cursor will be restored,</span>
+<span class="doccomment">///           the exit method and point nonaffecting.&quot;);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RaiiGuard</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span> {
+    <span class="ident">end</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span> <span class="ident">RaiiGuard</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a guard, calling the `start` function immediately, delaying the `end` function till the object is dropped.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span>(<span class="ident">start</span>: <span class="ident">S</span>, <span class="ident">end</span>: <span class="ident">E</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">start</span>();
+        <span class="ident">RaiiGuard</span> { <span class="ident">end</span>: <span class="prelude-val">Some</span>(<span class="ident">end</span>) }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">FnOnce</span>()<span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">RaiiGuard</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Call the `end` function supplied in [`new()`](#method.new).</span>
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">end</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>()();
+    }
+}
 
 
 <span class="doccomment">/// Parse an RFC3339 string into a timespec.</span>
@@ -259,7 +385,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use doh::util::parent_url;</span>
-<span class="doccomment">/// assert_eq!(parent_url(&amp;&quot;https://google.com/search/capitalism&quot;.parse().unwrap()),</span>
+<span class="doccomment">/// assert_eq!(parent_url(&amp;&quot;https://google.com/search/capitalism/&quot;.parse().unwrap()),</span>
 <span class="doccomment">///            &quot;https://google.com/search&quot;.parse().unwrap());</span>
 <span class="doccomment">/// assert_eq!(parent_url(&amp;&quot;https://google.com/search&quot;.parse().unwrap()),</span>
 <span class="doccomment">///            &quot;https://google.com&quot;.parse().unwrap());</span>
@@ -268,7 +394,7 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parent_url</span>(<span class="ident">u</span>: <span class="kw-2">&amp;</span><span class="ident">Url</span>) <span class="op">-&gt;</span> <span class="ident">Url</span> {
     <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">u</span>.<span class="ident">to_string</span>();
-    <span class="ident">p</span>[<span class="number">0</span>..<span class="ident">p</span>.<span class="ident">rfind</span>(<span class="string">&#39;/&#39;</span>).<span class="ident">unwrap</span>()].<span class="ident">parse</span>().<span class="ident">unwrap</span>()
+    <span class="ident">p</span>[<span class="number">0</span>..<span class="ident">p</span>[<span class="number">0</span>..<span class="ident">p</span>.<span class="ident">len</span>() <span class="op">-</span> ((<span class="ident">p</span>.<span class="ident">chars</span>().<span class="ident">last</span>() <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="string">&#39;/&#39;</span>)) <span class="kw">as</span> <span class="ident">usize</span>)].<span class="ident">rfind</span>(<span class="string">&#39;/&#39;</span>).<span class="ident">unwrap</span>()].<span class="ident">parse</span>().<span class="ident">unwrap_or_else</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">u</span>.<span class="ident">clone</span>())
 }
 </pre>
 </section>

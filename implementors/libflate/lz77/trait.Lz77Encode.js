@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["doh"] = [];
 implementors["libflate"] = [];
 implementors["reqwest"] = [];
 

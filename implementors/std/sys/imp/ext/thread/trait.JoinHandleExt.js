@@ -1,6 +1,8 @@
 (function() {var implementors = {};
 implementors["antidote"] = [];
+implementors["doh"] = [];
 implementors["hyper"] = [];
+implementors["itertools"] = [];
 implementors["libc"] = [];
 implementors["openssl"] = [];
 implementors["reqwest"] = [];

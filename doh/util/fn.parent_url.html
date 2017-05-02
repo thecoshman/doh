@@ -48,12 +48,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/doh/util.rs.html#110-113' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/doh/util.rs.html#173-176' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn parent_url(u: &amp;<a class="struct" href="../../url/struct.Url.html" title="struct url::Url">Url</a>) -&gt; <a class="struct" href="../../url/struct.Url.html" title="struct url::Url">Url</a></pre><div class='docblock'><p>Get a URL that is canonically considered a &quot;parent&quot; to the specified one, or the specified URL if it is a root URL.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
-<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="string">&quot;https://google.com/search/capitalism&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="string">&quot;https://google.com/search/capitalism/&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
            <span class="string">&quot;https://google.com/search&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="string">&quot;https://google.com/search&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
            <span class="string">&quot;https://google.com&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["move_cursor_back","Move the cursor `n` characters back (left)."],["move_cursor_down","Move the cursor `n` lines down."],["move_cursor_up","Move the cursor `n` lines up."],["show_cursor","Show/hide the cursor/caret."]]});
