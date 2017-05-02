@@ -1,7 +1,5 @@
 use doh::util::{RaiiGuard, TAB_SPACING, TAB_WIDTH};
 
-mod parse_rfc3339;
-
 
 #[test]
 fn tab_spacing() {

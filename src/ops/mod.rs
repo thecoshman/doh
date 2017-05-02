@@ -1,5 +1,6 @@
 use self::super::util::{human_readable_size, parent_url, GETCH_ARROW_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT, GETCH_ARROW_DOWN, GETCH_ARROW_UP, TAB_SPACING,
                         GETCH_ENTER, USER_AGENT, GETCH_ESC};
+use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
 use reqwest::{Response, IntoUrl, Client, Url};
 use reqwest::header::UserAgent;
@@ -9,11 +10,7 @@ use std::{cmp, fmt};
 use getch::Getch;
 use time::Tm;
 
-mod rfsapi;
-
 pub mod term;
-
-pub use self::rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 
 
 /// GET a resource with the RFSAPI header, auto-unpacking GZip.
@@ -273,8 +270,12 @@ impl RemoteFile {
     /// # Examples
     ///
     /// ```
-    /// # use doh::ops::{RemoteFile, FilesetData, RawFileData};
+    /// # extern crate rfsapi;
+    /// # extern crate doh;
+    /// # use doh::ops::RemoteFile;
     /// # use doh::util::parse_rfc3339;
+    /// # use rfsapi::{FilesetData, RawFileData};
+    /// # fn main() {
     /// assert_eq!(RemoteFile::from_response(FilesetData {
     ///     writes_supported: false,
     ///     is_root: false,
@@ -315,6 +316,7 @@ impl RemoteFile {
     ///         last_modified: Some(parse_rfc3339("2012-02-22T15:23:18Z").unwrap().to_local()),
     ///     },
     /// ]);
+    /// # }
     /// ```
     pub fn from_response(mut resp: FilesetData) -> Vec<RemoteFile> {
         if resp.is_file {

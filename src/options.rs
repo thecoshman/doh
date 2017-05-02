@@ -13,7 +13,7 @@
 
 
 use clap::{AppSettings, Arg, App};
-use url::Url;
+use reqwest::Url;
 
 
 /// Representation of the application's all configurable values.

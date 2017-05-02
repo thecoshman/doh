@@ -8,30 +8,24 @@ categories = ["network-programming", "web-programming::http-client"]
 license = "MIT"
 # Remember to also update in appveyor.yml
 version = "0.1.0"
-# Remember to also update in http.md
+# Remember to also update in doh.md
 authors = ["thecoshman <thecoshman@gmail.com>",
            "nabijaczleweli <nabijaczleweli@gmail.com>"]
 
 [dependencies]
-serde_derive = "0.9"
 lazy_static = "0.2"
 tabwriter = "1.0"
 itertools = "0.6"
 term_size = "0.3"
 reqwest = "0.5"
-serde = "0.9"
+rfsapi = "0.1"
 getch = "0.1"
 clap = "2.23"
 time = "0.1"
-mime = "0.2"
-url = "1.4"
 
 [target.'cfg(target_os="windows")'.dependencies]
 kernel32-sys = "0.2"
 winapi = "0.2"
-
-[dev-dependencies]
-serde_json = "0.9"
 
 
 [[bin]]
