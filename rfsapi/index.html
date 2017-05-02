@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `doh` crate.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, doh">
+    <meta name="description" content="API documentation for the Rust `rfsapi` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, rfsapi">
 
-    <title>doh - Rust</title>
+    <title>rfsapi - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'></p><script>window.sidebarCurrent = {name: 'doh', ty: 'mod', relpath: '../'};</script>
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'rfsapi', ty: 'mod', relpath: '../'};</script>
     </nav>
 
     <nav class="sub">
@@ -44,34 +44,45 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>doh</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>rfsapi</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/doh/lib.rs.html#1-18' title='goto source code'>[src]</a></span></h1>
-<h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub extern crate <a class="mod" href="../rfsapi/index.html" title="mod rfsapi">rfsapi</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+               </span><a class='srclink' href='../src/rfsapi/lib.rs.html#1-223' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Raw Filesystem API for Rust — enable simpler browsing with ease</p>
+
+<p>This library is to enable both servers and clients to use the RFSAPI,
+see <a href="https://github.com/thecoshman/doh">D&#39;Oh</a> for usage example.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="ops/index.html"
-                                  title='mod doh::ops'>ops</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="mod" href="util/index.html"
-                                  title='mod doh::util'>util</a></td>
+                                  title='mod rfsapi::util'>util</a></td>
                            <td class='docblock-short'>
                                 <p>Module containing various utility functions.</p>
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Options.html"
-                                  title='struct doh::Options'>Options</a></td>
+                           <td><a class="struct" href="struct.FilesetData.html"
+                                  title='struct rfsapi::FilesetData'>FilesetData</a></td>
                            <td class='docblock-short'>
-                                <p>Representation of the application&#39;s all configurable values.</p>
+                                <p>Basic RFSAPI response returned by the server.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.RawFileData.html"
+                                  title='struct rfsapi::RawFileData'>RawFileData</a></td>
+                           <td class='docblock-short'>
+                                <p>Information about a file available through RFSAPI.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.RawFsApiHeader.html"
+                                  title='struct rfsapi::RawFsApiHeader'>RawFsApiHeader</a></td>
+                           <td class='docblock-short'>
+                                <p>Header to specify when doing a request for the Raw Filesystem API,
+designated by &quot;X-Raw-Filesystem-API&quot;.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -128,7 +139,7 @@
 
     <script>
         window.rootPath = "../";
-        window.currentCrate = "doh";
+        window.currentCrate = "rfsapi";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>

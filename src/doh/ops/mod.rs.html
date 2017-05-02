@@ -413,9 +413,12 @@
 <span id="368">368</span>
 <span id="369">369</span>
 <span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">util</span>::{<span class="ident">human_readable_size</span>, <span class="ident">parent_url</span>, <span class="ident">GETCH_ARROW_PREFIX</span>, <span class="ident">GETCH_ARROW_RIGHT</span>, <span class="ident">GETCH_ARROW_LEFT</span>, <span class="ident">GETCH_ARROW_DOWN</span>, <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">TAB_SPACING</span>,
                         <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_ESC</span>};
+<span class="kw">use</span> <span class="ident">rfsapi</span>::{<span class="ident">RawFsApiHeader</span>, <span class="ident">FilesetData</span>, <span class="ident">RawFileData</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">BufRead</span>, <span class="ident">Write</span>, <span class="ident">Read</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">Response</span>, <span class="ident">IntoUrl</span>, <span class="ident">Client</span>, <span class="ident">Url</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>::<span class="ident">UserAgent</span>;
@@ -425,11 +428,7 @@
 <span class="kw">use</span> <span class="ident">getch</span>::<span class="ident">Getch</span>;
 <span class="kw">use</span> <span class="ident">time</span>::<span class="ident">Tm</span>;
 
-<span class="kw">mod</span> <span class="ident">rfsapi</span>;
-
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">term</span>;
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">rfsapi</span>::{<span class="ident">RawFsApiHeader</span>, <span class="ident">FilesetData</span>, <span class="ident">RawFileData</span>};
 
 
 <span class="doccomment">/// GET a resource with the RFSAPI header, auto-unpacking GZip.</span>
@@ -689,8 +688,12 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use doh::ops::{RemoteFile, FilesetData, RawFileData};</span>
+    <span class="doccomment">/// # extern crate rfsapi;</span>
+    <span class="doccomment">/// # extern crate doh;</span>
+    <span class="doccomment">/// # use doh::ops::RemoteFile;</span>
     <span class="doccomment">/// # use doh::util::parse_rfc3339;</span>
+    <span class="doccomment">/// # use rfsapi::{FilesetData, RawFileData};</span>
+    <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// assert_eq!(RemoteFile::from_response(FilesetData {</span>
     <span class="doccomment">///     writes_supported: false,</span>
     <span class="doccomment">///     is_root: false,</span>
@@ -731,6 +734,7 @@
     <span class="doccomment">///         last_modified: Some(parse_rfc3339(&quot;2012-02-22T15:23:18Z&quot;).unwrap().to_local()),</span>
     <span class="doccomment">///     },</span>
     <span class="doccomment">/// ]);</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_response</span>(<span class="kw-2">mut</span> <span class="ident">resp</span>: <span class="ident">FilesetData</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RemoteFile</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">resp</span>.<span class="ident">is_file</span> {
