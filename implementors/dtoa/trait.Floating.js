@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["doh"] = [];
 implementors["dtoa"] = [];
 implementors["reqwest"] = [];
 implementors["serde_urlencoded"] = [];
