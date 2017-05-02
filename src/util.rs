@@ -1,13 +1,76 @@
 //! Module containing various utility functions.
 
 
-use time::{self, Tm};
-use std::{f64, cmp};
 use reqwest::Url;
+use time::{self, Tm};
+use std::{iter, f64, cmp};
 
 
-/// The app name and version to use with User-Agent request header.
-pub static USER_AGENT: &'static str = concat!("D'Oh/", env!("CARGO_PKG_VERSION"));
+/// App name and version to use with User-Agent request header.
+pub static USER_AGENT: &str = concat!("D'Oh/", env!("CARGO_PKG_VERSION"));
+
+/// Byte returned by `getch()` for Enter.
+pub const GETCH_ENTER: u8 = b'\r';
+/// Byte returned by `getch()` for Escape.
+pub const GETCH_ESC: u8 = b'\x1B';
+/// First byte returned by `getch()` for any arrow key.
+pub const GETCH_ARROW_PREFIX: u8 = 224;
+/// Second byte returned by `getch()` for up arrow key.
+pub const GETCH_ARROW_UP: u8 = 72;
+/// Second byte returned by `getch()` for down arrow key.
+pub const GETCH_ARROW_DOWN: u8 = 80;
+/// Second byte returned by `getch()` for left arrow key.
+pub const GETCH_ARROW_LEFT: u8 = 75;
+/// Second byte returned by `getch()` for right arrow key.
+pub const GETCH_ARROW_RIGHT: u8 = 77;
+
+/// Amount of spaces to expand tabs to.
+///
+/// Provided by @Ell, so flame him.
+/// <span title=":noel:">![:noel:](https://cdn.discordapp.com/emojis/230277422006796288.png)</span>
+pub const TAB_WIDTH: usize = 4;
+lazy_static! {
+    /// Filler to replace tabs with of length [`TAB_WIDTH`](constant.TAB_WIDTH.html).
+    pub static ref TAB_SPACING: String = iter::repeat(' ').take(TAB_WIDTH).collect();
+}
+
+
+/// A RAII guard object, calling a function when it's created and when it's destroyed.
+///
+/// # Examples
+///
+/// Turn off cursor for the object's lifetime, then turn it back on.
+///
+/// ```
+/// # use doh::util::RaiiGuard;
+/// # fn cursor_visibility(_: bool) {}
+/// let _cursor = RaiiGuard::new(|| cursor_visibility(false),
+///                              || cursor_visibility(true));
+///
+/// println!("There is no cursor here.");
+/// println!("Normally you'd use this if you had nonechoing keyboard input.");
+///
+/// println!("After this scope ends, the cursor will be restored,
+///           the exit method and point nonaffecting.");
+/// ```
+pub struct RaiiGuard<E: FnOnce()> {
+    end: Option<E>,
+}
+
+impl<E: FnOnce()> RaiiGuard<E> {
+    /// Create a guard, calling the `start` function immediately, delaying the `end` function till the object is dropped.
+    pub fn new<S: FnOnce()>(start: S, end: E) -> Self {
+        start();
+        RaiiGuard { end: Some(end) }
+    }
+}
+
+impl<E: FnOnce()> Drop for RaiiGuard<E> {
+    /// Call the `end` function supplied in [`new()`](#method.new).
+    fn drop(&mut self) {
+        self.end.take().unwrap()();
+    }
+}
 
 
 /// Parse an RFC3339 string into a timespec.
@@ -100,7 +163,7 @@ pub fn human_readable_size(s: u64) -> String {
 ///
 /// ```
 /// # use doh::util::parent_url;
-/// assert_eq!(parent_url(&"https://google.com/search/capitalism".parse().unwrap()),
+/// assert_eq!(parent_url(&"https://google.com/search/capitalism/".parse().unwrap()),
 ///            "https://google.com/search".parse().unwrap());
 /// assert_eq!(parent_url(&"https://google.com/search".parse().unwrap()),
 ///            "https://google.com".parse().unwrap());
@@ -109,5 +172,5 @@ pub fn human_readable_size(s: u64) -> String {
 /// ```
 pub fn parent_url(u: &Url) -> Url {
     let p = u.to_string();
-    p[0..p.rfind('/').unwrap()].parse().unwrap()
+    p[0..p[0..p.len() - ((p.chars().last() == Some('/')) as usize)].rfind('/').unwrap()].parse().unwrap_or_else(|_| u.clone())
 }

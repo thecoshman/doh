@@ -16,12 +16,19 @@ authors = ["thecoshman <thecoshman@gmail.com>",
 serde_derive = "0.9"
 lazy_static = "0.2"
 tabwriter = "1.0"
+itertools = "0.6"
+term_size = "0.3"
 reqwest = "0.5"
 serde = "0.9"
+getch = "0.1"
 clap = "2.23"
 time = "0.1"
 mime = "0.2"
 url = "1.4"
+
+[target.'cfg(target_os="windows")'.dependencies]
+kernel32-sys = "0.2"
+winapi = "0.2"
 
 [dev-dependencies]
 serde_json = "0.9"
