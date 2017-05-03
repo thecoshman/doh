@@ -6,7 +6,7 @@ use reqwest::{Response, IntoUrl, Client, Url};
 use reqwest::header::UserAgent;
 use itertools::Itertools;
 use tabwriter::TabWriter;
-use std::path::Path;
+use std::path::PathBuf;
 use std::{cmp, fmt};
 use std::fs::File;
 use getch::Getch;
@@ -183,7 +183,7 @@ impl ListContext {
         if data.is_file {
             if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], &input, term_size)) {
                 try!(writeln!(out, "<Not UTF-8, select download destination>"));
-                try!(self.download_file(out));
+                try!(self.download_file(out, self.cururl.clone()));
             }
             self.cururl = parent_url(&self.cururl);
         } else {
@@ -211,8 +211,10 @@ impl ListContext {
             GETCH_ENTER => Ok((self.select(), false)),
             GETCH_ESC | b'q' | b'Q' => Ok((true, true)),
             b'd' | b'D' => {
-                try!(self.download_file(out));
-                Ok((false, false))
+                if !self.files.is_empty() {
+                    try!(self.download_file(out, self.cururl.join(&self.files[self.selected].full_name).unwrap()));
+                }
+                Ok((self.files.is_empty(), false))
             }
             GETCH_ARROW_PREFIX => {
                 match try!(input.getch()) {
@@ -267,11 +269,11 @@ impl ListContext {
         }
     }
 
-    fn download_file<W: Write>(&self, out: &mut W) -> io::Result<()> {
-        let f = Path::new(&self.cururl.path()[1..]);
+    fn download_file<W: Write>(&self, out: &mut W, u: Url) -> io::Result<()> {
+        let f = PathBuf::from(&u.path()[1..]);
         if let Some(outp) = term::save_file_picker(f.file_name().unwrap(), f.extension()) {
             try!(writeln!(out, "<Downloading to {}...>", outp.display()));
-            try!(io::copy(&mut download_raw(self.cururl.clone()), &mut try!(File::create(&outp))));
+            try!(io::copy(&mut download_raw(u), &mut try!(File::create(&outp))));
             try!(writeln!(out, "<Done!>"));
         }
         Ok(())
