@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `move_cursor_down` fn in crate `doh`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, move_cursor_down">
+    <meta name="description" content="API documentation for the Rust `save_file_picker` fn in crate `doh`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, save_file_picker">
 
-    <title>doh::ops::term::move_cursor_down - Rust</title>
+    <title>doh::ops::term::save_file_picker - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>doh</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'move_cursor_down', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../../index.html'>doh</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>term</a></p><script>window.sidebarCurrent = {name: 'save_file_picker', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -44,12 +44,12 @@
     </nav>
 
     <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>doh</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>term</a>::<wbr><a class="fn" href=''>move_cursor_down</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>doh</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>term</a>::<wbr><a class="fn" href=''>save_file_picker</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/doh/ops/term/non_windows.rs.html#14-16' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn move_cursor_down(n: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></pre><div class='docblock'><p>Move the cursor <code>n</code> lines down.</p>
+               </span><a class='srclink' href='../../../src/doh/ops/term/non_windows.rs.html#29-32' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn save_file_picker(filename: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsStr.html" title="struct std::ffi::os_str::OsStr">OsStr</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; extension: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/os_str/struct.OsStr.html" title="struct std::ffi::os_str::OsStr">OsStr</a>&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html" title="struct std::path::PathBuf">PathBuf</a>&gt;</pre><div class='docblock'><p>Show a file picker to let user choose where to save a file with the pecified filename and optional extension.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

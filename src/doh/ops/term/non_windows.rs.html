@@ -62,7 +62,27 @@
 <span id="17">17</span>
 <span id="18">18</span>
 <span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
 </pre><pre class="rust ">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">tinyfiledialogs</span>;
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">OsStr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">PathBuf</span>, <span class="ident">Path</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">tinyfiledialogs</span>::<span class="ident">save_file_dialog</span>;
+
+
 <span class="doccomment">/// Move the cursor `n` lines up.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">move_cursor_up</span>(<span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
     <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;\x1B[{}A&quot;</span>, <span class="ident">n</span>)
@@ -81,6 +101,12 @@
 <span class="doccomment">/// Show/hide the cursor/caret.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_cursor</span>(<span class="ident">show</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
     <span class="kw">if</span> <span class="ident">show</span> { <span class="string">&quot;\x1B[?25h&quot;</span> } <span class="kw">else</span> { <span class="string">&quot;\x1B[?25l&quot;</span> }
+}
+
+<span class="doccomment">/// Show a file picker to let user choose where to save a file with the pecified filename and optional extension.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_file_picker</span>(<span class="ident">filename</span>: <span class="kw-2">&amp;</span><span class="ident">OsStr</span>, <span class="ident">extension</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">OsStr</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">extension</span>;
+    <span class="ident">save_file_dialog</span>(<span class="string">&quot;Pick save location.&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">Path</span>::<span class="ident">new</span>(<span class="ident">filename</span>).<span class="ident">display</span>().<span class="ident">to_string</span>()).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">into</span>())
 }
 </pre>
 </section>

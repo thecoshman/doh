@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["doh"] = [];
 implementors["reqwest"] = [];
 
             if (window.register_implementors) {

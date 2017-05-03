@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["doh"] = [];
 implementors["unicode_width"] = [];
 
             if (window.register_implementors) {

@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["doh"] = [];
 implementors["hyper"] = [];
 
             if (window.register_implementors) {

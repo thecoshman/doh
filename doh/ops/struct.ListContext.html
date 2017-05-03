@@ -48,9 +48,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/doh/ops/mod.rs.html#109-113' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/doh/ops/mod.rs.html#125-129' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct ListContext { /* fields omitted */ }</pre><div class='docblock'><p>Main context used to list a server.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../doh/ops/struct.ListContext.html" title="struct doh::ops::ListContext">ListContext</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/doh/ops/mod.rs.html#115-243' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../doh/ops/struct.ListContext.html" title="struct doh::ops::ListContext">ListContext</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/doh/ops/mod.rs.html#131-286' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(starting_url: <a class="struct" href="../../url/struct.Url.html" title="struct url::Url">Url</a>) -&gt; <a class="struct" href="../../doh/ops/struct.ListContext.html" title="struct doh::ops::ListContext">ListContext</a></code></span></h4>
 <div class='docblock'><p>Create a context, starting off at the provided URL.</p>
 </div><h4 id='method.one_loop' class="method"><span id='one_loop.v' class='invisible'><code>fn <a href='#method.one_loop' class='fnname'>one_loop</a>&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt;(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; out: &amp;mut W,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; input: &amp;<a class="struct" href="../../getch/struct.Getch.html" title="struct getch::Getch">Getch</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; term_size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;</code></span></h4>
@@ -77,6 +77,10 @@
 <td>end</td>
 </tr>
 <tr>
+<td><code>&#39;D&#39;</code>/<code>&#39;d&#39;</code></td>
+<td>download file</td>
+</tr>
+<tr>
 <td>Up Arrow</td>
 <td>move selection 1 entry up</td>
 </tr>
@@ -94,9 +98,15 @@
 <h3 id='entering-entries' class='section-header'><a href='#entering-entries'>Entering entries</a></h3>
 <p>If the entry is a directory, on the next loop the selected subdirectory wll be listed.</p>
 
-<p>If the entry is a file, its contents are paged, see <a href="fn.paging_copy.html"><code>paging_copy()</code></a>.</p>
+<p>If the entry is a UTF-8 file, its contents are paged, see <a href="fn.paging_copy.html"><code>paging_copy()</code></a>.</p>
 
-<p>TODO: Non-UTF-8 file support.</p>
+<p>If the entry is a non-UTF-8 file, it is <a href="#downloading-files">downloaded</a>.</p>
+
+<h3 id='downloading-files' class='section-header'><a href='#downloading-files'>Downloading files</a></h3>
+<p>The user is shown a file picker and let choose where to download the file to,
+then the file is downloaded and saved to the specified location.</p>
+
+<p>The file isn&#39;t saved if the user cancels the picker.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
