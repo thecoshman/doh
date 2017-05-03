@@ -106,8 +106,13 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
         }
         try!(writer.flush());
 
-        if input.getch().unwrap() == GETCH_ESC {
-            break;
+        match try!(input.getch()) {
+            GETCH_ESC => break,
+            GETCH_ARROW_PREFIX => {
+                // Prevent doublescroll when using arrows
+                try!(input.getch());
+            }
+            _ => {}
         }
     }
 
