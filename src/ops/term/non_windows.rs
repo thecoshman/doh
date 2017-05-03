@@ -1,6 +1,7 @@
 extern crate tinyfiledialogs;
 
-use std::path::Path;
+use std::ffi::OsStr;
+use std::path::{PathBuf, Path};
 use self::tinyfiledialogs::save_file_dialog;
 
 
