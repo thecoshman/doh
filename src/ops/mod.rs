@@ -25,12 +25,12 @@ pub fn delete<U: IntoUrl>(u: U) -> Response {
     client().delete(u).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
 }
 
-/// GET a resource with the RFSAPI header, auto-unpacking GZip.
+/// GET a resource with the RFSAPI header, auto-unpacking gzip.
 pub fn download<U: IntoUrl>(u: U) -> Response {
     really_download(u, true)
 }
 
-/// GET a resource normally, auto-unpacking GZip.
+/// GET a resource normally, auto-unpacking gzip.
 pub fn download_raw<U: IntoUrl>(u: U) -> Response {
     really_download(u, false)
 }
@@ -214,7 +214,7 @@ impl ListContext {
         self.have_write = data.writes_supported;
 
         if data.is_file {
-            if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], &input, term_size)) {
+            if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], input, term_size)) {
                 try!(writeln!(out, "<Not UTF-8, select download destination>"));
                 try!(self.download_file(out, self.cururl.clone()));
             }
@@ -475,11 +475,11 @@ impl From<RawFileData> for RemoteFile {
 impl fmt::Display for RemoteFile {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         try!(write!(f, "{}\t", self.full_name));
-        if let Some(ref hs) = self.human_size.as_ref() {
+        if let Some(hs) = self.human_size.as_ref() {
             try!(write!(f, "{}", hs));
         }
         try!(write!(f, "\t"));
-        if let Some(ref lm) = self.last_modified.as_ref() {
+        if let Some(lm) = self.last_modified.as_ref() {
             try!(write!(f, "{}", lm.rfc3339()));
         }
         Ok(())
