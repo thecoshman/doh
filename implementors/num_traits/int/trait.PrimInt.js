@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["doh"] = [];
 implementors["num_traits"] = [];
 implementors["reqwest"] = [];
 
