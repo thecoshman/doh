@@ -36,7 +36,7 @@ pub fn download_raw<U: IntoUrl>(u: U) -> Response {
 }
 
 fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
-    client(u).header(RawFsApiHeader(raw)).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
+    client().get(u).header(RawFsApiHeader(raw)).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
 }
 
 pub fn client() -> Client {
@@ -345,9 +345,10 @@ impl ListContext {
 
     fn delete<W: Write>(&mut self, out: &mut W) -> io::Result<()> {
         let delurl = self.cururl.join(&self.files[self.selected].full_name).unwrap();
+        try!(writeln!(out, "<Deleting {}...>", percent_decode(&delurl.to_string()).unwrap()));
         let status = *delete(delurl.clone()).status();
         if status.is_success() {
-            try!(writeln!(out, "<Succesfully deleted {}>", percent_decode(&delurl.to_string()).unwrap()));
+            try!(writeln!(out, "<Success!>"));
         } else {
             try!(writeln!(out, "<Got {}...>", status));
         }
