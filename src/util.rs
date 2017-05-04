@@ -1,9 +1,10 @@
 //! Module containing various utility functions.
 
 
-use reqwest::Url;
 use time::{self, Tm};
+use std::borrow::Cow;
 use std::{iter, f64, cmp};
+use url::{percent_encoding, Url};
 
 
 /// App name and version to use with User-Agent request header.
@@ -13,8 +14,8 @@ pub static USER_AGENT: &str = concat!("D'Oh/", env!("CARGO_PKG_VERSION"));
 pub const GETCH_ENTER: u8 = b'\r';
 /// Byte returned by `getch()` for Escape.
 pub const GETCH_ESC: u8 = b'\x1B';
-/// First byte returned by `getch()` for any arrow key.
-pub const GETCH_ARROW_PREFIX: u8 = 224;
+/// First byte returned by `getch()` for special characters.
+pub const GETCH_SPECIAL_PREFIX: u8 = 224;
 /// Second byte returned by `getch()` for up arrow key.
 pub const GETCH_ARROW_UP: u8 = 72;
 /// Second byte returned by `getch()` for down arrow key.
@@ -23,6 +24,8 @@ pub const GETCH_ARROW_DOWN: u8 = 80;
 pub const GETCH_ARROW_LEFT: u8 = 75;
 /// Second byte returned by `getch()` for right arrow key.
 pub const GETCH_ARROW_RIGHT: u8 = 77;
+/// Second byte returned by `getch()` for Delete.
+pub const GETCH_DELETE: u8 = 83;
 
 /// Amount of spaces to expand tabs to.
 ///
@@ -173,4 +176,18 @@ pub fn human_readable_size(s: u64) -> String {
 pub fn parent_url(u: &Url) -> Url {
     let p = u.to_string();
     p[0..p[0..p.len() - ((p.chars().last() == Some('/')) as usize)].rfind('/').unwrap()].parse().unwrap_or_else(|_| u.clone())
+}
+
+/// Decode a percent-encoded string (like a part of a URL).
+///
+/// # Example
+///
+/// ```
+/// # use doh::util::percent_decode;
+/// # use std::borrow::Cow;
+/// assert_eq!(percent_decode("%D0%B0%D1%81%D0%B4%D1%84%20fdsa"), Some(Cow::from("асдф fdsa")));
+/// assert_eq!(percent_decode("%D0%D1%81%D0%B4%D1%84%20fdsa"), None);
+/// ```
+pub fn percent_decode(s: &str) -> Option<Cow<str>> {
+    percent_encoding::percent_decode(s.as_bytes()).decode_utf8().ok()
 }

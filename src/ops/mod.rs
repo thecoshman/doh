@@ -1,12 +1,12 @@
-use self::super::util::{human_readable_size, parent_url, GETCH_ARROW_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT, GETCH_ARROW_DOWN, GETCH_ARROW_UP, TAB_SPACING,
-                        GETCH_ENTER, USER_AGENT, GETCH_ESC};
+use self::super::util::{human_readable_size, percent_decode, parent_url, GETCH_SPECIAL_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT, GETCH_ARROW_DOWN,
+                        GETCH_ARROW_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_ESC};
 use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
 use reqwest::{Response, IntoUrl, Client, Url};
 use reqwest::header::UserAgent;
+use std::path::{PathBuf, Path};
 use itertools::Itertools;
 use tabwriter::TabWriter;
-use std::path::PathBuf;
 use std::{cmp, fmt};
 use std::fs::File;
 use getch::Getch;
@@ -14,6 +14,16 @@ use time::Tm;
 
 pub mod term;
 
+
+/// PUT a resource.
+pub fn upload<U: IntoUrl>(u: U, f: File) -> Response {
+    client().put(u).header(UserAgent(USER_AGENT.to_string())).body(f).send().unwrap()
+}
+
+/// DELETE a resource.
+pub fn delete<U: IntoUrl>(u: U) -> Response {
+    client().delete(u).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
+}
 
 /// GET a resource with the RFSAPI header, auto-unpacking GZip.
 pub fn download<U: IntoUrl>(u: U) -> Response {
@@ -26,13 +36,13 @@ pub fn download_raw<U: IntoUrl>(u: U) -> Response {
 }
 
 fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
+    client(u).header(RawFsApiHeader(raw)).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
+}
+
+pub fn client() -> Client {
     let mut client = Client::new().unwrap();
     client.gzip(true);
-    client.get(u)
-        .header(RawFsApiHeader(raw))
-        .header(UserAgent(USER_AGENT.to_string()))
-        .send()
-        .unwrap()
+    client
 }
 
 
@@ -108,7 +118,7 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
 
         match try!(input.getch()) {
             GETCH_ESC => break,
-            GETCH_ARROW_PREFIX => {
+            GETCH_SPECIAL_PREFIX => {
                 // Prevent doublescroll when using arrows
                 try!(input.getch());
             }
@@ -126,6 +136,7 @@ pub struct ListContext {
     cururl: Url,
     files: Vec<RemoteFile>,
     selected: usize,
+    have_write: bool,
 }
 
 impl ListContext {
@@ -135,6 +146,7 @@ impl ListContext {
             cururl: starting_url,
             files: vec![],
             selected: 0,
+            have_write: false,
         }
     }
 
@@ -149,9 +161,11 @@ impl ListContext {
     /// Enter/Right Arrow | enter highlighted entry
     /// Escape/`'Q'`/`'q'` | end
     /// `'D'`/`'d'` | download file
+    /// `'U'`/`'u'` | upload file
     /// Up Arrow | move selection 1 entry up
     /// Down Arrow | move selection 1 entry down
     /// Left Arrow | go up one level, if not at root
+    /// Delete | `DELETE` highlighted entry
     ///
     /// ### Entering entries
     ///
@@ -167,8 +181,21 @@ impl ListContext {
     /// then the file is downloaded and saved to the specified location.
     ///
     /// The file isn't saved if the user cancels the picker.
+    ///
+    /// ### Uploading files
+    ///
+    /// If the server, in the last RFSAPI request, specified `writes_supported` as `false`, an error is printed,
+    /// and nothing happens.
+    ///
+    /// Otherwise:
+    ///
+    /// The user is shown a file picker and let choose which file to upload,
+    /// then the file is streamed to the server via a `PUT` request in the currently selected directory,
+    /// with the name of the picked file.
+    ///
+    /// The file isn't uploaded if the user cancels the picker.
     pub fn one_loop<W: Write>(&mut self, mut out: &mut W, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
-        try!(writeln!(out, "Contents of {}:", self.cururl));
+        try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
         let mut resp = download(self.cururl.clone());
         if !resp.status().is_success() {
             try!(writeln!(out, "<Got {}...>", resp.status()));
@@ -184,6 +211,7 @@ impl ListContext {
                 return Ok(true);
             }
         };
+        self.have_write = data.writes_supported;
 
         if data.is_file {
             if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], &input, term_size)) {
@@ -216,12 +244,21 @@ impl ListContext {
             GETCH_ENTER => Ok((self.select(), false)),
             GETCH_ESC | b'q' | b'Q' => Ok((true, true)),
             b'd' | b'D' => {
-                if !self.files.is_empty() {
+                let download_ok = !self.files.is_empty() && self.files[self.selected].size.is_some();
+                if download_ok {
                     try!(self.download_file(out, self.cururl.join(&self.files[self.selected].full_name).unwrap()));
                 }
-                Ok((self.files.is_empty(), false))
+                Ok((!download_ok, false))
             }
-            GETCH_ARROW_PREFIX => {
+            b'u' | b'U' => {
+                if self.have_write {
+                    try!(self.upload(out));
+                } else {
+                    try!(writeln!(out, "<Server doesn't permit write requests>"));
+                }
+                Ok((false, false))
+            }
+            GETCH_SPECIAL_PREFIX => {
                 match try!(input.getch()) {
                     GETCH_ARROW_UP => {
                         if self.selected != 0 {
@@ -239,6 +276,14 @@ impl ListContext {
                     }
                     GETCH_ARROW_LEFT => Ok((self.back(), false)),
                     GETCH_ARROW_RIGHT => Ok((self.select(), false)),
+                    GETCH_DELETE => {
+                        if self.have_write {
+                            try!(self.delete(out));
+                        } else {
+                            try!(writeln!(out, "<Server doesn't permit write requests>"));
+                        }
+                        Ok((false, false))
+                    }
                     _ => Ok((true, false)),
                 }
             }
@@ -281,6 +326,32 @@ impl ListContext {
             try!(io::copy(&mut download_raw(u), &mut try!(File::create(&outp))));
             try!(writeln!(out, "<Done!>"));
         }
+        Ok(())
+    }
+
+    fn upload<W: Write>(&self, out: &mut W) -> io::Result<()> {
+        if let Some(inp) = term::open_file_picker() {
+            try!(writeln!(out, "<Uploading {} to {}...>", inp.display(), percent_decode(&self.cururl.to_string()).unwrap()));
+            let upurl = self.cururl.join(&Path::new(inp.file_name().unwrap()).display().to_string()).unwrap();
+            let status = *upload(upurl, try!(File::open(inp))).status();
+            if status.is_success() {
+                try!(writeln!(out, "<Success!>"));
+            } else {
+                try!(writeln!(out, "<Got {}...>", status));
+            }
+        }
+        Ok(())
+    }
+
+    fn delete<W: Write>(&mut self, out: &mut W) -> io::Result<()> {
+        let delurl = self.cururl.join(&self.files[self.selected].full_name).unwrap();
+        let status = *delete(delurl.clone()).status();
+        if status.is_success() {
+            try!(writeln!(out, "<Succesfully deleted {}>", percent_decode(&delurl.to_string()).unwrap()));
+        } else {
+            try!(writeln!(out, "<Got {}...>", status));
+        }
+        self.selected = 0;
         Ok(())
     }
 }

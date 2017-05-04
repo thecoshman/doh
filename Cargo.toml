@@ -22,6 +22,7 @@ rfsapi = "0.1"
 getch = "0.1"
 clap = "2.23"
 time = "0.1"
+url = "1.4"
 
 [target.'cfg(target_os="windows")'.dependencies]
 kernel32-sys = "0.2"

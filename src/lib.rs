@@ -9,6 +9,7 @@ extern crate getch;
 #[macro_use]
 extern crate clap;
 extern crate time;
+extern crate url;
 
 mod options;
 

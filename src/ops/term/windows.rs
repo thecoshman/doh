@@ -13,6 +13,7 @@ use self::winapi::{CONSOLE_SCREEN_BUFFER_INFO, CONSOLE_CURSOR_INFO, STD_OUTPUT_H
 #[link(name="comdlg32")]
 extern "system" {
     fn GetSaveFileNameW(lpofn: LPOPENFILENAMEW) -> BOOL;
+    fn GetOpenFileNameW(lpofn: LPOPENFILENAMEW) -> BOOL;
 }
 
 
@@ -46,7 +47,7 @@ pub fn show_cursor(show: bool) -> &'static str {
     ""
 }
 
-/// Show a file picker to let user choose where to save a file with the pecified filename and optional extension.
+/// Show a file picker to let user choose where to save a file with the specified filename and optional extension.
 pub fn save_file_picker(filename: &OsStr, extension: Option<&OsStr>) -> Option<PathBuf> {
     let ext: Vec<WCHAR> = if let Some(extension) = extension {
         extension.encode_wide().chain([0].into_iter().cloned()).collect()
@@ -63,40 +64,26 @@ pub fn save_file_picker(filename: &OsStr, extension: Option<&OsStr>) -> Option<P
         file[i] = b;
     }
 
-    let mut ofw = OPENFILENAMEW {
-        lStructSize: size_of::<OPENFILENAMEW>() as DWORD,
-        hwndOwner: null_mut(),
-        hInstance: null_mut(),
-        lpstrFilter: filter.as_ptr(),
-        lpstrCustomFilter: null_mut(),
-        nMaxCustFilter: 0,
-        nFilterIndex: if extension.is_some() { 2 } else { 1 },
-        lpstrFile: file.as_mut_ptr(),
-        nMaxFile: file.len() as DWORD,
-        lpstrFileTitle: null_mut(),
-        nMaxFileTitle: 0,
-        lpstrInitialDir: null_mut(),
-        lpstrTitle: null_mut(),
-        Flags: OFN_NOCHANGEDIR,
-        nFileOffset: 0,
-        nFileExtension: 0,
-        lpstrDefExt: if extension.is_some() {
-            ext.as_ptr()
-        } else {
-            null_mut()
-        },
-        lCustData: 0,
-        lpfnHook: None,
-        lpTemplateName: null_mut(),
-        pvReserved: null_mut(),
-        dwReserved: 0,
-        FlagsEx: 0,
-    };
-    if unsafe { GetSaveFileNameW(&mut ofw as LPOPENFILENAMEW) } == 0 {
-        None
-    } else {
-        Some(OsString::from_wide(&file[0..file.iter().position(|&b| b == 0).unwrap_or(file.len())]).into())
-    }
+    picker(GetSaveFileNameW,
+           ofnw(filter.as_ptr(),
+                if extension.is_some() { 2 } else { 1 },
+                file.as_mut_ptr(),
+                file.len() as DWORD,
+                if extension.is_some() {
+                    ext.as_ptr()
+                } else {
+                    null_mut()
+                }),
+           &file)
+}
+
+/// Show a file picker to let user choose a file.
+pub fn open_file_picker() -> Option<PathBuf> {
+    let filter: Vec<WCHAR> = OsStr::new("All Files\0*.*\0\0").encode_wide().collect();
+    let mut file = [0u16; 1024];
+    picker(GetOpenFileNameW,
+           ofnw(filter.as_ptr(), 1, file.as_mut_ptr(), file.len() as DWORD, null_mut()),
+           &file)
 }
 
 
@@ -132,5 +119,41 @@ fn get_csbi() -> Option<(HANDLE, CONSOLE_SCREEN_BUFFER_INFO)> {
     match unsafe { GetConsoleScreenBufferInfo(hand, &mut csbi) } {
         0 => None,
         _ => Some((hand, csbi)),
+    }
+}
+
+fn ofnw(filter: *const WCHAR, filter_index: DWORD, file: *mut WCHAR, file_len: DWORD, default_extension: *const WCHAR) -> OPENFILENAMEW {
+    OPENFILENAMEW {
+        lStructSize: size_of::<OPENFILENAMEW>() as DWORD,
+        hwndOwner: null_mut(),
+        hInstance: null_mut(),
+        lpstrFilter: filter,
+        lpstrCustomFilter: null_mut(),
+        nMaxCustFilter: 0,
+        nFilterIndex: filter_index,
+        lpstrFile: file,
+        nMaxFile: file_len,
+        lpstrFileTitle: null_mut(),
+        nMaxFileTitle: 0,
+        lpstrInitialDir: null_mut(),
+        lpstrTitle: null_mut(),
+        Flags: OFN_NOCHANGEDIR,
+        nFileOffset: 0,
+        nFileExtension: 0,
+        lpstrDefExt: default_extension,
+        lCustData: 0,
+        lpfnHook: None,
+        lpTemplateName: null_mut(),
+        pvReserved: null_mut(),
+        dwReserved: 0,
+        FlagsEx: 0,
+    }
+}
+
+fn picker(f: unsafe extern "system" fn(LPOPENFILENAMEW) -> BOOL, mut ofw: OPENFILENAMEW, file: &[WCHAR]) -> Option<PathBuf> {
+    if unsafe { f(&mut ofw as LPOPENFILENAMEW) } == 0 {
+        None
+    } else {
+        Some(OsString::from_wide(&file[0..file.iter().position(|&b| b == 0).unwrap_or(file.len())]).into())
     }
 }
