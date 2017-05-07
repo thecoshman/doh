@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.5.1/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.5.2/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -205,6 +205,8 @@
 <span id="160">160</span>
 <span id="161">161</span>
 <span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
@@ -326,15 +328,17 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Url</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">url</span>::<span class="ident">ParseError</span> <span class="kw">as</span> <span class="ident">UrlError</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">client</span>::{<span class="ident">Client</span>, <span class="ident">Response</span>, <span class="ident">RequestBuilder</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">client</span>::{<span class="ident">Client</span>, <span class="ident">RequestBuilder</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">body</span>::<span class="ident">Body</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">redirect</span>::<span class="ident">RedirectPolicy</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">response</span>::<span class="ident">Response</span>;
 
 <span class="kw">mod</span> <span class="ident">body</span>;
 <span class="kw">mod</span> <span class="ident">client</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">mod</span> <span class="ident">redirect</span>;
+<span class="kw">mod</span> <span class="ident">response</span>;
 
 
 <span class="doccomment">/// Shortcut method to quickly make a `GET` request.</span>

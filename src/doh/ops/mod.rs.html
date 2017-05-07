@@ -1013,7 +1013,7 @@
         }
         <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\t&quot;</span>));
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">lm</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">last_modified</span>.<span class="ident">as_ref</span>() {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">lm</span>.<span class="ident">rfc3339</span>()));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">lm</span>.<span class="ident">strftime</span>(<span class="string">&quot;%F %T&quot;</span>).<span class="ident">unwrap</span>()));
         }
         <span class="prelude-val">Ok</span>(())
     }

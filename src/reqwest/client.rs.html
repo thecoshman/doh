@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.5.1/src/client.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.5.2/src/client.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>client.rs.html -- source</title>
@@ -549,172 +549,27 @@
 <span id="504">504</span>
 <span id="505">505</span>
 <span id="506">506</span>
-<span id="507">507</span>
-<span id="508">508</span>
-<span id="509">509</span>
-<span id="510">510</span>
-<span id="511">511</span>
-<span id="512">512</span>
-<span id="513">513</span>
-<span id="514">514</span>
-<span id="515">515</span>
-<span id="516">516</span>
-<span id="517">517</span>
-<span id="518">518</span>
-<span id="519">519</span>
-<span id="520">520</span>
-<span id="521">521</span>
-<span id="522">522</span>
-<span id="523">523</span>
-<span id="524">524</span>
-<span id="525">525</span>
-<span id="526">526</span>
-<span id="527">527</span>
-<span id="528">528</span>
-<span id="529">529</span>
-<span id="530">530</span>
-<span id="531">531</span>
-<span id="532">532</span>
-<span id="533">533</span>
-<span id="534">534</span>
-<span id="535">535</span>
-<span id="536">536</span>
-<span id="537">537</span>
-<span id="538">538</span>
-<span id="539">539</span>
-<span id="540">540</span>
-<span id="541">541</span>
-<span id="542">542</span>
-<span id="543">543</span>
-<span id="544">544</span>
-<span id="545">545</span>
-<span id="546">546</span>
-<span id="547">547</span>
-<span id="548">548</span>
-<span id="549">549</span>
-<span id="550">550</span>
-<span id="551">551</span>
-<span id="552">552</span>
-<span id="553">553</span>
-<span id="554">554</span>
-<span id="555">555</span>
-<span id="556">556</span>
-<span id="557">557</span>
-<span id="558">558</span>
-<span id="559">559</span>
-<span id="560">560</span>
-<span id="561">561</span>
-<span id="562">562</span>
-<span id="563">563</span>
-<span id="564">564</span>
-<span id="565">565</span>
-<span id="566">566</span>
-<span id="567">567</span>
-<span id="568">568</span>
-<span id="569">569</span>
-<span id="570">570</span>
-<span id="571">571</span>
-<span id="572">572</span>
-<span id="573">573</span>
-<span id="574">574</span>
-<span id="575">575</span>
-<span id="576">576</span>
-<span id="577">577</span>
-<span id="578">578</span>
-<span id="579">579</span>
-<span id="580">580</span>
-<span id="581">581</span>
-<span id="582">582</span>
-<span id="583">583</span>
-<span id="584">584</span>
-<span id="585">585</span>
-<span id="586">586</span>
-<span id="587">587</span>
-<span id="588">588</span>
-<span id="589">589</span>
-<span id="590">590</span>
-<span id="591">591</span>
-<span id="592">592</span>
-<span id="593">593</span>
-<span id="594">594</span>
-<span id="595">595</span>
-<span id="596">596</span>
-<span id="597">597</span>
-<span id="598">598</span>
-<span id="599">599</span>
-<span id="600">600</span>
-<span id="601">601</span>
-<span id="602">602</span>
-<span id="603">603</span>
-<span id="604">604</span>
-<span id="605">605</span>
-<span id="606">606</span>
-<span id="607">607</span>
-<span id="608">608</span>
-<span id="609">609</span>
-<span id="610">610</span>
-<span id="611">611</span>
-<span id="612">612</span>
-<span id="613">613</span>
-<span id="614">614</span>
-<span id="615">615</span>
-<span id="616">616</span>
-<span id="617">617</span>
-<span id="618">618</span>
-<span id="619">619</span>
-<span id="620">620</span>
-<span id="621">621</span>
-<span id="622">622</span>
-<span id="623">623</span>
-<span id="624">624</span>
-<span id="625">625</span>
-<span id="626">626</span>
-<span id="627">627</span>
-<span id="628">628</span>
-<span id="629">629</span>
-<span id="630">630</span>
-<span id="631">631</span>
-<span id="632">632</span>
-<span id="633">633</span>
-<span id="634">634</span>
-<span id="635">635</span>
-<span id="636">636</span>
-<span id="637">637</span>
-<span id="638">638</span>
-<span id="639">639</span>
-<span id="640">640</span>
-<span id="641">641</span>
-<span id="642">642</span>
-<span id="643">643</span>
-<span id="644">644</span>
-<span id="645">645</span>
-<span id="646">646</span>
-<span id="647">647</span>
-<span id="648">648</span>
-<span id="649">649</span>
-<span id="650">650</span>
-<span id="651">651</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>, <span class="ident">RwLock</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">Ordering</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">client</span>::<span class="ident">IntoUrl</span>;
-<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">header</span>::{<span class="ident">Headers</span>, <span class="ident">ContentType</span>, <span class="ident">Location</span>, <span class="ident">Referer</span>, <span class="ident">UserAgent</span>, <span class="ident">Accept</span>, <span class="ident">ContentEncoding</span>, <span class="ident">Encoding</span>, <span class="ident">ContentLength</span>,
-    <span class="ident">TransferEncoding</span>, <span class="ident">AcceptEncoding</span>, <span class="ident">Range</span>, <span class="ident">qitem</span>};
+<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">header</span>::{<span class="ident">Headers</span>, <span class="ident">ContentType</span>, <span class="ident">Location</span>, <span class="ident">Referer</span>, <span class="ident">UserAgent</span>, <span class="ident">Accept</span>, <span class="ident">Encoding</span>,
+    <span class="ident">AcceptEncoding</span>, <span class="ident">Range</span>, <span class="ident">qitem</span>};
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">status</span>::<span class="ident">StatusCode</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">version</span>::<span class="ident">HttpVersion</span>;
 <span class="kw">use</span> <span class="ident">hyper</span>::{<span class="ident">Url</span>};
 
-<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>;
 <span class="kw">use</span> <span class="ident">serde_json</span>;
 <span class="kw">use</span> <span class="ident">serde_urlencoded</span>;
 
 <span class="kw">use</span> ::<span class="ident">body</span>::{<span class="self">self</span>, <span class="ident">Body</span>};
 <span class="kw">use</span> ::<span class="ident">redirect</span>::{<span class="ident">RedirectPolicy</span>, <span class="ident">check_redirect</span>};
+<span class="kw">use</span> ::<span class="ident">response</span>::<span class="ident">Response</span>;
 
 <span class="kw">static</span> <span class="ident">DEFAULT_USER_AGENT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="macro">concat</span><span class="macro">!</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_NAME&quot;</span>), <span class="string">&quot;/&quot;</span>, <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_VERSION&quot;</span>));
 
@@ -993,9 +848,7 @@
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">loc</span>) <span class="op">=</span> <span class="ident">loc</span> {
                         <span class="ident">loc</span>
                     } <span class="kw">else</span> {
-                        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span> {
-                            <span class="ident">inner</span>: <span class="ident">Decoder</span>::<span class="ident">from_hyper_response</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>))
-                        });
+                        <span class="kw">return</span> <span class="prelude-val">Ok</span>(::<span class="ident">response</span>::<span class="ident">new</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>)));
                     }
                 };
 
@@ -1007,16 +860,14 @@
                             <span class="ident">loc</span>
                         } <span class="kw">else</span> {
                             <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;redirect_policy disallowed redirection to &#39;{}&#39;&quot;</span>, <span class="ident">loc</span>);
-                            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span> {
-                                <span class="ident">inner</span>: <span class="ident">Decoder</span>::<span class="ident">from_hyper_response</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>))
-                            })
+
+                            <span class="kw">return</span> <span class="prelude-val">Ok</span>(::<span class="ident">response</span>::<span class="ident">new</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>)));
                         }
                     },
                     <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
                         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Location header had invalid URI: {:?}&quot;</span>, <span class="ident">e</span>);
-                        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span> {
-                            <span class="ident">inner</span>: <span class="ident">Decoder</span>::<span class="ident">from_hyper_response</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>))
-                        })
+
+                        <span class="kw">return</span> <span class="prelude-val">Ok</span>(::<span class="ident">response</span>::<span class="ident">new</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>)))
                     }
                 };
 
@@ -1024,9 +875,7 @@
 
                 <span class="comment">//TODO: removeSensitiveHeaders(&amp;mut headers, &amp;url);</span>
             } <span class="kw">else</span> {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Response</span> {
-                    <span class="ident">inner</span>: <span class="ident">Decoder</span>::<span class="ident">from_hyper_response</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>))
-                });
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(::<span class="ident">response</span>::<span class="ident">new</span>(<span class="ident">res</span>, <span class="ident">client</span>.<span class="ident">auto_ungzip</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>)))
             }
         }
     }
@@ -1039,145 +888,6 @@
             .<span class="ident">field</span>(<span class="string">&quot;url&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">url</span>)
             .<span class="ident">field</span>(<span class="string">&quot;headers&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">headers</span>)
             .<span class="ident">finish</span>()
-    }
-}
-
-<span class="doccomment">/// A Response to a submitted `Request`.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Response</span> {
-    <span class="ident">inner</span>: <span class="ident">Decoder</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Response</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">return</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> {
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="kw-2">ref</span> <span class="ident">hyper_response</span>) <span class="op">=&gt;</span> {
-                <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Response&quot;</span>)
-                    .<span class="ident">field</span>(<span class="string">&quot;status&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">hyper_response</span>.<span class="ident">status</span>)
-                    .<span class="ident">field</span>(<span class="string">&quot;headers&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">hyper_response</span>.<span class="ident">headers</span>)
-                    .<span class="ident">field</span>(<span class="string">&quot;version&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">hyper_response</span>.<span class="ident">version</span>)
-                    .<span class="ident">finish</span>()
-            },
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">Gzip</span>{<span class="kw-2">ref</span> <span class="ident">status</span>, <span class="kw-2">ref</span> <span class="ident">version</span>, <span class="kw-2">ref</span> <span class="ident">headers</span>, ..} <span class="op">=&gt;</span> {
-                <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Response&quot;</span>)
-                    .<span class="ident">field</span>(<span class="string">&quot;status&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">status</span>)
-                    .<span class="ident">field</span>(<span class="string">&quot;headers&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">headers</span>)
-                    .<span class="ident">field</span>(<span class="string">&quot;version&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">version</span>)
-                    .<span class="ident">finish</span>()
-            }
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Response</span> {
-    <span class="doccomment">/// Get the `StatusCode`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">StatusCode</span> {
-        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> {
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="kw-2">ref</span> <span class="ident">hyper_response</span>) <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="ident">hyper_response</span>.<span class="ident">status</span>,
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">Gzip</span>{<span class="kw-2">ref</span> <span class="ident">status</span>, ..} <span class="op">=&gt;</span> <span class="ident">status</span>
-        }
-    }
-
-    <span class="doccomment">/// Get the `Headers`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Headers</span> {
-        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> {
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="kw-2">ref</span> <span class="ident">hyper_response</span>) <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="ident">hyper_response</span>.<span class="ident">headers</span>,
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">Gzip</span>{<span class="kw-2">ref</span> <span class="ident">headers</span>, ..} <span class="op">=&gt;</span> <span class="ident">headers</span>
-        }
-    }
-
-    <span class="doccomment">/// Get the `HttpVersion`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HttpVersion</span> {
-        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> {
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="kw-2">ref</span> <span class="ident">hyper_response</span>) <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="ident">hyper_response</span>.<span class="ident">version</span>,
-            <span class="kw-2">&amp;</span><span class="ident">Decoder</span>::<span class="ident">Gzip</span>{<span class="kw-2">ref</span> <span class="ident">version</span>, ..} <span class="op">=&gt;</span> <span class="ident">version</span>
-        }
-    }
-
-    <span class="doccomment">/// Try and deserialize the response body as JSON.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">json</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Deserialize</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">serde_json</span>::<span class="ident">from_reader</span>(<span class="self">self</span>).<span class="ident">map_err</span>(::<span class="ident">Error</span>::<span class="ident">from</span>)
-    }
-}
-
-<span class="kw">enum</span> <span class="ident">Decoder</span> {
-    <span class="doccomment">/// A `PlainText` decoder just returns the response content as is.</span>
-    <span class="ident">PlainText</span>(::<span class="ident">hyper</span>::<span class="ident">client</span>::<span class="ident">Response</span>),
-    <span class="doccomment">/// A `Gzip` decoder will uncompress the gziped response content before returning it.</span>
-    <span class="ident">Gzip</span> {
-        <span class="ident">decoder</span>: ::<span class="ident">libflate</span>::<span class="ident">gzip</span>::<span class="ident">Decoder</span><span class="op">&lt;</span>::<span class="ident">hyper</span>::<span class="ident">client</span>::<span class="ident">Response</span><span class="op">&gt;</span>,
-        <span class="ident">headers</span>: ::<span class="ident">hyper</span>::<span class="ident">header</span>::<span class="ident">Headers</span>,
-        <span class="ident">version</span>: ::<span class="ident">hyper</span>::<span class="ident">version</span>::<span class="ident">HttpVersion</span>,
-        <span class="ident">status</span>: ::<span class="ident">hyper</span>::<span class="ident">status</span>::<span class="ident">StatusCode</span>,
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Decoder</span> {
-    <span class="doccomment">/// Constructs a Decoder from a hyper request.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A decoder is just a wrapper around the hyper request that knows</span>
-    <span class="doccomment">/// how to decode the content body of the request.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Uses the correct variant by inspecting the Content-Encoding header.</span>
-    <span class="kw">fn</span> <span class="ident">from_hyper_response</span>(<span class="kw-2">mut</span> <span class="ident">res</span>: ::<span class="ident">hyper</span>::<span class="ident">client</span>::<span class="ident">Response</span>, <span class="ident">check_gzip</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">check_gzip</span> {
-            <span class="kw">return</span> <span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="ident">res</span>);
-        }
-        <span class="kw">let</span> <span class="ident">content_encoding_gzip</span>: <span class="ident">bool</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">is_gzip</span> <span class="op">=</span> {
-            <span class="ident">content_encoding_gzip</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">headers</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">ContentEncoding</span><span class="op">&gt;</span>().<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">encs</span><span class="op">|</span>{
-                <span class="ident">encs</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Encoding</span>::<span class="ident">Gzip</span>)
-            });
-            <span class="ident">content_encoding_gzip</span> <span class="op">||</span> <span class="ident">res</span>.<span class="ident">headers</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">TransferEncoding</span><span class="op">&gt;</span>().<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">encs</span><span class="op">|</span>{
-                <span class="ident">encs</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">Encoding</span>::<span class="ident">Gzip</span>)
-            })
-        };
-        <span class="kw">if</span> <span class="ident">content_encoding_gzip</span> {
-            <span class="ident">res</span>.<span class="ident">headers</span>.<span class="ident">remove</span>::<span class="op">&lt;</span><span class="ident">ContentEncoding</span><span class="op">&gt;</span>();
-            <span class="ident">res</span>.<span class="ident">headers</span>.<span class="ident">remove</span>::<span class="op">&lt;</span><span class="ident">ContentLength</span><span class="op">&gt;</span>();
-        }
-        <span class="kw">if</span> <span class="ident">is_gzip</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">content_length</span>) <span class="op">=</span> <span class="ident">res</span>.<span class="ident">headers</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">ContentLength</span><span class="op">&gt;</span>() {
-                <span class="kw">if</span> <span class="ident">content_length</span>.<span class="number">0</span> <span class="op">==</span> <span class="number">0</span> {
-                    <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;GZipped response with content-length of 0&quot;</span>);
-                    <span class="ident">is_gzip</span> <span class="op">=</span> <span class="bool-val">false</span>;
-                }
-            }
-        }
-        <span class="kw">if</span> <span class="ident">is_gzip</span> {
-            <span class="kw">return</span> <span class="ident">Decoder</span>::<span class="ident">Gzip</span> {
-                <span class="ident">status</span>: <span class="ident">res</span>.<span class="ident">status</span>.<span class="ident">clone</span>(),
-                <span class="ident">version</span>: <span class="ident">res</span>.<span class="ident">version</span>.<span class="ident">clone</span>(),
-                <span class="ident">headers</span>: <span class="ident">res</span>.<span class="ident">headers</span>.<span class="ident">clone</span>(),
-                <span class="ident">decoder</span>: ::<span class="ident">libflate</span>::<span class="ident">gzip</span>::<span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">res</span>).<span class="ident">unwrap</span>(),
-            };
-        } <span class="kw">else</span> {
-            <span class="kw">return</span> <span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="ident">res</span>);
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">Decoder</span> {
-    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoder</span>::<span class="ident">PlainText</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">hyper_response</span>) <span class="op">=&gt;</span> {
-                <span class="ident">hyper_response</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
-            },
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Decoder</span>::<span class="ident">Gzip</span>{<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">decoder</span>, ..} <span class="op">=&gt;</span> {
-                <span class="ident">decoder</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
-            }
-        }
-    }
-}
-
-<span class="doccomment">/// Read the body of the Response.</span>
-<span class="kw">impl</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">Response</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
     }
 }
 
