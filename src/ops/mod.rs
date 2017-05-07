@@ -480,7 +480,7 @@ impl fmt::Display for RemoteFile {
         }
         try!(write!(f, "\t"));
         if let Some(lm) = self.last_modified.as_ref() {
-            try!(write!(f, "{}", lm.rfc3339()));
+            try!(write!(f, "{}", lm.strftime("%F %T").unwrap()));
         }
         Ok(())
     }
