@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.11/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.12/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -2088,10 +2088,17 @@
 <span id="2043">2043</span>
 <span id="2044">2044</span>
 <span id="2045">2045</span>
+<span id="2046">2046</span>
+<span id="2047">2047</span>
+<span id="2048">2048</span>
+<span id="2049">2049</span>
+<span id="2050">2050</span>
+<span id="2051">2051</span>
+<span id="2052">2052</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>, <span class="ident">non_upper_case_globals</span>, <span class="ident">non_snake_case</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">overflowing_literals</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span><span class="op">=</span><span class="string">&quot;https://docs.rs/openssl-sys/0.9.11&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span><span class="op">=</span><span class="string">&quot;https://docs.rs/openssl-sys/0.9.12&quot;</span>)]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libc</span>;
 
@@ -3877,6 +3884,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">DSA_verify</span>(<span class="ident">dummy</span>: <span class="ident">c_int</span>, <span class="ident">dgst</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>, <span class="ident">len</span>: <span class="ident">c_int</span>, <span class="ident">sigbuf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>,
                       <span class="ident">siglen</span>: <span class="ident">c_int</span>, <span class="ident">dsa</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">DSA</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SHA1</span>(<span class="ident">d</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>, <span class="ident">n</span>: <span class="ident">size_t</span>, <span class="ident">md</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SHA224</span>(<span class="ident">d</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>, <span class="ident">n</span>: <span class="ident">size_t</span>, <span class="ident">md</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SHA256</span>(<span class="ident">d</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>, <span class="ident">n</span>: <span class="ident">size_t</span>, <span class="ident">md</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SHA384</span>(<span class="ident">d</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>, <span class="ident">n</span>: <span class="ident">size_t</span>, <span class="ident">md</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SHA512</span>(<span class="ident">d</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span>, <span class="ident">n</span>: <span class="ident">size_t</span>, <span class="ident">md</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>;
+
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SSL_new</span>(<span class="ident">ctx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SSL_CTX</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SSL</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SSL_pending</span>(<span class="ident">ssl</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SSL</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SSL_free</span>(<span class="ident">ssl</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SSL</span>);
@@ -4099,6 +4112,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i2d_X509_REQ_bio</span>(<span class="ident">b</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">X509_REQ</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i2d_X509_REQ</span>(<span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">X509_REQ</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">d2i_PUBKEY</span>(<span class="ident">k</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">EVP_PKEY</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">len</span>: <span class="ident">c_long</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">EVP_PKEY</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i2d_PUBKEY_bio</span>(<span class="ident">b</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">EVP_PKEY</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i2d_PrivateKey_bio</span>(<span class="ident">b</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">EVP_PKEY</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i2d_PUBKEY</span>(<span class="ident">k</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">EVP_PKEY</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;

@@ -1,6 +1,7 @@
 (function() {var implementors = {};
 implementors["byteorder"] = [];
 implementors["doh"] = [];
+implementors["hyper"] = [];
 implementors["reqwest"] = [];
 
             if (window.register_implementors) {

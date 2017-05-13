@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.11/src/ssl/error.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.12/src/ssl/error.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>error.rs.html -- source</title>
@@ -162,6 +162,7 @@
 <span id="117">117</span>
 <span id="118">118</span>
 <span id="119">119</span>
+<span id="120">120</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
@@ -238,7 +239,8 @@
     <span class="ident">SetupFailure</span>(<span class="ident">ErrorStack</span>),
     <span class="doccomment">/// The handshake failed.</span>
     <span class="ident">Failure</span>(<span class="ident">MidHandshakeSslStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>),
-    <span class="doccomment">/// The handshake was interrupted midway through.</span>
+    <span class="doccomment">/// The handshake was interrupted midway through. This error will never be returned for blocking streams.</span>
+    <span class="comment">// FIXME change to WouldBlock</span>
     <span class="ident">Interrupted</span>(<span class="ident">MidHandshakeSslStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>),
 }
 
