@@ -530,6 +530,7 @@
 <span id="485">485</span>
 <span id="486">486</span>
 <span id="487">487</span>
+<span id="488">488</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">util</span>::{<span class="ident">human_readable_size</span>, <span class="ident">percent_decode</span>, <span class="ident">parent_url</span>, <span class="ident">GETCH_SPECIAL_PREFIX</span>, <span class="ident">GETCH_ARROW_RIGHT</span>, <span class="ident">GETCH_ARROW_LEFT</span>, <span class="ident">GETCH_ARROW_DOWN</span>,
                         <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">TAB_SPACING</span>, <span class="ident">GETCH_DELETE</span>, <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_ESC</span>};
@@ -597,6 +598,7 @@
 <span class="doccomment">/// ---|------</span>
 <span class="doccomment">/// Any key | stop paging</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paging_copy</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span>, <span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>, <span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">Getch</span>, <span class="ident">term_size</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>)) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Costant width of screen-end message for wrapping, as seen in-code from bottom right to top left.</span>
     <span class="kw">const</span> <span class="ident">END_MESSAGE_RAW_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">31</span> <span class="op">+</span> <span class="number">4</span> <span class="op">+</span> <span class="number">22</span> <span class="op">+</span> <span class="number">2</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="number">2</span> <span class="op">+</span> <span class="number">1</span>;
 
     <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">ty</span>) <span class="op">=</span> <span class="ident">term_size</span>;
@@ -621,7 +623,7 @@
             <span class="ident">outlines</span>.<span class="ident">extend</span>(<span class="ident">line</span>.<span class="ident">drain</span>(..).<span class="ident">chunks</span>(<span class="ident">tx</span>).<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">l</span><span class="op">|</span> <span class="ident">l</span>.<span class="ident">collect</span>()));
         }
     }
-    <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">line</span>;
+    <span class="ident">drop</span>(<span class="ident">line</span>);
 
     <span class="kw">let</span> <span class="ident">end_message_len</span> <span class="op">=</span> <span class="ident">END_MESSAGE_RAW_LEN</span> <span class="op">+</span> <span class="ident">label</span>.<span class="ident">chars</span>().<span class="ident">count</span>();
     <span class="kw">let</span> <span class="ident">end_message_lines</span> <span class="op">=</span> (<span class="ident">end_message_len</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="ident">tx</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">floor</span>() <span class="kw">as</span> <span class="ident">usize</span>;
