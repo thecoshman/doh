@@ -64,6 +64,7 @@ pub fn client() -> Client {
 /// ---|------
 /// Any key | stop paging
 pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &str, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
+    /// Costant width of screen-end message for wrapping, as seen in-code from bottom right to top left.
     const END_MESSAGE_RAW_LEN: usize = 31 + 4 + 22 + 2 + 1 + 2 + 1;
 
     let (tx, ty) = term_size;
@@ -88,7 +89,7 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
             outlines.extend(line.drain(..).chunks(tx).into_iter().map(|l| l.collect()));
         }
     }
-    let _ = line;
+    drop(line);
 
     let end_message_len = END_MESSAGE_RAW_LEN + label.chars().count();
     let end_message_lines = (end_message_len as f64 / tx as f64).floor() as usize;
