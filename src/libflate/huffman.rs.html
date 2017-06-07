@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.5/src/huffman.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/huffman.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>huffman.rs.html -- source</title>
@@ -359,6 +359,15 @@
 <span id="314">314</span>
 <span id="315">315</span>
 <span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
 </pre><pre class="rust ">
 <span class="doccomment">/// Length-limited Huffman Codes</span>
 <span class="doccomment">///</span>
@@ -483,20 +492,29 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
     {
-        <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">reader</span>.<span class="ident">peek_bits</span>(<span class="self">self</span>.<span class="ident">eob_bitwidth</span>));
+        <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">decode_unchecked</span>(<span class="ident">reader</span>);
+        <span class="ident">reader</span>.<span class="ident">check_last_error</span>()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">v</span>)
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_unchecked</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">u16</span>
+        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    {
+        <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">peek_bits_unchecked</span>(<span class="self">self</span>.<span class="ident">eob_bitwidth</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">table</span>.<span class="ident">get_unchecked</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">usize</span>) };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bitwidth</span> <span class="op">=</span> (<span class="ident">value</span> <span class="op">&amp;</span> <span class="number">0b11111</span>) <span class="kw">as</span> <span class="ident">u8</span>;
         <span class="kw">if</span> <span class="ident">bitwidth</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">eob_bitwidth</span> {
-            <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">reader</span>.<span class="ident">peek_bits</span>(<span class="self">self</span>.<span class="ident">max_bitwidth</span>));
+            <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">peek_bits_unchecked</span>(<span class="self">self</span>.<span class="ident">max_bitwidth</span>);
             <span class="ident">value</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">table</span>.<span class="ident">get_unchecked</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">usize</span>) };
             <span class="ident">bitwidth</span> <span class="op">=</span> (<span class="ident">value</span> <span class="op">&amp;</span> <span class="number">0b11111</span>) <span class="kw">as</span> <span class="ident">u8</span>;
             <span class="kw">if</span> <span class="ident">bitwidth</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">max_bitwidth</span> {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Invalid huffman coded stream&quot;</span>));
+                <span class="ident">reader</span>.<span class="ident">set_last_error</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Invalid huffman coded stream&quot;</span>));
             }
         }
         <span class="ident">reader</span>.<span class="ident">skip_bits</span>(<span class="ident">bitwidth</span> <span class="kw">as</span> <span class="ident">u8</span>);
         <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">value</span> <span class="op">&gt;&gt;</span> <span class="number">5</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">symbol</span>)
+        <span class="ident">symbol</span>
     }
 }
 
@@ -625,8 +643,8 @@
             .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>();
         <span class="ident">source</span>.<span class="ident">sort_by_key</span>(<span class="op">|</span><span class="ident">o</span><span class="op">|</span> <span class="ident">o</span>.<span class="ident">weight</span>);
 
-        <span class="kw">let</span> <span class="ident">weighted</span> <span class="op">=</span>
-            (<span class="number">0</span>..<span class="ident">max_bitwidth</span> <span class="op">-</span> <span class="number">1</span>).<span class="ident">fold</span>(<span class="ident">source</span>.<span class="ident">clone</span>(), <span class="op">|</span><span class="ident">w</span>, _<span class="op">|</span> <span class="ident">merge</span>(<span class="ident">package</span>(<span class="ident">w</span>), <span class="ident">source</span>.<span class="ident">clone</span>()));
+        <span class="kw">let</span> <span class="ident">weighted</span> <span class="op">=</span> (<span class="number">0</span>..<span class="ident">max_bitwidth</span> <span class="op">-</span> <span class="number">1</span>)
+            .<span class="ident">fold</span>(<span class="ident">source</span>.<span class="ident">clone</span>(), <span class="op">|</span><span class="ident">w</span>, _<span class="op">|</span> <span class="ident">merge</span>(<span class="ident">package</span>(<span class="ident">w</span>), <span class="ident">source</span>.<span class="ident">clone</span>()));
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">code_bitwidthes</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">frequencies</span>.<span class="ident">len</span>()];
         <span class="kw">for</span> <span class="ident">symbol</span> <span class="kw">in</span> <span class="ident">package</span>(<span class="ident">weighted</span>)

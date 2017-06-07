@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/libflate/gzip.rs.html#1-899' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/libflate/gzip.rs.html#1-898' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The encoder and decoder of the GZIP format.</p>
 
 <p>The GZIP format is defined in <a href="https://tools.ietf.org/html/rfc1952">RFC-1952</a>.</p>
@@ -64,7 +64,7 @@
 <span class="kw">let</span> <span class="ident">encoded_data</span> <span class="op">=</span> <span class="ident">encoder</span>.<span class="ident">finish</span>().<span class="ident">into_result</span>().<span class="ident">unwrap</span>();
 
 <span class="comment">// Decoding</span>
-<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">encoded_data</span>)).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">encoded_data</span>[..]).<span class="ident">unwrap</span>();
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoded_data</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 <span class="ident">decoder</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">decoded_data</span>).<span class="ident">unwrap</span>();
 

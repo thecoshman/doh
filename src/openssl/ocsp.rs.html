@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.12/src/ocsp.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/ocsp.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ocsp.rs.html -- source</title>
@@ -363,18 +363,18 @@
 <span class="kw">use</span> <span class="ident">x509</span>::{<span class="ident">X509</span>, <span class="ident">X509Ref</span>};
 
 <span class="macro">bitflags</span><span class="macro">!</span> {
-    <span class="kw">pub</span> <span class="ident">flags</span> <span class="ident">Flag</span>: <span class="ident">c_ulong</span> {
-        <span class="kw">const</span> <span class="ident">FLAG_NO_CERTS</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCERTS</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_INTERN</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOINTERN</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_CHAIN</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCHAIN</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_VERIFY</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOVERIFY</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_EXPLICIT</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOEXPLICIT</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_CA_SIGN</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCASIGN</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_DELEGATED</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NODELEGATED</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_CHECKS</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCHECKS</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_TRUST_OTHER</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_TRUSTOTHER</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_RESPID_KEY</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_RESPID_KEY</span>,
-        <span class="kw">const</span> <span class="ident">FLAG_NO_TIME</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOTIME</span>,
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Flag</span>: <span class="ident">c_ulong</span> {
+        <span class="kw">const</span> <span class="ident">FLAG_NO_CERTS</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCERTS</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_INTERN</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOINTERN</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_CHAIN</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCHAIN</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_VERIFY</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOVERIFY</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_EXPLICIT</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOEXPLICIT</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_CA_SIGN</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCASIGN</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_DELEGATED</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NODELEGATED</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_CHECKS</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOCHECKS</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_TRUST_OTHER</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_TRUSTOTHER</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_RESPID_KEY</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_RESPID_KEY</span>;
+        <span class="kw">const</span> <span class="ident">FLAG_NO_TIME</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_NOTIME</span>;
     }
 }
 

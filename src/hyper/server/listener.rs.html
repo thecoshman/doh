@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.10/src/server/listener.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/server/listener.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>listener.rs.html -- source</title>
@@ -174,7 +174,7 @@
             <span class="kw">match</span> <span class="ident">acceptor</span>.<span class="ident">accept</span>() {
                 <span class="prelude-val">Ok</span>(<span class="ident">stream</span>) <span class="op">=&gt;</span> <span class="ident">work</span>(<span class="ident">stream</span>),
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
-                    <span class="macro">error</span><span class="macro">!</span>(<span class="string">&quot;Connection failed: {}&quot;</span>, <span class="ident">e</span>);
+                    <span class="macro">info</span><span class="macro">!</span>(<span class="string">&quot;Connection failed: {}&quot;</span>, <span class="ident">e</span>);
                 }
             }
         }

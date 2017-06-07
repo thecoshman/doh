@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/hyper/header/mod.rs.html#1-918' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/hyper/header/mod.rs.html#1-929' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Headers container, and common header fields.</p>
 
 <p>hyper has the opinion that Headers should be strongly-typed, because that&#39;s
@@ -367,7 +367,7 @@ that via the numerals <code>1</code> and <code>0</code>.</p>
                            <td><a class="struct" href="struct.HeaderFormatter.html"
                                   title='struct reqwest::header::HeaderFormatter'>HeaderFormatter</a></td>
                            <td class='docblock-short'>
-                               [<div class='stab deprecated'>Deprecated</div>] 
+                               [<div class='stab deprecated'>Deprecated</div>] <p>A wrapper around any Header with a Display impl that calls fmt_header.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -427,6 +427,22 @@ that via the numerals <code>1</code> and <code>0</code>.</p>
                            <td class='docblock-short'>
                                 <p><code>Last-Modified</code> header, defined in
 <a href="http://tools.ietf.org/html/rfc7232#section-2.2">RFC7232</a></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Link.html"
+                                  title='struct reqwest::header::Link'>Link</a></td>
+                           <td class='docblock-short'>
+                                <p>The <code>Link</code> header, defined in
+<a href="http://tools.ietf.org/html/rfc5988#section-5">RFC5988</a></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.LinkValue.html"
+                                  title='struct reqwest::header::LinkValue'>LinkValue</a></td>
+                           <td class='docblock-short'>
+                                <p>A single <code>link-value</code> of a <code>Link</code> header, based on:
+<a href="http://tools.ietf.org/html/rfc5988#section-5">RFC5988</a></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -630,6 +646,14 @@ or <code>Accept-Encoding</code> header.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="enum" href="enum.MediaDesc.html"
+                                  title='enum reqwest::header::MediaDesc'>MediaDesc</a></td>
+                           <td class='docblock-short'>
+                                <p>A Media Descriptors Enum based on:
+<a href="https://www.w3.org/TR/html401/types.html#h-6.13">https://www.w3.org/TR/html401/types.html#h-6.13</a></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="enum" href="enum.Pragma.html"
                                   title='enum reqwest::header::Pragma'>Pragma</a></td>
                            <td class='docblock-short'>
@@ -674,6 +698,14 @@ except for the <code>WebSocket</code> value.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="enum" href="enum.RelationType.html"
+                                  title='enum reqwest::header::RelationType'>RelationType</a></td>
+                           <td class='docblock-short'>
+                                <p>A Link Relation Type Enum based on:
+<a href="https://tools.ietf.org/html/rfc5988#section-6.2.2">RFC5988</a></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="enum" href="enum.Vary.html"
                                   title='enum reqwest::header::Vary'>Vary</a></td>
                            <td class='docblock-short'>
@@ -686,6 +718,13 @@ except for the <code>WebSocket</code> value.</p>
                                   title='trait reqwest::header::Header'>Header</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for any object that will represent a header field and value.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.HeaderClone.html"
+                                  title='trait reqwest::header::HeaderClone'>HeaderClone</a></td>
+                           <td class='docblock-short'>
+                                <p>Internal implementation detail.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>

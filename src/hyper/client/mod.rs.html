@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.10/src/client/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/client/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -767,6 +767,28 @@
 <span id="722">722</span>
 <span id="723">723</span>
 <span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! HTTP Client</span>
 <span class="doccomment">//!</span>
@@ -1102,7 +1124,9 @@
                 _ <span class="op">=&gt;</span> () <span class="comment">// neither</span>
             }
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">streaming</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">req</span>.<span class="ident">start</span>());
-            <span class="ident">body</span>.<span class="ident">take</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">rdr</span><span class="op">|</span> <span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rdr</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">streaming</span>));
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>) <span class="op">=</span> <span class="ident">body</span>.<span class="ident">take</span>() {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rdr</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">streaming</span>));
+            }
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">streaming</span>.<span class="ident">send</span>());
             <span class="kw">if</span> <span class="op">!</span><span class="ident">res</span>.<span class="ident">status</span>.<span class="ident">is_redirection</span>() {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">res</span>)
@@ -1490,6 +1514,26 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="ident">client</span>.<span class="ident">post</span>(<span class="string">&quot;http://127.0.0.1&quot;</span>).<span class="ident">send</span>().<span class="ident">unwrap</span>().<span class="ident">read_to_string</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">s</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">s</span>, <span class="string">&quot;POST&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_request_body_error_is_returned</span>() {
+        <span class="macro">mock_connector</span><span class="macro">!</span>(<span class="ident">Connector</span> {
+            <span class="string">b&quot;HTTP/1.1 200 OK\r\nContent-Length: 5\r\n\r\n&quot;</span>,
+            <span class="string">b&quot;HELLO&quot;</span>
+        });
+
+        <span class="kw">struct</span> <span class="ident">BadBody</span>;
+
+        <span class="kw">impl</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Read</span> <span class="kw">for</span> <span class="ident">BadBody</span> {
+            <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Err</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="string">&quot;BadBody read&quot;</span>))
+            }
+        }
+
+        <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">with_connector</span>(<span class="ident">Connector</span>);
+        <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">post</span>(<span class="string">&quot;http://127.0.0.1&quot;</span>).<span class="ident">body</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BadBody</span>).<span class="ident">send</span>().<span class="ident">unwrap_err</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">to_string</span>(), <span class="string">&quot;BadBody read&quot;</span>);
     }
 }
 </pre>

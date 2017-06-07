@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/hyper_native_tls/lib.rs.html#1-256' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/hyper_native_tls/lib.rs.html#1-322' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>SSL support for Hyper via the native-tls crate.</p>
 
 <h1 id='usage' class='section-header'><a href='#usage'>Usage</a></h1>
@@ -91,6 +91,13 @@
 <table><tr><td><code>pub extern crate <a class="mod" href="../native_tls/index.html" title="mod native_tls">native_tls</a>;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Certificate.html"
+                                  title='struct hyper_native_tls::Certificate'>Certificate</a></td>
+                           <td class='docblock-short'>
+                                <p>An X509 certificate.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.NativeTlsClient.html"
                                   title='struct hyper_native_tls::NativeTlsClient'>NativeTlsClient</a></td>
                            <td class='docblock-short'>
@@ -102,6 +109,13 @@
                                   title='struct hyper_native_tls::NativeTlsServer'>NativeTlsServer</a></td>
                            <td class='docblock-short'>
                                 <p>An <code>SslServer</code> implementation using native-tls.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.StreamGuard.html"
+                                  title='struct hyper_native_tls::StreamGuard'>StreamGuard</a></td>
+                           <td class='docblock-short'>
+                                <p>A guard around a locked inner <code>TlsStream</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.10/src/http/h1.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/http/h1.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>h1.rs.html -- source</title>
@@ -1220,6 +1220,8 @@
 <span id="1175">1175</span>
 <span id="1176">1176</span>
 <span id="1177">1177</span>
+<span id="1178">1178</span>
+<span id="1179">1179</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Adapts the HTTP/1.1 implementation into the `HttpMessage` API.</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
@@ -2106,15 +2108,17 @@
             },
             <span class="ident">_partial</span> <span class="op">=&gt;</span> ()
         }
-        <span class="kw">match</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_into_buf</span>()) {
-            <span class="number">0</span> <span class="kw">if</span> <span class="ident">rdr</span>.<span class="ident">get_buf</span>().<span class="ident">is_empty</span>() <span class="op">=&gt;</span> {
+        <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">rdr</span>.<span class="ident">read_into_buf</span>());
+        <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">let</span> <span class="ident">buffered</span> <span class="op">=</span> <span class="ident">rdr</span>.<span class="ident">get_buf</span>().<span class="ident">len</span>();
+            <span class="kw">if</span> <span class="ident">buffered</span> <span class="op">==</span> ::<span class="ident">buffer</span>::<span class="ident">MAX_BUFFER_SIZE</span> {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">TooLarge</span>);
+            } <span class="kw">else</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(
-                    <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">ConnectionAborted</span>,
-                    <span class="string">&quot;Connection closed&quot;</span>
-                )))
-            },
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">TooLarge</span>),
-            _ <span class="op">=&gt;</span> ()
+                    <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedEof</span>,
+                    <span class="string">&quot;end of stream before headers finished&quot;</span>
+                )));
+            }
         }
     }
 }
@@ -2379,7 +2383,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">empty</span> <span class="op">=</span> <span class="ident">MockStream</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">BufReader</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">empty</span>);
         <span class="kw">match</span> <span class="ident">parse_request</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">ErrorKind</span>::<span class="ident">ConnectionAborted</span> <span class="op">=&gt;</span> (),
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">e</span>)) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">ErrorKind</span>::<span class="ident">UnexpectedEof</span> <span class="op">=&gt;</span> (),
             <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;unexpected result: {:?}&quot;</span>, <span class="ident">other</span>)
         }
     }

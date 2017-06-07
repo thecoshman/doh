@@ -1,6 +1,7 @@
 (function() {var implementors = {};
 implementors["doh"] = [];
 implementors["hyper"] = [];
+implementors["hyper_native_tls"] = [];
 implementors["reqwest"] = [];
 
             if (window.register_implementors) {

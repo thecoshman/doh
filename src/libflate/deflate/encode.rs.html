@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.5/src/deflate/encode.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/deflate/encode.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>encode.rs.html -- source</title>
@@ -680,7 +680,7 @@
           <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>
 {
     <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">block</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">writer</span>, <span class="ident">buf</span>));
+        <span class="self">self</span>.<span class="ident">block</span>.<span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">writer</span>, <span class="ident">buf</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">buf</span>.<span class="ident">len</span>())
     }
     <span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -709,19 +709,19 @@
     {
         <span class="self">self</span>.<span class="ident">block_buf</span>.<span class="ident">append</span>(<span class="ident">buf</span>);
         <span class="kw">while</span> <span class="self">self</span>.<span class="ident">block_buf</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">block_size</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">write_bit</span>(<span class="bool-val">false</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">2</span>, <span class="self">self</span>.<span class="ident">block_type</span> <span class="kw">as</span> <span class="ident">u16</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">block_buf</span>.<span class="ident">flush</span>(<span class="ident">writer</span>));
+            <span class="ident">writer</span>.<span class="ident">write_bit</span>(<span class="bool-val">false</span>)<span class="question-mark">?</span>;
+            <span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">2</span>, <span class="self">self</span>.<span class="ident">block_type</span> <span class="kw">as</span> <span class="ident">u16</span>)<span class="question-mark">?</span>;
+            <span class="self">self</span>.<span class="ident">block_buf</span>.<span class="ident">flush</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(())
     }
     <span class="kw">fn</span> <span class="ident">finish</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
     {
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">write_bit</span>(<span class="bool-val">true</span>));
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">2</span>, <span class="self">self</span>.<span class="ident">block_type</span> <span class="kw">as</span> <span class="ident">u16</span>));
-        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">block_buf</span>.<span class="ident">flush</span>(<span class="ident">writer</span>));
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">flush</span>());
+        <span class="ident">writer</span>.<span class="ident">write_bit</span>(<span class="bool-val">true</span>)<span class="question-mark">?</span>;
+        <span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">2</span>, <span class="self">self</span>.<span class="ident">block_type</span> <span class="kw">as</span> <span class="ident">u16</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="ident">block_buf</span>.<span class="ident">flush</span>(<span class="ident">writer</span>)<span class="question-mark">?</span>;
+        <span class="ident">writer</span>.<span class="ident">flush</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
@@ -789,14 +789,14 @@
         <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
     {
         <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">len</span>(), <span class="ident">MAX_NON_COMPRESSED_BLOCK_SIZE</span>);
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">flush</span>());
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>
-                 .<span class="ident">as_inner_mut</span>()
-                 .<span class="ident">write_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>(<span class="ident">size</span> <span class="kw">as</span> <span class="ident">u16</span>));
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>
-                 .<span class="ident">as_inner_mut</span>()
-                 .<span class="ident">write_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>(<span class="op">!</span><span class="ident">size</span> <span class="kw">as</span> <span class="ident">u16</span>));
-        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">writer</span>.<span class="ident">as_inner_mut</span>().<span class="ident">write_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>[..<span class="ident">size</span>]));
+        <span class="ident">writer</span>.<span class="ident">flush</span>()<span class="question-mark">?</span>;
+        <span class="ident">writer</span>
+            .<span class="ident">as_inner_mut</span>()
+            .<span class="ident">write_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>(<span class="ident">size</span> <span class="kw">as</span> <span class="ident">u16</span>)<span class="question-mark">?</span>;
+        <span class="ident">writer</span>
+            .<span class="ident">as_inner_mut</span>()
+            .<span class="ident">write_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>(<span class="op">!</span><span class="ident">size</span> <span class="kw">as</span> <span class="ident">u16</span>)<span class="question-mark">?</span>;
+        <span class="ident">writer</span>.<span class="ident">as_inner_mut</span>().<span class="ident">write_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>[..<span class="ident">size</span>])<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">drain</span>(<span class="number">0</span>..<span class="ident">size</span>);
         <span class="prelude-val">Ok</span>(())
     }
@@ -834,9 +834,9 @@
         <span class="self">self</span>.<span class="ident">lz77</span>.<span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buf</span>);
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">push</span>(<span class="ident">symbol</span>::<span class="ident">Symbol</span>::<span class="ident">EndOfBlock</span>);
         <span class="kw">let</span> <span class="ident">symbol_encoder</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">huffman</span>.<span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>);
-        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">huffman</span>.<span class="ident">save</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">symbol_encoder</span>));
+        <span class="self">self</span>.<span class="ident">huffman</span>.<span class="ident">save</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="ident">symbol_encoder</span>)<span class="question-mark">?</span>;
         <span class="kw">for</span> <span class="ident">s</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">drain</span>(..) {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">symbol_encoder</span>.<span class="ident">encode</span>(<span class="ident">writer</span>, <span class="ident">s</span>));
+            <span class="ident">symbol_encoder</span>.<span class="ident">encode</span>(<span class="ident">writer</span>, <span class="ident">s</span>)<span class="question-mark">?</span>;
         }
         <span class="self">self</span>.<span class="ident">original_size</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="prelude-val">Ok</span>(())

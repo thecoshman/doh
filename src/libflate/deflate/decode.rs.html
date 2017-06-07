@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.5/src/deflate/decode.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/deflate/decode.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>decode.rs.html -- source</title>
@@ -252,10 +252,29 @@
 <span id="207">207</span>
 <span id="208">208</span>
 <span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Read</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 <span class="kw">use</span> <span class="ident">byteorder</span>::<span class="ident">ReadBytesExt</span>;
 <span class="kw">use</span> <span class="ident">byteorder</span>::<span class="ident">LittleEndian</span>;
 
@@ -284,7 +303,7 @@
     <span class="doccomment">/// use libflate::deflate::Decoder;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let encoded_data = [243, 72, 205, 201, 201, 87, 8, 207, 47, 202, 73, 81, 4, 0];</span>
-    <span class="doccomment">/// let mut decoder = Decoder::new(Cursor::new(&amp;encoded_data));</span>
+    <span class="doccomment">/// let mut decoder = Decoder::new(&amp;encoded_data[..]);</span>
     <span class="doccomment">/// let mut buf = Vec::new();</span>
     <span class="doccomment">/// decoder.read_to_end(&amp;mut buf).unwrap();</span>
     <span class="doccomment">///</span>
@@ -326,29 +345,27 @@
 
     <span class="kw">fn</span> <span class="ident">read_non_compressed_block</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">reset</span>();
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">bit_reader</span>
-                           .<span class="ident">as_inner_mut</span>()
-                           .<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>());
-        <span class="kw">let</span> <span class="ident">nlen</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">bit_reader</span>
-                            .<span class="ident">as_inner_mut</span>()
-                            .<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>());
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">as_inner_mut</span>().<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">nlen</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">as_inner_mut</span>().<span class="ident">read_u16</span>::<span class="op">&lt;</span><span class="ident">LittleEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="op">!</span><span class="ident">len</span> <span class="op">!=</span> <span class="ident">nlen</span> {
             <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;LEN={} is not the one&#39;s complement of NLEN={}&quot;</span>, <span class="ident">len</span>, <span class="ident">nlen</span>))
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">old_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>();
-            <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">resize</span>(<span class="ident">old_len</span> <span class="op">+</span> <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="number">0</span>);
-            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">bit_reader</span>
-                     .<span class="ident">as_inner_mut</span>()
-                     .<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buffer</span>[<span class="ident">old_len</span>..]));
+            <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">reserve</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>);
+            <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">set_len</span>(<span class="ident">old_len</span> <span class="op">+</span> <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>) };
+            <span class="self">self</span>.<span class="ident">bit_reader</span>
+                .<span class="ident">as_inner_mut</span>()
+                .<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">buffer</span>[<span class="ident">old_len</span>..])<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(())
         }
     }
     <span class="kw">fn</span> <span class="ident">read_compressed_block</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">huffman</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">H</span>: <span class="ident">symbol</span>::<span class="ident">HuffmanCodec</span>
     {
-        <span class="kw">let</span> <span class="ident">symbol_decoder</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">huffman</span>.<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bit_reader</span>));
+        <span class="kw">let</span> <span class="ident">symbol_decoder</span> <span class="op">=</span> <span class="ident">huffman</span>.<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bit_reader</span>)<span class="question-mark">?</span>;
         <span class="kw">loop</span> {
-            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">symbol_decoder</span>.<span class="ident">decode</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bit_reader</span>));
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">symbol_decoder</span>.<span class="ident">decode_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bit_reader</span>);
+            <span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">check_last_error</span>()<span class="question-mark">?</span>;
             <span class="kw">match</span> <span class="ident">s</span> {
                 <span class="ident">symbol</span>::<span class="ident">Symbol</span>::<span class="ident">Literal</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> {
                     <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">push</span>(<span class="ident">b</span>);
@@ -360,11 +377,16 @@
                                           <span class="ident">distance</span>);
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidData</span>, <span class="ident">msg</span>));
                     }
-
-                    <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">distance</span> <span class="kw">as</span> <span class="ident">usize</span>;
-                    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> (<span class="ident">start</span>..).<span class="ident">take</span>(<span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>) {
-                        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">get_unchecked</span>(<span class="ident">i</span>) };
-                        <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">push</span>(<span class="ident">b</span>);
+                    <span class="kw">let</span> <span class="ident">old_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>();
+                    <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">reserve</span>(<span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+                    <span class="kw">unsafe</span> {
+                        <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">set_len</span>(<span class="ident">old_len</span> <span class="op">+</span> <span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+                        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">old_len</span> <span class="op">-</span> <span class="ident">distance</span> <span class="kw">as</span> <span class="ident">usize</span>;
+                        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">as_mut_ptr</span>();
+                        <span class="ident">ptr_copy</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">start</span> <span class="kw">as</span> <span class="ident">isize</span>),
+                                 <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">old_len</span> <span class="kw">as</span> <span class="ident">isize</span>),
+                                 <span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>,
+                                 <span class="ident">length</span> <span class="op">&gt;</span> <span class="ident">distance</span>);
                     }
                 }
                 <span class="ident">symbol</span>::<span class="ident">Symbol</span>::<span class="ident">EndOfBlock</span> <span class="op">=&gt;</span> {
@@ -376,9 +398,14 @@
     }
     <span class="kw">fn</span> <span class="ident">truncate_old_buffer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">lz77</span>::<span class="ident">MAX_DISTANCE</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">*</span> <span class="number">4</span> {
-            <span class="kw">let</span> <span class="ident">new_start</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">lz77</span>::<span class="ident">MAX_DISTANCE</span> <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">drain</span>(<span class="number">0</span>..<span class="ident">new_start</span>);
-            <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="ident">lz77</span>::<span class="ident">MAX_DISTANCE</span> <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="kw">let</span> <span class="ident">new_len</span> <span class="op">=</span> <span class="ident">lz77</span>::<span class="ident">MAX_DISTANCE</span> <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">as_mut_ptr</span>();
+                <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">ptr</span>.<span class="ident">offset</span>((<span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">new_len</span>) <span class="kw">as</span> <span class="ident">isize</span>);
+                <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">src</span>, <span class="ident">ptr</span>, <span class="ident">new_len</span>);
+            }
+            <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">truncate</span>(<span class="ident">new_len</span>);
+            <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="ident">new_len</span>;
         }
     }
 }
@@ -394,26 +421,37 @@
         } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">eos</span> {
             <span class="prelude-val">Ok</span>(<span class="number">0</span>)
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">bfinal</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">read_bit</span>());
-            <span class="kw">let</span> <span class="ident">btype</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">read_bits</span>(<span class="number">2</span>));
+            <span class="kw">let</span> <span class="ident">bfinal</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">read_bit</span>()<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">btype</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bit_reader</span>.<span class="ident">read_bits</span>(<span class="number">2</span>)<span class="question-mark">?</span>;
             <span class="self">self</span>.<span class="ident">eos</span> <span class="op">=</span> <span class="ident">bfinal</span>;
             <span class="self">self</span>.<span class="ident">truncate_old_buffer</span>();
             <span class="kw">match</span> <span class="ident">btype</span> {
                 <span class="number">0b00</span> <span class="op">=&gt;</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">read_non_compressed_block</span>());
+                    <span class="self">self</span>.<span class="ident">read_non_compressed_block</span>()<span class="question-mark">?</span>;
                     <span class="self">self</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
                 }
                 <span class="number">0b01</span> <span class="op">=&gt;</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">read_compressed_block</span>(<span class="ident">symbol</span>::<span class="ident">FixedHuffmanCodec</span>));
+                    <span class="self">self</span>.<span class="ident">read_compressed_block</span>(<span class="ident">symbol</span>::<span class="ident">FixedHuffmanCodec</span>)<span class="question-mark">?</span>;
                     <span class="self">self</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
                 }
                 <span class="number">0b10</span> <span class="op">=&gt;</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">read_compressed_block</span>(<span class="ident">symbol</span>::<span class="ident">DynamicHuffmanCodec</span>));
+                    <span class="self">self</span>.<span class="ident">read_compressed_block</span>(<span class="ident">symbol</span>::<span class="ident">DynamicHuffmanCodec</span>)<span class="question-mark">?</span>;
                     <span class="self">self</span>.<span class="ident">read</span>(<span class="ident">buf</span>)
                 }
                 <span class="number">0b11</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;btype 0x11 of DEFLATE is reserved(error) value&quot;</span>)),
                 _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
             }
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ptr_copy</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>, <span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">count</span>: <span class="ident">usize</span>, <span class="ident">is_overlapping</span>: <span class="ident">bool</span>) {
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">is_overlapping</span> {
+        <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">src</span>, <span class="ident">dst</span>, <span class="ident">count</span>);
+    } <span class="kw">else</span> {
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">count</span> {
+            <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">src</span>.<span class="ident">offset</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">isize</span>), <span class="ident">dst</span>.<span class="ident">offset</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">isize</span>), <span class="number">1</span>);
         }
     }
 }
@@ -457,9 +495,7 @@
 
         <span class="kw">let</span> <span class="ident">error</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">err</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">error</span>.<span class="ident">kind</span>(), <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidData</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">error</span>
-                    .<span class="ident">to_string</span>()
-                    .<span class="ident">starts_with</span>(<span class="string">&quot;Too long backword reference&quot;</span>));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">error</span>.<span class="ident">to_string</span>().<span class="ident">starts_with</span>(<span class="string">&quot;Too long backword reference&quot;</span>));
     }
 }
 </pre>

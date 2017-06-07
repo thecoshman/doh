@@ -1,6 +1,7 @@
 (function() {var implementors = {};
 implementors["doh"] = [];
 implementors["hyper"] = [];
+implementors["hyper_native_tls"] = [];
 implementors["reqwest"] = [];
 implementors["serde_urlencoded"] = [];
 implementors["url"] = [];

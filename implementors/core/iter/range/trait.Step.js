@@ -2,6 +2,7 @@
 implementors["antidote"] = [];
 implementors["doh"] = [];
 implementors["hyper"] = [];
+implementors["hyper_native_tls"] = [];
 implementors["itertools"] = [];
 implementors["libc"] = [];
 implementors["openssl"] = [];
