@@ -138,6 +138,7 @@ pub struct ListContext {
     files: Vec<RemoteFile>,
     selected: usize,
     have_write: bool,
+    bad_response_counter: usize,
 }
 
 impl ListContext {
@@ -148,6 +149,7 @@ impl ListContext {
             files: vec![],
             selected: 0,
             have_write: false,
+            bad_response_counter: 0,
         }
     }
 
@@ -208,8 +210,11 @@ impl ListContext {
             Ok(d) => d,
             Err(e) => {
                 try!(writeln!(out, "<Couldn't parse server response: {}...>", e));
-                self.back();
-                return Ok(true);
+                self.bad_response_counter += !self.back() as usize;
+                if self.bad_response_counter == 3 {
+                    try!(writeln!(out, "<Server at {} doesn't support RFSAPI.>", self.cururl));
+                }
+                return Ok(self.bad_response_counter != 3);
             }
         };
         self.have_write = data.writes_supported;
