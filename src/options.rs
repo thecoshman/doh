@@ -31,7 +31,7 @@ impl Options {
             .author(crate_authors!("\n"))
             .about(crate_description!())
             .setting(AppSettings::ColoredHelp)
-            .arg(Arg::from_usage("<URL> 'Directory to host. Default: current working directory'").validator(Options::url_validator))
+            .arg(Arg::from_usage("<URL> 'Remote directory to browse'").validator(Options::url_validator))
             .get_matches();
 
         let u = matches.value_of("URL").unwrap();
