@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error","A set of errors that can occur parsing HTTP streams."],["ParseError","Errors that can occur during parsing."]],"type":[["Result","Result type often returned from methods that can have hyper `Error`s."]]});
+initSidebarItems({"enum":[["Error","A set of errors that can occur parsing HTTP streams."]],"struct":[["UriError","An error parsing a `Uri`."]],"type":[["Result","Result type often returned from methods that can have hyper `Error`s."]]});

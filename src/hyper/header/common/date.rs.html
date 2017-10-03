@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/date.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/date.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>date.rs.html -- source</title>
@@ -77,42 +77,30 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">HttpDate</span>;
 
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Date` header, defined in [RFC7231](http://tools.ietf.org/html/rfc7231#section-7.1.1.2)</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// The `Date` header field represents the date and time at which the</span>
     <span class="doccomment">/// message was originated.</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
     <span class="doccomment">/// ```plain</span>
     <span class="doccomment">/// Date = HTTP-date</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
     <span class="doccomment">/// * `Tue, 15 Nov 1994 08:12:31 GMT`</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate time;</span>
-    <span class="doccomment">/// # extern crate hyper;</span>
-    <span class="doccomment">/// # fn main() {</span>
-    <span class="doccomment">/// // extern crate time;</span>
-    <span class="doccomment">/// </span>
-    <span class="doccomment">/// use hyper::header::{Headers, Date, HttpDate};</span>
-    <span class="doccomment">/// use time;</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">/// use hyper::header::{Headers, Date};</span>
+    <span class="doccomment">/// use std::time::SystemTime;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
-    <span class="doccomment">/// headers.set(Date(HttpDate(time::now())));</span>
-    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// headers.set(Date(SystemTime::now().into()));</span>
     <span class="doccomment">/// ```</span>
     (<span class="ident">Date</span>, <span class="string">&quot;Date&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">HttpDate</span>]
 
@@ -182,7 +170,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

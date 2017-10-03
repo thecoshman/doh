@@ -48,8 +48,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/hyper/header/shared/quality_item.rs.html#124-127' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn q(f: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a class="struct" href="../../reqwest/header/struct.Quality.html" title="struct reqwest::header::Quality">Quality</a></pre><div class='docblock'><p>Convenience function to create a <code>Quality</code> from a float.</p>
+               </span><a class='srclink' href='../../src/hyper/header/shared/quality_item.rs.html#131-133' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn q&lt;T&gt;(val: T) -&gt; <a class="struct" href="../../reqwest/header/struct.Quality.html" title="struct reqwest::header::Quality">Quality</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: IntoQuality,&nbsp;</span></pre><div class='docblock'><p>Convenience function to create a <code>Quality</code> from a float or integer.</p>
+
+<p>Implemented for <code>u16</code> and <code>f32</code>. Panics if value is out of range.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -107,7 +109,6 @@
         window.rootPath = "../../";
         window.currentCrate = "reqwest";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/bio.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/bio.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bio.rs.html -- source</title>
@@ -117,6 +117,10 @@
 <span id="72">72</span>
 <span id="73">73</span>
 <span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
@@ -142,8 +146,12 @@
         <span class="ident">ffi</span>::<span class="ident">init</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">c_int</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
-        <span class="kw">let</span> <span class="ident">bio</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">BIO_new_mem_buf</span>(<span class="ident">buf</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _, <span class="ident">buf</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>))) };
+        <span class="kw">let</span> <span class="ident">bio</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">BIO_new_mem_buf</span>(
+                <span class="ident">buf</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _,
+                <span class="ident">buf</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+            )))
+        };
 
         <span class="prelude-val">Ok</span>(<span class="ident">MemBioSlice</span>(<span class="ident">bio</span>, <span class="ident">PhantomData</span>))
     }
@@ -250,7 +258,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

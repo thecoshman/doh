@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/string.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/string.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>string.rs.html -- source</title>
@@ -123,6 +123,8 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="ident">foreign_types</span>::{<span class="ident">ForeignType</span>, <span class="ident">ForeignTypeRef</span>};
@@ -200,9 +202,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">ossl110</span>)]</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">free</span>(<span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>) {
-    ::<span class="ident">ffi</span>::<span class="ident">CRYPTO_free</span>(<span class="ident">buf</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-                       <span class="macro">concat</span><span class="macro">!</span>(<span class="macro">file</span><span class="macro">!</span>(), <span class="string">&quot;\0&quot;</span>).<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
-                       <span class="macro">line</span><span class="macro">!</span>() <span class="kw">as</span> ::<span class="ident">libc</span>::<span class="ident">c_int</span>);
+    ::<span class="ident">ffi</span>::<span class="ident">CRYPTO_free</span>(
+        <span class="ident">buf</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+        <span class="macro">concat</span><span class="macro">!</span>(<span class="macro">file</span><span class="macro">!</span>(), <span class="string">&quot;\0&quot;</span>).<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+        <span class="macro">line</span><span class="macro">!</span>() <span class="kw">as</span> ::<span class="ident">libc</span>::<span class="ident">c_int</span>,
+    );
 }
 </pre>
 </section>
@@ -262,7 +266,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../../../num_traits/index.html'><img src='https://rust-num.github.io/num/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../../index.html'>num_traits</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>wrapping</a></p><script>window.sidebarCurrent = {name: 'WrappingAdd', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait WrappingAdd</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../../index.html'>num_traits</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>wrapping</a></p><script>window.sidebarCurrent = {name: 'WrappingAdd', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/num_traits/ops/wrapping.rs.html#23-27' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait WrappingAdd: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Add.html" title="trait core::ops::Add">Add</a>&lt;Self, Output=Self&gt; {
+               </span><a class='srclink' href='../../../src/num_traits/ops/wrapping.rs.html#24-28' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait WrappingAdd: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Add.html" title="trait core::ops::arith::Add">Add</a>&lt;Self, Output = Self&gt; {
     fn <a href='#tymethod.wrapping_add' class='fnname'>wrapping_add</a>(&amp;self, v: &amp;Self) -&gt; Self;
 }</pre><div class='docblock'><p>Performs addition that wraps around on overflow.</p>
 </div>
@@ -70,6 +70,7 @@ the type.</p>
 <li><code>impl WrappingAdd for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></li>
 <li><code>impl WrappingAdd for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></li>
 <li><code>impl WrappingAdd for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a></code></li>
+<li><code>impl&lt;T:&nbsp;<a class="trait" href="../../../num_traits/ops/wrapping/trait.WrappingAdd.html" title="trait num_traits::ops::wrapping::WrappingAdd">WrappingAdd</a>&gt; WrappingAdd for <a class="struct" href="https://doc.rust-lang.org/nightly/core/num/struct.Wrapping.html" title="struct core::num::Wrapping">Wrapping</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/core/num/struct.Wrapping.html" title="struct core::num::Wrapping">Wrapping</a>&lt;T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Add.html" title="trait core::ops::arith::Add">Add</a>&lt;Output = <a class="struct" href="https://doc.rust-lang.org/nightly/core/num/struct.Wrapping.html" title="struct core::num::Wrapping">Wrapping</a>&lt;T&gt;&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../../implementors/num_traits/ops/wrapping/trait.WrappingAdd.js">
                  </script></section>
@@ -129,7 +130,6 @@ the type.</p>
         window.rootPath = "../../../";
         window.currentCrate = "num_traits";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

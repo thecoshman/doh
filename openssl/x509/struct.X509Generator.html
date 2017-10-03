@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>x509</a></p><script>window.sidebarCurrent = {name: 'X509Generator', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct X509Generator</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>x509</a></p><script>window.sidebarCurrent = {name: 'X509Generator', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,9 +48,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/openssl/x509/mod.rs.html#101-106' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/openssl/x509/mod.rs.html#115-120' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct X509Generator { /* fields omitted */ }</pre><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
-</div></div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#109-282' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#123-311' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Creates a new generator with the following defaults:</p>
@@ -63,13 +63,13 @@
 </div><h4 id='method.set_valid_period' class="method"><span id='set_valid_period.v' class='invisible'><code>fn <a href='#method.set_valid_period' class='fnname'>set_valid_period</a>(self, days: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Sets certificate validity period in days since today</p>
-</div><h4 id='method.add_name' class="method"><span id='add_name.v' class='invisible'><code>fn <a href='#method.add_name' class='fnname'>add_name</a>(self, attr_type: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, attr_value: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
+</div><h4 id='method.add_name' class="method"><span id='add_name.v' class='invisible'><code>fn <a href='#method.add_name' class='fnname'>add_name</a>(self, attr_type: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>, attr_value: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add attribute to the name of the certificate</p>
 
 <pre class="rust rust-example-rendered">
 <span class="ident">generator</span>.<span class="ident">add_name</span>(<span class="string">&quot;CN&quot;</span>.<span class="ident">to_string</span>(),<span class="string">&quot;example.com&quot;</span>.<span class="ident">to_string</span>());</pre>
-</div><h4 id='method.add_names' class="method"><span id='add_names.v' class='invisible'><code>fn <a href='#method.add_names' class='fnname'>add_names</a>&lt;I&gt;(self, attrs: I) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a> <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item=<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;</span></code></span></h4>
+</div><h4 id='method.add_names' class="method"><span id='add_names.v' class='invisible'><code>fn <a href='#method.add_names' class='fnname'>add_names</a>&lt;I&gt;(self, attrs: I) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;,&nbsp;</span></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add multiple attributes to the name of the certificate</p>
 
@@ -86,7 +86,7 @@
 <span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">x509</span>::<span class="ident">extension</span>::<span class="ident">KeyUsageOption</span>::<span class="kw-2">*</span>;
 
 <span class="ident">generator</span>.<span class="ident">add_extension</span>(<span class="ident">KeyUsage</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">DigitalSignature</span>, <span class="ident">KeyEncipherment</span>]));</pre>
-</div><h4 id='method.add_extensions' class="method"><span id='add_extensions.v' class='invisible'><code>fn <a href='#method.add_extensions' class='fnname'>add_extensions</a>&lt;I&gt;(self, exts: I) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a> <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item=<a class="enum" href="../../openssl/x509/extension/enum.Extension.html" title="enum openssl::x509::extension::Extension">Extension</a>&gt;</span></code></span></h4>
+</div><h4 id='method.add_extensions' class="method"><span id='add_extensions.v' class='invisible'><code>fn <a href='#method.add_extensions' class='fnname'>add_extensions</a>&lt;I&gt;(self, exts: I) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="enum" href="../../openssl/x509/extension/enum.Extension.html" title="enum openssl::x509::extension::Extension">Extension</a>&gt;,&nbsp;</span></code></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add multiple extensions to a certificate</p>
 
@@ -162,7 +162,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

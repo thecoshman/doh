@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/zlib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/zlib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>zlib.rs.html -- source</title>
@@ -695,6 +695,36 @@
 <span id="650">650</span>
 <span id="651">651</span>
 <span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! The encoder and decoder of the ZLIB format.</span>
 <span class="doccomment">//!</span>
@@ -889,54 +919,61 @@
         <span class="self">self</span>.<span class="ident">compression_level</span>.<span class="ident">clone</span>()
     }
     <span class="kw">fn</span> <span class="ident">from_lz77</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">lz77</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
-        <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>
+    <span class="kw">where</span>
+        <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>,
     {
         <span class="ident">Header</span> {
             <span class="ident">compression_level</span>: <span class="ident">From</span>::<span class="ident">from</span>(<span class="ident">lz77</span>.<span class="ident">compression_level</span>()),
             <span class="ident">window_size</span>: <span class="ident">Lz77WindowSize</span>::<span class="ident">from_u16</span>(<span class="ident">lz77</span>.<span class="ident">window_size</span>()),
         }
     }
-    <span class="kw">fn</span> <span class="ident">read_from</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">reader</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">read_from</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">reader</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
     {
         <span class="kw">let</span> <span class="ident">cmf</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">flg</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">check</span> <span class="op">=</span> ((<span class="ident">cmf</span> <span class="kw">as</span> <span class="ident">u16</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span>) <span class="op">+</span> <span class="ident">flg</span> <span class="kw">as</span> <span class="ident">u16</span>;
         <span class="kw">if</span> <span class="ident">check</span> <span class="op">%</span> <span class="number">31</span> <span class="op">!=</span> <span class="number">0</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Inconsistent ZLIB check bits: `CMF({}) * 256 + \
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
+                <span class="string">&quot;Inconsistent ZLIB check bits: `CMF({}) * 256 + \
                                             FLG({})` must be a multiple of 31&quot;</span>,
-                                           <span class="ident">cmf</span>,
-                                           <span class="ident">flg</span>));
+                <span class="ident">cmf</span>,
+                <span class="ident">flg</span>
+            ));
         }
 
         <span class="kw">let</span> <span class="ident">compression_method</span> <span class="op">=</span> <span class="ident">cmf</span> <span class="op">&amp;</span> <span class="number">0b1111</span>;
         <span class="kw">let</span> <span class="ident">compression_info</span> <span class="op">=</span> <span class="ident">cmf</span> <span class="op">&gt;&gt;</span> <span class="number">4</span>;
         <span class="kw">if</span> <span class="ident">compression_method</span> <span class="op">!=</span> <span class="ident">COMPRESSION_METHOD_DEFLATE</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Compression methods other than DEFLATE(8) are \
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
+                <span class="string">&quot;Compression methods other than DEFLATE(8) are \
                                             unsupported: method={}&quot;</span>,
-                                           <span class="ident">compression_method</span>));
+                <span class="ident">compression_method</span>
+            ));
         }
-        <span class="kw">let</span> <span class="ident">window_size</span> <span class="op">=</span> <span class="ident">Lz77WindowSize</span>::<span class="ident">from_u4</span>(<span class="ident">compression_info</span>)
-            .<span class="ident">ok_or_else</span>(<span class="op">||</span> {
-                            <span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;CINFO above 7 are not allowed: value={}&quot;</span>,
-                                                <span class="ident">compression_info</span>)
-                        })<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">window_size</span> <span class="op">=</span> <span class="ident">Lz77WindowSize</span>::<span class="ident">from_u4</span>(<span class="ident">compression_info</span>).<span class="ident">ok_or_else</span>(<span class="op">||</span> {
+            <span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;CINFO above 7 are not allowed: value={}&quot;</span>, <span class="ident">compression_info</span>)
+        })<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">dict_flag</span> <span class="op">=</span> (<span class="ident">flg</span> <span class="op">&amp;</span> <span class="number">0b100000</span>) <span class="op">!=</span> <span class="number">0</span>;
         <span class="kw">if</span> <span class="ident">dict_flag</span> {
             <span class="kw">let</span> <span class="ident">dictionary_id</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Preset dictionaries are not supported: \
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
+                <span class="string">&quot;Preset dictionaries are not supported: \
                                             dictionary_id=0x{:X}&quot;</span>,
-                                           <span class="ident">dictionary_id</span>));
+                <span class="ident">dictionary_id</span>
+            ));
         }
         <span class="kw">let</span> <span class="ident">compression_level</span> <span class="op">=</span> <span class="ident">CompressionLevel</span>::<span class="ident">from_u2</span>(<span class="ident">flg</span> <span class="op">&gt;&gt;</span> <span class="number">6</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">Header</span> {
-               <span class="ident">window_size</span>: <span class="ident">window_size</span>,
-               <span class="ident">compression_level</span>: <span class="ident">compression_level</span>,
-           })
+            <span class="ident">window_size</span>: <span class="ident">window_size</span>,
+            <span class="ident">compression_level</span>: <span class="ident">compression_level</span>,
+        })
     }
     <span class="kw">fn</span> <span class="ident">write_to</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+    <span class="kw">where</span>
+        <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
     {
         <span class="kw">let</span> <span class="ident">cmf</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">window_size</span>.<span class="ident">as_u4</span>() <span class="op">&lt;&lt;</span> <span class="number">4</span>) <span class="op">|</span> <span class="ident">COMPRESSION_METHOD_DEFLATE</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">compression_level</span>.<span class="ident">as_u2</span>() <span class="op">&lt;&lt;</span> <span class="number">6</span>;
@@ -959,7 +996,8 @@
     <span class="ident">eos</span>: <span class="ident">bool</span>,
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Decoder</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+<span class="kw">where</span>
+    <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
 {
     <span class="doccomment">/// Makes a new decoder instance.</span>
     <span class="doccomment">///</span>
@@ -982,11 +1020,11 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">read_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">Decoder</span> {
-               <span class="ident">header</span>: <span class="ident">header</span>,
-               <span class="ident">reader</span>: <span class="ident">deflate</span>::<span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">inner</span>),
-               <span class="ident">adler32</span>: <span class="ident">checksum</span>::<span class="ident">Adler32</span>::<span class="ident">new</span>(),
-               <span class="ident">eos</span>: <span class="bool-val">false</span>,
-           })
+            <span class="ident">header</span>: <span class="ident">header</span>,
+            <span class="ident">reader</span>: <span class="ident">deflate</span>::<span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="ident">inner</span>),
+            <span class="ident">adler32</span>: <span class="ident">checksum</span>::<span class="ident">Adler32</span>::<span class="ident">new</span>(),
+            <span class="ident">eos</span>: <span class="bool-val">false</span>,
+        })
     }
 
     <span class="doccomment">/// Returns the header of the ZLIB stream.</span>
@@ -1024,7 +1062,8 @@
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="ident">Read</span> <span class="kw">for</span> <span class="ident">Decoder</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+<span class="kw">where</span>
+    <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
 {
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">eos</span> {
@@ -1035,9 +1074,11 @@
                 <span class="self">self</span>.<span class="ident">eos</span> <span class="op">=</span> <span class="bool-val">true</span>;
                 <span class="kw">let</span> <span class="ident">adler32</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reader</span>.<span class="ident">as_inner_mut</span>().<span class="ident">read_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
                 <span class="kw">if</span> <span class="ident">adler32</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">adler32</span>.<span class="ident">value</span>() {
-                    <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Adler32 checksum mismatched: value={}, expected={}&quot;</span>,
-                                            <span class="self">self</span>.<span class="ident">adler32</span>.<span class="ident">value</span>(),
-                                            <span class="ident">adler32</span>))
+                    <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
+                        <span class="string">&quot;Adler32 checksum mismatched: value={}, expected={}&quot;</span>,
+                        <span class="self">self</span>.<span class="ident">adler32</span>.<span class="ident">value</span>(),
+                        <span class="ident">adler32</span>
+                    ))
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Ok</span>(<span class="number">0</span>)
                 }
@@ -1052,7 +1093,8 @@
 <span class="doccomment">/// Options for a ZLIB encoder.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EncodeOptions</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>
+<span class="kw">where</span>
+    <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>,
 {
     <span class="ident">header</span>: <span class="ident">Header</span>,
     <span class="ident">options</span>: <span class="ident">deflate</span>::<span class="ident">EncodeOptions</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>,
@@ -1080,7 +1122,8 @@
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> <span class="ident">EncodeOptions</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>
+<span class="kw">where</span>
+    <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>,
 {
     <span class="doccomment">/// Specifies the LZ77 encoder used to compress input data.</span>
     <span class="doccomment">///</span>
@@ -1154,7 +1197,8 @@
     <span class="ident">adler32</span>: <span class="ident">checksum</span>::<span class="ident">Adler32</span>,
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">lz77</span>::<span class="ident">DefaultLz77Encoder</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
 {
     <span class="doccomment">/// Makes a new encoder instance.</span>
     <span class="doccomment">///</span>
@@ -1177,8 +1221,9 @@
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">E</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
-          <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
+    <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>,
 {
     <span class="doccomment">/// Makes a new encoder instance with specified options.</span>
     <span class="doccomment">///</span>
@@ -1200,10 +1245,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_options</span>(<span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">W</span>, <span class="ident">options</span>: <span class="ident">EncodeOptions</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">options</span>.<span class="ident">header</span>.<span class="ident">write_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">Encoder</span> {
-               <span class="ident">header</span>: <span class="ident">options</span>.<span class="ident">header</span>,
-               <span class="ident">writer</span>: <span class="ident">deflate</span>::<span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">inner</span>, <span class="ident">options</span>.<span class="ident">options</span>),
-               <span class="ident">adler32</span>: <span class="ident">checksum</span>::<span class="ident">Adler32</span>::<span class="ident">new</span>(),
-           })
+            <span class="ident">header</span>: <span class="ident">options</span>.<span class="ident">header</span>,
+            <span class="ident">writer</span>: <span class="ident">deflate</span>::<span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">inner</span>, <span class="ident">options</span>.<span class="ident">options</span>),
+            <span class="ident">adler32</span>: <span class="ident">checksum</span>::<span class="ident">Adler32</span>::<span class="ident">new</span>(),
+        })
     }
 
     <span class="doccomment">/// Returns the header of the ZLIB stream.</span>
@@ -1236,15 +1281,16 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Finish</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">finish_try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">writer</span>.<span class="ident">finish</span>());
         <span class="kw">match</span> <span class="ident">inner</span>
-                  .<span class="ident">write_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">adler32</span>.<span class="ident">value</span>())
-                  .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">inner</span>.<span class="ident">flush</span>()) {
+            .<span class="ident">write_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">adler32</span>.<span class="ident">value</span>())
+            .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">inner</span>.<span class="ident">flush</span>()) {
             <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="ident">Finish</span>::<span class="ident">new</span>(<span class="ident">inner</span>, <span class="prelude-val">None</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">Finish</span>::<span class="ident">new</span>(<span class="ident">inner</span>, <span class="prelude-val">Some</span>(<span class="ident">e</span>)),
         }
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="ident">Write</span> <span class="kw">for</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
 {
     <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">written_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">buf</span>)<span class="question-mark">?</span>;
@@ -1281,16 +1327,21 @@
         }
     }
 
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="kw">const</span> <span class="ident">DECODE_WORKS_TESTDATA</span>: [<span class="ident">u8</span>; <span class="number">20</span>] <span class="op">=</span> [
+        <span class="number">120</span>, <span class="number">156</span>, <span class="number">243</span>, <span class="number">72</span>, <span class="number">205</span>, <span class="number">201</span>, <span class="number">201</span>, <span class="number">87</span>, <span class="number">8</span>, <span class="number">207</span>, <span class="number">47</span>, <span class="number">202</span>, <span class="number">73</span>, <span class="number">81</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">28</span>, <span class="number">73</span>, <span class="number">4</span>, <span class="number">62</span>
+    ];
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">decode_works</span>() {
-        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> [<span class="number">120</span>, <span class="number">156</span>, <span class="number">243</span>, <span class="number">72</span>, <span class="number">205</span>, <span class="number">201</span>, <span class="number">201</span>, <span class="number">87</span>, <span class="number">8</span>, <span class="number">207</span>, <span class="number">47</span>, <span class="number">202</span>, <span class="number">73</span>, <span class="number">81</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">28</span>,
-                       <span class="number">73</span>, <span class="number">4</span>, <span class="number">62</span>];
+        <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">DECODE_WORKS_TESTDATA</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="ident">Decoder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>[..]).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">decoder</span>.<span class="ident">header</span>(),
-                   <span class="ident">Header</span> {
-                       <span class="ident">window_size</span>: <span class="ident">Lz77WindowSize</span>::<span class="ident">KB32</span>,
-                       <span class="ident">compression_level</span>: <span class="ident">CompressionLevel</span>::<span class="ident">Default</span>,
-                   });
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="kw-2">*</span><span class="ident">decoder</span>.<span class="ident">header</span>(),
+            <span class="ident">Header</span> {
+                <span class="ident">window_size</span>: <span class="ident">Lz77WindowSize</span>::<span class="ident">KB32</span>,
+                <span class="ident">compression_level</span>: <span class="ident">CompressionLevel</span>::<span class="ident">Default</span>,
+            }
+        );
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
         <span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">decoder</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>).<span class="ident">unwrap</span>();
@@ -1311,14 +1362,18 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">best_speed_encode_works</span>() {
         <span class="kw">let</span> <span class="ident">plain</span> <span class="op">=</span> <span class="string">b&quot;Hello World! Hello ZLIB!!&quot;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(),
-                                                <span class="ident">EncodeOptions</span>::<span class="ident">default</span>().<span class="ident">fixed_huffman_codes</span>())
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span>
+            <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">EncodeOptions</span>::<span class="ident">default</span>().<span class="ident">fixed_huffman_codes</span>())
                 .<span class="ident">unwrap</span>();
         <span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">&amp;</span><span class="ident">plain</span>[..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">encoder</span>.<span class="ident">finish</span>().<span class="ident">into_result</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">decode_all</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>).<span class="ident">unwrap</span>(), <span class="ident">plain</span>);
     }
 
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="kw">const</span> <span class="ident">RAW_ENCODE_WORKS_EXPECTED</span>: [<span class="ident">u8</span>; <span class="number">23</span>] <span class="op">=</span> [
+        <span class="number">120</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">243</span>, <span class="number">255</span>, <span class="number">72</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">32</span>, <span class="number">87</span>, <span class="number">111</span>, <span class="number">114</span>, <span class="number">108</span>, <span class="number">100</span>, <span class="number">33</span>, <span class="number">28</span>, <span class="number">73</span>, <span class="number">4</span>, <span class="number">62</span>
+    ];
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">raw_encode_works</span>() {
         <span class="kw">let</span> <span class="ident">plain</span> <span class="op">=</span> <span class="string">b&quot;Hello World!&quot;</span>;
@@ -1326,26 +1381,31 @@
             .<span class="ident">unwrap</span>();
         <span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">&amp;</span><span class="ident">plain</span>[..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">encoder</span>.<span class="ident">finish</span>().<span class="ident">into_result</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> [<span class="number">120</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">243</span>, <span class="number">255</span>, <span class="number">72</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">32</span>, <span class="number">87</span>, <span class="number">111</span>, <span class="number">114</span>, <span class="number">108</span>,
-                        <span class="number">100</span>, <span class="number">33</span>, <span class="number">28</span>, <span class="number">73</span>, <span class="number">4</span>, <span class="number">62</span>];
+        <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">RAW_ENCODE_WORKS_EXPECTED</span>;
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">encoded</span>, <span class="ident">expected</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">decode_all</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>).<span class="ident">unwrap</span>(), <span class="ident">plain</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
     <span class="kw">fn</span> <span class="ident">test_issue_2</span>() {
         <span class="comment">// See: https://github.com/sile/libflate/issues/2</span>
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([<span class="number">163</span>, <span class="number">181</span>, <span class="number">167</span>, <span class="number">40</span>, <span class="number">62</span>, <span class="number">239</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">217</span>, <span class="number">61</span>, <span class="number">122</span>, <span class="number">20</span>, <span class="number">136</span>,
-                               <span class="number">160</span>, <span class="number">178</span>, <span class="number">119</span>, <span class="number">217</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">97</span>, <span class="number">195</span>, <span class="number">101</span>, <span class="number">47</span>, <span class="number">170</span>]);
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([<span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">211</span>, <span class="number">7</span>, <span class="number">64</span>, <span class="number">96</span>, <span class="number">36</span>, <span class="number">57</span>, <span class="number">155</span>, <span class="number">53</span>, <span class="number">166</span>, <span class="number">76</span>, <span class="number">14</span>, <span class="number">238</span>,
-                               <span class="number">66</span>, <span class="number">148</span>, <span class="number">154</span>, <span class="number">124</span>, <span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">188</span>, <span class="number">138</span>, <span class="number">131</span>, <span class="number">171</span>, <span class="number">189</span>, <span class="number">54</span>, <span class="number">229</span>,
-                               <span class="number">192</span>, <span class="number">38</span>, <span class="number">29</span>, <span class="number">240</span>, <span class="number">122</span>, <span class="number">28</span>]);
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([<span class="number">239</span>, <span class="number">238</span>, <span class="number">212</span>, <span class="number">42</span>, <span class="number">5</span>, <span class="number">46</span>, <span class="number">186</span>, <span class="number">67</span>, <span class="number">122</span>, <span class="number">247</span>, <span class="number">30</span>, <span class="number">61</span>, <span class="number">219</span>, <span class="number">62</span>, <span class="number">228</span>,
-                               <span class="number">202</span>, <span class="number">164</span>, <span class="number">205</span>, <span class="number">139</span>, <span class="number">109</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">122</span>, <span class="number">30</span>, <span class="number">12</span>, <span class="number">62</span>,
-                               <span class="number">46</span>, <span class="number">27</span>, <span class="number">145</span>, <span class="number">241</span>, <span class="number">183</span>, <span class="number">137</span>]);
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([<span class="number">88</span>, <span class="number">202</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">108</span>, <span class="number">153</span>, <span class="number">49</span>, <span class="number">164</span>, <span class="number">250</span>, <span class="number">71</span>, <span class="number">19</span>, <span class="number">4</span>, <span class="number">108</span>, <span class="number">111</span>,
-                               <span class="number">108</span>, <span class="number">237</span>, <span class="number">205</span>, <span class="number">208</span>, <span class="number">77</span>, <span class="number">217</span>, <span class="number">100</span>, <span class="number">118</span>, <span class="number">49</span>, <span class="number">10</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">51</span>,
-                               <span class="number">202</span>, <span class="number">69</span>, <span class="number">67</span>, <span class="number">181</span>, <span class="number">146</span>, <span class="number">86</span>]);
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
+            [<span class="number">163</span>, <span class="number">181</span>, <span class="number">167</span>, <span class="number">40</span>, <span class="number">62</span>, <span class="number">239</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">217</span>, <span class="number">61</span>, <span class="number">122</span>, <span class="number">20</span>,
+             <span class="number">136</span>, <span class="number">160</span>, <span class="number">178</span>, <span class="number">119</span>, <span class="number">217</span>, <span class="number">217</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">97</span>, <span class="number">195</span>, <span class="number">101</span>, <span class="number">47</span>, <span class="number">170</span>]
+        );
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
+            [<span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">211</span>, <span class="number">7</span>, <span class="number">64</span>, <span class="number">96</span>, <span class="number">36</span>, <span class="number">57</span>, <span class="number">155</span>, <span class="number">53</span>, <span class="number">166</span>, <span class="number">76</span>, <span class="number">14</span>, <span class="number">238</span>, <span class="number">66</span>, <span class="number">66</span>, <span class="number">148</span>, <span class="number">154</span>, <span class="number">124</span>,
+             <span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">188</span>, <span class="number">138</span>, <span class="number">131</span>, <span class="number">171</span>, <span class="number">189</span>, <span class="number">54</span>, <span class="number">229</span>, <span class="number">192</span>, <span class="number">38</span>, <span class="number">29</span>, <span class="number">240</span>, <span class="number">122</span>, <span class="number">28</span>]
+        );
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
+            [<span class="number">239</span>, <span class="number">238</span>, <span class="number">212</span>, <span class="number">42</span>, <span class="number">5</span>, <span class="number">46</span>, <span class="number">186</span>, <span class="number">67</span>, <span class="number">122</span>, <span class="number">247</span>, <span class="number">30</span>, <span class="number">61</span>, <span class="number">219</span>, <span class="number">62</span>, <span class="number">228</span>, <span class="number">202</span>, <span class="number">164</span>, <span class="number">205</span>,
+             <span class="number">139</span>, <span class="number">109</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">122</span>, <span class="number">30</span>, <span class="number">12</span>, <span class="number">62</span>, <span class="number">46</span>, <span class="number">27</span>, <span class="number">145</span>, <span class="number">241</span>, <span class="number">183</span>, <span class="number">137</span>]
+        );
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
+            [<span class="number">88</span>, <span class="number">202</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">108</span>, <span class="number">153</span>, <span class="number">49</span>, <span class="number">164</span>, <span class="number">250</span>, <span class="number">71</span>, <span class="number">19</span>, <span class="number">4</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">108</span>, <span class="number">237</span>, <span class="number">205</span>,
+             <span class="number">208</span>, <span class="number">77</span>, <span class="number">217</span>, <span class="number">100</span>, <span class="number">118</span>, <span class="number">49</span>, <span class="number">10</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">51</span>, <span class="number">202</span>, <span class="number">69</span>, <span class="number">67</span>, <span class="number">181</span>, <span class="number">146</span>, <span class="number">86</span>]
+        );
     }
 }
 </pre>
@@ -1406,7 +1466,6 @@
         window.rootPath = "../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

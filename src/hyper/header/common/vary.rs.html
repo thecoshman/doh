@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/vary.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/vary.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>vary.rs.html -- source</title>
@@ -110,7 +110,7 @@
 <span id="65">65</span>
 <span id="66">66</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">UniCase</span>;
+<span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">Ascii</span>;
 
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Vary` header, defined in [RFC7231](https://tools.ietf.org/html/rfc7231#section-7.1.4)</span>
@@ -146,18 +146,18 @@
     <span class="doccomment">/// // extern crate unicase;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// use hyper::header::{Headers, Vary};</span>
-    <span class="doccomment">/// use unicase::UniCase;</span>
+    <span class="doccomment">/// use unicase::Ascii;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     Vary::Items(vec![</span>
-    <span class="doccomment">///         UniCase(&quot;accept-encoding&quot;.to_owned()),</span>
-    <span class="doccomment">///         UniCase(&quot;accept-language&quot;.to_owned()),</span>
+    <span class="doccomment">///         Ascii::new(&quot;accept-encoding&quot;.to_owned()),</span>
+    <span class="doccomment">///         Ascii::new(&quot;accept-language&quot;.to_owned()),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    (<span class="ident">Vary</span>, <span class="string">&quot;Vary&quot;</span>) <span class="op">=&gt;</span> {<span class="ident">Any</span> <span class="op">/</span> (<span class="ident">UniCase</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>)<span class="op">+</span>}
+    (<span class="ident">Vary</span>, <span class="string">&quot;Vary&quot;</span>) <span class="op">=&gt;</span> {<span class="ident">Any</span> <span class="op">/</span> (<span class="ident">Ascii</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>)<span class="op">+</span>}
 
     <span class="ident">test_vary</span> {
         <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;accept-encoding, accept-language&quot;</span>]);
@@ -166,10 +166,10 @@
         <span class="kw">fn</span> <span class="ident">test2</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vary</span>: ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vary</span><span class="op">&gt;</span>;
 
-            <span class="ident">vary</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>([<span class="string">b&quot;*&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">as_ref</span>());
+            <span class="ident">vary</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;*&quot;</span>.<span class="ident">into</span>());
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">vary</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">Vary</span>::<span class="ident">Any</span>));
 
-            <span class="ident">vary</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>([<span class="string">b&quot;etag,cookie,allow&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">as_ref</span>());
+            <span class="ident">vary</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;etag,cookie,allow&quot;</span>.<span class="ident">into</span>());
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">vary</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">Vary</span>::<span class="ident">Items</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;eTag&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>(),
                                                         <span class="string">&quot;cookIE&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>(),
                                                         <span class="string">&quot;AlLOw&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>(),])));
@@ -234,7 +234,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

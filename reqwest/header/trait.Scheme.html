@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>reqwest</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'Scheme', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Scheme</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>reqwest</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'Scheme', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,10 +48,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/hyper/header/common/authorization.rs.html#112-119' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/hyper/header/common/authorization.rs.html#118-125' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Scheme: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">FromStr</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> {
     fn <a href='#tymethod.scheme' class='fnname'>scheme</a>() -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;;
-    fn <a href='#tymethod.fmt_scheme' class='fnname'>fmt_scheme</a>(&amp;self, &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.fmt_scheme' class='fnname'>fmt_scheme</a>(&amp;self, &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;;
 }</pre><div class='docblock'><p>An Authorization scheme to be used in the header.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
@@ -63,9 +63,9 @@
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl Scheme for <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></li>
-<li><code>impl Scheme for <a class="struct" href="../../reqwest/header/struct.Basic.html" title="struct reqwest::header::Basic">Basic</a></code></li>
+    <li><code>impl Scheme for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></li>
 <li><code>impl Scheme for <a class="struct" href="../../reqwest/header/struct.Bearer.html" title="struct reqwest::header::Bearer">Bearer</a></code></li>
+<li><code>impl Scheme for <a class="struct" href="../../reqwest/header/struct.Basic.html" title="struct reqwest::header::Basic">Basic</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/hyper/header/common/authorization/trait.Scheme.js">
                  </script></section>
@@ -125,7 +125,6 @@
         window.rootPath = "../../";
         window.currentCrate = "reqwest";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>gzip</a></p><script>window.sidebarCurrent = {name: 'CompressionLevel', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum CompressionLevel</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>gzip</a></p><script>window.sidebarCurrent = {name: 'CompressionLevel', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -54,7 +54,7 @@
     Slowest,
     Unknown,
 }</pre><div class='docblock'><p>Compression levels defined by the GZIP format.</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Fastest' class='variant'><span id='Fastest.v' class='invisible'><code>Fastest</code></span></span><div class='docblock'><p>Compressor used fastest algorithm.</p>
 </div><span id='variant.Slowest' class='variant'><span id='Slowest.v' class='invisible'><code>Slowest</code></span></span><div class='docblock'><p>Compressor used maximum compression, slowest algorithm.</p>
 </div><span id='variant.Unknown' class='variant'><span id='Unknown.v' class='invisible'><code>Unknown</code></span></span><div class='docblock'><p>No information about compression method.</p>
@@ -74,9 +74,9 @@
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="enum" href="../../libflate/gzip/enum.CompressionLevel.html" title="enum libflate::gzip::CompressionLevel">CompressionLevel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#60' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html" title="trait core::hash::Hash">Hash</a> for <a class="enum" href="../../libflate/gzip/enum.CompressionLevel.html" title="enum libflate::gzip::CompressionLevel">CompressionLevel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#60' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.hash' class="method"><span id='hash.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#tymethod.hash' class='fnname'>hash</a>&lt;__H:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></span></h4>
-<div class='docblock'><p>Feeds this value into the state given, updating the hasher as necessary.</p>
-</div><h4 id='method.hash_slice' class="method"><span id='hash_slice.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[Self]</a>, state: &amp;mut H) <span class="where fmt-newline">where H: <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a></span></code><div class='since' title='Stable since Rust version 1.3.0'>1.3.0</div></span></h4>
-<div class='docblock'><p>Feeds a slice of this type into the state provided.</p>
+<div class='docblock'><p>Feeds this value into the given [<code>Hasher</code>]. <a href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#tymethod.hash">Read more</a></p>
+</div><h4 id='method.hash_slice' class="method"><span id='hash_slice.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[Self]</a>, state: &amp;mut H) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;H: <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a>,&nbsp;</span></code><div class='since' title='Stable since Rust version 1.3.0'>1.3.0</div></span></h4>
+<div class='docblock'><p>Feeds a slice of this type into the given [<code>Hasher</code>]. <a href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice">Read more</a></p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="enum" href="../../libflate/lz77/enum.CompressionLevel.html" title="enum libflate::lz77::CompressionLevel">CompressionLevel</a>&gt; for <a class="enum" href="../../libflate/gzip/enum.CompressionLevel.html" title="enum libflate::gzip::CompressionLevel">CompressionLevel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#87-95' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.from' class="method"><span id='from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(f: <a class="enum" href="../../libflate/lz77/enum.CompressionLevel.html" title="enum libflate::lz77::CompressionLevel">CompressionLevel</a>) -&gt; Self</code></span></h4>
 <div class='docblock'><p>Performs the conversion.</p>
@@ -137,7 +137,6 @@
         window.rootPath = "../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

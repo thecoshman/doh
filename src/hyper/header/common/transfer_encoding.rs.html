@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/transfer_encoding.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/transfer_encoding.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>transfer_encoding.rs.html -- source</title>
@@ -96,6 +96,20 @@
 <span id="51">51</span>
 <span id="52">52</span>
 <span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">Encoding</span>;
 
@@ -107,6 +121,13 @@
     <span class="doccomment">/// corresponding to the sequence of transfer codings that have been (or</span>
     <span class="doccomment">/// will be) applied to the payload body in order to form the message</span>
     <span class="doccomment">/// body.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that setting this header will *remove* any previously set</span>
+    <span class="doccomment">/// `Content-Length` header, in accordance with</span>
+    <span class="doccomment">/// [RFC7230](http://tools.ietf.org/html/rfc7230#section-3.3.2):</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// &gt; A sender MUST NOT send a Content-Length header field in any message</span>
+    <span class="doccomment">/// &gt; that contains a Transfer-Encoding header field.</span>
     <span class="doccomment">/// </span>
     <span class="doccomment">/// # ABNF</span>
     <span class="doccomment">/// ```plain</span>
@@ -145,6 +166,13 @@
                 <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Encoding</span>::<span class="ident">Chunked</span>, <span class="ident">Encoding</span>::<span class="ident">Chunked</span>]
             )));
 
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">TransferEncoding</span> {
+    <span class="doccomment">/// Constructor for the most common Transfer-Encoding, `chunked`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">chunked</span>() <span class="op">-&gt;</span> <span class="ident">TransferEncoding</span> {
+        <span class="ident">TransferEncoding</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Encoding</span>::<span class="ident">Chunked</span>])
     }
 }
 
@@ -208,7 +236,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

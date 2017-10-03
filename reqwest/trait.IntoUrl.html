@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>reqwest</a></p><script>window.sidebarCurrent = {name: 'IntoUrl', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait IntoUrl</p><div class="block items"><ul><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>reqwest</a></p><script>window.sidebarCurrent = {name: 'IntoUrl', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,22 +48,18 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/hyper/client/mod.rs.html#438-441' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait IntoUrl {
-    fn <a href='#tymethod.into_url' class='fnname'>into_url</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a>, <a class="enum" href="../reqwest/enum.UrlError.html" title="enum reqwest::UrlError">ParseError</a>&gt;;
-}</pre><div class='docblock'><p>A helper trait to convert common objects into a Url.</p>
+               </span><a class='srclink' href='../src/reqwest/into_url.rs.html#8' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait IntoUrl: PolyfillTryInto { }</pre><div class='docblock'><p>A trait to try to convert some type into a <code>Url</code>.</p>
+
+<p>This trait is &quot;sealed&quot;, such that only types within reqwest can
+implement it. The reason is that it will eventually be deprecated
+and removed, when <code>std::convert::TryFrom</code> is stabilized.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
-            <div class='methods'>
-        <h3 id='tymethod.into_url' class='method'><span id='into_url.v' class='invisible'><code>fn <a href='#tymethod.into_url' class='fnname'>into_url</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a>, <a class="enum" href="../reqwest/enum.UrlError.html" title="enum reqwest::UrlError">ParseError</a>&gt;</code></span></h3><div class='docblock'><p>Consumes the object, trying to return a Url.</p>
-</div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl IntoUrl for <a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a></code></li>
-<li><code>impl&lt;'a&gt; IntoUrl for &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></li>
-<li><code>impl&lt;'a&gt; IntoUrl for &amp;'a <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></li>
+    <li><code>impl&lt;T:&nbsp;PolyfillTryInto&gt; IntoUrl for T</code></li>
 </ul><script type="text/javascript" async
-                         src="../implementors/hyper/client/trait.IntoUrl.js">
+                         src="../implementors/reqwest/trait.IntoUrl.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
 
@@ -121,7 +117,6 @@
         window.rootPath = "../";
         window.currentCrate = "reqwest";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

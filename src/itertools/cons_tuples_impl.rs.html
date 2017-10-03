@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.0/src/cons_tuples_impl.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.5/src/cons_tuples_impl.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>cons_tuples_impl.rs.html -- source</title>
@@ -104,6 +104,11 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
 </pre><pre class="rust ">
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_cons_iter</span>(
@@ -122,6 +127,11 @@
 
             <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
                 <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">size_hint</span>()
+            }
+            <span class="kw">fn</span> <span class="ident">fold</span><span class="op">&lt;</span><span class="ident">Acc</span>, <span class="ident">Fold</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">accum</span>: <span class="ident">Acc</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">Fold</span>) <span class="op">-&gt;</span> <span class="ident">Acc</span>
+                <span class="kw">where</span> <span class="ident">Fold</span>: <span class="ident">FnMut</span>(<span class="ident">Acc</span>, <span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">Acc</span>,
+            {
+                <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">fold</span>(<span class="ident">accum</span>, <span class="kw">move</span> <span class="op">|</span><span class="ident">acc</span>, (($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">B</span>,)<span class="kw-2">*</span>), <span class="ident">x</span>)<span class="op">|</span> <span class="ident">f</span>(<span class="ident">acc</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">B</span>,)<span class="op">*</span> <span class="ident">x</span>, )))
             }
         }
 
@@ -224,7 +234,6 @@
         window.rootPath = "../../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/bit.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/bit.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bit.rs.html -- source</title>
@@ -232,6 +232,28 @@
 <span id="187">187</span>
 <span id="188">188</span>
 <span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">byteorder</span>::<span class="ident">LittleEndian</span>;
@@ -245,7 +267,8 @@
     <span class="ident">end</span>: <span class="ident">u8</span>,
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> <span class="ident">BitWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
 {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">inner</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">BitWriter</span> {
@@ -305,11 +328,12 @@
     <span class="ident">last_error</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span>,
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+<span class="kw">where</span>
+    <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
 {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">inner</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">BitReader</span> {
-            <span class="ident">inner</span>: <span class="ident">inner</span>,
+            <span class="ident">inner</span>,
             <span class="ident">last_read</span>: <span class="number">0</span>,
             <span class="ident">offset</span>: <span class="number">32</span>,
             <span class="ident">last_error</span>: <span class="prelude-val">None</span>,
@@ -345,7 +369,7 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peek_bits_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bitwidth</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">bitwidth</span> <span class="op">&lt;=</span> <span class="number">16</span>);
-        <span class="kw">while</span> (<span class="number">32</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">offset</span>) <span class="op">&lt;</span> <span class="ident">bitwidth</span> {
+        <span class="kw">while</span> <span class="number">32</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">offset</span> <span class="op">+</span> <span class="ident">bitwidth</span> {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">last_error</span>.<span class="ident">is_some</span>() {
                 <span class="kw">return</span> <span class="number">0</span>;
             }
@@ -360,7 +384,7 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">skip_bits</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bitwidth</span>: <span class="ident">u8</span>) {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="number">32</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">offset</span> <span class="op">&gt;=</span> <span class="ident">bitwidth</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">last_error</span>.<span class="ident">is_some</span>() <span class="op">||</span> <span class="number">32</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">offset</span> <span class="op">&gt;=</span> <span class="ident">bitwidth</span>);
         <span class="self">self</span>.<span class="ident">offset</span> <span class="op">+=</span> <span class="ident">bitwidth</span>;
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -371,6 +395,18 @@
         <span class="kw">let</span> <span class="ident">next</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span> <span class="kw">as</span> <span class="ident">u32</span>;
         <span class="self">self</span>.<span class="ident">last_read</span> <span class="op">|=</span> <span class="ident">next</span> <span class="op">&lt;&lt;</span> (<span class="number">32</span> <span class="op">-</span> <span class="number">8</span>);
         <span class="prelude-val">Ok</span>(())
+    }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BitReaderState</span> {
+        <span class="ident">BitReaderState</span> {
+            <span class="ident">last_read</span>: <span class="self">self</span>.<span class="ident">last_read</span>,
+            <span class="ident">offset</span>: <span class="self">self</span>.<span class="ident">offset</span>,
+        }
+    }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">restore_state</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">state</span>: <span class="ident">BitReaderState</span>) {
+        <span class="self">self</span>.<span class="ident">last_read</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">last_read</span>;
+        <span class="self">self</span>.<span class="ident">offset</span> <span class="op">=</span> <span class="ident">state</span>.<span class="ident">offset</span>;
     }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
@@ -386,6 +422,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">R</span> {
         <span class="self">self</span>.<span class="ident">inner</span>
     }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">BitReaderState</span> {
+    <span class="ident">last_read</span>: <span class="ident">u32</span>,
+    <span class="ident">offset</span>: <span class="ident">u8</span>,
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -418,8 +460,10 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">reader</span>.<span class="ident">peek_bits_unchecked</span>(<span class="number">3</span>), <span class="number">0b101</span>);
         <span class="ident">reader</span>.<span class="ident">skip_bits</span>(<span class="number">1</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">reader</span>.<span class="ident">peek_bits_unchecked</span>(<span class="number">3</span>), <span class="number">0b010</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">8</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">kind</span>()),
-                   <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedEof</span>));
+        <span class="macro">assert_eq</span><span class="macro">!</span>(
+            <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">8</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">kind</span>()),
+            <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedEof</span>)
+        );
     }
 }
 </pre>
@@ -480,7 +524,6 @@
         window.rootPath = "../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

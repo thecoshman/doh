@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/upgrade.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/upgrade.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>upgrade.rs.html -- source</title>
@@ -204,7 +204,7 @@
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
-<span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">UniCase</span>;
+<span class="kw">use</span> <span class="ident">unicase</span>;
 
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Upgrade` header, defined in [RFC7230](http://tools.ietf.org/html/rfc7230#section-6.7)</span>
@@ -272,13 +272,13 @@
             <span class="prelude-val">Some</span>(<span class="ident">Upgrade</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Protocol</span>::<span class="ident">new</span>(<span class="ident">ProtocolName</span>::<span class="ident">WebSocket</span>, <span class="prelude-val">None</span>)])));
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="ident">test3</span>() {
-            <span class="kw">let</span> <span class="ident">x</span>: ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Upgrade</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span>[<span class="string">b&quot;WEbSOCKet&quot;</span>.<span class="ident">to_vec</span>()]);
+            <span class="kw">let</span> <span class="ident">x</span>: ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Upgrade</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;WEbSOCKet&quot;</span>.<span class="ident">into</span>());
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">x</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">Upgrade</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Protocol</span>::<span class="ident">new</span>(<span class="ident">ProtocolName</span>::<span class="ident">WebSocket</span>, <span class="prelude-val">None</span>)])));
         }
     }
 }
 
-<span class="doccomment">/// A protocol name used to identify a spefic protocol. Names are case-sensitive</span>
+<span class="doccomment">/// A protocol name used to identify a specific protocol. Names are case-sensitive</span>
 <span class="doccomment">/// except for the `WebSocket` value.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ProtocolName</span> {
@@ -303,7 +303,7 @@
             <span class="string">&quot;TLS&quot;</span> <span class="op">=&gt;</span> <span class="ident">ProtocolName</span>::<span class="ident">Tls</span>,
             <span class="string">&quot;h2c&quot;</span> <span class="op">=&gt;</span> <span class="ident">ProtocolName</span>::<span class="ident">H2c</span>,
             _ <span class="op">=&gt;</span> {
-                <span class="kw">if</span> <span class="ident">UniCase</span>(<span class="ident">s</span>) <span class="op">==</span> <span class="ident">UniCase</span>(<span class="string">&quot;websocket&quot;</span>) {
+                <span class="kw">if</span> <span class="ident">unicase</span>::<span class="ident">eq_ascii</span>(<span class="ident">s</span>, <span class="string">&quot;websocket&quot;</span>) {
                     <span class="ident">ProtocolName</span>::<span class="ident">WebSocket</span>
                 } <span class="kw">else</span> {
                     <span class="ident">ProtocolName</span>::<span class="ident">Unregistered</span>(<span class="ident">s</span>.<span class="ident">to_owned</span>())
@@ -418,7 +418,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

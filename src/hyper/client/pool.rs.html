@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/client/pool.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/client/pool.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>pool.rs.html -- source</title>
@@ -481,529 +481,443 @@
 <span id="436">436</span>
 <span id="437">437</span>
 <span id="438">438</span>
-<span id="439">439</span>
-<span id="440">440</span>
-<span id="441">441</span>
-<span id="442">442</span>
-<span id="443">443</span>
-<span id="444">444</span>
-<span id="445">445</span>
-<span id="446">446</span>
-<span id="447">447</span>
-<span id="448">448</span>
-<span id="449">449</span>
-<span id="450">450</span>
-<span id="451">451</span>
-<span id="452">452</span>
-<span id="453">453</span>
-<span id="454">454</span>
-<span id="455">455</span>
-<span id="456">456</span>
-<span id="457">457</span>
-<span id="458">458</span>
-<span id="459">459</span>
-<span id="460">460</span>
-<span id="461">461</span>
-<span id="462">462</span>
-<span id="463">463</span>
-<span id="464">464</span>
-<span id="465">465</span>
-<span id="466">466</span>
-<span id="467">467</span>
-<span id="468">468</span>
-<span id="469">469</span>
-<span id="470">470</span>
-<span id="471">471</span>
-<span id="472">472</span>
-<span id="473">473</span>
-<span id="474">474</span>
-<span id="475">475</span>
-<span id="476">476</span>
-<span id="477">477</span>
-<span id="478">478</span>
-<span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
 </pre><pre class="rust ">
-<span class="doccomment">//! Client Connection Pooling</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">ToOwned</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::{<span class="ident">Cell</span>, <span class="ident">RefCell</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::{<span class="ident">HashMap</span>, <span class="ident">VecDeque</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>, <span class="ident">Write</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">SocketAddr</span>, <span class="ident">Shutdown</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">Ordering</span>};
-
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">BitAndAssign</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">Instant</span>};
 
-<span class="kw">use</span> <span class="ident">net</span>::{<span class="ident">NetworkConnector</span>, <span class="ident">NetworkStream</span>, <span class="ident">DefaultConnector</span>};
-<span class="kw">use</span> <span class="ident">client</span>::<span class="ident">scheme</span>::<span class="ident">Scheme</span>;
+<span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Future</span>, <span class="ident">Async</span>, <span class="ident">Poll</span>};
+<span class="kw">use</span> <span class="ident">relay</span>;
 
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">stale</span>::{<span class="ident">StaleCheck</span>, <span class="ident">Stale</span>};
+<span class="kw">use</span> <span class="ident">proto</span>::{<span class="ident">KeepAlive</span>, <span class="ident">KA</span>};
 
-<span class="doccomment">/// The `NetworkConnector` that behaves as a connection pool used by hyper&#39;s `Client`.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">NetworkConnector</span><span class="op">&gt;</span> {
-    <span class="ident">connector</span>: <span class="ident">C</span>,
-    <span class="ident">inner</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">PoolImpl</span><span class="op">&lt;&lt;</span><span class="ident">C</span> <span class="kw">as</span> <span class="ident">NetworkConnector</span><span class="op">&gt;</span>::<span class="ident">Stream</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">stale_check</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">StaleCallback</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Stream</span><span class="op">&gt;&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">inner</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">PoolInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
 }
 
-<span class="doccomment">/// Config options for the `Pool`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Config</span> {
-    <span class="doccomment">/// The maximum idle connections *per host*.</span>
-    <span class="kw">pub</span> <span class="ident">max_idle</span>: <span class="ident">usize</span>,
+<span class="kw">struct</span> <span class="ident">PoolInner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">enabled</span>: <span class="ident">bool</span>,
+    <span class="comment">// These are internal Conns sitting in the event loop in the KeepAlive</span>
+    <span class="comment">// state, waiting to receive a new Request to send on the socket.</span>
+    <span class="ident">idle</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="comment">// These are outstanding Checkouts that are waiting for a socket to be</span>
+    <span class="comment">// able to send a Request one. This is used when &quot;racing&quot; for a new</span>
+    <span class="comment">// connection.</span>
+    <span class="comment">//</span>
+    <span class="comment">// The Client starts 2 tasks, 1 to connect a new socket, and 1 to wait</span>
+    <span class="comment">// for the Pool to receive an idle Conn. When a Conn becomes idle,</span>
+    <span class="comment">// this list is checked for any parked Checkouts, and tries to notify</span>
+    <span class="comment">// them that the Conn could be used instead of waiting for a brand new</span>
+    <span class="comment">// connection.</span>
+    <span class="ident">parked</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">VecDeque</span><span class="op">&lt;</span><span class="ident">relay</span>::<span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Config</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Config</span> {
-        <span class="ident">Config</span> {
-            <span class="ident">max_idle</span>: <span class="number">5</span>,
-        }
-    }
-}
-
-<span class="comment">// Because `Config` has all its properties public, it would be a breaking</span>
-<span class="comment">// change to add new ones. Sigh.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">Config2</span> {
-    <span class="ident">idle_timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>,
-    <span class="ident">max_idle</span>: <span class="ident">usize</span>,
-}
-
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">PoolImpl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="ident">conns</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PooledStreamInner</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">config</span>: <span class="ident">Config2</span>,
-}
-
-<span class="kw">type</span> <span class="ident">Key</span> <span class="op">=</span> (<span class="ident">String</span>, <span class="ident">u16</span>, <span class="ident">Scheme</span>);
-
-<span class="kw">fn</span> <span class="ident">key</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Scheme</span><span class="op">&gt;&gt;</span>(<span class="ident">host</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">port</span>: <span class="ident">u16</span>, <span class="ident">scheme</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Key</span> {
-    (<span class="ident">host</span>.<span class="ident">to_owned</span>(), <span class="ident">port</span>, <span class="ident">scheme</span>.<span class="ident">into</span>())
-}
-
-<span class="kw">impl</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">DefaultConnector</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Creates a `Pool` with a `DefaultConnector`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">config</span>: <span class="ident">Config</span>) <span class="op">-&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">DefaultConnector</span><span class="op">&gt;</span> {
-        <span class="ident">Pool</span>::<span class="ident">with_connector</span>(<span class="ident">config</span>, <span class="ident">DefaultConnector</span>::<span class="ident">default</span>())
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">NetworkConnector</span><span class="op">&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Creates a `Pool` with a specified `NetworkConnector`.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_connector</span>(<span class="ident">config</span>: <span class="ident">Config</span>, <span class="ident">connector</span>: <span class="ident">C</span>) <span class="op">-&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">enabled</span>: <span class="ident">bool</span>, <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Pool</span> {
-            <span class="ident">connector</span>: <span class="ident">connector</span>,
-            <span class="ident">inner</span>: <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Mutex</span>::<span class="ident">new</span>(<span class="ident">PoolImpl</span> {
-                <span class="ident">conns</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
-                <span class="ident">config</span>: <span class="ident">Config2</span> {
-                    <span class="ident">idle_timeout</span>: <span class="prelude-val">None</span>,
-                    <span class="ident">max_idle</span>: <span class="ident">config</span>.<span class="ident">max_idle</span>,
-                }
+            <span class="ident">inner</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">PoolInner</span> {
+                <span class="ident">enabled</span>: <span class="ident">enabled</span>,
+                <span class="ident">idle</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
+                <span class="ident">parked</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
+                <span class="ident">timeout</span>: <span class="ident">timeout</span>,
             })),
-            <span class="ident">stale_check</span>: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="doccomment">/// Set a duration for how long an idle connection is still valid.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_idle_timeout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>().<span class="ident">config</span>.<span class="ident">idle_timeout</span> <span class="op">=</span> <span class="ident">timeout</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Checkout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Checkout</span> {
+            <span class="ident">key</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">key</span>.<span class="ident">to_owned</span>()),
+            <span class="ident">pool</span>: <span class="self">self</span>.<span class="ident">clone</span>(),
+            <span class="ident">parked</span>: <span class="prelude-val">None</span>,
+        }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_stale_check</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>)
-    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">StaleCheck</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Stream</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Stale</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
-        <span class="self">self</span>.<span class="ident">stale_check</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">callback</span>));
-    }
-
-    <span class="doccomment">/// Clear all idle connections from the Pool, closing them.</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_idle</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>().<span class="ident">conns</span>.<span class="ident">clear</span>();
-    }
-
-    <span class="comment">// private</span>
-
-    <span class="kw">fn</span> <span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PooledStreamInner</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Stream</span><span class="op">&gt;&gt;</span> {
-        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">inner</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">lookup</span>(<span class="ident">key</span>) {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">stale_check</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">stale_check</span> {
-                <span class="kw">let</span> <span class="ident">dur</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">idle</span>.<span class="ident">expect</span>(<span class="string">&quot;idle is never missing inside pool&quot;</span>).<span class="ident">elapsed</span>();
-                <span class="kw">let</span> <span class="ident">arg</span> <span class="op">=</span> <span class="ident">stale</span>::<span class="ident">check</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">inner</span>.<span class="ident">stream</span>, <span class="ident">dur</span>);
-                <span class="kw">if</span> <span class="ident">stale_check</span>(<span class="ident">arg</span>).<span class="ident">is_stale</span>() {
-                    <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;ejecting stale connection&quot;</span>);
-                    <span class="kw">continue</span>;
+    <span class="kw">fn</span> <span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">entry</span>: <span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::put {:?}&quot;</span>, <span class="ident">key</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>();
+        <span class="comment">//let inner = &amp;mut *inner;</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">remove_parked</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">entry</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">entry</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">parked</span>) <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">parked</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>) {
+            <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">tx</span>) <span class="op">=</span> <span class="ident">parked</span>.<span class="ident">pop_front</span>() {
+                <span class="kw">if</span> <span class="ident">tx</span>.<span class="ident">is_canceled</span>() {
+                    <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::put removing canceled parked {:?}&quot;</span>, <span class="ident">key</span>);
+                } <span class="kw">else</span> {
+                    <span class="ident">tx</span>.<span class="ident">complete</span>(<span class="ident">entry</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>());
+                    <span class="kw">break</span>;
                 }
-            }
-            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
-        }
-        <span class="prelude-val">None</span>
-    }
-
-
-    <span class="kw">fn</span> <span class="ident">lookup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PooledStreamInner</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Stream</span><span class="op">&gt;&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">locked</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">should_remove</span> <span class="op">=</span> <span class="bool-val">false</span>;
-        <span class="kw">let</span> <span class="ident">deadline</span> <span class="op">=</span> <span class="ident">locked</span>.<span class="ident">config</span>.<span class="ident">idle_timeout</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">dur</span><span class="op">|</span> <span class="ident">Instant</span>::<span class="ident">now</span>() <span class="op">-</span> <span class="ident">dur</span>);
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">get_mut</span>(<span class="ident">key</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">vec</span><span class="op">|</span> {
-            <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=</span> <span class="ident">vec</span>.<span class="ident">pop</span>() {
-                <span class="ident">should_remove</span> <span class="op">=</span> <span class="ident">vec</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="number">1</span>;
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">deadline</span>) <span class="op">=</span> <span class="ident">deadline</span> {
-                    <span class="kw">if</span> <span class="ident">inner</span>.<span class="ident">idle</span>.<span class="ident">expect</span>(<span class="string">&quot;idle is never missing inside pool&quot;</span>) <span class="op">&lt;</span> <span class="ident">deadline</span> {
-                        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;ejecting expired connection&quot;</span>);
-                        <span class="kw">continue</span>;
+                <span class="comment">/*
+                match tx.send(entry.take().unwrap()) {
+                    Ok(()) =&gt; break,
+                    Err(e) =&gt; {
+                        trace!(&quot;Pool::put removing canceled parked {:?}&quot;, key);
+                        entry = Some(e);
                     }
                 }
-                <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
+                */</span>
             }
+            <span class="ident">remove_parked</span> <span class="op">=</span> <span class="ident">parked</span>.<span class="ident">is_empty</span>();
+        }
+        <span class="kw">if</span> <span class="ident">remove_parked</span> {
+            <span class="ident">inner</span>.<span class="ident">parked</span>.<span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>);
+        }
+
+        <span class="kw">match</span> <span class="ident">entry</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> {
+                <span class="ident">inner</span>.<span class="ident">idle</span>.<span class="ident">entry</span>(<span class="ident">key</span>)
+                     .<span class="ident">or_insert</span>(<span class="ident">Vec</span>::<span class="ident">new</span>())
+                     .<span class="ident">push</span>(<span class="ident">entry</span>);
+            }
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::put found parked {:?}&quot;</span>, <span class="ident">key</span>),
+        }
+    }
+
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pooled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::pooled {:?}&quot;</span>, <span class="ident">key</span>);
+        <span class="ident">Pooled</span> {
+            <span class="ident">entry</span>: <span class="ident">Entry</span> {
+                <span class="ident">value</span>: <span class="ident">value</span>,
+                <span class="ident">is_reused</span>: <span class="bool-val">false</span>,
+                <span class="ident">status</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">Cell</span>::<span class="ident">new</span>(<span class="ident">TimedKA</span>::<span class="ident">Busy</span>)),
+            },
+            <span class="ident">key</span>: <span class="ident">key</span>,
+            <span class="ident">pool</span>: <span class="self">self</span>.<span class="ident">clone</span>(),
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">is_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">enabled</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">reuse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">entry</span>: <span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::reuse {:?}&quot;</span>, <span class="ident">key</span>);
+        <span class="ident">entry</span>.<span class="ident">is_reused</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">set</span>(<span class="ident">TimedKA</span>::<span class="ident">Busy</span>);
+        <span class="ident">Pooled</span> {
+            <span class="ident">entry</span>: <span class="ident">entry</span>,
+            <span class="ident">key</span>: <span class="ident">key</span>,
+            <span class="ident">pool</span>: <span class="self">self</span>.<span class="ident">clone</span>(),
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">park</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">tx</span>: <span class="ident">relay</span>::<span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>) {
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::park {:?}&quot;</span>, <span class="ident">key</span>);
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>()
+            .<span class="ident">parked</span>.<span class="ident">entry</span>(<span class="ident">key</span>)
+            .<span class="ident">or_insert</span>(<span class="ident">VecDeque</span>::<span class="ident">new</span>())
+            .<span class="ident">push_back</span>(<span class="ident">tx</span>);
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">clean_parked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) {
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool::clean_parked {:?}&quot;</span>, <span class="ident">key</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>();
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">remove_parked</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">parked</span>) <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">parked</span>.<span class="ident">get_mut</span>(<span class="ident">key</span>) {
+            <span class="ident">parked</span>.<span class="ident">retain</span>(<span class="op">|</span><span class="ident">tx</span><span class="op">|</span> {
+                <span class="op">!</span><span class="ident">tx</span>.<span class="ident">is_canceled</span>()
+            });
+            <span class="ident">remove_parked</span> <span class="op">=</span> <span class="ident">parked</span>.<span class="ident">is_empty</span>();
+        }
+        <span class="kw">if</span> <span class="ident">remove_parked</span> {
+            <span class="ident">inner</span>.<span class="ident">parked</span>.<span class="ident">remove</span>(<span class="ident">key</span>);
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Pool</span> {
+            <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">clone</span>(),
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">entry</span>: <span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">key</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">pool</span>: <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">T</span>;
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">value</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DerefMut</span> <span class="kw">for</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">value</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">KeepAlive</span> <span class="kw">for</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">busy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">set</span>(<span class="ident">TimedKA</span>::<span class="ident">Busy</span>);
+    }
+
+    <span class="kw">fn</span> <span class="ident">disable</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">set</span>(<span class="ident">TimedKA</span>::<span class="ident">Disabled</span>);
+    }
+
+    <span class="kw">fn</span> <span class="ident">idle</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">let</span> <span class="ident">previous</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">status</span>();
+        <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">set</span>(<span class="ident">TimedKA</span>::<span class="ident">Idle</span>(<span class="ident">Instant</span>::<span class="ident">now</span>()));
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">KA</span>::<span class="ident">Idle</span> <span class="op">=</span> <span class="ident">previous</span> {
+            <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pooled::idle already idle&quot;</span>);
+            <span class="kw">return</span>;
+        }
+        <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">is_reused</span> <span class="op">=</span> <span class="bool-val">true</span>;
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">is_enabled</span>() {
+            <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">put</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">clone</span>());
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">KA</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">get</span>() {
+            <span class="ident">TimedKA</span>::<span class="ident">Idle</span>(_) <span class="op">=&gt;</span> <span class="ident">KA</span>::<span class="ident">Idle</span>,
+            <span class="ident">TimedKA</span>::<span class="ident">Busy</span> <span class="op">=&gt;</span> <span class="ident">KA</span>::<span class="ident">Busy</span>,
+            <span class="ident">TimedKA</span>::<span class="ident">Disabled</span> <span class="op">=&gt;</span> <span class="ident">KA</span>::<span class="ident">Disabled</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Pooled&quot;</span>)
+            .<span class="ident">field</span>(<span class="string">&quot;status&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">get</span>())
+            .<span class="ident">field</span>(<span class="string">&quot;key&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">key</span>)
+            .<span class="ident">finish</span>()
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">BitAndAssign</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">bitand_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">enabled</span>: <span class="ident">bool</span>) {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">enabled</span> {
+            <span class="self">self</span>.<span class="ident">disable</span>();
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">value</span>: <span class="ident">T</span>,
+    <span class="ident">is_reused</span>: <span class="ident">bool</span>,
+    <span class="ident">status</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">Cell</span><span class="op">&lt;</span><span class="ident">TimedKA</span><span class="op">&gt;&gt;</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">enum</span> <span class="ident">TimedKA</span> {
+    <span class="ident">Idle</span>(<span class="ident">Instant</span>),
+    <span class="ident">Busy</span>,
+    <span class="ident">Disabled</span>,
+}
+
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checkout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">key</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">pool</span>: <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">parked</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">relay</span>::<span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">Future</span> <span class="kw">for</span> <span class="ident">Checkout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Pooled</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>;
+
+    <span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Checkout::poll&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">drop_parked</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">rx</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">parked</span> {
+            <span class="kw">match</span> <span class="ident">rx</span>.<span class="ident">poll</span>() {
+                <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">entry</span>)) <span class="op">=&gt;</span> {
+                    <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Checkout::poll found client in relay for {:?}&quot;</span>, <span class="self">self</span>.<span class="ident">key</span>);
+                    <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">reuse</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="ident">entry</span>)));
+                },
+                <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>) <span class="op">=&gt;</span> (),
+                <span class="prelude-val">Err</span>(<span class="ident">_canceled</span>) <span class="op">=&gt;</span> <span class="ident">drop_parked</span> <span class="op">=</span> <span class="bool-val">true</span>,
+            }
+        }
+        <span class="kw">if</span> <span class="ident">drop_parked</span> {
+            <span class="self">self</span>.<span class="ident">parked</span>.<span class="ident">take</span>();
+        }
+        <span class="kw">let</span> <span class="ident">expiration</span> <span class="op">=</span> <span class="ident">Expiration</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">timeout</span>);
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">key</span>;
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Checkout::poll url = {:?}, expiration = {:?}&quot;</span>, <span class="ident">key</span>, <span class="ident">expiration</span>.<span class="number">0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">should_remove</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>().<span class="ident">idle</span>.<span class="ident">get_mut</span>(<span class="ident">key</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">list</span><span class="op">|</span> {
+            <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Checkout::poll key found {:?}&quot;</span>, <span class="ident">key</span>);
+            <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">entry</span>) <span class="op">=</span> <span class="ident">list</span>.<span class="ident">pop</span>() {
+                <span class="kw">match</span> <span class="ident">entry</span>.<span class="ident">status</span>.<span class="ident">get</span>() {
+                    <span class="ident">TimedKA</span>::<span class="ident">Idle</span>(<span class="ident">idle_at</span>) <span class="kw">if</span> <span class="op">!</span><span class="ident">expiration</span>.<span class="ident">expires</span>(<span class="ident">idle_at</span>) <span class="op">=&gt;</span> {
+                        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Checkout::poll found idle client for {:?}&quot;</span>, <span class="ident">key</span>);
+                        <span class="ident">should_remove</span> <span class="op">=</span> <span class="ident">list</span>.<span class="ident">is_empty</span>();
+                        <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">entry</span>);
+                    },
+                    _ <span class="op">=&gt;</span> {
+                        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Checkout::poll removing unacceptable pooled {:?}&quot;</span>, <span class="ident">key</span>);
+                        <span class="comment">// every other case the Entry should just be dropped</span>
+                        <span class="comment">// 1. Idle but expired</span>
+                        <span class="comment">// 2. Busy (something else somehow took it?)</span>
+                        <span class="comment">// 3. Disabled don&#39;t reuse of course</span>
+                    }
+                }
+            }
+            <span class="ident">should_remove</span> <span class="op">=</span> <span class="bool-val">true</span>;
             <span class="prelude-val">None</span>
         });
+
         <span class="kw">if</span> <span class="ident">should_remove</span> {
-            <span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">remove</span>(<span class="ident">key</span>);
+            <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow_mut</span>().<span class="ident">idle</span>.<span class="ident">remove</span>(<span class="ident">key</span>);
         }
-        <span class="ident">inner</span>
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="ident">PoolImpl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">reuse</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>, <span class="ident">conn</span>: <span class="ident">PooledStreamInner</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) {
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;reuse {:?}&quot;</span>, <span class="ident">key</span>);
-        <span class="kw">let</span> <span class="ident">conns</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">conns</span>.<span class="ident">entry</span>(<span class="ident">key</span>).<span class="ident">or_insert</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
-        <span class="kw">if</span> <span class="ident">conns</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">max_idle</span> {
-            <span class="ident">conns</span>.<span class="ident">push</span>(<span class="ident">conn</span>);
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">NetworkConnector</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">=</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">S</span>: <span class="ident">NetworkStream</span> <span class="op">+</span> <span class="ident">Send</span><span class="op">&gt;</span> <span class="ident">NetworkConnector</span> <span class="kw">for</span> <span class="ident">Pool</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Stream</span> <span class="op">=</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">host</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">port</span>: <span class="ident">u16</span>, <span class="ident">scheme</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;&gt;</span> {
-        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">key</span>(<span class="ident">host</span>, <span class="ident">port</span>, <span class="ident">scheme</span>);
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=&gt;</span> {
-                <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Pool had connection, using&quot;</span>);
-                <span class="ident">inner</span>
-            },
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">PooledStreamInner</span> {
-                <span class="ident">key</span>: <span class="ident">key</span>.<span class="ident">clone</span>(),
-                <span class="ident">idle</span>: <span class="prelude-val">None</span>,
-                <span class="ident">stream</span>: <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">connector</span>.<span class="ident">connect</span>(<span class="ident">host</span>, <span class="ident">port</span>, <span class="ident">scheme</span>)),
-                <span class="ident">previous_response_expected_no_content</span>: <span class="bool-val">false</span>,
-            }
-
-        };
-        <span class="prelude-val">Ok</span>(<span class="ident">PooledStream</span> {
-            <span class="ident">has_read</span>: <span class="bool-val">false</span>,
-            <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="ident">inner</span>),
-            <span class="ident">is_closed</span>: <span class="ident">AtomicBool</span>::<span class="ident">new</span>(<span class="bool-val">false</span>),
-            <span class="ident">pool</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">clone</span>(),
-        })
-    }
-}
-
-<span class="kw">type</span> <span class="ident">StaleCallback</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Fn</span>(<span class="ident">StaleCheck</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Stale</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>;
-
-<span class="comment">// private on purpose</span>
-<span class="comment">//</span>
-<span class="comment">// Yes, I know! Shame on me! This hurts docs! And it means it only</span>
-<span class="comment">// works with closures! I know!</span>
-<span class="comment">//</span>
-<span class="comment">// The thing is, this is experiemental. I&#39;m not certain about the naming.</span>
-<span class="comment">// Or other things. So I don&#39;t really want it in the docs, yet.</span>
-<span class="comment">//</span>
-<span class="comment">// As for only working with closures, that&#39;s fine. A closure is probably</span>
-<span class="comment">// enough, and if it isn&#39;t, well you can grab the stream and duration and</span>
-<span class="comment">// pass those to a function, and then figure out whether to call stale()</span>
-<span class="comment">// or fresh() based on the return value.</span>
-<span class="comment">//</span>
-<span class="comment">// Point is, it&#39;s not that bad. And it&#39;s not ready to publicize.</span>
-<span class="kw">mod</span> <span class="ident">stale</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
-
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaleCheck</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">S</span>,
-        <span class="ident">duration</span>: <span class="ident">Duration</span>,
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">S</span>, <span class="ident">dur</span>: <span class="ident">Duration</span>) <span class="op">-&gt;</span> <span class="ident">StaleCheck</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="ident">StaleCheck</span> {
-            <span class="ident">stream</span>: <span class="ident">stream</span>,
-            <span class="ident">duration</span>: <span class="ident">dur</span>,
-        }
-    }
-
-    <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StaleCheck</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stream</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span> {
-            <span class="self">self</span>.<span class="ident">stream</span>
-        }
-
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">idle_duration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Duration</span> {
-            <span class="self">self</span>.<span class="ident">duration</span>
-        }
-
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stale</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Stale</span> {
-            <span class="ident">Stale</span>(<span class="bool-val">true</span>)
-        }
-
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fresh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Stale</span> {
-            <span class="ident">Stale</span>(<span class="bool-val">false</span>)
-        }
-    }
-
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Stale</span>(<span class="ident">bool</span>);
-
-
-    <span class="kw">impl</span> <span class="ident">Stale</span> {
-        <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_stale</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-            <span class="self">self</span>.<span class="number">0</span>
-        }
-    }
-}
-
-
-<span class="doccomment">/// A Stream that will try to be returned to the Pool when dropped.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="ident">has_read</span>: <span class="ident">bool</span>,
-    <span class="ident">inner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PooledStreamInner</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;&gt;</span>,
-    <span class="comment">// mutated in &amp;self methods</span>
-    <span class="ident">is_closed</span>: <span class="ident">AtomicBool</span>,
-    <span class="ident">pool</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">PoolImpl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
-}
-
-<span class="comment">// manual impl to add the &#39;static bound for 1.7 compat</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;PooledStream&quot;</span>)
-           .<span class="ident">field</span>(<span class="string">&quot;inner&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>)
-           .<span class="ident">field</span>(<span class="string">&quot;has_read&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">has_read</span>)
-           .<span class="ident">field</span>(<span class="string">&quot;is_closed&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>))
-           .<span class="ident">field</span>(<span class="string">&quot;pool&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">pool</span>)
-           .<span class="ident">finish</span>()
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">NetworkStream</span><span class="op">&gt;</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Take the wrapped stream out of the pool completely.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">S</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>().<span class="ident">expect</span>(<span class="string">&quot;PooledStream lost its inner stream&quot;</span>).<span class="ident">stream</span>
-    }
-
-    <span class="doccomment">/// Gets a borrowed reference to the underlying stream.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">S</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">expect</span>(<span class="string">&quot;PooledStream lost its inner stream&quot;</span>).<span class="ident">stream</span>
-    }
-
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span> {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">expect</span>(<span class="string">&quot;PooledStream lost its inner stream&quot;</span>).<span class="ident">stream</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">PooledStreamInner</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="ident">key</span>: <span class="ident">Key</span>,
-    <span class="ident">idle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;</span>,
-    <span class="ident">stream</span>: <span class="ident">S</span>,
-    <span class="ident">previous_response_expected_no_content</span>: <span class="ident">bool</span>,
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">NetworkStream</span><span class="op">&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">inner</span>.<span class="ident">stream</span>.<span class="ident">read</span>(<span class="ident">buf</span>));
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
-            <span class="comment">// if the wrapped stream returns EOF (Ok(0)), that means the</span>
-            <span class="comment">// server has closed the stream. we must be sure this stream</span>
-            <span class="comment">// is dropped and not put back into the pool.</span>
-            <span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-
-            <span class="comment">// if the stream has never read bytes before, then the pooled</span>
-            <span class="comment">// stream may have been disconnected by the server while</span>
-            <span class="comment">// we checked it back out</span>
-            <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">has_read</span> <span class="op">&amp;&amp;</span> <span class="ident">inner</span>.<span class="ident">idle</span>.<span class="ident">is_some</span>() {
-                <span class="comment">// idle being some means this is a reused stream</span>
-                <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(
-                    <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">ConnectionAborted</span>,
-                    <span class="string">&quot;Pooled stream disconnected&quot;</span>
-                ))
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Ok</span>(<span class="number">0</span>)
-            }
-        } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">has_read</span> <span class="op">=</span> <span class="bool-val">true</span>;
-            <span class="prelude-val">Ok</span>(<span class="ident">n</span>)
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">NetworkStream</span><span class="op">&gt;</span> <span class="ident">Write</span> <span class="kw">for</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">stream</span>.<span class="ident">write</span>(<span class="ident">buf</span>)
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">stream</span>.<span class="ident">flush</span>()
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">NetworkStream</span><span class="op">&gt;</span> <span class="ident">NetworkStream</span> <span class="kw">for</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">peer_addr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">stream</span>.<span class="ident">peer_addr</span>()
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-                <span class="ident">e</span>
-            })
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">set_read_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dur</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">stream</span>.<span class="ident">set_read_timeout</span>(<span class="ident">dur</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-                <span class="ident">e</span>
-            })
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">set_write_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dur</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">stream</span>.<span class="ident">set_write_timeout</span>(<span class="ident">dur</span>)
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-                <span class="ident">e</span>
-            })
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">how</span>: <span class="ident">Shutdown</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">store</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">stream</span>.<span class="ident">close</span>(<span class="ident">how</span>)
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">set_previous_response_expected_no_content</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">expected</span>: <span class="ident">bool</span>) {
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;set_previous_response_expected_no_content {}&quot;</span>, <span class="ident">expected</span>);
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>().<span class="ident">previous_response_expected_no_content</span> <span class="op">=</span> <span class="ident">expected</span>;
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">previous_response_expected_no_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">answer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">previous_response_expected_no_content</span>;
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;previous_response_expected_no_content {}&quot;</span>, <span class="ident">answer</span>);
-        <span class="ident">answer</span>
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">PooledStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">let</span> <span class="ident">is_closed</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_closed</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;PooledStream.drop, is_closed={}&quot;</span>, <span class="ident">is_closed</span>);
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">is_closed</span> {
-            <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">inner</span><span class="op">|</span> {
-                <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Instant</span>::<span class="ident">now</span>();
-                <span class="ident">inner</span>.<span class="ident">idle</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">now</span>);
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">pool</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">lock</span>() {
-                    <span class="ident">pool</span>.<span class="ident">reuse</span>(<span class="ident">inner</span>.<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="ident">inner</span>);
+        <span class="kw">match</span> <span class="ident">entry</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">reuse</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="ident">entry</span>))),
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">parked</span>.<span class="ident">is_none</span>() {
+                    <span class="kw">let</span> (<span class="ident">tx</span>, <span class="kw-2">mut</span> <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">relay</span>::<span class="ident">channel</span>();
+                    <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">rx</span>.<span class="ident">poll</span>(); <span class="comment">// park this task</span>
+                    <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">park</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="ident">tx</span>);
+                    <span class="self">self</span>.<span class="ident">parked</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">rx</span>);
                 }
-                <span class="comment">// else poisoned, give up</span>
-            });
+                <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>)
+            },
         }
     }
 }
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Checkout</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">parked</span>.<span class="ident">take</span>();
+        <span class="self">self</span>.<span class="ident">pool</span>.<span class="ident">clean_parked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">key</span>);
+    }
+}
+
+<span class="kw">struct</span> <span class="ident">Expiration</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>);
+
+<span class="kw">impl</span> <span class="ident">Expiration</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">dur</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Expiration</span> {
+        <span class="ident">Expiration</span>(<span class="ident">dur</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">expires</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">instant</span>: <span class="ident">Instant</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">timeout</span>) <span class="op">=&gt;</span> <span class="ident">instant</span>.<span class="ident">elapsed</span>() <span class="op">&gt;</span> <span class="ident">timeout</span>,
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+        }
+    }
+}
+
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">Shutdown</span>;
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Read</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
-    <span class="kw">use</span> <span class="ident">mock</span>::{<span class="ident">MockConnector</span>};
-    <span class="kw">use</span> <span class="ident">net</span>::{<span class="ident">NetworkConnector</span>, <span class="ident">NetworkStream</span>};
-
-    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Pool</span>, <span class="ident">key</span>};
-
-    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">mocked</span> {
-        () <span class="op">=&gt;</span> ({
-            <span class="ident">Pool</span>::<span class="ident">with_connector</span>(<span class="ident">Default</span>::<span class="ident">default</span>(), <span class="ident">MockConnector</span>)
-        })
-    }
+    <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Async</span>, <span class="ident">Future</span>};
+    <span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">future</span>;
+    <span class="kw">use</span> <span class="ident">proto</span>::<span class="ident">KeepAlive</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Pool</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_connect_and_drop</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pool</span> <span class="op">=</span> <span class="macro">mocked</span><span class="macro">!</span>();
-        <span class="ident">pool</span>.<span class="ident">set_idle_timeout</span>(<span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">100</span>)));
-        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">key</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">get_ref</span>().<span class="ident">id</span>, <span class="number">0</span>);
-        <span class="ident">stream</span>.<span class="ident">get_mut</span>().<span class="ident">id</span> <span class="op">=</span> <span class="number">9</span>;
-        <span class="ident">drop</span>(<span class="ident">stream</span>);
-        {
-            <span class="kw">let</span> <span class="ident">locked</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">len</span>(), <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap</span>().<span class="ident">len</span>(), <span class="number">1</span>);
-        }
-        <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>(); <span class="comment">//reused</span>
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">get_ref</span>().<span class="ident">id</span>, <span class="number">9</span>);
-        <span class="ident">drop</span>(<span class="ident">stream</span>);
-        {
-            <span class="kw">let</span> <span class="ident">locked</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">len</span>(), <span class="number">1</span>);
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap</span>().<span class="ident">len</span>(), <span class="number">1</span>);
+    <span class="kw">fn</span> <span class="ident">test_pool_checkout_smoke</span>() {
+        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">Pool</span>::<span class="ident">new</span>(<span class="bool-val">true</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">5</span>)));
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>.<span class="ident">to_string</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pooled</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">41</span>);
+        <span class="ident">pooled</span>.<span class="ident">idle</span>();
+
+        <span class="kw">match</span> <span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">poll</span>().<span class="ident">unwrap</span>() {
+            <span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">pooled</span>) <span class="op">=&gt;</span> <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">pooled</span>, <span class="number">41</span>),
+            _ <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;not ready&quot;</span>),
         }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_closed</span>() {
-        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="macro">mocked</span><span class="macro">!</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="ident">stream</span>.<span class="ident">close</span>(<span class="ident">Shutdown</span>::<span class="ident">Both</span>).<span class="ident">unwrap</span>();
-        <span class="ident">drop</span>(<span class="ident">stream</span>);
-        <span class="kw">let</span> <span class="ident">locked</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+    <span class="kw">fn</span> <span class="ident">test_pool_checkout_returns_none_if_expired</span>() {
+        <span class="ident">future</span>::<span class="ident">lazy</span>(<span class="op">||</span> {
+            <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">Pool</span>::<span class="ident">new</span>(<span class="bool-val">true</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>)));
+            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>.<span class="ident">to_string</span>());
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pooled</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">41</span>);
+            <span class="ident">pooled</span>.<span class="ident">idle</span>();
+            ::<span class="ident">std</span>::<span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">timeout</span>.<span class="ident">unwrap</span>());
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">poll</span>().<span class="ident">unwrap</span>().<span class="ident">is_not_ready</span>());
+            ::<span class="ident">futures</span>::<span class="ident">future</span>::<span class="ident">ok</span>::<span class="op">&lt;</span>(), ()<span class="op">&gt;</span>(())
+        }).<span class="ident">wait</span>().<span class="ident">unwrap</span>();
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_eof_closes</span>() {
-        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="macro">mocked</span><span class="macro">!</span>();
+    <span class="kw">fn</span> <span class="ident">test_pool_removes_expired</span>() {
+        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">Pool</span>::<span class="ident">new</span>(<span class="bool-val">true</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>)));
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>.<span class="ident">to_string</span>());
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>]).<span class="ident">unwrap</span>(), <span class="number">0</span>);
-        <span class="ident">drop</span>(<span class="ident">stream</span>);
-        <span class="kw">let</span> <span class="ident">locked</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pooled1</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">41</span>);
+        <span class="ident">pooled1</span>.<span class="ident">idle</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pooled2</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">5</span>);
+        <span class="ident">pooled2</span>.<span class="ident">idle</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pooled3</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">99</span>);
+        <span class="ident">pooled3</span>.<span class="ident">idle</span>();
+
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">idle</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">entries</span><span class="op">|</span> <span class="ident">entries</span>.<span class="ident">len</span>()), <span class="prelude-val">Some</span>(<span class="number">3</span>));
+        ::<span class="ident">std</span>::<span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">timeout</span>.<span class="ident">unwrap</span>());
+
+        <span class="ident">pooled1</span>.<span class="ident">idle</span>();
+        <span class="ident">pooled2</span>.<span class="ident">idle</span>(); <span class="comment">// idle after sleep, not expired</span>
+        <span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">poll</span>().<span class="ident">unwrap</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">idle</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">entries</span><span class="op">|</span> <span class="ident">entries</span>.<span class="ident">len</span>()), <span class="prelude-val">Some</span>(<span class="number">1</span>));
+        <span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">poll</span>().<span class="ident">unwrap</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">idle</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">is_none</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_read_conn_aborted</span>() {
-        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="macro">mocked</span><span class="macro">!</span>();
+    <span class="kw">fn</span> <span class="ident">test_pool_checkout_task_unparked</span>() {
+        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">Pool</span>::<span class="ident">new</span>(<span class="bool-val">true</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">10</span>)));
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>.<span class="ident">to_string</span>());
+        <span class="kw">let</span> <span class="ident">pooled1</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">41</span>);
 
-        <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>]).<span class="ident">unwrap_err</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">err</span>.<span class="ident">kind</span>(), ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">ConnectionAborted</span>);
-        <span class="ident">drop</span>(<span class="ident">stream</span>);
-        <span class="kw">let</span> <span class="ident">locked</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">locked</span>.<span class="ident">conns</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pooled</span> <span class="op">=</span> <span class="ident">pooled1</span>.<span class="ident">clone</span>();
+        <span class="kw">let</span> <span class="ident">checkout</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">join</span>(<span class="ident">future</span>::<span class="ident">lazy</span>(<span class="kw">move</span> <span class="op">||</span> {
+            <span class="comment">// the checkout future will park first,</span>
+            <span class="comment">// and then this lazy future will be polled, which will insert</span>
+            <span class="comment">// the pooled back into the pool</span>
+            <span class="comment">//</span>
+            <span class="comment">// this test makes sure that doing so will unpark the checkout</span>
+            <span class="ident">pooled</span>.<span class="ident">idle</span>();
+            <span class="prelude-val">Ok</span>(())
+        })).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">entry</span>, _)<span class="op">|</span> <span class="ident">entry</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">checkout</span>.<span class="ident">wait</span>().<span class="ident">unwrap</span>(), <span class="kw-2">*</span><span class="ident">pooled1</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_idle_timeout</span>() {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pool</span> <span class="op">=</span> <span class="macro">mocked</span><span class="macro">!</span>();
-        <span class="ident">pool</span>.<span class="ident">set_idle_timeout</span>(<span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">10</span>)));
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">get_ref</span>().<span class="ident">id</span>, <span class="number">0</span>);
-        <span class="ident">stream</span>.<span class="ident">get_mut</span>().<span class="ident">id</span> <span class="op">=</span> <span class="number">1337</span>;
-        <span class="ident">drop</span>(<span class="ident">stream</span>);
-        ::<span class="ident">std</span>::<span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">100</span>));
-        <span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">connect</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">3000</span>, <span class="string">&quot;http&quot;</span>).<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">get_ref</span>().<span class="ident">id</span>, <span class="number">0</span>);
+    <span class="kw">fn</span> <span class="ident">test_pool_checkout_drop_cleans_up_parked</span>() {
+        <span class="ident">future</span>::<span class="ident">lazy</span>(<span class="op">||</span> {
+            <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">Pool</span>::<span class="ident">new</span>(<span class="bool-val">true</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">10</span>)));
+            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="string">&quot;localhost:12345&quot;</span>.<span class="ident">to_string</span>());
+            <span class="kw">let</span> <span class="ident">_pooled1</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">pooled</span>(<span class="ident">key</span>.<span class="ident">clone</span>(), <span class="number">41</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">checkout1</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">checkout2</span> <span class="op">=</span> <span class="ident">pool</span>.<span class="ident">checkout</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>);
+
+            <span class="comment">// first poll needed to get into Pool&#39;s parked</span>
+            <span class="ident">checkout1</span>.<span class="ident">poll</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">parked</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap</span>().<span class="ident">len</span>(), <span class="number">1</span>);
+            <span class="ident">checkout2</span>.<span class="ident">poll</span>().<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">parked</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap</span>().<span class="ident">len</span>(), <span class="number">2</span>);
+
+            <span class="comment">// on drop, clean up Pool</span>
+            <span class="ident">drop</span>(<span class="ident">checkout1</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">parked</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">unwrap</span>().<span class="ident">len</span>(), <span class="number">1</span>);
+
+            <span class="ident">drop</span>(<span class="ident">checkout2</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">pool</span>.<span class="ident">inner</span>.<span class="ident">borrow</span>().<span class="ident">parked</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">is_none</span>());
+
+            ::<span class="ident">futures</span>::<span class="ident">future</span>::<span class="ident">ok</span>::<span class="op">&lt;</span>(), ()<span class="op">&gt;</span>(())
+        }).<span class="ident">wait</span>().<span class="ident">unwrap</span>();
     }
 }
 </pre>
@@ -1064,7 +978,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

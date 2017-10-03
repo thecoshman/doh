@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/accept.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/accept.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>accept.rs.html -- source</title>
@@ -186,8 +186,10 @@
 <span id="141">141</span>
 <span id="142">142</span>
 <span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">mime</span>::<span class="ident">Mime</span>;
+<span class="kw">use</span> <span class="ident">mime</span>::{<span class="self">self</span>, <span class="ident">Mime</span>};
 
 <span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">QualityItem</span>, <span class="ident">qitem</span>};
 
@@ -213,118 +215,120 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
-    <span class="doccomment">/// * `audio/*; q=0.2, audio/basic` (`*` value won&#39;t parse correctly)</span>
+    <span class="doccomment">/// * `audio/*; q=0.2, audio/basic`</span>
     <span class="doccomment">/// * `text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Accept, qitem};</span>
-    <span class="doccomment">/// use hyper::mime::{Mime, TopLevel, SubLevel};</span>
+    <span class="doccomment">/// use hyper::mime;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     Accept(vec![</span>
-    <span class="doccomment">///         qitem(Mime(TopLevel::Text, SubLevel::Html, vec![])),</span>
+    <span class="doccomment">///         qitem(mime::TEXT_HTML),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Accept, qitem};</span>
-    <span class="doccomment">/// use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};</span>
+    <span class="doccomment">/// use hyper::mime;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     Accept(vec![</span>
-    <span class="doccomment">///         qitem(Mime(TopLevel::Application, SubLevel::Json,</span>
-    <span class="doccomment">///                    vec![(Attr::Charset, Value::Utf8)])),</span>
+    <span class="doccomment">///         qitem(mime::APPLICATION_JSON),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use hyper::header::{Headers, Accept, QualityItem, Quality, qitem};</span>
-    <span class="doccomment">/// use hyper::mime::{Mime, TopLevel, SubLevel};</span>
+    <span class="doccomment">/// use hyper::header::{Headers, Accept, QualityItem, q, qitem};</span>
+    <span class="doccomment">/// use hyper::mime;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     Accept(vec![</span>
-    <span class="doccomment">///         qitem(Mime(TopLevel::Text, SubLevel::Html, vec![])),</span>
-    <span class="doccomment">///         qitem(Mime(TopLevel::Application,</span>
-    <span class="doccomment">///                    SubLevel::Ext(&quot;xhtml+xml&quot;.to_owned()), vec![])),</span>
-    <span class="doccomment">///         QualityItem::new(Mime(TopLevel::Application, SubLevel::Xml, vec![]),</span>
-    <span class="doccomment">///                          Quality(900)),</span>
-    <span class="doccomment">///                          qitem(Mime(TopLevel::Image,</span>
-    <span class="doccomment">///                                     SubLevel::Ext(&quot;webp&quot;.to_owned()), vec![])),</span>
-    <span class="doccomment">///                          QualityItem::new(Mime(TopLevel::Star, SubLevel::Star, vec![]),</span>
-    <span class="doccomment">///                                           Quality(800))</span>
+    <span class="doccomment">///         qitem(mime::TEXT_HTML),</span>
+    <span class="doccomment">///         qitem(&quot;application/xhtml+xml&quot;.parse().unwrap()),</span>
+    <span class="doccomment">///         QualityItem::new(</span>
+    <span class="doccomment">///             mime::TEXT_XML,</span>
+    <span class="doccomment">///             q(900)</span>
+    <span class="doccomment">///         ),</span>
+    <span class="doccomment">///         qitem(&quot;image/webp&quot;.parse().unwrap()),</span>
+    <span class="doccomment">///         QualityItem::new(</span>
+    <span class="doccomment">///             mime::STAR_STAR,</span>
+    <span class="doccomment">///             q(800)</span>
+    <span class="doccomment">///         ),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Notes</span>
-    <span class="doccomment">/// * Using always Mime types to represent `media-range` differs from the ABNF.</span>
-    <span class="doccomment">/// * **FIXME**: `accept-ext` is not supported.</span>
     (<span class="ident">Accept</span>, <span class="string">&quot;Accept&quot;</span>) <span class="op">=&gt;</span> (<span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>)<span class="op">+</span>
 
     <span class="ident">test_accept</span> {
         <span class="comment">// Tests from the RFC</span>
-        <span class="comment">// FIXME: Test fails, first value containing a &quot;*&quot; fails to parse</span>
-        <span class="comment">// test_header!(</span>
-        <span class="comment">//    test1,</span>
-        <span class="comment">//    vec![b&quot;audio/*; q=0.2, audio/basic&quot;],</span>
-        <span class="comment">//    Some(HeaderField(vec![</span>
-        <span class="comment">//        QualityItem::new(Mime(TopLevel::Audio, SubLevel::Star, vec![]), Quality(200)),</span>
-        <span class="comment">//        qitem(Mime(TopLevel::Audio, SubLevel::Ext(&quot;basic&quot;.to_owned()), vec![])),</span>
-        <span class="comment">//        ])));</span>
+         <span class="macro">test_header</span><span class="macro">!</span>(
+            <span class="ident">test1</span>,
+            <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;audio/*; q=0.2, audio/basic&quot;</span>],
+            <span class="prelude-val">Some</span>(<span class="ident">HeaderField</span>(<span class="macro">vec</span><span class="macro">!</span>[
+                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="string">&quot;audio/*&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>(), <span class="ident">q</span>(<span class="number">200</span>)),
+                <span class="ident">qitem</span>(<span class="string">&quot;audio/basic&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
+                ])));
         <span class="macro">test_header</span><span class="macro">!</span>(
             <span class="ident">test2</span>,
             <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c&quot;</span>],
             <span class="prelude-val">Some</span>(<span class="ident">HeaderField</span>(<span class="macro">vec</span><span class="macro">!</span>[
-                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="ident">Mime</span>(<span class="ident">TopLevel</span>::<span class="ident">Text</span>, <span class="ident">SubLevel</span>::<span class="ident">Plain</span>, <span class="macro">vec</span><span class="macro">!</span>[]), <span class="ident">Quality</span>(<span class="number">500</span>)),
-                <span class="ident">qitem</span>(<span class="ident">Mime</span>(<span class="ident">TopLevel</span>::<span class="ident">Text</span>, <span class="ident">SubLevel</span>::<span class="ident">Html</span>, <span class="macro">vec</span><span class="macro">!</span>[])),
+                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="ident">TEXT_PLAIN</span>, <span class="ident">q</span>(<span class="number">500</span>)),
+                <span class="ident">qitem</span>(<span class="ident">TEXT_HTML</span>),
                 <span class="ident">QualityItem</span>::<span class="ident">new</span>(
-                    <span class="ident">Mime</span>(<span class="ident">TopLevel</span>::<span class="ident">Text</span>, <span class="ident">SubLevel</span>::<span class="ident">Ext</span>(<span class="string">&quot;x-dvi&quot;</span>.<span class="ident">to_owned</span>()), <span class="macro">vec</span><span class="macro">!</span>[]),
-                    <span class="ident">Quality</span>(<span class="number">800</span>)),
-                <span class="ident">qitem</span>(<span class="ident">Mime</span>(<span class="ident">TopLevel</span>::<span class="ident">Text</span>, <span class="ident">SubLevel</span>::<span class="ident">Ext</span>(<span class="string">&quot;x-c&quot;</span>.<span class="ident">to_owned</span>()), <span class="macro">vec</span><span class="macro">!</span>[])),
+                    <span class="string">&quot;text/x-dvi&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>(),
+                    <span class="ident">q</span>(<span class="number">800</span>)),
+                <span class="ident">qitem</span>(<span class="string">&quot;text/x-c&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
                 ])));
         <span class="comment">// Custom tests</span>
         <span class="macro">test_header</span><span class="macro">!</span>(
             <span class="ident">test3</span>,
             <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;text/plain; charset=utf-8&quot;</span>],
             <span class="prelude-val">Some</span>(<span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[
-                <span class="ident">qitem</span>(<span class="ident">Mime</span>(<span class="ident">TopLevel</span>::<span class="ident">Text</span>, <span class="ident">SubLevel</span>::<span class="ident">Plain</span>, <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">Attr</span>::<span class="ident">Charset</span>, <span class="ident">Value</span>::<span class="ident">Utf8</span>)])),
+                <span class="ident">qitem</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>),
                 ])));
         <span class="macro">test_header</span><span class="macro">!</span>(
             <span class="ident">test4</span>,
             <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;text/plain; charset=utf-8; q=0.5&quot;</span>],
             <span class="prelude-val">Some</span>(<span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[
-                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="ident">Mime</span>(<span class="ident">TopLevel</span>::<span class="ident">Text</span>,
-                    <span class="ident">SubLevel</span>::<span class="ident">Plain</span>, <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">Attr</span>::<span class="ident">Charset</span>, <span class="ident">Value</span>::<span class="ident">Utf8</span>)]),
-                    <span class="ident">Quality</span>(<span class="number">500</span>)),
+                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="ident">TEXT_PLAIN_UTF_8</span>,
+                    <span class="ident">q</span>(<span class="number">500</span>)),
             ])));
+
+        <span class="attribute">#[<span class="ident">test</span>]</span>
+        <span class="kw">fn</span> <span class="ident">test_fuzzing1</span>() {
+            <span class="kw">let</span> <span class="ident">raw</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;chunk#;e&quot;</span>.<span class="ident">into</span>();
+            <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">Accept</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">raw</span>);
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">is_ok</span>());
+        }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Accept</span> {
     <span class="doccomment">/// A constructor to easily create `Accept: */*`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">star</span>() <span class="op">-&gt;</span> <span class="ident">Accept</span> {
-        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="macro">mime</span><span class="macro">!</span>(<span class="ident">Star</span><span class="op">/</span><span class="ident">Star</span>))])
+        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="ident">mime</span>::<span class="ident">STAR_STAR</span>)])
     }
 
     <span class="doccomment">/// A constructor to easily create `Accept: application/json`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">json</span>() <span class="op">-&gt;</span> <span class="ident">Accept</span> {
-        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="macro">mime</span><span class="macro">!</span>(<span class="ident">Application</span><span class="op">/</span><span class="ident">Json</span>))])
+        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="ident">mime</span>::<span class="ident">APPLICATION_JSON</span>)])
     }
 
     <span class="doccomment">/// A constructor to easily create `Accept: text/*`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text</span>() <span class="op">-&gt;</span> <span class="ident">Accept</span> {
-        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="macro">mime</span><span class="macro">!</span>(<span class="ident">Text</span><span class="op">/</span><span class="ident">Star</span>))])
+        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="ident">mime</span>::<span class="ident">TEXT_STAR</span>)])
     }
 
     <span class="doccomment">/// A constructor to easily create `Accept: image/*`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">image</span>() <span class="op">-&gt;</span> <span class="ident">Accept</span> {
-        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="macro">mime</span><span class="macro">!</span>(<span class="ident">Image</span><span class="op">/</span><span class="ident">Star</span>))])
+        <span class="ident">Accept</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">qitem</span>(<span class="ident">mime</span>::<span class="ident">IMAGE_STAR</span>)])
     }
 }
 
@@ -388,7 +392,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

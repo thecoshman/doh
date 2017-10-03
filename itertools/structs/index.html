@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'structs', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module structs</p><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'structs', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/itertools/lib.rs.html#38-77' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/itertools/lib.rs.html#32-73' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The concrete iterator types.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -242,6 +242,21 @@ missing elements using a closure.</p>
                                   title='struct itertools::structs::PeekingTakeWhile'>PeekingTakeWhile</a></td>
                            <td class='docblock-short'>
                                 <p>An iterator adaptor that takes items while a closure returns <code>true</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Positions.html"
+                                  title='struct itertools::structs::Positions'>Positions</a></td>
+                           <td class='docblock-short'>
+                                <p>An iterator adapter to get the positions of each element that matches a predicate.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ProcessResults.html"
+                                  title='struct itertools::structs::ProcessResults'>ProcessResults</a></td>
+                           <td class='docblock-short'>
+                                <p>An iterator that produces only the <code>T</code> values as long as the
+inner iterator produces <code>Ok(T)</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -454,7 +469,6 @@ and produces <code>A</code>. Stops on the first <code>None</code> encountered.</
         window.rootPath = "../../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

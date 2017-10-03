@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/pkey.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/pkey.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>pkey.rs.html -- source</title>
@@ -423,6 +423,57 @@
 <span id="378">378</span>
 <span id="379">379</span>
 <span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_void</span>, <span class="ident">c_char</span>, <span class="ident">c_int</span>, <span class="ident">size_t</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
@@ -510,7 +561,11 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">evp</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_new</span>()));
             <span class="kw">let</span> <span class="ident">pkey</span> <span class="op">=</span> <span class="ident">PKey</span>(<span class="ident">evp</span>);
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(<span class="ident">pkey</span>.<span class="number">0</span>, <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_RSA</span>, <span class="ident">rsa</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _)));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(
+                <span class="ident">pkey</span>.<span class="number">0</span>,
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_RSA</span>,
+                <span class="ident">rsa</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">rsa</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">pkey</span>)
         }
@@ -521,7 +576,11 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">evp</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_new</span>()));
             <span class="kw">let</span> <span class="ident">pkey</span> <span class="op">=</span> <span class="ident">PKey</span>(<span class="ident">evp</span>);
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(<span class="ident">pkey</span>.<span class="number">0</span>, <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_DSA</span>, <span class="ident">dsa</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _)));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(
+                <span class="ident">pkey</span>.<span class="number">0</span>,
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_DSA</span>,
+                <span class="ident">dsa</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">dsa</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">pkey</span>)
         }
@@ -532,7 +591,11 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">evp</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_new</span>()));
             <span class="kw">let</span> <span class="ident">pkey</span> <span class="op">=</span> <span class="ident">PKey</span>(<span class="ident">evp</span>);
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(<span class="ident">pkey</span>.<span class="number">0</span>, <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_DH</span>, <span class="ident">dh</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _)));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(
+                <span class="ident">pkey</span>.<span class="number">0</span>,
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_DH</span>,
+                <span class="ident">dh</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">dh</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">pkey</span>)
         }
@@ -543,7 +606,11 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">evp</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_new</span>()));
             <span class="kw">let</span> <span class="ident">pkey</span> <span class="op">=</span> <span class="ident">PKey</span>(<span class="ident">evp</span>);
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(<span class="ident">pkey</span>.<span class="number">0</span>, <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_EC</span>, <span class="ident">ec_key</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _)));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_assign</span>(
+                <span class="ident">pkey</span>.<span class="number">0</span>,
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_EC</span>,
+                <span class="ident">ec_key</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">ec_key</span>);
             <span class="prelude-val">Ok</span>(<span class="ident">pkey</span>)
         }
@@ -556,10 +623,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hmac</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PKey</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">key</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">c_int</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_new_mac_key</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_HMAC</span>,
-                                                           <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                                           <span class="ident">key</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _,
-                                                           <span class="ident">key</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>)));
+            <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_new_mac_key</span>(
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_HMAC</span>,
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="ident">key</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _,
+                <span class="ident">key</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">PKey</span>(<span class="ident">key</span>))
         }
     }
@@ -567,6 +636,7 @@
     <span class="macro">private_key_from_pem</span><span class="macro">!</span>(<span class="ident">PKey</span>, <span class="ident">ffi</span>::<span class="ident">PEM_read_bio_PrivateKey</span>);
     <span class="macro">public_key_from_pem</span><span class="macro">!</span>(<span class="ident">PKey</span>, <span class="ident">ffi</span>::<span class="ident">PEM_read_bio_PUBKEY</span>);
     <span class="macro">public_key_from_der</span><span class="macro">!</span>(<span class="ident">PKey</span>, <span class="ident">ffi</span>::<span class="ident">d2i_PUBKEY</span>);
+    <span class="macro">private_key_from_der</span><span class="macro">!</span>(<span class="ident">PKey</span>, <span class="ident">ffi</span>::<span class="ident">d2i_AutoPrivateKey</span>);
 
     <span class="doccomment">/// Deserializes a DER-formatted PKCS#8 private key, using a callback to retrieve the password</span>
     <span class="doccomment">/// if the key is encrpyted.</span>
@@ -574,17 +644,19 @@
     <span class="doccomment">/// The callback should copy the password into the provided buffer and return the number of</span>
     <span class="doccomment">/// bytes written.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_key_from_pkcs8_callback</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">der</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PKey</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span>,
     {
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">init</span>();
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">CallbackState</span>::<span class="ident">new</span>(<span class="ident">callback</span>);
             <span class="kw">let</span> <span class="ident">bio</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">MemBioSlice</span>::<span class="ident">new</span>(<span class="ident">der</span>));
-            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">d2i_PKCS8PrivateKey_bio</span>(<span class="ident">bio</span>.<span class="ident">as_ptr</span>(),
-                                               <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                               <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
-                                               <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _))
-                .<span class="ident">map</span>(<span class="ident">PKey</span>)
+            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">d2i_PKCS8PrivateKey_bio</span>(
+                <span class="ident">bio</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
+            )).<span class="ident">map</span>(<span class="ident">PKey</span>)
         }
     }
 
@@ -594,33 +666,38 @@
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `passphrase` contains an embedded null.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_key_from_pkcs8_passphrase</span>(<span class="ident">der</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-                                             <span class="ident">passphrase</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>])
-                                             <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PKey</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_key_from_pkcs8_passphrase</span>(
+        <span class="ident">der</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+        <span class="ident">passphrase</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PKey</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">init</span>();
             <span class="kw">let</span> <span class="ident">bio</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">MemBioSlice</span>::<span class="ident">new</span>(<span class="ident">der</span>));
             <span class="kw">let</span> <span class="ident">passphrase</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">passphrase</span>).<span class="ident">unwrap</span>();
-            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">d2i_PKCS8PrivateKey_bio</span>(<span class="ident">bio</span>.<span class="ident">as_ptr</span>(),
-                                               <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                               <span class="prelude-val">None</span>,
-                                               <span class="ident">passphrase</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _))
-                .<span class="ident">map</span>(<span class="ident">PKey</span>)
+            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">d2i_PKCS8PrivateKey_bio</span>(
+                <span class="ident">bio</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="prelude-val">None</span>,
+                <span class="ident">passphrase</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
+            )).<span class="ident">map</span>(<span class="ident">PKey</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.9.2&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use private_key_from_pem_callback&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_key_from_pem_cb</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">pass_cb</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PKey</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">c_char</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>
+    <span class="kw">where</span>
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">c_char</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>,
     {
         <span class="ident">ffi</span>::<span class="ident">init</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">CallbackState</span>::<span class="ident">new</span>(<span class="ident">pass_cb</span>);
         <span class="kw">let</span> <span class="ident">mem_bio</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">MemBioSlice</span>::<span class="ident">new</span>(<span class="ident">buf</span>));
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">evp</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_PrivateKey</span>(<span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
-                                                              <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                                              <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
-                                                              <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)));
+            <span class="kw">let</span> <span class="ident">evp</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_PrivateKey</span>(
+                <span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">PKey</span>::<span class="ident">from_ptr</span>(<span class="ident">evp</span>))
         }
     }
@@ -649,7 +726,10 @@
 <span class="kw">impl</span> <span class="ident">PKeyCtxRef</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_rsa_padding</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pad</span>: <span class="ident">Padding</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_CTX_set_rsa_padding</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">pad</span>.<span class="ident">as_raw</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_CTX_set_rsa_padding</span>(
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">pad</span>.<span class="ident">as_raw</span>(),
+            )));
         }
         <span class="prelude-val">Ok</span>(())
     }
@@ -657,7 +737,9 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rsa_padding</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Padding</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pad</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">unsafe</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_CTX_get_rsa_padding</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pad</span>)));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_CTX_get_rsa_padding</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">pad</span>),
+            ));
         };
         <span class="prelude-val">Ok</span>(<span class="ident">Padding</span>::<span class="ident">from_raw</span>(<span class="ident">pad</span>))
     }
@@ -671,17 +753,31 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_set_peer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">peer</span>: <span class="kw-2">&amp;</span><span class="ident">PKeyRef</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_derive_set_peer</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">peer</span>.<span class="ident">as_ptr</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(
+                <span class="ident">ffi</span>::<span class="ident">EVP_PKEY_derive_set_peer</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">peer</span>.<span class="ident">as_ptr</span>()),
+            ));
         }
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">len</span>: <span class="ident">size_t</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">unsafe</span> { <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_derive</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len</span>))); }
+        <span class="kw">unsafe</span> {
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_derive</span>(
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len</span>,
+            )));
+        }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0u8</span>; <span class="ident">len</span>];
-        <span class="kw">unsafe</span> { <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_derive</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">key</span>.<span class="ident">as_mut_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len</span>))); }
+        <span class="kw">unsafe</span> {
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">EVP_PKEY_derive</span>(
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">key</span>.<span class="ident">as_mut_ptr</span>(),
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len</span>,
+            )));
+        }
         <span class="prelude-val">Ok</span>(<span class="ident">key</span>)
     }
 }
@@ -701,7 +797,8 @@
     <span class="kw">fn</span> <span class="ident">test_to_password</span>() {
         <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>::<span class="ident">generate</span>(<span class="number">2048</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">pkey</span> <span class="op">=</span> <span class="ident">PKey</span>::<span class="ident">from_rsa</span>(<span class="ident">rsa</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">pem</span> <span class="op">=</span> <span class="ident">pkey</span>.<span class="ident">private_key_to_pem_passphrase</span>(<span class="ident">Cipher</span>::<span class="ident">aes_128_cbc</span>(), <span class="string">b&quot;foobar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">pem</span> <span class="op">=</span> <span class="ident">pkey</span>.<span class="ident">private_key_to_pem_passphrase</span>(<span class="ident">Cipher</span>::<span class="ident">aes_128_cbc</span>(), <span class="string">b&quot;foobar&quot;</span>)
+            .<span class="ident">unwrap</span>();
         <span class="ident">PKey</span>::<span class="ident">private_key_from_pem_passphrase</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>, <span class="string">b&quot;foobar&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">PKey</span>::<span class="ident">private_key_from_pem_passphrase</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>, <span class="string">b&quot;fizzbuzz&quot;</span>).<span class="ident">is_err</span>());
     }
@@ -717,11 +814,10 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;../test/pkcs8.der&quot;</span>);
         <span class="ident">PKey</span>::<span class="ident">private_key_from_pkcs8_callback</span>(<span class="ident">key</span>, <span class="op">|</span><span class="ident">password</span><span class="op">|</span> {
-                <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                <span class="ident">password</span>[..<span class="number">6</span>].<span class="ident">copy_from_slice</span>(<span class="string">b&quot;mypass&quot;</span>);
-                <span class="prelude-val">Ok</span>(<span class="number">6</span>)
-            })
-            .<span class="ident">unwrap</span>();
+            <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="ident">password</span>[..<span class="number">6</span>].<span class="ident">copy_from_slice</span>(<span class="string">b&quot;mypass&quot;</span>);
+            <span class="prelude-val">Ok</span>(<span class="number">6</span>)
+        }).<span class="ident">unwrap</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">password_queried</span>);
     }
 
@@ -741,6 +837,12 @@
     <span class="kw">fn</span> <span class="ident">test_public_key_from_der</span>() {
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;../test/key.der.pub&quot;</span>);
         <span class="ident">PKey</span>::<span class="ident">public_key_from_der</span>(<span class="ident">key</span>).<span class="ident">unwrap</span>();
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_private_key_from_der</span>() {
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;../test/key.der&quot;</span>);
+        <span class="ident">PKey</span>::<span class="ident">private_key_from_der</span>(<span class="ident">key</span>).<span class="ident">unwrap</span>();
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -862,7 +964,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

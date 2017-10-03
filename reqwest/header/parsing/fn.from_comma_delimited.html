@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#26-38' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn from_comma_delimited&lt;T, S&gt;(raw: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[S]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;T&gt;, <a class="enum" href="../../../reqwest/enum.HyperError.html" title="enum reqwest::HyperError">Error</a>&gt; <span class="where fmt-newline">where S: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;, T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">FromStr</a></span></pre><div class='docblock'><p>Reads a comma-delimited raw header into a Vec.</p>
+               </span><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#31-43' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn from_comma_delimited&lt;T&gt;(raw: &amp;<a class="struct" href="../../../reqwest/header/struct.Raw.html" title="struct reqwest::header::Raw">Raw</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;, <a class="enum" href="../../../hyper/error/enum.Error.html" title="enum hyper::error::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">FromStr</a>,&nbsp;</span></pre><div class='docblock'><p>Reads a comma-delimited raw header into a Vec.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -107,7 +107,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "reqwest";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

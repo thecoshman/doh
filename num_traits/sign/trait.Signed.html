@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../../num_traits/index.html'><img src='https://rust-num.github.io/num/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../index.html'>num_traits</a>::<wbr><a href='index.html'>sign</a></p><script>window.sidebarCurrent = {name: 'Signed', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Signed</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>num_traits</a>::<wbr><a href='index.html'>sign</a></p><script>window.sidebarCurrent = {name: 'Signed', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,13 +48,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/num_traits/sign.rs.html#7-41' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Signed: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../num_traits/trait.Num.html" title="trait num_traits::Num">Num</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Neg.html" title="trait core::ops::Neg">Neg</a>&lt;Output=Self&gt; {
+               </span><a class='srclink' href='../../src/num_traits/sign.rs.html#8-42' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Signed: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../num_traits/trait.Num.html" title="trait num_traits::Num">Num</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Neg.html" title="trait core::ops::arith::Neg">Neg</a>&lt;Output = Self&gt; {
     fn <a href='#tymethod.abs' class='fnname'>abs</a>(&amp;self) -&gt; Self;
-    fn <a href='#tymethod.abs_sub' class='fnname'>abs_sub</a>(&amp;self, other: &amp;Self) -&gt; Self;
-    fn <a href='#tymethod.signum' class='fnname'>signum</a>(&amp;self) -&gt; Self;
-    fn <a href='#tymethod.is_positive' class='fnname'>is_positive</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
-    fn <a href='#tymethod.is_negative' class='fnname'>is_negative</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+<div class='item-spacer'></div>    fn <a href='#tymethod.abs_sub' class='fnname'>abs_sub</a>(&amp;self, other: &amp;Self) -&gt; Self;
+<div class='item-spacer'></div>    fn <a href='#tymethod.signum' class='fnname'>signum</a>(&amp;self) -&gt; Self;
+<div class='item-spacer'></div>    fn <a href='#tymethod.is_positive' class='fnname'>is_positive</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+<div class='item-spacer'></div>    fn <a href='#tymethod.is_negative' class='fnname'>is_negative</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
 }</pre><div class='docblock'><p>Useful functions for signed numbers (i.e. numbers that can be negative).</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
@@ -95,6 +95,7 @@ between <code>self</code> and <code>other</code> is returned.</p>
 <li><code>impl Signed for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a></code></li>
 <li><code>impl Signed for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></li>
 <li><code>impl Signed for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></li>
+<li><code>impl&lt;T:&nbsp;<a class="trait" href="../../num_traits/sign/trait.Signed.html" title="trait num_traits::sign::Signed">Signed</a>&gt; Signed for <a class="struct" href="https://doc.rust-lang.org/nightly/core/num/struct.Wrapping.html" title="struct core::num::Wrapping">Wrapping</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/core/num/struct.Wrapping.html" title="struct core::num::Wrapping">Wrapping</a>&lt;T&gt;: <a class="trait" href="../../num_traits/trait.Num.html" title="trait num_traits::Num">Num</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Neg.html" title="trait core::ops::arith::Neg">Neg</a>&lt;Output = <a class="struct" href="https://doc.rust-lang.org/nightly/core/num/struct.Wrapping.html" title="struct core::num::Wrapping">Wrapping</a>&lt;T&gt;&gt;,&nbsp;</span></code></li>
 <li><code>impl Signed for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a></code></li>
 <li><code>impl Signed for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a></code></li>
 </ul><script type="text/javascript" async
@@ -156,7 +157,6 @@ between <code>self</code> and <code>other</code> is returned.</p>
         window.rootPath = "../../";
         window.currentCrate = "num_traits";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

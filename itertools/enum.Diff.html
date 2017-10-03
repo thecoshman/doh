@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'Diff', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum Diff</p><div class="block items"><ul><li><a href="#variants">Variants</a></li></ul></div><p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'Diff', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/itertools/diff.rs.html#15-26' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum Diff&lt;I, J&gt; <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>, J: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a></span> {
+<pre class='rust enum'>pub enum Diff&lt;I, J&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,&nbsp;</span> {
     FirstMismatch(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;),
     Shorter(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;),
     Longer(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;),
@@ -57,7 +57,7 @@
 
 <p><code>Diff</code> represents the way in which the elements yielded by the iterator <code>I</code> differ to some
 iterator <code>J</code>.</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.FirstMismatch' class='variant'><span id='FirstMismatch.v' class='invisible'><code>FirstMismatch(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;)</code></span></span><div class='docblock'><p>The index of the first non-matching element along with both iterator&#39;s remaining elements
 starting with the first mis-match.</p>
 </div><span id='variant.Shorter' class='variant'><span id='Shorter.v' class='invisible'><code>Shorter(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;)</code></span></span><div class='docblock'><p>The total number of elements that were in <code>J</code> along with the remaining elements of <code>I</code>.</p>
@@ -119,7 +119,6 @@ starting with the first mis-match.</p>
         window.rootPath = "../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

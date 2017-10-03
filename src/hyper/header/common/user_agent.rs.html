@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/user_agent.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/user_agent.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>user_agent.rs.html -- source</title>
@@ -117,15 +117,15 @@
     <span class="doccomment">/// use hyper::header::{Headers, UserAgent};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
-    <span class="doccomment">/// headers.set(UserAgent(&quot;hyper/0.5.2&quot;.to_owned()));</span>
+    <span class="doccomment">/// headers.set(UserAgent::new(&quot;hyper/0.5.2&quot;));</span>
     <span class="doccomment">/// ```</span>
-    (<span class="ident">UserAgent</span>, <span class="string">&quot;User-Agent&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">String</span>]
+    (<span class="ident">UserAgent</span>, <span class="string">&quot;User-Agent&quot;</span>) <span class="op">=&gt;</span> <span class="ident">Cow</span>[<span class="ident">str</span>]
 
     <span class="ident">test_user_agent</span> {
         <span class="comment">// Testcase from RFC</span>
         <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;CERN-LineMode/2.15 libwww/2.17b3&quot;</span>]);
         <span class="comment">// Own testcase</span>
-        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test2</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Bunnies&quot;</span>], <span class="prelude-val">Some</span>(<span class="ident">UserAgent</span>(<span class="string">&quot;Bunnies&quot;</span>.<span class="ident">to_owned</span>())));
+        <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test2</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;Bunnies&quot;</span>], <span class="prelude-val">Some</span>(<span class="ident">UserAgent</span>::<span class="ident">new</span>(<span class="string">&quot;Bunnies&quot;</span>)));
     }
 }
 </pre>
@@ -186,7 +186,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

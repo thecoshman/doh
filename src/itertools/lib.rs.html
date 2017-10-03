@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.5/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -1704,6 +1704,83 @@
 <span id="1659">1659</span>
 <span id="1660">1660</span>
 <span id="1661">1661</span>
+<span id="1662">1662</span>
+<span id="1663">1663</span>
+<span id="1664">1664</span>
+<span id="1665">1665</span>
+<span id="1666">1666</span>
+<span id="1667">1667</span>
+<span id="1668">1668</span>
+<span id="1669">1669</span>
+<span id="1670">1670</span>
+<span id="1671">1671</span>
+<span id="1672">1672</span>
+<span id="1673">1673</span>
+<span id="1674">1674</span>
+<span id="1675">1675</span>
+<span id="1676">1676</span>
+<span id="1677">1677</span>
+<span id="1678">1678</span>
+<span id="1679">1679</span>
+<span id="1680">1680</span>
+<span id="1681">1681</span>
+<span id="1682">1682</span>
+<span id="1683">1683</span>
+<span id="1684">1684</span>
+<span id="1685">1685</span>
+<span id="1686">1686</span>
+<span id="1687">1687</span>
+<span id="1688">1688</span>
+<span id="1689">1689</span>
+<span id="1690">1690</span>
+<span id="1691">1691</span>
+<span id="1692">1692</span>
+<span id="1693">1693</span>
+<span id="1694">1694</span>
+<span id="1695">1695</span>
+<span id="1696">1696</span>
+<span id="1697">1697</span>
+<span id="1698">1698</span>
+<span id="1699">1699</span>
+<span id="1700">1700</span>
+<span id="1701">1701</span>
+<span id="1702">1702</span>
+<span id="1703">1703</span>
+<span id="1704">1704</span>
+<span id="1705">1705</span>
+<span id="1706">1706</span>
+<span id="1707">1707</span>
+<span id="1708">1708</span>
+<span id="1709">1709</span>
+<span id="1710">1710</span>
+<span id="1711">1711</span>
+<span id="1712">1712</span>
+<span id="1713">1713</span>
+<span id="1714">1714</span>
+<span id="1715">1715</span>
+<span id="1716">1716</span>
+<span id="1717">1717</span>
+<span id="1718">1718</span>
+<span id="1719">1719</span>
+<span id="1720">1720</span>
+<span id="1721">1721</span>
+<span id="1722">1722</span>
+<span id="1723">1723</span>
+<span id="1724">1724</span>
+<span id="1725">1725</span>
+<span id="1726">1726</span>
+<span id="1727">1727</span>
+<span id="1728">1728</span>
+<span id="1729">1729</span>
+<span id="1730">1730</span>
+<span id="1731">1731</span>
+<span id="1732">1732</span>
+<span id="1733">1733</span>
+<span id="1734">1734</span>
+<span id="1735">1735</span>
+<span id="1736">1736</span>
+<span id="1737">1737</span>
+<span id="1738">1738</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">crate_name</span><span class="op">=</span><span class="string">&quot;itertools&quot;</span>]</span>
@@ -1714,12 +1791,6 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```ignore</span>
 <span class="doccomment">//! use itertools::Itertools;</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! To enable the macros in this crate, use the `#[macro_use]` attribute:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```ignore</span>
-<span class="doccomment">//! #[macro_use] extern crate itertools;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Rust Version</span>
@@ -1764,6 +1835,7 @@
         <span class="ident">Unique</span>,
         <span class="ident">UniqueBy</span>,
         <span class="ident">Flatten</span>,
+        <span class="ident">Positions</span>,
     };
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cons_tuples_impl</span>::<span class="ident">ConsTuples</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">format</span>::{<span class="ident">Format</span>, <span class="ident">FormatWith</span>};
@@ -1772,6 +1844,7 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">kmerge_impl</span>::{<span class="ident">KMerge</span>, <span class="ident">KMergeBy</span>};
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pad_tail</span>::<span class="ident">PadUsing</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">peeking_take_while</span>::<span class="ident">PeekingTakeWhile</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">process_results_impl</span>::<span class="ident">ProcessResults</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rciter_impl</span>::<span class="ident">RcIter</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">repeatn</span>::<span class="ident">RepeatN</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sources</span>::{<span class="ident">RepeatCall</span>, <span class="ident">Unfold</span>, <span class="ident">Iterate</span>};
@@ -1783,12 +1856,14 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ziptuple</span>::<span class="ident">Zip</span>;
 }
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">structs</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concat_impl</span>::<span class="ident">concat</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cons_tuples_impl</span>::<span class="ident">cons_tuples</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">diff</span>::<span class="ident">diff_with</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">diff</span>::<span class="ident">Diff</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">kmerge_impl</span>::{<span class="ident">kmerge_by</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">minmax</span>::<span class="ident">MinMaxResult</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">peeking_take_while</span>::<span class="ident">PeekingNext</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">process_results_impl</span>::<span class="ident">process_results</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">repeatn</span>::<span class="ident">repeat_n</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sources</span>::{<span class="ident">repeat_call</span>, <span class="ident">unfold</span>, <span class="ident">iterate</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">with_position</span>::<span class="ident">Position</span>;
@@ -1799,6 +1874,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">free</span>;
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">free</span>::<span class="kw-2">*</span>;
+<span class="kw">mod</span> <span class="ident">concat_impl</span>;
 <span class="kw">mod</span> <span class="ident">cons_tuples_impl</span>;
 <span class="kw">mod</span> <span class="ident">diff</span>;
 <span class="kw">mod</span> <span class="ident">format</span>;
@@ -1808,6 +1884,7 @@
 <span class="kw">mod</span> <span class="ident">minmax</span>;
 <span class="kw">mod</span> <span class="ident">pad_tail</span>;
 <span class="kw">mod</span> <span class="ident">peeking_take_while</span>;
+<span class="kw">mod</span> <span class="ident">process_results_impl</span>;
 <span class="kw">mod</span> <span class="ident">rciter_impl</span>;
 <span class="kw">mod</span> <span class="ident">repeatn</span>;
 <span class="kw">mod</span> <span class="ident">size_hint</span>;
@@ -1835,6 +1912,13 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note: To enable the macros in this crate, use the `#[macro_use]` attribute</span>
+<span class="doccomment">/// when importing the crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// #[macro_use] extern crate itertools;</span>
+<span class="doccomment">/// ```</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">iproduct</span> {
     (@<span class="ident">flatten</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>:<span class="ident">expr</span>,) <span class="op">=&gt;</span> (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>
@@ -1843,7 +1927,7 @@
         <span class="macro">iproduct</span><span class="macro">!</span>(@<span class="ident">flatten</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">cons_tuples</span>(<span class="macro">iproduct</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">J</span>)), $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">K</span>,)<span class="kw-2">*</span>)
     );
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
-        (::<span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">IntoIterator</span>::<span class="ident">into_iter</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>))
+        ::<span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">IntoIterator</span>::<span class="ident">into_iter</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>)
     );
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">J</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
         <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Itertools</span>::<span class="ident">cartesian_product</span>(<span class="macro">iproduct</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>), <span class="macro">iproduct</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">J</span>))
@@ -1878,9 +1962,16 @@
 <span class="doccomment">/// assert_eq!(xs, [69, 106, 103]);</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note: To enable the macros in this crate, use the `#[macro_use]` attribute</span>
+<span class="doccomment">/// when importing the crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore</span>
+<span class="doccomment">/// #[macro_use] extern crate itertools;</span>
+<span class="doccomment">/// ```</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">izip</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
-        (::<span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">IntoIterator</span>::<span class="ident">into_iter</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>))
+        ::<span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">IntoIterator</span>::<span class="ident">into_iter</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>)
     );
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
         {
@@ -1904,8 +1995,7 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Itertools</span> : <span class="ident">Iterator</span> {
     <span class="comment">// adaptors</span>
 
-    <span class="doccomment">/// Alternate elements from two iterators until both</span>
-    <span class="doccomment">/// run out.</span>
+    <span class="doccomment">/// Alternate elements from two iterators until both have run out.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element type is `Self::Item`.</span>
     <span class="doccomment">///</span>
@@ -1914,8 +2004,8 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let it = (0..3).interleave(vec![7, 8]);</span>
-    <span class="doccomment">/// itertools::assert_equal(it, vec![0, 7, 1, 8, 2]);</span>
+    <span class="doccomment">/// let it = (1..7).interleave(vec![-1, -2]);</span>
+    <span class="doccomment">/// itertools::assert_equal(it, vec![1, -1, 2, -2, 3, 4, 5, 6]);</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">interleave</span><span class="op">&lt;</span><span class="ident">J</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">J</span>) <span class="op">-&gt;</span> <span class="ident">Interleave</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">J</span>::<span class="ident">IntoIter</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">J</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>,
@@ -1924,15 +2014,16 @@
         <span class="ident">interleave</span>(<span class="self">self</span>, <span class="ident">other</span>)
     }
 
-    <span class="doccomment">/// Alternate elements from two iterators until one of them runs out.</span>
+    <span class="doccomment">/// Alternate elements from two iterators until at least one of them has run</span>
+    <span class="doccomment">/// out.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element type is `Self::Item`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let it = (0..5).interleave_shortest(vec![7, 8]);</span>
-    <span class="doccomment">/// itertools::assert_equal(it, vec![0, 7, 1, 8, 2]);</span>
+    <span class="doccomment">/// let it = (1..7).interleave_shortest(vec![-1, -2]);</span>
+    <span class="doccomment">/// itertools::assert_equal(it, vec![1, -1, 2, -2, 3]);</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">interleave_shortest</span><span class="op">&lt;</span><span class="ident">J</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">J</span>) <span class="op">-&gt;</span> <span class="ident">InterleaveShortest</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">J</span>::<span class="ident">IntoIter</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">J</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>,
@@ -2007,8 +2098,8 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// // An adaptor that gathers elements up in pairs</span>
-    <span class="doccomment">/// let pit = (0..4).batching(|mut it| {</span>
+    <span class="doccomment">/// // An adaptor that gathers elements in pairs</span>
+    <span class="doccomment">/// let pit = (0..4).batching(|it| {</span>
     <span class="doccomment">///            match it.next() {</span>
     <span class="doccomment">///                None =&gt; None,</span>
     <span class="doccomment">///                Some(x) =&gt; match it.next() {</span>
@@ -2366,11 +2457,13 @@
     <span class="doccomment">/// Return an iterator adaptor that uses the passed-in closure to</span>
     <span class="doccomment">/// optionally merge together consecutive elements.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// The closure `f` is passed two elements, `x`, `y` and may return either</span>
-    <span class="doccomment">/// (1) `Ok(z)` to merge the two values or (2) `Err((x&#39;, y&#39;))` to indicate</span>
-    <span class="doccomment">/// they can&#39;t be merged. In (2), the value `x&#39;` is emitted by the iterator.</span>
-    <span class="doccomment">/// Coalesce continues with either `z` (1) or `y&#39;` (2), and the next</span>
-    <span class="doccomment">/// iterator element as the next pair of elements to merge.</span>
+    <span class="doccomment">/// The closure `f` is passed two elements, `previous` and `current` and may</span>
+    <span class="doccomment">/// return either (1) `Ok(combined)` to merge the two values or</span>
+    <span class="doccomment">/// (2) `Err((previous&#39;, current&#39;))` to indicate they can&#39;t be merged.</span>
+    <span class="doccomment">/// In (2), the value `previous&#39;` is emitted by the iterator.</span>
+    <span class="doccomment">/// Either (1) `combined` or (2) `current&#39;` becomes the previous value</span>
+    <span class="doccomment">/// when coalesce continues with the next pair of elements to merge. The</span>
+    <span class="doccomment">/// value that remains at the end is also emitted by the iterator.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element type is `Self::Item`.</span>
     <span class="doccomment">///</span>
@@ -2461,7 +2554,7 @@
         <span class="ident">adaptors</span>::<span class="ident">unique_by</span>(<span class="self">self</span>, <span class="ident">f</span>)
     }
 
-    <span class="doccomment">/// Return an iterator adaptor that borrows from this iterator and </span>
+    <span class="doccomment">/// Return an iterator adaptor that borrows from this iterator and</span>
     <span class="doccomment">/// takes items while the closure `accept` returns `true`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This adaptor can only be used on iterators that implement `PeekingNext`</span>
@@ -2659,6 +2752,26 @@
         <span class="ident">with_position</span>::<span class="ident">with_position</span>(<span class="self">self</span>)
     }
 
+    <span class="doccomment">/// Return an iterator adaptor that yields the indices of all elements</span>
+    <span class="doccomment">/// satisfying a predicate, counted from the start of the iterator.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Equivalent to `iter.enumerate().filter(|(_, v)| predicate(v)).map(|(i, _)| i)`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use itertools::Itertools;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let data = vec![1, 2, 3, 3, 4, 6, 7, 9];</span>
+    <span class="doccomment">/// itertools::assert_equal(data.iter().positions(|v| v % 2 == 0), vec![1, 4, 5]);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// itertools::assert_equal(data.iter().positions(|v| v % 2 == 1).rev(), vec![7, 6, 3, 2, 0]);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">positions</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">predicate</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">Positions</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">P</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
+              <span class="ident">P</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>,
+    {
+        <span class="ident">adaptors</span>::<span class="ident">positions</span>(<span class="self">self</span>, <span class="ident">predicate</span>)
+    }
+
     <span class="comment">// non-adaptor methods</span>
     <span class="doccomment">/// Advances the iterator and returns the next items grouped in a tuple of</span>
     <span class="doccomment">/// a specific size (up to 4).</span>
@@ -2702,6 +2815,28 @@
             <span class="ident">index</span> <span class="op">+=</span> <span class="number">1</span>;
         }
         <span class="prelude-val">None</span>
+    }
+
+    <span class="doccomment">/// Check whether all elements compare equal.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Empty iterators are considered to have equal elements:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use itertools::Itertools;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let data = vec![1, 1, 1, 2, 2, 3, 3, 3, 4, 5, 5];</span>
+    <span class="doccomment">/// assert!(!data.iter().all_equal());</span>
+    <span class="doccomment">/// assert!(data[0..3].iter().all_equal());</span>
+    <span class="doccomment">/// assert!(data[3..5].iter().all_equal());</span>
+    <span class="doccomment">/// assert!(data[5..8].iter().all_equal());</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let data : Option&lt;usize&gt; = None;</span>
+    <span class="doccomment">/// assert!(data.into_iter().all_equal());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">all_equal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
+        <span class="kw">where</span> <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">PartialEq</span>,
+    {
+        <span class="self">self</span>.<span class="ident">dedup</span>().<span class="ident">nth</span>(<span class="number">1</span>).<span class="ident">is_none</span>()
     }
 
     <span class="doccomment">/// Consume the first `n` elements from the iterator eagerly,</span>
@@ -2775,6 +2910,26 @@
               <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
         <span class="self">self</span>.<span class="ident">fold</span>((), <span class="kw">move</span> <span class="op">|</span>(), <span class="ident">element</span><span class="op">|</span> <span class="ident">f</span>(<span class="ident">element</span>))
+    }
+
+    <span class="doccomment">/// Combine all an iterator&#39;s elements into one element by using `Extend`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This combinator will extend the first item with each of the rest of the</span>
+    <span class="doccomment">/// items of the iterator. If the iterator is empty, the default value of</span>
+    <span class="doccomment">/// `I::Item` is returned.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// use itertools::Itertools;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let input = vec![vec![1], vec![2, 3], vec![4, 5, 6]];</span>
+    <span class="doccomment">/// assert_eq!(input.into_iter().concat(),</span>
+    <span class="doccomment">///            vec![1, 2, 3, 4, 5, 6]);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">concat</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Item</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
+              <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Extend</span><span class="op">&lt;&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Iterator</span><span class="op">&gt;</span>::<span class="ident">Item</span> <span class="kw">as</span> <span class="ident">IntoIterator</span><span class="op">&gt;</span>::<span class="ident">Item</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">IntoIterator</span> <span class="op">+</span> <span class="ident">Default</span>
+    {
+        <span class="ident">concat</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// `.collect_vec()` is simply a type specialization of `.collect()`,</span>
@@ -3365,7 +3520,6 @@
         }
     }
 }
-
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -3424,7 +3578,6 @@
         window.rootPath = "../../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

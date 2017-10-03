@@ -531,12 +531,15 @@
 <span id="486">486</span>
 <span id="487">487</span>
 <span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">util</span>::{<span class="ident">human_readable_size</span>, <span class="ident">percent_decode</span>, <span class="ident">parent_url</span>, <span class="ident">GETCH_SPECIAL_PREFIX</span>, <span class="ident">GETCH_ARROW_RIGHT</span>, <span class="ident">GETCH_ARROW_LEFT</span>, <span class="ident">GETCH_ARROW_DOWN</span>,
                         <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">TAB_SPACING</span>, <span class="ident">GETCH_DELETE</span>, <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_ESC</span>};
 <span class="kw">use</span> <span class="ident">rfsapi</span>::{<span class="ident">RawFsApiHeader</span>, <span class="ident">FilesetData</span>, <span class="ident">RawFileData</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">BufRead</span>, <span class="ident">Write</span>, <span class="ident">Read</span>};
-<span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">Response</span>, <span class="ident">IntoUrl</span>, <span class="ident">Client</span>, <span class="ident">Url</span>};
+<span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">ClientBuilder</span>, <span class="ident">Response</span>, <span class="ident">IntoUrl</span>, <span class="ident">Client</span>, <span class="ident">Url</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>::<span class="ident">UserAgent</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">PathBuf</span>, <span class="ident">Path</span>};
 <span class="kw">use</span> <span class="ident">itertools</span>::<span class="ident">Itertools</span>;
@@ -551,12 +554,12 @@
 
 <span class="doccomment">/// PUT a resource.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">upload</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">IntoUrl</span><span class="op">&gt;</span>(<span class="ident">u</span>: <span class="ident">U</span>, <span class="ident">f</span>: <span class="ident">File</span>) <span class="op">-&gt;</span> <span class="ident">Response</span> {
-    <span class="ident">client</span>().<span class="ident">put</span>(<span class="ident">u</span>).<span class="ident">header</span>(<span class="ident">UserAgent</span>(<span class="ident">USER_AGENT</span>.<span class="ident">to_string</span>())).<span class="ident">body</span>(<span class="ident">f</span>).<span class="ident">send</span>().<span class="ident">unwrap</span>()
+    <span class="ident">client</span>().<span class="ident">put</span>(<span class="ident">u</span>).<span class="ident">header</span>(<span class="ident">UserAgent</span>::<span class="ident">new</span>(<span class="ident">USER_AGENT</span>)).<span class="ident">body</span>(<span class="ident">f</span>).<span class="ident">send</span>().<span class="ident">unwrap</span>()
 }
 
 <span class="doccomment">/// DELETE a resource.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">IntoUrl</span><span class="op">&gt;</span>(<span class="ident">u</span>: <span class="ident">U</span>) <span class="op">-&gt;</span> <span class="ident">Response</span> {
-    <span class="ident">client</span>().<span class="ident">delete</span>(<span class="ident">u</span>).<span class="ident">header</span>(<span class="ident">UserAgent</span>(<span class="ident">USER_AGENT</span>.<span class="ident">to_string</span>())).<span class="ident">send</span>().<span class="ident">unwrap</span>()
+    <span class="ident">client</span>().<span class="ident">delete</span>(<span class="ident">u</span>).<span class="ident">header</span>(<span class="ident">UserAgent</span>::<span class="ident">new</span>(<span class="ident">USER_AGENT</span>)).<span class="ident">send</span>().<span class="ident">unwrap</span>()
 }
 
 <span class="doccomment">/// GET a resource with the RFSAPI header, auto-unpacking gzip.</span>
@@ -570,13 +573,11 @@
 }
 
 <span class="kw">fn</span> <span class="ident">really_download</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">IntoUrl</span><span class="op">&gt;</span>(<span class="ident">u</span>: <span class="ident">U</span>, <span class="ident">raw</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Response</span> {
-    <span class="ident">client</span>().<span class="ident">get</span>(<span class="ident">u</span>).<span class="ident">header</span>(<span class="ident">RawFsApiHeader</span>(<span class="ident">raw</span>)).<span class="ident">header</span>(<span class="ident">UserAgent</span>(<span class="ident">USER_AGENT</span>.<span class="ident">to_string</span>())).<span class="ident">send</span>().<span class="ident">unwrap</span>()
+    <span class="ident">client</span>().<span class="ident">get</span>(<span class="ident">u</span>).<span class="ident">header</span>(<span class="ident">RawFsApiHeader</span>(<span class="ident">raw</span>)).<span class="ident">header</span>(<span class="ident">UserAgent</span>::<span class="ident">new</span>(<span class="ident">USER_AGENT</span>)).<span class="ident">send</span>().<span class="ident">unwrap</span>()
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">client</span>() <span class="op">-&gt;</span> <span class="ident">Client</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
-    <span class="ident">client</span>.<span class="ident">gzip</span>(<span class="bool-val">true</span>);
-    <span class="ident">client</span>
+<span class="kw">fn</span> <span class="ident">client</span>() <span class="op">-&gt;</span> <span class="ident">Client</span> {
+    <span class="ident">ClientBuilder</span>::<span class="ident">new</span>().<span class="ident">gzip</span>(<span class="bool-val">true</span>).<span class="ident">build</span>().<span class="ident">unwrap</span>()
 }
 
 
@@ -672,6 +673,7 @@
     <span class="ident">files</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RemoteFile</span><span class="op">&gt;</span>,
     <span class="ident">selected</span>: <span class="ident">usize</span>,
     <span class="ident">have_write</span>: <span class="ident">bool</span>,
+    <span class="ident">bad_response_counter</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ListContext</span> {
@@ -682,6 +684,7 @@
             <span class="ident">files</span>: <span class="macro">vec</span><span class="macro">!</span>[],
             <span class="ident">selected</span>: <span class="number">0</span>,
             <span class="ident">have_write</span>: <span class="bool-val">false</span>,
+            <span class="ident">bad_response_counter</span>: <span class="number">0</span>,
         }
     }
 
@@ -742,8 +745,11 @@
             <span class="prelude-val">Ok</span>(<span class="ident">d</span>) <span class="op">=&gt;</span> <span class="ident">d</span>,
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
                 <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Couldn&#39;t parse server response: {}...&gt;&quot;</span>, <span class="ident">e</span>));
-                <span class="self">self</span>.<span class="ident">back</span>();
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
+                <span class="self">self</span>.<span class="ident">bad_response_counter</span> <span class="op">+=</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">back</span>() <span class="kw">as</span> <span class="ident">usize</span>;
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bad_response_counter</span> <span class="op">==</span> <span class="number">3</span> {
+                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Server at {} doesn&#39;t support RFSAPI.&gt;&quot;</span>, <span class="self">self</span>.<span class="ident">cururl</span>));
+                }
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">bad_response_counter</span> <span class="op">!=</span> <span class="number">3</span>);
             }
         };
         <span class="self">self</span>.<span class="ident">have_write</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">writes_supported</span>;
@@ -868,7 +874,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inp</span>) <span class="op">=</span> <span class="ident">term</span>::<span class="ident">open_file_picker</span>() {
             <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Uploading {} to {}...&gt;&quot;</span>, <span class="ident">inp</span>.<span class="ident">display</span>(), <span class="ident">percent_decode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">to_string</span>()).<span class="ident">unwrap</span>()));
             <span class="kw">let</span> <span class="ident">upurl</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="ident">Path</span>::<span class="ident">new</span>(<span class="ident">inp</span>.<span class="ident">file_name</span>().<span class="ident">unwrap</span>()).<span class="ident">display</span>().<span class="ident">to_string</span>()).<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">upload</span>(<span class="ident">upurl</span>, <span class="macro">try</span><span class="macro">!</span>(<span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">inp</span>))).<span class="ident">status</span>();
+            <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">upload</span>(<span class="ident">upurl</span>, <span class="macro">try</span><span class="macro">!</span>(<span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">inp</span>))).<span class="ident">status</span>();
             <span class="kw">if</span> <span class="ident">status</span>.<span class="ident">is_success</span>() {
                 <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Success!&gt;&quot;</span>));
             } <span class="kw">else</span> {
@@ -881,7 +887,7 @@
     <span class="kw">fn</span> <span class="ident">delete</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">delurl</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">files</span>[<span class="self">self</span>.<span class="ident">selected</span>].<span class="ident">full_name</span>).<span class="ident">unwrap</span>();
         <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Deleting {}...&gt;&quot;</span>, <span class="ident">percent_decode</span>(<span class="kw-2">&amp;</span><span class="ident">delurl</span>.<span class="ident">to_string</span>()).<span class="ident">unwrap</span>()));
-        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">delete</span>(<span class="ident">delurl</span>.<span class="ident">clone</span>()).<span class="ident">status</span>();
+        <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">delete</span>(<span class="ident">delurl</span>.<span class="ident">clone</span>()).<span class="ident">status</span>();
         <span class="kw">if</span> <span class="ident">status</span>.<span class="ident">is_success</span>() {
             <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Success!&gt;&quot;</span>));
         } <span class="kw">else</span> {
@@ -1078,7 +1084,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "doh";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

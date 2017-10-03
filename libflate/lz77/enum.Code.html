@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>lz77</a></p><script>window.sidebarCurrent = {name: 'Code', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum Code</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>lz77</a></p><script>window.sidebarCurrent = {name: 'Code', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -56,7 +56,7 @@
         backward_distance: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>,
     },
 }</pre><div class='docblock'><p>A LZ77 encoded data.</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Literal' class='variant'><span id='Literal.v' class='invisible'><code>Literal(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>)</code></span></span><div class='docblock'><p>Literal byte.</p>
 </div><span id='variant.Pointer' class='variant'><span id='Pointer.v' class='invisible'><code>Pointer</code></span></span><div class='docblock'><p>Backward pointer to shared data.</p>
 </div><span class='docblock autohide sub-variant' id='variant.Pointer.fields'><h3 class='fields'>Fields of <code>Pointer</code></h3>
@@ -81,9 +81,9 @@ The values must be limited to <code>MAX_DISTANCE</code>.</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="enum" href="../../libflate/lz77/enum.Code.html" title="enum libflate::lz77::Code">Code</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#18' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html" title="trait core::hash::Hash">Hash</a> for <a class="enum" href="../../libflate/lz77/enum.Code.html" title="enum libflate::lz77::Code">Code</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#18' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.hash' class="method"><span id='hash.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#tymethod.hash' class='fnname'>hash</a>&lt;__H:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></span></h4>
-<div class='docblock'><p>Feeds this value into the state given, updating the hasher as necessary.</p>
-</div><h4 id='method.hash_slice' class="method"><span id='hash_slice.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[Self]</a>, state: &amp;mut H) <span class="where fmt-newline">where H: <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a></span></code><div class='since' title='Stable since Rust version 1.3.0'>1.3.0</div></span></h4>
-<div class='docblock'><p>Feeds a slice of this type into the state provided.</p>
+<div class='docblock'><p>Feeds this value into the given [<code>Hasher</code>]. <a href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#tymethod.hash">Read more</a></p>
+</div><h4 id='method.hash_slice' class="method"><span id='hash_slice.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[Self]</a>, state: &amp;mut H) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;H: <a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a>,&nbsp;</span></code><div class='since' title='Stable since Rust version 1.3.0'>1.3.0</div></span></h4>
+<div class='docblock'><p>Feeds a slice of this type into the given [<code>Hasher</code>]. <a href="https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -141,7 +141,6 @@ The values must be limited to <code>MAX_DISTANCE</code>.</p>
         window.rootPath = "../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

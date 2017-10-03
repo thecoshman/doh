@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>openssl</a></p><script>window.sidebarCurrent = {name: 'ssl', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module ssl</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a></p><script>window.sidebarCurrent = {name: 'ssl', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1-2070' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1-2025' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>SSL/TLS support.</p>
 
 <p><code>SslConnector</code> and <code>SslAcceptor</code> should be used in most cases - they handle
@@ -125,6 +125,13 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::CipherBits'>CipherBits</a></td>
                            <td class='docblock-short'>
                                 
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ConnectConfiguration.html"
+                                  title='struct openssl::ssl::ConnectConfiguration'>ConnectConfiguration</a></td>
+                           <td class='docblock-short'>
+                                <p>A type which allows for configuration of a client-side TLS session before connection.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -613,7 +620,6 @@ Use together with SSL_VERIFY_PEER.</p>
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

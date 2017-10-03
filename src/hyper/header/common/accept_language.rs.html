@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/accept_language.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/accept_language.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>accept_language.rs.html -- source</title>
@@ -112,7 +112,6 @@
 <span id="67">67</span>
 <span id="68">68</span>
 <span id="69">69</span>
-<span id="70">70</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">language_tags</span>::<span class="ident">LanguageTag</span>;
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">QualityItem</span>;
@@ -137,8 +136,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use hyper::LanguageTag;</span>
-    <span class="doccomment">/// use hyper::header::{Headers, AcceptLanguage, qitem};</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AcceptLanguage, LanguageTag, qitem};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// let mut langtag: LanguageTag = Default::default();</span>
@@ -153,15 +151,15 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// # extern crate hyper;</span>
     <span class="doccomment">/// # #[macro_use] extern crate language_tags;</span>
-    <span class="doccomment">/// # use hyper::header::{Headers, AcceptLanguage, QualityItem, Quality, qitem};</span>
+    <span class="doccomment">/// # use hyper::header::{Headers, AcceptLanguage, QualityItem, q, qitem};</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     AcceptLanguage(vec![</span>
     <span class="doccomment">///         qitem(langtag!(da)),</span>
-    <span class="doccomment">///         QualityItem::new(langtag!(en;;;GB), Quality(800)),</span>
-    <span class="doccomment">///         QualityItem::new(langtag!(en), Quality(700)),</span>
+    <span class="doccomment">///         QualityItem::new(langtag!(en;;;GB), q(800)),</span>
+    <span class="doccomment">///         QualityItem::new(langtag!(en), q(700)),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// # }</span>
@@ -175,9 +173,9 @@
         <span class="macro">test_header</span><span class="macro">!</span>(
             <span class="ident">test2</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;en-US, en; q=0.5, fr&quot;</span>],
             <span class="prelude-val">Some</span>(<span class="ident">AcceptLanguage</span>(<span class="macro">vec</span><span class="macro">!</span>[
-                <span class="ident">qitem</span>(<span class="macro">langtag</span><span class="macro">!</span>(<span class="ident">en</span>;;;<span class="ident">US</span>)),
-                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="macro">langtag</span><span class="macro">!</span>(<span class="ident">en</span>), <span class="ident">Quality</span>(<span class="number">500</span>)),
-                <span class="ident">qitem</span>(<span class="macro">langtag</span><span class="macro">!</span>(<span class="ident">fr</span>)),
+                <span class="ident">qitem</span>(<span class="string">&quot;en-US&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
+                <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="string">&quot;en&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>(), <span class="ident">q</span>(<span class="number">500</span>)),
+                <span class="ident">qitem</span>(<span class="string">&quot;fr&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()),
         ])));
     }
 }
@@ -242,7 +240,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

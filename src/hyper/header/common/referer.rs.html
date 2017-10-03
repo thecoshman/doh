@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/referer.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/referer.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>referer.rs.html -- source</title>
@@ -108,16 +108,16 @@
     <span class="doccomment">/// use hyper::header::{Headers, Referer};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
-    <span class="doccomment">/// headers.set(Referer(&quot;/People.html#tim&quot;.to_owned()));</span>
+    <span class="doccomment">/// headers.set(Referer::new(&quot;/People.html#tim&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Referer};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
-    <span class="doccomment">/// headers.set(Referer(&quot;http://www.example.com/index.html&quot;.to_owned()));</span>
+    <span class="doccomment">/// headers.set(Referer::new(&quot;http://www.example.com/index.html&quot;));</span>
     <span class="doccomment">/// ```</span>
     <span class="comment">// TODO Use URL</span>
-    (<span class="ident">Referer</span>, <span class="string">&quot;Referer&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">String</span>]
+    (<span class="ident">Referer</span>, <span class="string">&quot;Referer&quot;</span>) <span class="op">=&gt;</span> <span class="ident">Cow</span>[<span class="ident">str</span>]
 
     <span class="ident">test_referer</span> {
         <span class="comment">// Testcase from the RFC</span>
@@ -184,7 +184,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/access_control_request_headers.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/access_control_request_headers.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>access_control_request_headers.rs.html -- source</title>
@@ -102,7 +102,7 @@
 <span id="57">57</span>
 <span id="58">58</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">UniCase</span>;
+<span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">Ascii</span>;
 
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Access-Control-Request-Headers` header, part of</span>
@@ -128,11 +128,11 @@
     <span class="doccomment">/// // extern crate unicase;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// use hyper::header::{Headers, AccessControlRequestHeaders};</span>
-    <span class="doccomment">/// use unicase::UniCase;</span>
+    <span class="doccomment">/// use unicase::Ascii;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
-    <span class="doccomment">///     AccessControlRequestHeaders(vec![UniCase(&quot;date&quot;.to_owned())])</span>
+    <span class="doccomment">///     AccessControlRequestHeaders(vec![Ascii::new(&quot;date&quot;.to_owned())])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
@@ -143,18 +143,18 @@
     <span class="doccomment">/// // extern crate unicase;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// use hyper::header::{Headers, AccessControlRequestHeaders};</span>
-    <span class="doccomment">/// use unicase::UniCase;</span>
+    <span class="doccomment">/// use unicase::Ascii;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     AccessControlRequestHeaders(vec![</span>
-    <span class="doccomment">///         UniCase(&quot;accept-language&quot;.to_owned()),</span>
-    <span class="doccomment">///         UniCase(&quot;date&quot;.to_owned()),</span>
+    <span class="doccomment">///         Ascii::new(&quot;accept-language&quot;.to_owned()),</span>
+    <span class="doccomment">///         Ascii::new(&quot;date&quot;.to_owned()),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    (<span class="ident">AccessControlRequestHeaders</span>, <span class="string">&quot;Access-Control-Request-Headers&quot;</span>) <span class="op">=&gt;</span> (<span class="ident">UniCase</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>)<span class="op">*</span>
+    (<span class="ident">AccessControlRequestHeaders</span>, <span class="string">&quot;Access-Control-Request-Headers&quot;</span>) <span class="op">=&gt;</span> (<span class="ident">Ascii</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>)<span class="op">*</span>
 
     <span class="ident">test_access_control_request_headers</span> {
         <span class="macro">test_header</span><span class="macro">!</span>(<span class="ident">test1</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;accept-language, date&quot;</span>]);
@@ -218,7 +218,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

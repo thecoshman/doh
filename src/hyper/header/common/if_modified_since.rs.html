@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/if_modified_since.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/if_modified_since.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>if_modified_since.rs.html -- source</title>
@@ -83,45 +83,35 @@
 <span id="38">38</span>
 <span id="39">39</span>
 <span id="40">40</span>
-<span id="41">41</span>
-<span id="42">42</span>
-<span id="43">43</span>
-<span id="44">44</span>
-<span id="45">45</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">HttpDate</span>;
 
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `If-Modified-Since` header, defined in</span>
     <span class="doccomment">/// [RFC7232](http://tools.ietf.org/html/rfc7232#section-3.3)</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// The `If-Modified-Since` header field makes a GET or HEAD request</span>
     <span class="doccomment">/// method conditional on the selected representation&#39;s modification date</span>
     <span class="doccomment">/// being more recent than the date provided in the field-value.</span>
     <span class="doccomment">/// Transfer of the selected representation&#39;s data is avoided if that</span>
     <span class="doccomment">/// data has not changed.</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
     <span class="doccomment">/// ```plain</span>
     <span class="doccomment">/// If-Unmodified-Since = HTTP-date</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
     <span class="doccomment">/// * `Sat, 29 Oct 1994 19:43:31 GMT`</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate hyper;</span>
-    <span class="doccomment">/// # extern crate time;</span>
-    <span class="doccomment">/// # fn main() {</span>
-    <span class="doccomment">/// // extern crate time;</span>
-    <span class="doccomment">/// </span>
-    <span class="doccomment">/// use hyper::header::{Headers, IfModifiedSince, HttpDate};</span>
-    <span class="doccomment">/// use time::{self, Duration};</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">/// use hyper::header::{Headers, IfModifiedSince};</span>
+    <span class="doccomment">/// use std::time::{SystemTime, Duration};</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
-    <span class="doccomment">/// headers.set(IfModifiedSince(HttpDate(time::now() - Duration::days(1))));</span>
-    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// let modified = SystemTime::now() - Duration::from_secs(60 * 60 * 24);</span>
+    <span class="doccomment">/// headers.set(IfModifiedSince(modified.into()));</span>
     <span class="doccomment">/// ```</span>
     (<span class="ident">IfModifiedSince</span>, <span class="string">&quot;If-Modified-Since&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">HttpDate</span>]
 
@@ -192,7 +182,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

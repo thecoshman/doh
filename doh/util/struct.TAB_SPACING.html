@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>util</a></p><script>window.sidebarCurrent = {name: 'TAB_SPACING', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct TAB_SPACING</p><div class="block items"><ul><li><a href="#deref-methods">Methods from __Deref&lt;Target=String&gt;</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>util</a></p><script>window.sidebarCurrent = {name: 'TAB_SPACING', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -50,7 +50,7 @@
                    </a>
                </span></span></h1>
 <pre class='rust struct'>pub struct TAB_SPACING { /* fields omitted */ }</pre><div class='docblock'><p>Filler to replace tabs with of length <a href="constant.TAB_WIDTH.html"><code>TAB_WIDTH</code></a>.</p>
-</div><h2 id='deref-methods'>Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html" title="trait core::ops::Deref">__Deref</a>&lt;Target=<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</h2><div class='impl-items'><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h2 id='deref-methods'>Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">__Deref</a>&lt;Target = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</h2><div class='impl-items'><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Converts a <code>String</code> into a byte vector.</p>
 
 <p>This consumes the <code>String</code>, so we do not need to copy its contents.</p>
@@ -123,10 +123,10 @@
 <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;hello&quot;</span>);
 
 <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">into_boxed_str</span>();</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html" title="trait core::ops::Deref">__Deref</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code></span><span class='out-of-band'></span></h3>
-<div class='impl-items'><h4 id='associatedtype.Target' class="type"><span id='Target.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#associatedtype.Target' class="type">Target</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></span></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">__Deref</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code></span><span class='out-of-band'></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Target' class="type"><span id='Target.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html#associatedtype.Target' class="type">Target</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></h4>
 <div class='docblock'><p>The resulting type after dereferencing</p>
-</div><h4 id='method.deref' class="method"><span id='deref.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#tymethod.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></span></h4>
+</div><h4 id='method.deref' class="method"><span id='deref.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html#tymethod.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></h4>
 <div class='docblock'><p>The method called to dereference a value</p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lazy_static/trait.LazyStatic.html" title="trait lazy_static::LazyStatic">LazyStatic</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code></span><span class='out-of-band'></span></h3>
 <div class='impl-items'><h4 id='method.initialize' class="method"><span id='initialize.v' class='invisible'><code>fn <a href='../../lazy_static/trait.LazyStatic.html#tymethod.initialize' class='fnname'>initialize</a>(lazy: &amp;Self)</code></span></h4>
@@ -187,7 +187,6 @@
         window.rootPath = "../../";
         window.currentCrate = "doh";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

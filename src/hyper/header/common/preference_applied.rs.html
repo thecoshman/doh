@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/preference_applied.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/preference_applied.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>preference_applied.rs.html -- source</title>
@@ -149,10 +149,9 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
-<span id="107">107</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">HeaderFormat</span>, <span class="ident">Preference</span>};
+<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Raw</span>, <span class="ident">Preference</span>};
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">parsing</span>::{<span class="ident">from_comma_delimited</span>, <span class="ident">fmt_comma_delimited</span>};
 
 <span class="doccomment">/// `Preference-Applied` header, defined in [RFC7240](http://tools.ietf.org/html/rfc7240)</span>
@@ -203,10 +202,11 @@
 
 <span class="kw">impl</span> <span class="ident">Header</span> <span class="kw">for</span> <span class="ident">PreferenceApplied</span> {
     <span class="kw">fn</span> <span class="ident">header_name</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-        <span class="string">&quot;Preference-Applied&quot;</span>
+        <span class="kw">static</span> <span class="ident">NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Preference-Applied&quot;</span>;
+        <span class="ident">NAME</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_header</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>]) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PreferenceApplied</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse_header</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="ident">Raw</span>) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PreferenceApplied</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">preferences</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">from_comma_delimited</span>(<span class="ident">raw</span>));
         <span class="kw">if</span> <span class="op">!</span><span class="ident">preferences</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">Ok</span>(<span class="ident">PreferenceApplied</span>(<span class="ident">preferences</span>))
@@ -214,11 +214,9 @@
             <span class="prelude-val">Err</span>(::<span class="ident">Error</span>::<span class="ident">Header</span>)
         }
     }
-}
 
-<span class="kw">impl</span> <span class="ident">HeaderFormat</span> <span class="kw">for</span> <span class="ident">PreferenceApplied</span> {
-    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="self">self</span>, <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">header</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">f</span>.<span class="ident">fmt_line</span>(<span class="self">self</span>)
     }
 }
 
@@ -232,7 +230,7 @@
               <span class="ident">value</span>.<span class="ident">to_owned</span>(),
               <span class="macro">vec</span><span class="macro">!</span>[]
             ),
-            <span class="ident">preference</span> @ _ <span class="op">=&gt;</span> <span class="ident">preference</span>.<span class="ident">clone</span>()
+            <span class="ident">preference</span> <span class="op">=&gt;</span> <span class="ident">preference</span>.<span class="ident">clone</span>()
         }).<span class="ident">collect</span>();
         <span class="ident">fmt_comma_delimited</span>(<span class="ident">f</span>, <span class="kw-2">&amp;</span><span class="ident">preferences</span>)
     }
@@ -240,17 +238,17 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">HeaderFormat</span>, <span class="ident">Preference</span>};
+    <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">Preference</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_format_ignore_parameters</span>() {
         <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">PreferenceApplied</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Preference</span>::<span class="ident">Extension</span>(
+            <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">PreferenceApplied</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Preference</span>::<span class="ident">Extension</span>(
                 <span class="string">&quot;foo&quot;</span>.<span class="ident">to_owned</span>(),
                 <span class="string">&quot;bar&quot;</span>.<span class="ident">to_owned</span>(),
                 <span class="macro">vec</span><span class="macro">!</span>[(<span class="string">&quot;bar&quot;</span>.<span class="ident">to_owned</span>(), <span class="string">&quot;foo&quot;</span>.<span class="ident">to_owned</span>()), (<span class="string">&quot;buz&quot;</span>.<span class="ident">to_owned</span>(), <span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>())]
-            )]) <span class="kw">as</span> <span class="kw-2">&amp;</span>(<span class="ident">HeaderFormat</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>)),
+            )])),
             <span class="string">&quot;foo=bar&quot;</span>.<span class="ident">to_owned</span>()
         );
     }
@@ -316,7 +314,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

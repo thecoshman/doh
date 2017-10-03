@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>serde_json</a>::<wbr><a href='index.html'>de</a></p><script>window.sidebarCurrent = {name: 'Read', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Read</p><div class="block items"><ul><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>serde_json</a>::<wbr><a href='index.html'>de</a></p><script>window.sidebarCurrent = {name: 'Read', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/serde_json/read.rs.html#13-63' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Read: Sealed { }</pre><div class='docblock'><p>Trait used by the deserializer for iterating over input. This is manually
+               </span><a class='srclink' href='../../src/serde_json/read.rs.html#22-79' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Read&lt;'de&gt;: Sealed { }</pre><div class='docblock'><p>Trait used by the deserializer for iterating over input. This is manually
 &quot;specialized&quot; for iterating over &amp;[u8]. Once feature(specialization) is
 stable we can use actual specialization.</p>
 
@@ -58,10 +58,9 @@ stable we can use actual specialization.</p>
 </div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;Iter&gt; Read for <a class="struct" href="../../serde_json/de/struct.IteratorRead.html" title="struct serde_json::de::IteratorRead">IteratorRead</a>&lt;Iter&gt; <span class="where fmt-newline">where Iter: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&lt;Item=<a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;</span></code></li>
-<li><code>impl&lt;R&gt; Read for <a class="struct" href="../../serde_json/de/struct.IoRead.html" title="struct serde_json::de::IoRead">IoRead</a>&lt;R&gt; <span class="where fmt-newline">where R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a></span></code></li>
-<li><code>impl&lt;'a&gt; Read for <a class="struct" href="../../serde_json/de/struct.SliceRead.html" title="struct serde_json::de::SliceRead">SliceRead</a>&lt;'a&gt;</code></li>
-<li><code>impl&lt;'a&gt; Read for <a class="struct" href="../../serde_json/de/struct.StrRead.html" title="struct serde_json::de::StrRead">StrRead</a>&lt;'a&gt;</code></li>
+    <li><code>impl&lt;'de, R&gt; Read&lt;'de&gt; for <a class="struct" href="../../serde_json/de/struct.IoRead.html" title="struct serde_json::de::IoRead">IoRead</a>&lt;R&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a>,&nbsp;</span></code></li>
+<li><code>impl&lt;'a&gt; Read&lt;'a&gt; for <a class="struct" href="../../serde_json/de/struct.SliceRead.html" title="struct serde_json::de::SliceRead">SliceRead</a>&lt;'a&gt;</code></li>
+<li><code>impl&lt;'a&gt; Read&lt;'a&gt; for <a class="struct" href="../../serde_json/de/struct.StrRead.html" title="struct serde_json::de::StrRead">StrRead</a>&lt;'a&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/serde_json/de/trait.Read.js">
                  </script></section>
@@ -121,7 +120,6 @@ stable we can use actual specialization.</p>
         window.rootPath = "../../";
         window.currentCrate = "serde_json";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.0/src/sources.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.5/src/sources.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>sources.rs.html -- source</title>
@@ -226,7 +226,6 @@
 <span id="181">181</span>
 <span id="182">182</span>
 <span id="183">183</span>
-<span id="184">184</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Iterators that are sources (produce elements from parameters,</span>
 <span class="doccomment">//! not from another iterator).</span>
@@ -300,19 +299,18 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// use itertools::unfold;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let mut fibonacci = unfold((1_u32, 1_u32), |state| {</span>
-<span class="doccomment">///     let (ref mut x1, ref mut x2) = *state;</span>
-<span class="doccomment">///</span>
+<span class="doccomment">/// let (mut x1, mut x2) = (1u32, 1u32);</span>
+<span class="doccomment">/// let mut fibonacci = unfold((), move |_| {</span>
 <span class="doccomment">///     // Attempt to get the next Fibonacci number</span>
-<span class="doccomment">///     let next = x1.saturating_add(*x2);</span>
+<span class="doccomment">///     let next = x1.saturating_add(x2);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     // Shift left: ret &lt;- x1 &lt;- x2 &lt;- next</span>
-<span class="doccomment">///     let ret = *x1;</span>
-<span class="doccomment">///     *x1 = *x2;</span>
-<span class="doccomment">///     *x2 = next;</span>
+<span class="doccomment">///     let ret = x1;</span>
+<span class="doccomment">///     x1 = x2;</span>
+<span class="doccomment">///     x2 = next;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     // If addition has saturated at the maximum, we are finished</span>
-<span class="doccomment">///     if ret == *x1 &amp;&amp; ret &gt; 1 {</span>
+<span class="doccomment">///     if ret == x1 &amp;&amp; ret &gt; 1 {</span>
 <span class="doccomment">///         return None;</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">///</span>
@@ -470,7 +468,6 @@
         window.rootPath = "../../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

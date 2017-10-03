@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>clap</a></p><script>window.sidebarCurrent = {name: 'AppSettings', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum AppSettings</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>clap</a></p><script>window.sidebarCurrent = {name: 'AppSettings', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -86,7 +86,7 @@
 
 <p><strong>NOTE:</strong> When these settings are used, they apply only to current command, and are <em>not</em>
 propagated down or up through child or parent subcommands</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.AllowInvalidUtf8' class='variant'><span id='AllowInvalidUtf8.v' class='invisible'><code>AllowInvalidUtf8</code></span></span><div class='docblock'><p>Specifies that any invalid UTF-8 code points should <em>not</em> be treated as an error.
 This is the default behavior of <code>clap</code>.</p>
 
@@ -384,7 +384,7 @@ to <code>test</code> there could not also be a subcommand or alias <code>temp</c
 
 <p><strong>CAUTION:</strong> This setting can interfere with <a href="./struct.Arg.html#method.index">positional/free arguments</a>, take care when
 designing CLIs which allow inferred subcommands and have potential positional/free
-arguments who&#39;s values could start with the same characters as subcommands. If this is the
+arguments whose values could start with the same characters as subcommands. If this is the
 case, it&#39;s recommended to use settings such as <a href="./enum.AppSettings.html#variant.ArgsNegateSubcommands"><code>AppSeettings::ArgsNegateSubcommands</code></a> in
 conjuction with this setting.</p>
 
@@ -615,9 +615,9 @@ rare)</p>
 </div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">FromStr</a> for <a class="enum" href="../clap/enum.AppSettings.html" title="enum clap::AppSettings">AppSettings</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/clap/app/settings.rs.html#868-909' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='associatedtype.Err' class="type"><span id='Err.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#associatedtype.Err' class="type">Err</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></span></h4>
+<div class='impl-items'><h4 id='associatedtype.Err' class="type"><span id='Err.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#associatedtype.Err' class="type">Err</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></h4>
 <div class='docblock'><p>The associated error which can be returned from parsing.</p>
-</div><h4 id='method.from_str' class="method"><span id='from_str.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#tymethod.from_str' class='fnname'>from_str</a>(s: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, Self::<a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">Err</a>&gt;</code></span></h4>
+</div><h4 id='method.from_str' class="method"><span id='from_str.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#tymethod.from_str' class='fnname'>from_str</a>(s: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, Self::<a class="type" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#associatedtype.Err" title="type core::str::FromStr::Err">Err</a>&gt;</code></span></h4>
 <div class='docblock'><p>Parses a string <code>s</code> to return a value of this type. <a href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#tymethod.from_str">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -676,7 +676,6 @@ rare)</p>
         window.rootPath = "../";
         window.currentCrate = "clap";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

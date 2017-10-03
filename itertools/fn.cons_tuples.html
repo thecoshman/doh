@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/itertools/cons_tuples_impl.rs.html#57-61' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn cons_tuples&lt;I, J&gt;(iterable: I) -&gt; <a class="struct" href="../itertools/structs/struct.ConsTuples.html" title="struct itertools::structs::ConsTuples">ConsTuples</a>&lt;I, J&gt; <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&lt;Item=J&gt;</span></pre><div class='docblock'><p>Create an iterator that maps for example iterators of
+               </span><a class='srclink' href='../src/itertools/cons_tuples_impl.rs.html#62-66' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn cons_tuples&lt;I, J&gt;(iterable: I) -&gt; <a class="struct" href="../itertools/structs/struct.ConsTuples.html" title="struct itertools::structs::ConsTuples">ConsTuples</a>&lt;I, J&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&lt;Item = J&gt;,&nbsp;</span></pre><div class='docblock'><p>Create an iterator that maps for example iterators of
 <code>((A, B), C)</code> to <code>(A, B, C)</code>.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -108,7 +108,6 @@
         window.rootPath = "../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

@@ -91,9 +91,6 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
-<span id="49">49</span>
-<span id="50">50</span>
-<span id="51">51</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This module contains the configuration of the application.</span>
 <span class="doccomment">//!</span>
@@ -109,7 +106,7 @@
 <span class="doccomment">//! ```</span>
 
 
-<span class="kw">use</span> <span class="ident">clap</span>::{<span class="ident">AppSettings</span>, <span class="ident">Arg</span>, <span class="ident">App</span>};
+<span class="kw">use</span> <span class="ident">clap</span>::{<span class="ident">AppSettings</span>, <span class="ident">Arg</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">Url</span>;
 
 
@@ -123,10 +120,7 @@
 <span class="kw">impl</span> <span class="ident">Options</span> {
     <span class="doccomment">/// Parse `env`-wide command-line arguments into an `Options` instance</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>() <span class="op">-&gt;</span> <span class="ident">Options</span> {
-        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="ident">App</span>::<span class="ident">new</span>(<span class="string">&quot;doh&quot;</span>)
-            .<span class="ident">version</span>(<span class="macro">crate_version</span><span class="macro">!</span>())
-            .<span class="ident">author</span>(<span class="macro">crate_authors</span><span class="macro">!</span>(<span class="string">&quot;\n&quot;</span>))
-            .<span class="ident">about</span>(<span class="macro">crate_description</span><span class="macro">!</span>())
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">app_from_crate</span><span class="macro">!</span>(<span class="string">&quot;\n&quot;</span>)
             .<span class="ident">setting</span>(<span class="ident">AppSettings</span>::<span class="ident">ColoredHelp</span>)
             .<span class="ident">arg</span>(<span class="ident">Arg</span>::<span class="ident">from_usage</span>(<span class="string">&quot;&lt;URL&gt; &#39;Remote directory to browse&#39;&quot;</span>).<span class="ident">validator</span>(<span class="ident">Options</span>::<span class="ident">url_validator</span>))
             .<span class="ident">get_matches</span>();
@@ -204,7 +198,6 @@
         window.rootPath = "../../";
         window.currentCrate = "doh";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

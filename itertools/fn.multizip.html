@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/itertools/ziptuple.rs.html#42-47' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn multizip&lt;T, U&gt;(t: U) -&gt; <a class="struct" href="../itertools/structs/struct.Zip.html" title="struct itertools::structs::Zip">Zip</a>&lt;T&gt; <span class="where fmt-newline">where <a class="struct" href="../itertools/structs/struct.Zip.html" title="struct itertools::structs::Zip">Zip</a>&lt;T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;U&gt;, <a class="struct" href="../itertools/structs/struct.Zip.html" title="struct itertools::structs::Zip">Zip</a>&lt;T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a></span></pre><div class='docblock'><p>An iterator that generalizes <em>.zip()</em> and allows running multiple iterators in lockstep.</p>
+<pre class='rust fn'>pub fn multizip&lt;T, U&gt;(t: U) -&gt; <a class="struct" href="../itertools/structs/struct.Zip.html" title="struct itertools::structs::Zip">Zip</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="struct" href="../itertools/structs/struct.Zip.html" title="struct itertools::structs::Zip">Zip</a>&lt;T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;U&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;<a class="struct" href="../itertools/structs/struct.Zip.html" title="struct itertools::structs::Zip">Zip</a>&lt;T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,&nbsp;</span></pre><div class='docblock'><p>An iterator that generalizes <em>.zip()</em> and allows running multiple iterators in lockstep.</p>
 
 <p>The iterator <code>Zip&lt;(I, J, ..., M)&gt;</code> is formed from a tuple of iterators (or values that
 implement <code>IntoIterator</code>) and yields elements
@@ -127,7 +127,6 @@ element types of the subiterator.</p>
         window.rootPath = "../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>language_tags</a></p><script>window.sidebarCurrent = {name: 'LanguageTag', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct LanguageTag</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>language_tags</a></p><script>window.sidebarCurrent = {name: 'LanguageTag', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -50,13 +50,13 @@
                    </a>
                </span><a class='srclink' href='../src/language_tags/lib.rs.html#221-254' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct LanguageTag {
-    pub language: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
-    pub extlangs: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
-    pub script: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
-    pub region: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
-    pub variants: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
-    pub extensions: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/btree/map/struct.BTreeMap.html" title="struct collections::btree::map::BTreeMap">BTreeMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;&gt;,
-    pub privateuse: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub language: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub extlangs: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub script: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub region: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub variants: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub extensions: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/btree/map/struct.BTreeMap.html" title="struct alloc::btree::map::BTreeMap">BTreeMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;,
+    pub privateuse: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
 }</pre><div class='docblock'><p>A language tag as described in <a href="http://tools.ietf.org/html/bcp47">BCP47</a>.</p>
 
 <p>Language tags are used to help identify languages, whether spoken,
@@ -64,27 +64,27 @@ written, signed, or otherwise signaled, for the purpose of
 communication.  This includes constructed and artificial languages
 but excludes languages not intended primarily for human
 communication, such as programming languages.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.language' class="structfield">
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.language' class="structfield">
                            <span id='language.v' class='invisible'>
-                           <code>language: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           <code>language: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Language subtags are used to indicate the language, ignoring all
 other aspects such as script, region or spefic invariants.</p>
 </div><span id='structfield.extlangs' class="structfield">
                            <span id='extlangs.v' class='invisible'>
-                           <code>extlangs: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           <code>extlangs: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Extended language subtags are used to identify certain specially
 selected languages that, for various historical and compatibility
 reasons, are closely identified with or tagged using an existing
 primary language subtag.</p>
 </div><span id='structfield.script' class="structfield">
                            <span id='script.v' class='invisible'>
-                           <code>script: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           <code>script: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Script subtags are used to indicate the script or writing system
 variations that distinguish the written forms of a language or its
 dialects.</p>
 </div><span id='structfield.region' class="structfield">
                            <span id='region.v' class='invisible'>
-                           <code>region: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           <code>region: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Region subtags are used to indicate linguistic variations associated
 with or appropriate to a specific country, territory, or region.
 Typically, a region subtag is used to indicate variations such as
@@ -94,20 +94,20 @@ that is appropriate for use throughout a region, for instance,
 Spanish content tailored to be useful throughout Latin America.</p>
 </div><span id='structfield.variants' class="structfield">
                            <span id='variants.v' class='invisible'>
-                           <code>variants: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           <code>variants: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Variant subtags are used to indicate additional, well-recognized
 variations that define a language or its dialects that are not
 covered by other available subtags.</p>
 </div><span id='structfield.extensions' class="structfield">
                            <span id='extensions.v' class='invisible'>
-                           <code>extensions: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/btree/map/struct.BTreeMap.html" title="struct collections::btree::map::BTreeMap">BTreeMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;&gt;</code>
+                           <code>extensions: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/btree/map/struct.BTreeMap.html" title="struct alloc::btree::map::BTreeMap">BTreeMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;</code>
                            </span></span><div class='docblock'><p>Extensions provide a mechanism for extending language tags for use in
 various applications.  They are intended to identify information that
 is commonly used in association with languages or language tags but
 that is not part of language identification.</p>
 </div><span id='structfield.privateuse' class="structfield">
                            <span id='privateuse.v' class='invisible'>
-                           <code>privateuse: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           <code>privateuse: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Private use subtags are used to indicate distinctions in language
 that are important in a given context by private agreement.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../language_tags/struct.LanguageTag.html" title="struct language_tags::LanguageTag">LanguageTag</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/language_tags/lib.rs.html#256-361' title='goto source code'>[src]</a></span></h3>
@@ -236,7 +236,6 @@ not validated.</p>
         window.rootPath = "../";
         window.currentCrate = "language_tags";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

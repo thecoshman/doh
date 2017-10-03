@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["UniCase","Case Insensitive wrapper of strings."]]});
+initSidebarItems({"fn":[["eq","Compare two string-like types for case-less equality, using unicode folding."],["eq_ascii","Compare two string-like types for case-less equality, ignoring ASCII case."]],"struct":[["Ascii","Case Insensitive wrapper of Ascii strings."],["UniCase","Case Insensitive wrapper of strings."]]});

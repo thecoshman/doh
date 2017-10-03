@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/lz77/default.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/lz77/default.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>default.rs.html -- source</title>
@@ -155,6 +155,10 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
@@ -212,7 +216,8 @@
 }
 <span class="kw">impl</span> <span class="ident">Lz77Encode</span> <span class="kw">for</span> <span class="ident">DefaultLz77Encoder</span> {
     <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">sink</span>: <span class="ident">S</span>)
-        <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Sink</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Sink</span>,
     {
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">extend_from_slice</span>(<span class="ident">buf</span>);
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">window_size</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">*</span> <span class="number">8</span> {
@@ -220,7 +225,8 @@
         }
     }
     <span class="kw">fn</span> <span class="ident">flush</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">sink</span>: <span class="ident">S</span>)
-        <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">Sink</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">Sink</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prefix_table</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
@@ -232,9 +238,9 @@
                 <span class="kw">if</span> <span class="ident">distance</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">window_size</span> <span class="kw">as</span> <span class="ident">usize</span> {
                     <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="number">3</span> <span class="op">+</span> <span class="ident">longest_common_prefix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">buf</span>, <span class="ident">i</span> <span class="op">+</span> <span class="number">3</span>, <span class="ident">j</span> <span class="op">+</span> <span class="number">3</span>);
                     <span class="ident">sink</span>.<span class="ident">consume</span>(<span class="ident">Code</span>::<span class="ident">Pointer</span> {
-                                     <span class="ident">length</span>: <span class="ident">length</span>,
-                                     <span class="ident">backward_distance</span>: <span class="ident">distance</span> <span class="kw">as</span> <span class="ident">u16</span>,
-                                 });
+                        <span class="ident">length</span>: <span class="ident">length</span>,
+                        <span class="ident">backward_distance</span>: <span class="ident">distance</span> <span class="kw">as</span> <span class="ident">u16</span>,
+                    });
                     <span class="ident">i</span> <span class="op">+=</span> <span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>;
                     <span class="kw">continue</span>;
                 }
@@ -254,9 +260,11 @@
 
 <span class="kw">fn</span> <span class="ident">prefix</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> [<span class="ident">u8</span>; <span class="number">3</span>] {
     <span class="kw">unsafe</span> {
-        [<span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>),
-         <span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>),
-         <span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get_unchecked</span>(<span class="number">2</span>)]
+        [
+            <span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>),
+            <span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>),
+            <span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get_unchecked</span>(<span class="number">2</span>),
+        ]
     }
 }
 
@@ -326,7 +334,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

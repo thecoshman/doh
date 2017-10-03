@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/x509/extension.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/x509/extension.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>extension.rs.html -- source</title>
@@ -684,6 +684,37 @@
 <span id="639">639</span>
 <span id="640">640</span>
 <span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
 
@@ -695,7 +726,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// See the `Extension` documentation for more information on the different</span>
 <span class="doccomment">/// variants.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Hash</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.9.7&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use X509Builder and X509ReqBuilder instead&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ExtensionType</span> {
     <span class="ident">KeyUsage</span>,
@@ -800,12 +831,20 @@
             <span class="kw-2">&amp;</span><span class="ident">Extension</span>::<span class="ident">KeyUsage</span>(<span class="kw-2">ref</span> <span class="ident">purposes</span>) <span class="op">=&gt;</span> <span class="ident">join</span>(<span class="ident">purposes</span>.<span class="ident">iter</span>(), <span class="string">&quot;,&quot;</span>),
             <span class="kw-2">&amp;</span><span class="ident">Extension</span>::<span class="ident">ExtKeyUsage</span>(<span class="kw-2">ref</span> <span class="ident">purposes</span>) <span class="op">=&gt;</span> <span class="ident">join</span>(<span class="ident">purposes</span>.<span class="ident">iter</span>(), <span class="string">&quot;,&quot;</span>),
             <span class="kw-2">&amp;</span><span class="ident">Extension</span>::<span class="ident">SubjectAltName</span>(<span class="kw-2">ref</span> <span class="ident">names</span>) <span class="op">=&gt;</span> {
-                <span class="ident">join</span>(<span class="ident">names</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">opt</span>, <span class="kw-2">ref</span> <span class="ident">val</span>)<span class="op">|</span> <span class="ident">opt</span>.<span class="ident">to_string</span>() <span class="op">+</span> <span class="string">&quot;:&quot;</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">val</span>),
-                     <span class="string">&quot;,&quot;</span>)
+                <span class="ident">join</span>(
+                    <span class="ident">names</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">opt</span>, <span class="kw-2">ref</span> <span class="ident">val</span>)<span class="op">|</span> {
+                        <span class="ident">opt</span>.<span class="ident">to_string</span>() <span class="op">+</span> <span class="string">&quot;:&quot;</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">val</span>
+                    }),
+                    <span class="string">&quot;,&quot;</span>,
+                )
             }
             <span class="kw-2">&amp;</span><span class="ident">Extension</span>::<span class="ident">IssuerAltName</span>(<span class="kw-2">ref</span> <span class="ident">names</span>) <span class="op">=&gt;</span> {
-                <span class="ident">join</span>(<span class="ident">names</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">opt</span>, <span class="kw-2">ref</span> <span class="ident">val</span>)<span class="op">|</span> <span class="ident">opt</span>.<span class="ident">to_string</span>() <span class="op">+</span> <span class="string">&quot;:&quot;</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">val</span>),
-                     <span class="string">&quot;,&quot;</span>)
+                <span class="ident">join</span>(
+                    <span class="ident">names</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">opt</span>, <span class="kw-2">ref</span> <span class="ident">val</span>)<span class="op">|</span> {
+                        <span class="ident">opt</span>.<span class="ident">to_string</span>() <span class="op">+</span> <span class="string">&quot;:&quot;</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">val</span>
+                    }),
+                    <span class="string">&quot;,&quot;</span>,
+                )
             }
             <span class="kw-2">&amp;</span><span class="ident">Extension</span>::<span class="ident">OtherNid</span>(_, <span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">clone</span>(),
             <span class="kw-2">&amp;</span><span class="ident">Extension</span>::<span class="ident">OtherStr</span>(_, <span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>.<span class="ident">clone</span>(),
@@ -813,7 +852,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.9.7&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use X509Builder and X509ReqBuilder instead&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">KeyUsageOption</span> {
     <span class="ident">DigitalSignature</span>,
@@ -1048,10 +1087,30 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">first</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">critical</span>, <span class="string">&quot;critical&quot;</span>);
-        <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">digital_signature</span>, <span class="string">&quot;digitalSignature&quot;</span>);
-        <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">non_repudiation</span>, <span class="string">&quot;nonRepudiation&quot;</span>);
-        <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">key_encipherment</span>, <span class="string">&quot;keyEncipherment&quot;</span>);
-        <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">data_encipherment</span>, <span class="string">&quot;dataEncipherment&quot;</span>);
+        <span class="ident">append</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>,
+            <span class="self">self</span>.<span class="ident">digital_signature</span>,
+            <span class="string">&quot;digitalSignature&quot;</span>,
+        );
+        <span class="ident">append</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>,
+            <span class="self">self</span>.<span class="ident">non_repudiation</span>,
+            <span class="string">&quot;nonRepudiation&quot;</span>,
+        );
+        <span class="ident">append</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>,
+            <span class="self">self</span>.<span class="ident">key_encipherment</span>,
+            <span class="string">&quot;keyEncipherment&quot;</span>,
+        );
+        <span class="ident">append</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>,
+            <span class="self">self</span>.<span class="ident">data_encipherment</span>,
+            <span class="string">&quot;dataEncipherment&quot;</span>,
+        );
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">key_agreement</span>, <span class="string">&quot;keyAgreement&quot;</span>);
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">key_cert_sign</span>, <span class="string">&quot;keyCertSign&quot;</span>);
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">crl_sign</span>, <span class="string">&quot;cRLSign&quot;</span>);
@@ -1163,7 +1222,12 @@
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">server_auth</span>, <span class="string">&quot;serverAuth&quot;</span>);
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">client_auth</span>, <span class="string">&quot;clientAuth&quot;</span>);
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">code_signing</span>, <span class="string">&quot;codeSigning&quot;</span>);
-        <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">email_protection</span>, <span class="string">&quot;emailProtection&quot;</span>);
+        <span class="ident">append</span>(
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>,
+            <span class="self">self</span>.<span class="ident">email_protection</span>,
+            <span class="string">&quot;emailProtection&quot;</span>,
+        );
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">time_stamping</span>, <span class="string">&quot;timeStamping&quot;</span>);
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">ms_code_ind</span>, <span class="string">&quot;msCodeInd&quot;</span>);
         <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">first</span>, <span class="self">self</span>.<span class="ident">ms_code_com</span>, <span class="string">&quot;msCodeCom&quot;</span>);
@@ -1184,9 +1248,7 @@
 
 <span class="kw">impl</span> <span class="ident">SubjectKeyIdentifier</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">SubjectKeyIdentifier</span> {
-        <span class="ident">SubjectKeyIdentifier</span> {
-            <span class="ident">critical</span>: <span class="bool-val">false</span>,
-        }
+        <span class="ident">SubjectKeyIdentifier</span> { <span class="ident">critical</span>: <span class="bool-val">false</span> }
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">critical</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SubjectKeyIdentifier</span> {
@@ -1384,7 +1446,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

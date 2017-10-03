@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/referrer_policy.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/referrer_policy.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>referrer_policy.rs.html -- source</title>
@@ -160,13 +160,11 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
-<span id="118">118</span>
-<span id="119">119</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
 
-<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">HeaderFormat</span>, <span class="ident">parsing</span>};
+<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Raw</span>, <span class="ident">parsing</span>};
 
 <span class="doccomment">/// `Referrer-Policy` header, part of</span>
 <span class="doccomment">/// [Referrer Policy](https://www.w3.org/TR/referrer-policy/#referrer-policy-header)</span>
@@ -221,7 +219,7 @@
         <span class="ident">NAME</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_header</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>]) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ReferrerPolicy</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse_header</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="ident">Raw</span>) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ReferrerPolicy</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ReferrerPolicy</span>::<span class="kw-2">*</span>;
         <span class="comment">// See https://www.w3.org/TR/referrer-policy/#determine-policy-for-token</span>
         <span class="kw">let</span> <span class="ident">headers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">parsing</span>::<span class="ident">from_comma_delimited</span>(<span class="ident">raw</span>));
@@ -243,11 +241,9 @@
 
         <span class="prelude-val">Err</span>(::<span class="ident">Error</span>::<span class="ident">Header</span>)
     }
-}
 
-<span class="kw">impl</span> <span class="ident">HeaderFormat</span> <span class="kw">for</span> <span class="ident">ReferrerPolicy</span> {
-    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="self">self</span>, <span class="ident">f</span>)
+    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">header</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">f</span>.<span class="ident">fmt_line</span>(<span class="self">self</span>)
     }
 }
 
@@ -269,16 +265,16 @@
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
 <span class="kw">fn</span> <span class="ident">test_parse_header</span>() {
-    <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">ReferrerPolicy</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>([<span class="string">b&quot;origin&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">as_ref</span>()).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">ReferrerPolicy</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;origin&quot;</span>.<span class="ident">into</span>()).<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">ReferrerPolicy</span>::<span class="ident">Origin</span>;
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
-    <span class="kw">let</span> <span class="ident">e</span>: ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ReferrerPolicy</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>([<span class="string">b&quot;foobar&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">as_ref</span>());
+    <span class="kw">let</span> <span class="ident">e</span>: ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ReferrerPolicy</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;foobar&quot;</span>.<span class="ident">into</span>());
     <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">e</span>.<span class="ident">is_err</span>());
 }
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
 <span class="kw">fn</span> <span class="ident">test_rightmost_header</span>() {
-    <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">ReferrerPolicy</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;same-origin, origin, foobar&quot;</span>.<span class="ident">into</span>()]).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">ReferrerPolicy</span> <span class="op">=</span> <span class="ident">Header</span>::<span class="ident">parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;same-origin, origin, foobar&quot;</span>.<span class="ident">into</span>()).<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">ReferrerPolicy</span>::<span class="ident">Origin</span>;
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
 }
@@ -340,7 +336,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

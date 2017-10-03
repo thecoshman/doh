@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_urlencoded-0.4.3/src/ser/part.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_urlencoded-0.5.1/src/ser/part.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>part.rs.html -- source</title>
@@ -264,13 +264,6 @@
 <span id="219">219</span>
 <span id="220">220</span>
 <span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">dtoa</span>;
 <span class="kw">use</span> <span class="ident">itoa</span>;
@@ -387,7 +380,7 @@
 
     <span class="kw">fn</span> <span class="ident">serialize_unit_variant</span>(<span class="self">self</span>,
                               <span class="ident">_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-                              <span class="ident">_variant_index</span>: <span class="ident">usize</span>,
+                              <span class="ident">_variant_index</span>: <span class="ident">u32</span>,
                               <span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>)
                               <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">sink</span>.<span class="ident">serialize_static_str</span>(<span class="ident">variant</span>.<span class="ident">into</span>())
@@ -404,7 +397,7 @@
     <span class="kw">fn</span> <span class="ident">serialize_newtype_variant</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">ser</span>::<span class="ident">Serialize</span><span class="op">&gt;</span>
         (<span class="self">self</span>,
          <span class="ident">_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-         <span class="ident">_variant_index</span>: <span class="ident">usize</span>,
+         <span class="ident">_variant_index</span>: <span class="ident">u32</span>,
          <span class="ident">_variant</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
          <span class="ident">_value</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>)
          <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -427,13 +420,6 @@
         <span class="prelude-val">Err</span>(<span class="self">self</span>.<span class="ident">sink</span>.<span class="ident">unsupported</span>())
     }
 
-
-    <span class="kw">fn</span> <span class="ident">serialize_seq_fixed_size</span>(<span class="self">self</span>,
-                                <span class="ident">_len</span>: <span class="ident">usize</span>)
-                                <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">SerializeSeq</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Err</span>(<span class="self">self</span>.<span class="ident">sink</span>.<span class="ident">unsupported</span>())
-    }
-
     <span class="kw">fn</span> <span class="ident">serialize_tuple</span>(<span class="self">self</span>,
                        <span class="ident">_len</span>: <span class="ident">usize</span>)
                        <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">SerializeTuple</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -450,7 +436,7 @@
     <span class="kw">fn</span> <span class="ident">serialize_tuple_variant</span>
         (<span class="self">self</span>,
          <span class="ident">_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-         <span class="ident">_variant_index</span>: <span class="ident">usize</span>,
+         <span class="ident">_variant_index</span>: <span class="ident">u32</span>,
          <span class="ident">_variant</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
          <span class="ident">_len</span>: <span class="ident">usize</span>)
          <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">SerializeTupleVariant</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -473,7 +459,7 @@
     <span class="kw">fn</span> <span class="ident">serialize_struct_variant</span>
         (<span class="self">self</span>,
          <span class="ident">_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
-         <span class="ident">_variant_index</span>: <span class="ident">usize</span>,
+         <span class="ident">_variant_index</span>: <span class="ident">u32</span>,
          <span class="ident">_variant</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>,
          <span class="ident">_len</span>: <span class="ident">usize</span>)
          <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">SerializeStructVariant</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
@@ -558,7 +544,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "serde_urlencoded";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

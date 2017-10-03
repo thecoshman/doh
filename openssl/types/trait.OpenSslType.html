@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>types</a></p><script>window.sidebarCurrent = {name: 'OpenSslType', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait OpenSslType</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>types</a></p><script>window.sidebarCurrent = {name: 'OpenSslType', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -49,11 +49,11 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/foreign_types/lib.rs.html#180-192' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait OpenSslType <span class="where fmt-newline">where Self::<a class="trait" href="../../openssl/types/trait.OpenSslType.html" title="trait openssl::types::OpenSslType">Ref</a>::<a class="trait" href="../../openssl/types/trait.OpenSslTypeRef.html" title="trait openssl::types::OpenSslTypeRef">CType</a> == Self::<a class="trait" href="../../openssl/types/trait.OpenSslType.html" title="trait openssl::types::OpenSslType">CType</a></span> {
+<pre class='rust trait'>pub trait OpenSslType <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Self::<a class="type" href="../../openssl/types/trait.OpenSslType.html#associatedtype.Ref" title="type openssl::types::OpenSslType::Ref">Ref</a> as <a class="trait" href="../../openssl/types/trait.OpenSslTypeRef.html" title="trait openssl::types::OpenSslTypeRef">ForeignTypeRef</a>&gt;::<a class="type" href="../../openssl/types/trait.OpenSslTypeRef.html#associatedtype.CType" title="type openssl::types::OpenSslTypeRef::CType">CType</a> == Self::<a class="type" href="../../openssl/types/trait.OpenSslType.html#associatedtype.CType" title="type openssl::types::OpenSslType::CType">CType</a>,&nbsp;</span>{
     type <a href='#associatedtype.CType' class="type">CType</a>;
     type <a href='#associatedtype.Ref' class="type">Ref</a>: <a class="trait" href="../../openssl/types/trait.OpenSslTypeRef.html" title="trait openssl::types::OpenSslTypeRef">ForeignTypeRef</a>;
-    unsafe fn <a href='#tymethod.from_ptr' class='fnname'>from_ptr</a>(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="trait" href="../../openssl/types/trait.OpenSslType.html" title="trait openssl::types::OpenSslType">CType</a>) -&gt; Self;
-    fn <a href='#tymethod.as_ptr' class='fnname'>as_ptr</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="trait" href="../../openssl/types/trait.OpenSslType.html" title="trait openssl::types::OpenSslType">CType</a>;
+    unsafe fn <a href='#tymethod.from_ptr' class='fnname'>from_ptr</a>(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="type" href="../../openssl/types/trait.OpenSslType.html#associatedtype.CType" title="type openssl::types::OpenSslType::CType">CType</a>) -&gt; Self;
+<div class='item-spacer'></div>    fn <a href='#tymethod.as_ptr' class='fnname'>as_ptr</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="type" href="../../openssl/types/trait.OpenSslType.html#associatedtype.CType" title="type openssl::types::OpenSslType::CType">CType</a>;
 }</pre><div class='docblock'><p>A type implemented by wrappers over foreign types.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
@@ -63,8 +63,8 @@
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.from_ptr' class='method'><span id='from_ptr.v' class='invisible'><code>unsafe fn <a href='#tymethod.from_ptr' class='fnname'>from_ptr</a>(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="trait" href="../../openssl/types/trait.OpenSslType.html" title="trait openssl::types::OpenSslType">CType</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Constructs an instance of this type from its raw type.</p>
-</div><h3 id='tymethod.as_ptr' class='method'><span id='as_ptr.v' class='invisible'><code>fn <a href='#tymethod.as_ptr' class='fnname'>as_ptr</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="trait" href="../../openssl/types/trait.OpenSslType.html" title="trait openssl::types::OpenSslType">CType</a></code></span></h3><div class='docblock'><p>Returns a raw pointer to the wrapped value.</p>
+        <h3 id='tymethod.from_ptr' class='method'><span id='from_ptr.v' class='invisible'><code>unsafe fn <a href='#tymethod.from_ptr' class='fnname'>from_ptr</a>(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="type" href="../../openssl/types/trait.OpenSslType.html#associatedtype.CType" title="type openssl::types::OpenSslType::CType">CType</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Constructs an instance of this type from its raw type.</p>
+</div><h3 id='tymethod.as_ptr' class='method'><span id='as_ptr.v' class='invisible'><code>fn <a href='#tymethod.as_ptr' class='fnname'>as_ptr</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="type" href="../../openssl/types/trait.OpenSslType.html#associatedtype.CType" title="type openssl::types::OpenSslType::CType">CType</a></code></span></h3><div class='docblock'><p>Returns a raw pointer to the wrapped value.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
@@ -76,6 +76,7 @@
 <li><code>impl ForeignType for <a class="struct" href="../../openssl/asn1/struct.Asn1Object.html" title="struct openssl::asn1::Asn1Object">Asn1Object</a></code></li>
 <li><code>impl ForeignType for <a class="struct" href="../../openssl/bn/struct.BigNumContext.html" title="struct openssl::bn::BigNumContext">BigNumContext</a></code></li>
 <li><code>impl ForeignType for <a class="struct" href="../../openssl/bn/struct.BigNum.html" title="struct openssl::bn::BigNum">BigNum</a></code></li>
+<li><code>impl ForeignType for <a class="struct" href="../../openssl/cms/struct.CmsContentInfo.html" title="struct openssl::cms::CmsContentInfo">CmsContentInfo</a></code></li>
 <li><code>impl ForeignType for <a class="struct" href="../../openssl/conf/struct.Conf.html" title="struct openssl::conf::Conf">Conf</a></code></li>
 <li><code>impl ForeignType for <a class="struct" href="../../openssl/dh/struct.Dh.html" title="struct openssl::dh::Dh">Dh</a></code></li>
 <li><code>impl ForeignType for <a class="struct" href="../../openssl/dsa/struct.Dsa.html" title="struct openssl::dsa::Dsa">Dsa</a></code></li>
@@ -167,7 +168,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

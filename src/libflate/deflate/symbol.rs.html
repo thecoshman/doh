@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/deflate/symbol.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/deflate/symbol.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>symbol.rs.html -- source</title>
@@ -477,6 +477,79 @@
 <span id="432">432</span>
 <span id="433">433</span>
 <span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
@@ -487,52 +560,101 @@
 <span class="kw">use</span> <span class="ident">huffman</span>;
 <span class="kw">use</span> <span class="ident">huffman</span>::<span class="ident">Builder</span>;
 
-<span class="kw">const</span> <span class="ident">FIXED_LITERAL_OR_LENGTH_CODE_TABLE</span>: [(<span class="ident">u8</span>, <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>, <span class="ident">u16</span>); <span class="number">4</span>] <span class="op">=</span>
-    [(<span class="number">8</span>, <span class="number">000</span>..<span class="number">144</span>, <span class="number">0b0_0011_0000</span>),
-     (<span class="number">9</span>, <span class="number">144</span>..<span class="number">256</span>, <span class="number">0b1_1001_0000</span>),
-     (<span class="number">7</span>, <span class="number">256</span>..<span class="number">280</span>, <span class="number">0b0_0000_0000</span>),
-     (<span class="number">8</span>, <span class="number">280</span>..<span class="number">288</span>, <span class="number">0b0_1100_0000</span>)];
+<span class="kw">const</span> <span class="ident">FIXED_LITERAL_OR_LENGTH_CODE_TABLE</span>: [(<span class="ident">u8</span>, <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>, <span class="ident">u16</span>); <span class="number">4</span>] <span class="op">=</span> [
+    (<span class="number">8</span>, <span class="number">000</span>..<span class="number">144</span>, <span class="number">0b0_0011_0000</span>),
+    (<span class="number">9</span>, <span class="number">144</span>..<span class="number">256</span>, <span class="number">0b1_1001_0000</span>),
+    (<span class="number">7</span>, <span class="number">256</span>..<span class="number">280</span>, <span class="number">0b0_0000_0000</span>),
+    (<span class="number">8</span>, <span class="number">280</span>..<span class="number">288</span>, <span class="number">0b0_1100_0000</span>),
+];
 
-<span class="kw">const</span> <span class="ident">BITWIDTH_CODE_ORDER</span>: [<span class="ident">usize</span>; <span class="number">19</span>] <span class="op">=</span> [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">11</span>, <span class="number">4</span>, <span class="number">12</span>, <span class="number">3</span>, <span class="number">13</span>, <span class="number">2</span>,
-                                          <span class="number">14</span>, <span class="number">1</span>, <span class="number">15</span>];
+<span class="kw">const</span> <span class="ident">BITWIDTH_CODE_ORDER</span>: [<span class="ident">usize</span>; <span class="number">19</span>] <span class="op">=</span> [
+    <span class="number">16</span>,
+    <span class="number">17</span>,
+    <span class="number">18</span>,
+    <span class="number">0</span>,
+    <span class="number">8</span>,
+    <span class="number">7</span>,
+    <span class="number">9</span>,
+    <span class="number">6</span>,
+    <span class="number">10</span>,
+    <span class="number">5</span>,
+    <span class="number">11</span>,
+    <span class="number">4</span>,
+    <span class="number">12</span>,
+    <span class="number">3</span>,
+    <span class="number">13</span>,
+    <span class="number">2</span>,
+    <span class="number">14</span>,
+    <span class="number">1</span>,
+    <span class="number">15</span>,
+];
 
 <span class="kw">const</span> <span class="ident">END_OF_BLOCK</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">256</span>;
 
-<span class="kw">const</span> <span class="ident">LENGTH_TABLE</span>: [(<span class="ident">u16</span>, <span class="ident">u8</span>); <span class="number">29</span>] <span class="op">=</span>
-    [(<span class="number">3</span>, <span class="number">0</span>), (<span class="number">4</span>, <span class="number">0</span>), (<span class="number">5</span>, <span class="number">0</span>), (<span class="number">6</span>, <span class="number">0</span>), (<span class="number">7</span>, <span class="number">0</span>), (<span class="number">8</span>, <span class="number">0</span>), (<span class="number">9</span>, <span class="number">0</span>), (<span class="number">10</span>, <span class="number">0</span>), (<span class="number">11</span>, <span class="number">1</span>), (<span class="number">13</span>, <span class="number">1</span>), (<span class="number">15</span>, <span class="number">1</span>),
-     (<span class="number">17</span>, <span class="number">1</span>), (<span class="number">19</span>, <span class="number">2</span>), (<span class="number">23</span>, <span class="number">2</span>), (<span class="number">27</span>, <span class="number">2</span>), (<span class="number">31</span>, <span class="number">2</span>), (<span class="number">35</span>, <span class="number">3</span>), (<span class="number">43</span>, <span class="number">3</span>), (<span class="number">51</span>, <span class="number">3</span>), (<span class="number">59</span>, <span class="number">3</span>), (<span class="number">67</span>, <span class="number">4</span>),
-     (<span class="number">83</span>, <span class="number">4</span>), (<span class="number">99</span>, <span class="number">4</span>), (<span class="number">115</span>, <span class="number">4</span>), (<span class="number">131</span>, <span class="number">5</span>), (<span class="number">163</span>, <span class="number">5</span>), (<span class="number">195</span>, <span class="number">5</span>), (<span class="number">227</span>, <span class="number">5</span>), (<span class="number">258</span>, <span class="number">0</span>)];
+<span class="kw">const</span> <span class="ident">LENGTH_TABLE</span>: [(<span class="ident">u16</span>, <span class="ident">u8</span>); <span class="number">29</span>] <span class="op">=</span> [
+    (<span class="number">3</span>, <span class="number">0</span>),
+    (<span class="number">4</span>, <span class="number">0</span>),
+    (<span class="number">5</span>, <span class="number">0</span>),
+    (<span class="number">6</span>, <span class="number">0</span>),
+    (<span class="number">7</span>, <span class="number">0</span>),
+    (<span class="number">8</span>, <span class="number">0</span>),
+    (<span class="number">9</span>, <span class="number">0</span>),
+    (<span class="number">10</span>, <span class="number">0</span>),
+    (<span class="number">11</span>, <span class="number">1</span>),
+    (<span class="number">13</span>, <span class="number">1</span>),
+    (<span class="number">15</span>, <span class="number">1</span>),
+    (<span class="number">17</span>, <span class="number">1</span>),
+    (<span class="number">19</span>, <span class="number">2</span>),
+    (<span class="number">23</span>, <span class="number">2</span>),
+    (<span class="number">27</span>, <span class="number">2</span>),
+    (<span class="number">31</span>, <span class="number">2</span>),
+    (<span class="number">35</span>, <span class="number">3</span>),
+    (<span class="number">43</span>, <span class="number">3</span>),
+    (<span class="number">51</span>, <span class="number">3</span>),
+    (<span class="number">59</span>, <span class="number">3</span>),
+    (<span class="number">67</span>, <span class="number">4</span>),
+    (<span class="number">83</span>, <span class="number">4</span>),
+    (<span class="number">99</span>, <span class="number">4</span>),
+    (<span class="number">115</span>, <span class="number">4</span>),
+    (<span class="number">131</span>, <span class="number">5</span>),
+    (<span class="number">163</span>, <span class="number">5</span>),
+    (<span class="number">195</span>, <span class="number">5</span>),
+    (<span class="number">227</span>, <span class="number">5</span>),
+    (<span class="number">258</span>, <span class="number">0</span>),
+];
 
-<span class="kw">const</span> <span class="ident">DISTANCE_TABLE</span>: [(<span class="ident">u16</span>, <span class="ident">u8</span>); <span class="number">30</span>] <span class="op">=</span> [(<span class="number">1</span>, <span class="number">0</span>),
-                                         (<span class="number">2</span>, <span class="number">0</span>),
-                                         (<span class="number">3</span>, <span class="number">0</span>),
-                                         (<span class="number">4</span>, <span class="number">0</span>),
-                                         (<span class="number">5</span>, <span class="number">1</span>),
-                                         (<span class="number">7</span>, <span class="number">1</span>),
-                                         (<span class="number">9</span>, <span class="number">2</span>),
-                                         (<span class="number">13</span>, <span class="number">2</span>),
-                                         (<span class="number">17</span>, <span class="number">3</span>),
-                                         (<span class="number">25</span>, <span class="number">3</span>),
-                                         (<span class="number">33</span>, <span class="number">4</span>),
-                                         (<span class="number">49</span>, <span class="number">4</span>),
-                                         (<span class="number">65</span>, <span class="number">5</span>),
-                                         (<span class="number">97</span>, <span class="number">5</span>),
-                                         (<span class="number">129</span>, <span class="number">6</span>),
-                                         (<span class="number">193</span>, <span class="number">6</span>),
-                                         (<span class="number">257</span>, <span class="number">7</span>),
-                                         (<span class="number">385</span>, <span class="number">7</span>),
-                                         (<span class="number">513</span>, <span class="number">8</span>),
-                                         (<span class="number">769</span>, <span class="number">8</span>),
-                                         (<span class="number">1025</span>, <span class="number">9</span>),
-                                         (<span class="number">1537</span>, <span class="number">9</span>),
-                                         (<span class="number">2049</span>, <span class="number">10</span>),
-                                         (<span class="number">3073</span>, <span class="number">10</span>),
-                                         (<span class="number">4097</span>, <span class="number">11</span>),
-                                         (<span class="number">6145</span>, <span class="number">11</span>),
-                                         (<span class="number">8193</span>, <span class="number">12</span>),
-                                         (<span class="number">12289</span>, <span class="number">12</span>),
-                                         (<span class="number">16385</span>, <span class="number">13</span>),
-                                         (<span class="number">24577</span>, <span class="number">13</span>)];
+<span class="kw">const</span> <span class="ident">DISTANCE_TABLE</span>: [(<span class="ident">u16</span>, <span class="ident">u8</span>); <span class="number">30</span>] <span class="op">=</span> [
+    (<span class="number">1</span>, <span class="number">0</span>),
+    (<span class="number">2</span>, <span class="number">0</span>),
+    (<span class="number">3</span>, <span class="number">0</span>),
+    (<span class="number">4</span>, <span class="number">0</span>),
+    (<span class="number">5</span>, <span class="number">1</span>),
+    (<span class="number">7</span>, <span class="number">1</span>),
+    (<span class="number">9</span>, <span class="number">2</span>),
+    (<span class="number">13</span>, <span class="number">2</span>),
+    (<span class="number">17</span>, <span class="number">3</span>),
+    (<span class="number">25</span>, <span class="number">3</span>),
+    (<span class="number">33</span>, <span class="number">4</span>),
+    (<span class="number">49</span>, <span class="number">4</span>),
+    (<span class="number">65</span>, <span class="number">5</span>),
+    (<span class="number">97</span>, <span class="number">5</span>),
+    (<span class="number">129</span>, <span class="number">6</span>),
+    (<span class="number">193</span>, <span class="number">6</span>),
+    (<span class="number">257</span>, <span class="number">7</span>),
+    (<span class="number">385</span>, <span class="number">7</span>),
+    (<span class="number">513</span>, <span class="number">8</span>),
+    (<span class="number">769</span>, <span class="number">8</span>),
+    (<span class="number">1025</span>, <span class="number">9</span>),
+    (<span class="number">1537</span>, <span class="number">9</span>),
+    (<span class="number">2049</span>, <span class="number">10</span>),
+    (<span class="number">3073</span>, <span class="number">10</span>),
+    (<span class="number">4097</span>, <span class="number">11</span>),
+    (<span class="number">6145</span>, <span class="number">11</span>),
+    (<span class="number">8193</span>, <span class="number">12</span>),
+    (<span class="number">12289</span>, <span class="number">12</span>),
+    (<span class="number">16385</span>, <span class="number">13</span>),
+    (<span class="number">24577</span>, <span class="number">13</span>),
+];
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Symbol</span> {
@@ -609,7 +731,8 @@
 }
 <span class="kw">impl</span> <span class="ident">Encoder</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>, <span class="ident">symbol</span>: <span class="ident">Symbol</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+    <span class="kw">where</span>
+        <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
     {
         <span class="self">self</span>.<span class="ident">literal</span>.<span class="ident">encode</span>(<span class="ident">writer</span>, <span class="ident">symbol</span>.<span class="ident">code</span>())<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">bits</span>, <span class="ident">extra</span>)) <span class="op">=</span> <span class="ident">symbol</span>.<span class="ident">extra_lengh</span>() {
@@ -633,7 +756,8 @@
 <span class="kw">impl</span> <span class="ident">Decoder</span> {
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decode_unchecked</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Symbol</span>
-        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">decode_literal_or_length</span>(<span class="ident">reader</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Symbol</span>::<span class="ident">Share</span> { <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">distance</span>, .. } <span class="op">=</span> <span class="ident">symbol</span> {
@@ -643,7 +767,8 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">decode_literal_or_length</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Symbol</span>
-        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
     {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">literal</span>.<span class="ident">decode_unchecked</span>(<span class="ident">reader</span>);
         <span class="kw">match</span> <span class="ident">decoded</span> {
@@ -662,7 +787,8 @@
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">decode_distance</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">u16</span>
-        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
     {
         <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">distance</span>.<span class="ident">decode_unchecked</span>(<span class="ident">reader</span>) <span class="kw">as</span> <span class="ident">usize</span>;
         <span class="kw">let</span> (<span class="ident">base</span>, <span class="ident">extra_bits</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="ident">DISTANCE_TABLE</span>.<span class="ident">get_unchecked</span>(<span class="ident">decoded</span>) };
@@ -675,8 +801,11 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HuffmanCodec</span> {
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbols</span>: <span class="kw-2">&amp;</span>[<span class="ident">Symbol</span>]) <span class="op">-&gt;</span> <span class="ident">Encoder</span>;
     <span class="kw">fn</span> <span class="ident">save</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>, <span class="ident">codec</span>: <span class="kw-2">&amp;</span><span class="ident">Encoder</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>;
-    <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decoder</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>;
+    <span class="kw">where</span>
+        <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>;
+    <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decoder</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>;
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
@@ -686,10 +815,10 @@
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbols</span>: <span class="kw-2">&amp;</span>[<span class="ident">Symbol</span>]) <span class="op">-&gt;</span> <span class="ident">Encoder</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">literal_builder</span> <span class="op">=</span> <span class="ident">huffman</span>::<span class="ident">EncoderBuilder</span>::<span class="ident">new</span>(<span class="number">288</span>);
         <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">bitwidth</span>, <span class="kw-2">ref</span> <span class="ident">symbols</span>, <span class="ident">code_base</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">FIXED_LITERAL_OR_LENGTH_CODE_TABLE</span> {
-            <span class="kw">for</span> (<span class="ident">code</span>, <span class="ident">symbol</span>) <span class="kw">in</span> <span class="ident">symbols</span>
-                    .<span class="ident">clone</span>()
-                    .<span class="ident">enumerate</span>()
-                    .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">i</span>, <span class="ident">s</span>)<span class="op">|</span> (<span class="ident">code_base</span> <span class="op">+</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>, <span class="ident">s</span>)) {
+            <span class="kw">for</span> (<span class="ident">code</span>, <span class="ident">symbol</span>) <span class="kw">in</span> <span class="ident">symbols</span>.<span class="ident">clone</span>().<span class="ident">enumerate</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">i</span>, <span class="ident">s</span>)<span class="op">|</span> {
+                (<span class="ident">code_base</span> <span class="op">+</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>, <span class="ident">s</span>)
+            })
+            {
                 <span class="ident">literal_builder</span>.<span class="ident">set_mapping</span>(<span class="ident">symbol</span>, <span class="ident">huffman</span>::<span class="ident">Code</span>::<span class="ident">new</span>(<span class="ident">bitwidth</span>, <span class="ident">code</span>));
             }
         }
@@ -706,20 +835,22 @@
     }
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_variables</span>)]</span>
     <span class="kw">fn</span> <span class="ident">save</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>, <span class="ident">codec</span>: <span class="kw-2">&amp;</span><span class="ident">Encoder</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+    <span class="kw">where</span>
+        <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
     {
         <span class="prelude-val">Ok</span>(())
     }
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_variables</span>)]</span>
     <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decoder</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">literal_builder</span> <span class="op">=</span> <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">new</span>(<span class="number">9</span>, <span class="prelude-val">Some</span>(<span class="ident">END_OF_BLOCK</span>));
         <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">bitwidth</span>, <span class="kw-2">ref</span> <span class="ident">symbols</span>, <span class="ident">code_base</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">FIXED_LITERAL_OR_LENGTH_CODE_TABLE</span> {
-            <span class="kw">for</span> (<span class="ident">code</span>, <span class="ident">symbol</span>) <span class="kw">in</span> <span class="ident">symbols</span>
-                    .<span class="ident">clone</span>()
-                    .<span class="ident">enumerate</span>()
-                    .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">i</span>, <span class="ident">s</span>)<span class="op">|</span> (<span class="ident">code_base</span> <span class="op">+</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>, <span class="ident">s</span>)) {
+            <span class="kw">for</span> (<span class="ident">code</span>, <span class="ident">symbol</span>) <span class="kw">in</span> <span class="ident">symbols</span>.<span class="ident">clone</span>().<span class="ident">enumerate</span>().<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">i</span>, <span class="ident">s</span>)<span class="op">|</span> {
+                (<span class="ident">code_base</span> <span class="op">+</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>, <span class="ident">s</span>)
+            })
+            {
                 <span class="ident">literal_builder</span>.<span class="ident">set_mapping</span>(<span class="ident">symbol</span>, <span class="ident">huffman</span>::<span class="ident">Code</span>::<span class="ident">new</span>(<span class="ident">bitwidth</span>, <span class="ident">code</span>));
             }
         }
@@ -730,9 +861,9 @@
         }
 
         <span class="prelude-val">Ok</span>(<span class="ident">Decoder</span> {
-               <span class="ident">literal</span>: <span class="ident">literal_builder</span>.<span class="ident">finish</span>(),
-               <span class="ident">distance</span>: <span class="ident">distance_builder</span>.<span class="ident">finish</span>(),
-           })
+            <span class="ident">literal</span>: <span class="ident">literal_builder</span>.<span class="ident">finish</span>(),
+            <span class="ident">distance</span>: <span class="ident">distance_builder</span>.<span class="ident">finish</span>(),
+        })
     }
 }
 
@@ -754,7 +885,8 @@
         }
     }
     <span class="kw">fn</span> <span class="ident">save</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitWriter</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>, <span class="ident">codec</span>: <span class="kw-2">&amp;</span><span class="ident">Encoder</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>
+    <span class="kw">where</span>
+        <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
     {
         <span class="kw">let</span> <span class="ident">literal_code_count</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">257</span>, <span class="ident">codec</span>.<span class="ident">literal</span>.<span class="ident">used_max_symbol</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>) <span class="op">+</span> <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">distance_code_count</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">1</span>, <span class="ident">codec</span>.<span class="ident">distance</span>.<span class="ident">used_max_symbol</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>) <span class="op">+</span> <span class="number">1</span>);
@@ -766,19 +898,21 @@
         }
         <span class="kw">let</span> <span class="ident">bitwidth_encoder</span> <span class="op">=</span> <span class="ident">huffman</span>::<span class="ident">EncoderBuilder</span>::<span class="ident">from_frequencies</span>(<span class="kw-2">&amp;</span><span class="ident">code_counts</span>, <span class="number">7</span>);
 
-        <span class="kw">let</span> <span class="ident">bitwidth_code_count</span> <span class="op">=</span>
-            <span class="ident">cmp</span>::<span class="ident">max</span>(<span class="number">4</span>,
-                     <span class="ident">BITWIDTH_CODE_ORDER</span>
-                         .<span class="ident">iter</span>()
-                         .<span class="ident">rev</span>()
-                         .<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">i</span><span class="op">|</span> <span class="ident">bitwidth_encoder</span>.<span class="ident">lookup</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>).<span class="ident">width</span> <span class="op">&gt;</span> <span class="number">0</span>)
-                         .<span class="ident">map_or</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">trailing_zeros</span><span class="op">|</span> <span class="number">19</span> <span class="op">-</span> <span class="ident">trailing_zeros</span>)) <span class="kw">as</span> <span class="ident">u16</span>;
+        <span class="kw">let</span> <span class="ident">bitwidth_code_count</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">max</span>(
+            <span class="number">4</span>,
+            <span class="ident">BITWIDTH_CODE_ORDER</span>
+                .<span class="ident">iter</span>()
+                .<span class="ident">rev</span>()
+                .<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">i</span><span class="op">|</span> <span class="ident">bitwidth_encoder</span>.<span class="ident">lookup</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">u16</span>).<span class="ident">width</span> <span class="op">&gt;</span> <span class="number">0</span>)
+                .<span class="ident">map_or</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">trailing_zeros</span><span class="op">|</span> <span class="number">19</span> <span class="op">-</span> <span class="ident">trailing_zeros</span>),
+        ) <span class="kw">as</span> <span class="ident">u16</span>;
         <span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">5</span>, <span class="ident">literal_code_count</span> <span class="op">-</span> <span class="number">257</span>)<span class="question-mark">?</span>;
         <span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">5</span>, <span class="ident">distance_code_count</span> <span class="op">-</span> <span class="number">1</span>)<span class="question-mark">?</span>;
         <span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="number">4</span>, <span class="ident">bitwidth_code_count</span> <span class="op">-</span> <span class="number">4</span>)<span class="question-mark">?</span>;
-        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i</span> <span class="kw">in</span> <span class="ident">BITWIDTH_CODE_ORDER</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">take</span>(<span class="ident">bitwidth_code_count</span> <span class="kw">as</span> <span class="ident">usize</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i</span> <span class="kw">in</span> <span class="ident">BITWIDTH_CODE_ORDER</span>.<span class="ident">iter</span>().<span class="ident">take</span>(
+            <span class="ident">bitwidth_code_count</span> <span class="kw">as</span> <span class="ident">usize</span>,
+        )
+        {
             <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">code_counts</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="number">0</span> {
                 <span class="number">0</span>
             } <span class="kw">else</span> {
@@ -795,20 +929,22 @@
         <span class="prelude-val">Ok</span>(())
     }
     <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decoder</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
     {
         <span class="kw">let</span> <span class="ident">literal_code_count</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">5</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">257</span>;
         <span class="kw">let</span> <span class="ident">distance_code_count</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">5</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">bitwidth_code_count</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">4</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">4</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bitwidth_code_bitwidthes</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">19</span>];
-        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i</span> <span class="kw">in</span> <span class="ident">BITWIDTH_CODE_ORDER</span>
-                .<span class="ident">iter</span>()
-                .<span class="ident">take</span>(<span class="ident">bitwidth_code_count</span> <span class="kw">as</span> <span class="ident">usize</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">i</span> <span class="kw">in</span> <span class="ident">BITWIDTH_CODE_ORDER</span>.<span class="ident">iter</span>().<span class="ident">take</span>(
+            <span class="ident">bitwidth_code_count</span> <span class="kw">as</span> <span class="ident">usize</span>,
+        )
+        {
             <span class="ident">bitwidth_code_bitwidthes</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">3</span>)<span class="question-mark">?</span> <span class="kw">as</span> <span class="ident">u8</span>;
         }
-        <span class="kw">let</span> <span class="ident">bitwidth_decoder</span> <span class="op">=</span> <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">from_bitwidthes</span>(<span class="kw-2">&amp;</span><span class="ident">bitwidth_code_bitwidthes</span>,
-                                                                        <span class="prelude-val">None</span>);
+        <span class="kw">let</span> <span class="ident">bitwidth_decoder</span> <span class="op">=</span>
+            <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">from_bitwidthes</span>(<span class="kw-2">&amp;</span><span class="ident">bitwidth_code_bitwidthes</span>, <span class="prelude-val">None</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">literal_code_bitwidthes</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">literal_code_count</span> <span class="kw">as</span> <span class="ident">usize</span>);
         <span class="kw">while</span> <span class="ident">literal_code_bitwidthes</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">literal_code_count</span> <span class="kw">as</span> <span class="ident">usize</span> {
@@ -828,50 +964,60 @@
         <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">distance_code_bitwidthes</span>.<span class="ident">len</span>(), <span class="ident">distance_code_count</span> <span class="kw">as</span> <span class="ident">usize</span>);
 
         <span class="prelude-val">Ok</span>(<span class="ident">Decoder</span> {
-               <span class="ident">literal</span>: <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">from_bitwidthes</span>(<span class="kw-2">&amp;</span><span class="ident">literal_code_bitwidthes</span>,
-                                                                 <span class="prelude-val">Some</span>(<span class="ident">END_OF_BLOCK</span>)),
-               <span class="ident">distance</span>: <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">from_bitwidthes</span>(<span class="kw-2">&amp;</span><span class="ident">distance_code_bitwidthes</span>, <span class="prelude-val">None</span>),
-           })
+            <span class="ident">literal</span>: <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">from_bitwidthes</span>(
+                <span class="kw-2">&amp;</span><span class="ident">literal_code_bitwidthes</span>,
+                <span class="prelude-val">Some</span>(<span class="ident">END_OF_BLOCK</span>),
+            ),
+            <span class="ident">distance</span>: <span class="ident">huffman</span>::<span class="ident">DecoderBuilder</span>::<span class="ident">from_bitwidthes</span>(<span class="kw-2">&amp;</span><span class="ident">distance_code_bitwidthes</span>, <span class="prelude-val">None</span>),
+        })
     }
 }
 
-<span class="kw">fn</span> <span class="ident">load_bitwidthes</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
-                      <span class="ident">code</span>: <span class="ident">u16</span>,
-                      <span class="ident">last</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>)
-                      <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">u8</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>
+<span class="kw">fn</span> <span class="ident">load_bitwidthes</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(
+    <span class="ident">reader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bit</span>::<span class="ident">BitReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+    <span class="ident">code</span>: <span class="ident">u16</span>,
+    <span class="ident">last</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">u8</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">R</span>: <span class="ident">io</span>::<span class="ident">Read</span>,
 {
     <span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">code</span> {
-           <span class="number">0</span>...<span class="number">15</span> <span class="op">=&gt;</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">once</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">u8</span>)),
-           <span class="number">16</span> <span class="op">=&gt;</span> {
-               <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">2</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">3</span>;
-               <span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="ident">last</span>.<span class="ident">ok_or_else</span>(<span class="op">||</span> <span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;No preceeding value&quot;</span>))<span class="question-mark">?</span>;
-               <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">last</span>).<span class="ident">take</span>(<span class="ident">count</span> <span class="kw">as</span> <span class="ident">usize</span>))
-           }
-           <span class="number">17</span> <span class="op">=&gt;</span> {
-               <span class="kw">let</span> <span class="ident">zeros</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">3</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">3</span>;
-               <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="number">0</span>).<span class="ident">take</span>(<span class="ident">zeros</span> <span class="kw">as</span> <span class="ident">usize</span>))
-           }
-           <span class="number">18</span> <span class="op">=&gt;</span> {
-               <span class="kw">let</span> <span class="ident">zeros</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">7</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">11</span>;
-               <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="number">0</span>).<span class="ident">take</span>(<span class="ident">zeros</span> <span class="kw">as</span> <span class="ident">usize</span>))
-           }
-           _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
-       })
+        <span class="number">0</span>...<span class="number">15</span> <span class="op">=&gt;</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">once</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">u8</span>)),
+        <span class="number">16</span> <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="ident">count</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">2</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">3</span>;
+            <span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="ident">last</span>.<span class="ident">ok_or_else</span>(
+                <span class="op">||</span> <span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;No preceeding value&quot;</span>),
+            )<span class="question-mark">?</span>;
+            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">last</span>).<span class="ident">take</span>(<span class="ident">count</span> <span class="kw">as</span> <span class="ident">usize</span>))
+        }
+        <span class="number">17</span> <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="ident">zeros</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">3</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">3</span>;
+            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="number">0</span>).<span class="ident">take</span>(<span class="ident">zeros</span> <span class="kw">as</span> <span class="ident">usize</span>))
+        }
+        <span class="number">18</span> <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="ident">zeros</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_bits</span>(<span class="number">7</span>)<span class="question-mark">?</span> <span class="op">+</span> <span class="number">11</span>;
+            <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="number">0</span>).<span class="ident">take</span>(<span class="ident">zeros</span> <span class="kw">as</span> <span class="ident">usize</span>))
+        }
+        _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+    })
 }
 
-<span class="kw">fn</span> <span class="ident">build_bitwidth_codes</span>(<span class="ident">codec</span>: <span class="kw-2">&amp;</span><span class="ident">Encoder</span>,
-                        <span class="ident">literal_code_count</span>: <span class="ident">u16</span>,
-                        <span class="ident">distance_code_count</span>: <span class="ident">u16</span>)
-                        <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">build_bitwidth_codes</span>(
+    <span class="ident">codec</span>: <span class="kw-2">&amp;</span><span class="ident">Encoder</span>,
+    <span class="ident">literal_code_count</span>: <span class="ident">u16</span>,
+    <span class="ident">distance_code_count</span>: <span class="ident">u16</span>,
+) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>)<span class="op">&gt;</span> {
     <span class="kw">struct</span> <span class="ident">RunLength</span> {
         <span class="ident">value</span>: <span class="ident">u8</span>,
         <span class="ident">count</span>: <span class="ident">usize</span>,
     }
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">run_lens</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RunLength</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
-    <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">e</span>, <span class="ident">size</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span>[(<span class="kw-2">&amp;</span><span class="ident">codec</span>.<span class="ident">literal</span>, <span class="ident">literal_code_count</span>),
-                        (<span class="kw-2">&amp;</span><span class="ident">codec</span>.<span class="ident">distance</span>, <span class="ident">distance_code_count</span>)] {
+    <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="ident">e</span>, <span class="ident">size</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span>[
+        (<span class="kw-2">&amp;</span><span class="ident">codec</span>.<span class="ident">literal</span>, <span class="ident">literal_code_count</span>),
+        (<span class="kw-2">&amp;</span><span class="ident">codec</span>.<span class="ident">distance</span>, <span class="ident">distance_code_count</span>),
+    ]
+    {
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">c</span>) <span class="kw">in</span> (<span class="number">0</span>..<span class="ident">size</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">lookup</span>(<span class="ident">x</span> <span class="kw">as</span> <span class="ident">u16</span>).<span class="ident">width</span>).<span class="ident">enumerate</span>() {
             <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">run_lens</span>.<span class="ident">last</span>().<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">value</span> <span class="op">==</span> <span class="ident">c</span>) {
                 <span class="ident">run_lens</span>.<span class="ident">last_mut</span>().<span class="ident">unwrap</span>().<span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
@@ -970,7 +1116,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

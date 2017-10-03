@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/last_modified.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/last_modified.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>last_modified.rs.html -- source</title>
@@ -81,44 +81,34 @@
 <span id="36">36</span>
 <span id="37">37</span>
 <span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
-<span id="41">41</span>
-<span id="42">42</span>
-<span id="43">43</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">HttpDate</span>;
 
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Last-Modified` header, defined in</span>
     <span class="doccomment">/// [RFC7232](http://tools.ietf.org/html/rfc7232#section-2.2)</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// The `Last-Modified` header field in a response provides a timestamp</span>
     <span class="doccomment">/// indicating the date and time at which the origin server believes the</span>
     <span class="doccomment">/// selected representation was last modified, as determined at the</span>
     <span class="doccomment">/// conclusion of handling the request.</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
     <span class="doccomment">/// ```plain</span>
     <span class="doccomment">/// Expires = HTTP-date</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
     <span class="doccomment">/// * `Sat, 29 Oct 1994 19:43:31 GMT`</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # extern crate hyper;</span>
-    <span class="doccomment">/// # extern crate time;</span>
-    <span class="doccomment">/// # fn main() {</span>
-    <span class="doccomment">/// // extern crate time;</span>
-    <span class="doccomment">/// </span>
-    <span class="doccomment">/// use hyper::header::{Headers, LastModified, HttpDate};</span>
-    <span class="doccomment">/// use time::{self, Duration};</span>
-    <span class="doccomment">/// </span>
+    <span class="doccomment">/// use hyper::header::{Headers, LastModified};</span>
+    <span class="doccomment">/// use std::time::{SystemTime, Duration};</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
-    <span class="doccomment">/// headers.set(LastModified(HttpDate(time::now() - Duration::days(1))));</span>
-    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// let modified = SystemTime::now() - Duration::from_secs(60 * 60 * 24);</span>
+    <span class="doccomment">/// headers.set(LastModified(modified.into()));</span>
     <span class="doccomment">/// ```</span>
     (<span class="ident">LastModified</span>, <span class="string">&quot;Last-Modified&quot;</span>) <span class="op">=&gt;</span> [<span class="ident">HttpDate</span>]
 
@@ -188,7 +178,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

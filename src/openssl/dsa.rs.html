@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/dsa.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/dsa.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>dsa.rs.html -- source</title>
@@ -238,6 +238,12 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="ident">foreign_types</span>::<span class="ident">ForeignTypeRef</span>;
@@ -320,15 +326,18 @@
 <span class="kw">impl</span> <span class="ident">Dsa</span> {
     <span class="doccomment">/// Generate a DSA key pair.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span>(<span class="ident">bits</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+        <span class="ident">ffi</span>::<span class="ident">init</span>();
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">dsa</span> <span class="op">=</span> <span class="ident">Dsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DSA_new</span>())));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">DSA_generate_parameters_ex</span>(<span class="ident">dsa</span>.<span class="number">0</span>,
-                                                     <span class="ident">bits</span> <span class="kw">as</span> <span class="ident">c_int</span>,
-                                                     <span class="ident">ptr</span>::<span class="ident">null</span>(),
-                                                     <span class="number">0</span>,
-                                                     <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                                     <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                                     <span class="ident">ptr</span>::<span class="ident">null_mut</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">DSA_generate_parameters_ex</span>(
+                <span class="ident">dsa</span>.<span class="number">0</span>,
+                <span class="ident">bits</span> <span class="kw">as</span> <span class="ident">c_int</span>,
+                <span class="ident">ptr</span>::<span class="ident">null</span>(),
+                <span class="number">0</span>,
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+            )));
             <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">DSA_generate_key</span>(<span class="ident">dsa</span>.<span class="number">0</span>)));
             <span class="prelude-val">Ok</span>(<span class="ident">dsa</span>)
         }
@@ -341,7 +350,8 @@
 
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.9.2&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use private_key_from_pem_callback&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_key_from_pem_cb</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">pass_cb</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">c_char</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>
+    <span class="kw">where</span>
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">c_char</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>,
     {
         <span class="ident">ffi</span>::<span class="ident">init</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">CallbackState</span>::<span class="ident">new</span>(<span class="ident">pass_cb</span>);
@@ -349,10 +359,12 @@
 
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">cb_ptr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
-            <span class="kw">let</span> <span class="ident">dsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_DSAPrivateKey</span>(<span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
-                                                                 <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                                                 <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
-                                                                 <span class="ident">cb_ptr</span>)));
+            <span class="kw">let</span> <span class="ident">dsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_DSAPrivateKey</span>(
+                <span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
+                <span class="ident">cb_ptr</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">Dsa</span>(<span class="ident">dsa</span>))
         }
     }
@@ -415,7 +427,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_to_password</span>() {
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Dsa</span>::<span class="ident">generate</span>(<span class="number">2048</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">pem</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">private_key_to_pem_passphrase</span>(<span class="ident">Cipher</span>::<span class="ident">aes_128_cbc</span>(), <span class="string">b&quot;foobar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">pem</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">private_key_to_pem_passphrase</span>(<span class="ident">Cipher</span>::<span class="ident">aes_128_cbc</span>(), <span class="string">b&quot;foobar&quot;</span>)
+            .<span class="ident">unwrap</span>();
         <span class="ident">Dsa</span>::<span class="ident">private_key_from_pem_passphrase</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>, <span class="string">b&quot;foobar&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">Dsa</span>::<span class="ident">private_key_from_pem_passphrase</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>, <span class="string">b&quot;fizzbuzz&quot;</span>).<span class="ident">is_err</span>());
     }
@@ -425,11 +438,10 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;../test/dsa-encrypted.pem&quot;</span>);
         <span class="ident">Dsa</span>::<span class="ident">private_key_from_pem_callback</span>(<span class="ident">key</span>, <span class="op">|</span><span class="ident">password</span><span class="op">|</span> {
-                <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                <span class="ident">password</span>[..<span class="number">6</span>].<span class="ident">copy_from_slice</span>(<span class="string">b&quot;mypass&quot;</span>);
-                <span class="prelude-val">Ok</span>(<span class="number">6</span>)
-            })
-            .<span class="ident">unwrap</span>();
+            <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="ident">password</span>[..<span class="number">6</span>].<span class="ident">copy_from_slice</span>(<span class="string">b&quot;mypass&quot;</span>);
+            <span class="prelude-val">Ok</span>(<span class="number">6</span>)
+        }).<span class="ident">unwrap</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">password_queried</span>);
     }
@@ -492,7 +504,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

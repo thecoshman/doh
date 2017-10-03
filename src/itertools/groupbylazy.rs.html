@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.0/src/groupbylazy.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.6.5/src/groupbylazy.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>groupbylazy.rs.html -- source</title>
@@ -606,6 +606,9 @@
 <span id="561">561</span>
 <span id="562">562</span>
 <span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::{<span class="ident">Cell</span>, <span class="ident">RefCell</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">vec</span>;
@@ -669,13 +672,14 @@
     <span class="doccomment">/// flag set if iterator is exhausted</span>
     <span class="ident">done</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// Index of group we are currently buffering or visiting</span>
-    <span class="ident">top</span>: <span class="ident">usize</span>,
+    <span class="ident">top_group</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Least index for which we still have elements buffered</span>
-    <span class="ident">bot</span>: <span class="ident">usize</span>,
-    <span class="doccomment">/// Group index for `buffer[0]` -- the slots bufbot..bot are unused</span>
-    <span class="doccomment">/// and will be erased when that range is large enough.</span>
-    <span class="ident">bufbot</span>: <span class="ident">usize</span>,
-    <span class="doccomment">/// Buffered groups, from `bufbot` (index 0) to `top`.</span>
+    <span class="ident">oldest_buffered_group</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// Group index for `buffer[0]` -- the slots</span>
+    <span class="doccomment">/// bottom_group..oldest_buffered_group are unused and will be erased when</span>
+    <span class="doccomment">/// that range is large enough.</span>
+    <span class="ident">bottom_group</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// Buffered groups, from `bottom_group` (index 0) to `top_group`.</span>
     <span class="ident">buffer</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">vec</span>::<span class="ident">IntoIter</span><span class="op">&lt;</span><span class="ident">I</span>::<span class="ident">Item</span><span class="op">&gt;&gt;</span>,
     <span class="doccomment">/// index of last group iter that was dropped, usize::MAX == none</span>
     <span class="ident">dropped_group</span>: <span class="ident">usize</span>,
@@ -690,19 +694,21 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">step</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">client</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">I</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="comment">/*
-        println!(&quot;client={}, bufbot={}, bot={}, top={}, buffers=[{}]&quot;,
-                 client, self.bufbot, self.bot, self.top,
+        println!(&quot;client={}, bottom_group={}, oldest_buffered_group={}, top_group={}, buffers=[{}]&quot;,
+                 client, self.bottom_group, self.oldest_buffered_group,
+                 self.top_group,
                  self.buffer.iter().map(|elt| elt.len()).format(&quot;, &quot;));
-         */</span>
-        <span class="kw">if</span> <span class="ident">client</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">bot</span> {
+        */</span>
+        <span class="kw">if</span> <span class="ident">client</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> {
             <span class="prelude-val">None</span>
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">client</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">||</span>
-            (<span class="ident">client</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bufbot</span>)
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">client</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">||</span>
+            (<span class="ident">client</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">&amp;&amp;</span>
+             <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bottom_group</span>)
         {
             <span class="self">self</span>.<span class="ident">lookup_buffer</span>(<span class="ident">client</span>)
         } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">done</span> {
             <span class="prelude-val">None</span>
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">==</span> <span class="ident">client</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">==</span> <span class="ident">client</span> {
             <span class="self">self</span>.<span class="ident">step_current</span>()
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">step_buffering</span>(<span class="ident">client</span>)
@@ -712,24 +718,24 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">never</span>)]</span>
     <span class="kw">fn</span> <span class="ident">lookup_buffer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">client</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">I</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="comment">// if `bufidx` doesn&#39;t exist in self.buffer, it might be empty</span>
-        <span class="kw">let</span> <span class="ident">bufidx</span> <span class="op">=</span> <span class="ident">client</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bufbot</span>;
-        <span class="kw">if</span> <span class="ident">client</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">bot</span> {
+        <span class="kw">let</span> <span class="ident">bufidx</span> <span class="op">=</span> <span class="ident">client</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bottom_group</span>;
+        <span class="kw">if</span> <span class="ident">client</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
         <span class="kw">let</span> <span class="ident">elt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">get_mut</span>(<span class="ident">bufidx</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">queue</span><span class="op">|</span> <span class="ident">queue</span>.<span class="ident">next</span>());
-        <span class="kw">if</span> <span class="ident">elt</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="ident">client</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">bot</span> {
+        <span class="kw">if</span> <span class="ident">elt</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="ident">client</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> {
             <span class="comment">// FIXME: VecDeque is unfortunately not zero allocation when empty,</span>
             <span class="comment">// so we do this job manually.</span>
-            <span class="comment">// `bufbot..bot` is unused, and if it&#39;s large enough, erase it.</span>
-            <span class="self">self</span>.<span class="ident">bot</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="comment">// `bottom_group..oldest_buffered_group` is unused, and if it&#39;s large enough, erase it.</span>
+            <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> <span class="op">+=</span> <span class="number">1</span>;
             <span class="comment">// skip forward further empty queues too</span>
-            <span class="kw">while</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">bot</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bufbot</span>)
+            <span class="kw">while</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">oldest_buffered_group</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bottom_group</span>)
                              .<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">buf</span><span class="op">|</span> <span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span>)
             {
-                <span class="self">self</span>.<span class="ident">bot</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> <span class="op">+=</span> <span class="number">1</span>;
             }
 
-            <span class="kw">let</span> <span class="ident">nclear</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bot</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bufbot</span>;
+            <span class="kw">let</span> <span class="ident">nclear</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bottom_group</span>;
             <span class="kw">if</span> <span class="ident">nclear</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">nclear</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
                 <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">retain</span>(<span class="op">|</span><span class="ident">buf</span><span class="op">|</span> {
@@ -737,7 +743,7 @@
                     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">buf</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> <span class="op">||</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="ident">nclear</span>);
                     <span class="ident">i</span> <span class="op">&gt;</span> <span class="ident">nclear</span>
                 });
-                <span class="self">self</span>.<span class="ident">bufbot</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bot</span>;
+                <span class="self">self</span>.<span class="ident">bottom_group</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">oldest_buffered_group</span>;
             }
         }
         <span class="ident">elt</span>
@@ -761,12 +767,12 @@
         <span class="comment">// the requested group index, and buffer the elements (unless</span>
         <span class="comment">// the group is marked as dropped).</span>
         <span class="comment">// Because the `Groups` iterator is always the first to request</span>
-        <span class="comment">// each group index, client is the next index efter top.</span>
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">top</span> <span class="op">+</span> <span class="number">1</span> <span class="op">==</span> <span class="ident">client</span>);
+        <span class="comment">// each group index, client is the next index efter top_group.</span>
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">top_group</span> <span class="op">+</span> <span class="number">1</span> <span class="op">==</span> <span class="ident">client</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">group</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">elt</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">current_elt</span>.<span class="ident">take</span>() {
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">dropped_group</span> {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">dropped_group</span> {
                 <span class="ident">group</span>.<span class="ident">push</span>(<span class="ident">elt</span>);
             }
         }
@@ -783,33 +789,33 @@
                 },
             }
             <span class="self">self</span>.<span class="ident">current_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>);
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">dropped_group</span> {
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">dropped_group</span> {
                 <span class="ident">group</span>.<span class="ident">push</span>(<span class="ident">elt</span>);
             }
         }
 
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">dropped_group</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">dropped_group</span> {
             <span class="self">self</span>.<span class="ident">push_next_group</span>(<span class="ident">group</span>);
         }
         <span class="kw">if</span> <span class="ident">first_elt</span>.<span class="ident">is_some</span>() {
-            <span class="self">self</span>.<span class="ident">top</span> <span class="op">+=</span> <span class="number">1</span>;
-            <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">top</span> <span class="op">==</span> <span class="ident">client</span>);
+            <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">top_group</span> <span class="op">==</span> <span class="ident">client</span>);
         }
         <span class="ident">first_elt</span>
     }
 
     <span class="kw">fn</span> <span class="ident">push_next_group</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">group</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">I</span>::<span class="ident">Item</span><span class="op">&gt;</span>) {
-        <span class="comment">// When we add a new buffered group, fill up slots between bot and top</span>
-        <span class="kw">while</span> <span class="self">self</span>.<span class="ident">top</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bufbot</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() {
+        <span class="comment">// When we add a new buffered group, fill up slots between oldest_buffered_group and top_group</span>
+        <span class="kw">while</span> <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bottom_group</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>() {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">is_empty</span>() {
-                <span class="self">self</span>.<span class="ident">bufbot</span> <span class="op">+=</span> <span class="number">1</span>;
-                <span class="self">self</span>.<span class="ident">bot</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">bottom_group</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">oldest_buffered_group</span> <span class="op">+=</span> <span class="number">1</span>;
             } <span class="kw">else</span> {
                 <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">push</span>(<span class="ident">Vec</span>::<span class="ident">new</span>().<span class="ident">into_iter</span>());
             }
         }
         <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">push</span>(<span class="ident">group</span>.<span class="ident">into_iter</span>());
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">top</span> <span class="op">+</span> <span class="number">1</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bufbot</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>());
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">top_group</span> <span class="op">+</span> <span class="number">1</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">bottom_group</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">len</span>());
     }
 
     <span class="doccomment">/// This is the immediate case, where we use no buffering</span>
@@ -828,7 +834,7 @@
                     <span class="prelude-val">Some</span>(<span class="ident">old_key</span>) <span class="op">=&gt;</span> <span class="kw">if</span> <span class="ident">old_key</span> <span class="op">!=</span> <span class="ident">key</span> {
                         <span class="self">self</span>.<span class="ident">current_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>);
                         <span class="self">self</span>.<span class="ident">current_elt</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">elt</span>);
-                        <span class="self">self</span>.<span class="ident">top</span> <span class="op">+=</span> <span class="number">1</span>;
+                        <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">+=</span> <span class="number">1</span>;
                         <span class="kw">return</span> <span class="prelude-val">None</span>;
                     },
                 }
@@ -849,14 +855,14 @@
         <span class="comment">// Perform this by simply buffering one more element, grabbing the</span>
         <span class="comment">// next key.</span>
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">done</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">client</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">top</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">client</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">top_group</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">current_key</span>.<span class="ident">is_some</span>());
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">current_elt</span>.<span class="ident">is_none</span>());
         <span class="kw">let</span> <span class="ident">old_key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">current_key</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">elt</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">next_element</span>() {
             <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">call_mut</span>(<span class="kw-2">&amp;</span><span class="ident">elt</span>);
             <span class="kw">if</span> <span class="ident">old_key</span> <span class="op">!=</span> <span class="ident">key</span> {
-                <span class="self">self</span>.<span class="ident">top</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">top_group</span> <span class="op">+=</span> <span class="number">1</span>;
             }
             <span class="self">self</span>.<span class="ident">current_key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>);
             <span class="self">self</span>.<span class="ident">current_elt</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">elt</span>);
@@ -911,9 +917,9 @@
             <span class="ident">current_key</span>: <span class="prelude-val">None</span>,
             <span class="ident">current_elt</span>: <span class="prelude-val">None</span>,
             <span class="ident">done</span>: <span class="bool-val">false</span>,
-            <span class="ident">top</span>: <span class="number">0</span>,
-            <span class="ident">bot</span>: <span class="number">0</span>,
-            <span class="ident">bufbot</span>: <span class="number">0</span>,
+            <span class="ident">top_group</span>: <span class="number">0</span>,
+            <span class="ident">oldest_buffered_group</span>: <span class="number">0</span>,
+            <span class="ident">bottom_group</span>: <span class="number">0</span>,
             <span class="ident">buffer</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             <span class="ident">dropped_group</span>: <span class="op">!</span><span class="number">0</span>,
         }),
@@ -1040,9 +1046,9 @@
             <span class="ident">current_key</span>: <span class="prelude-val">None</span>,
             <span class="ident">current_elt</span>: <span class="prelude-val">None</span>,
             <span class="ident">done</span>: <span class="bool-val">false</span>,
-            <span class="ident">top</span>: <span class="number">0</span>,
-            <span class="ident">bot</span>: <span class="number">0</span>,
-            <span class="ident">bufbot</span>: <span class="number">0</span>,
+            <span class="ident">top_group</span>: <span class="number">0</span>,
+            <span class="ident">oldest_buffered_group</span>: <span class="number">0</span>,
+            <span class="ident">bottom_group</span>: <span class="number">0</span>,
             <span class="ident">buffer</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             <span class="ident">dropped_group</span>: <span class="op">!</span><span class="number">0</span>,
         }),
@@ -1228,7 +1234,6 @@
         window.rootPath = "../../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

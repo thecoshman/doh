@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tinyfiledialogs-2.5.9/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tinyfiledialogs-3.0.4/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -493,7 +493,7 @@
     <span class="kw">let</span> <span class="ident">c_input</span> <span class="op">=</span> <span class="kw">unsafe</span> {
         <span class="ident">tinyfd_inputBox</span>(<span class="ident">input_box_title</span>.<span class="ident">as_ptr</span>(),
                         <span class="ident">input_box_message</span>.<span class="ident">as_ptr</span>(),
-                        <span class="ident">input_box_default</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">as_ptr</span>()).<span class="ident">unwrap_or</span>(<span class="ident">ptr</span>::<span class="ident">null</span>()))
+                        <span class="ident">input_box_default</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">as_ptr</span>()).<span class="ident">unwrap_or</span>(<span class="ident">ptr</span>::<span class="ident">null</span>()))
     };
 
     <span class="kw">if</span> <span class="op">!</span><span class="ident">c_input</span>.<span class="ident">is_null</span>() {
@@ -748,7 +748,6 @@
         window.rootPath = "../../";
         window.currentCrate = "tinyfiledialogs";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

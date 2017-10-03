@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>lz77</a></p><script>window.sidebarCurrent = {name: 'NoCompressionLz77Encoder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct NoCompressionLz77Encoder</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>lz77</a></p><script>window.sidebarCurrent = {name: 'NoCompressionLz77Encoder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,9 +48,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#89' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#94' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct NoCompressionLz77Encoder;</pre><div class='docblock'><p>A no compression implementation of <code>LZ77Encode</code> trait.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#90-107' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#95-112' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
 <div class='docblock'><p>Makes a new encoder instance.</p>
 
@@ -64,13 +64,13 @@
 
 <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">deflate</span>::<span class="ident">EncodeOptions</span>::<span class="ident">with_lz77</span>(<span class="ident">lz77</span>);
 <span class="kw">let</span> <span class="ident">_deflate</span> <span class="op">=</span> <span class="ident">deflate</span>::<span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">options</span>);</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#88' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#93' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../libflate/lz77/trait.Lz77Encode.html" title="trait libflate::lz77::Lz77Encode">Lz77Encode</a> for <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#108-121' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.encode' class="method"><span id='encode.v' class='invisible'><code>fn <a href='../../libflate/lz77/trait.Lz77Encode.html#tymethod.encode' class='fnname'>encode</a>&lt;S&gt;(&amp;mut self, buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, sink: S) <span class="where fmt-newline">where S: <a class="trait" href="../../libflate/lz77/trait.Sink.html" title="trait libflate::lz77::Sink">Sink</a></span></code></span></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../libflate/lz77/trait.Lz77Encode.html" title="trait libflate::lz77::Lz77Encode">Lz77Encode</a> for <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/lz77/mod.rs.html#113-131' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.encode' class="method"><span id='encode.v' class='invisible'><code>fn <a href='../../libflate/lz77/trait.Lz77Encode.html#tymethod.encode' class='fnname'>encode</a>&lt;S&gt;(&amp;mut self, buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, sink: S) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../libflate/lz77/trait.Sink.html" title="trait libflate::lz77::Sink">Sink</a>,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Encodes a buffer and writes result LZ77 codes to <code>sink</code>.</p>
-</div><h4 id='method.flush' class="method"><span id='flush.v' class='invisible'><code>fn <a href='../../libflate/lz77/trait.Lz77Encode.html#tymethod.flush' class='fnname'>flush</a>&lt;S&gt;(&amp;mut self, sink: S) <span class="where fmt-newline">where S: <a class="trait" href="../../libflate/lz77/trait.Sink.html" title="trait libflate::lz77::Sink">Sink</a></span></code></span></h4>
+</div><h4 id='method.flush' class="method"><span id='flush.v' class='invisible'><code>fn <a href='../../libflate/lz77/trait.Lz77Encode.html#tymethod.flush' class='fnname'>flush</a>&lt;S&gt;(&amp;mut self, sink: S) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../libflate/lz77/trait.Sink.html" title="trait libflate::lz77::Sink">Sink</a>,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Flushes the encoder, ensuring that all intermediately buffered codes are consumed by <code>sink</code>.</p>
 </div><h4 id='method.compression_level' class="method"><span id='compression_level.v' class='invisible'><code>fn <a href='../../libflate/lz77/trait.Lz77Encode.html#method.compression_level' class='fnname'>compression_level</a>(&amp;self) -&gt; <a class="enum" href="../../libflate/lz77/enum.CompressionLevel.html" title="enum libflate::lz77::CompressionLevel">CompressionLevel</a></code></span></h4>
 <div class='docblock'><p>Returns the compression level of the encoder. <a href="../../libflate/lz77/trait.Lz77Encode.html#method.compression_level">Read more</a></p>
@@ -133,7 +133,6 @@
         window.rootPath = "../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

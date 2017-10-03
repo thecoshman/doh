@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'ContentRangeSpec', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum ContentRangeSpec</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'ContentRangeSpec', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -55,8 +55,8 @@
         instance_length: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>&gt;,
     },
     Unregistered {
-        unit: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
-        resp: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+        unit: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
+        resp: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     },
 }</pre><div class='docblock'><p>Content-Range, described in <a href="https://tools.ietf.org/html/rfc7233#section-4.2">RFC7233</a></p>
 
@@ -76,7 +76,7 @@ complete-length     = 1*DIGIT
 other-content-range = other-range-unit SP other-range-resp
 other-range-resp    = *CHAR
 </code></pre>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Bytes' class='variant'><span id='Bytes.v' class='invisible'><code>Bytes</code></span></span><div class='docblock'><p>Byte range</p>
 </div><span class='docblock autohide sub-variant' id='variant.Bytes.fields'><h3 class='fields'>Fields of <code>Bytes</code></h3>
 
@@ -86,8 +86,8 @@ satisfied</p>
 </div></td></tr></table></span><span id='variant.Unregistered' class='variant'><span id='Unregistered.v' class='invisible'><code>Unregistered</code></span></span><div class='docblock'><p>Custom range, with unit not registered at IANA</p>
 </div><span class='docblock autohide sub-variant' id='variant.Unregistered.fields'><h3 class='fields'>Fields of <code>Unregistered</code></h3>
 
-                           <table><tr><td id='variant.Unregistered.field.unit'><span id='Unregistered.v.unit.v' class='invisible'><code>unit:&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></span></td><td><div class='docblock'><p>other-range-unit</p>
-</div></td></tr><tr><td id='variant.Unregistered.field.resp'><span id='Unregistered.v.resp.v' class='invisible'><code>resp:&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code></span></td><td><div class='docblock'><p>other-range-resp</p>
+                           <table><tr><td id='variant.Unregistered.field.unit'><span id='Unregistered.v.unit.v' class='invisible'><code>unit:&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></td><td><div class='docblock'><p>other-range-unit</p>
+</div></td></tr><tr><td id='variant.Unregistered.field.resp'><span id='Unregistered.v.resp.v' class='invisible'><code>resp:&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></td><td><div class='docblock'><p>other-range-resp</p>
 </div></td></tr></table></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../../hyper/header/enum.ContentRangeSpec.html" title="enum hyper::header::ContentRangeSpec">ContentRangeSpec</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/common/content_range.rs.html#89' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../../hyper/header/enum.ContentRangeSpec.html" title="enum hyper::header::ContentRangeSpec">ContentRangeSpec</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
@@ -166,7 +166,6 @@ satisfied</p>
         window.rootPath = "../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

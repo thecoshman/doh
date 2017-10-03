@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>ssl</a></p><script>window.sidebarCurrent = {name: 'MidHandshakeSslStream', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct MidHandshakeSslStream</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>ssl</a></p><script>window.sidebarCurrent = {name: 'MidHandshakeSslStream', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,9 +48,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1683-1686' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1617-1620' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct MidHandshakeSslStream&lt;S&gt; { /* fields omitted */ }</pre><div class='docblock'><p>An SSL stream midway through the handshake process.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S&gt; <a class="struct" href="../../openssl/ssl/struct.MidHandshakeSslStream.html" title="struct openssl::ssl::MidHandshakeSslStream">MidHandshakeSslStream</a>&lt;S&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1688-1733' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S&gt; <a class="struct" href="../../openssl/ssl/struct.MidHandshakeSslStream.html" title="struct openssl::ssl::MidHandshakeSslStream">MidHandshakeSslStream</a>&lt;S&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1622-1667' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.get_ref' class="method"><span id='get_ref.v' class='invisible'><code>fn <a href='#method.get_ref' class='fnname'>get_ref</a>(&amp;self) -&gt; &amp;S</code></span></h4>
 <div class='docblock'><p>Returns a shared reference to the inner stream.</p>
 </div><h4 id='method.get_mut' class="method"><span id='get_mut.v' class='invisible'><code>fn <a href='#method.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut S</code></span></h4>
@@ -63,7 +63,7 @@
 <div class='docblock'><p>Consumes <code>self</code>, returning its error.</p>
 </div><h4 id='method.handshake' class="method"><span id='handshake.v' class='invisible'><code>fn <a href='#method.handshake' class='fnname'>handshake</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/ssl/struct.SslStream.html" title="struct openssl::ssl::SslStream">SslStream</a>&lt;S&gt;, <a class="enum" href="../../openssl/ssl/enum.HandshakeError.html" title="enum openssl::ssl::HandshakeError">HandshakeError</a>&lt;S&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Restarts the handshake process.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../openssl/ssl/struct.MidHandshakeSslStream.html" title="struct openssl::ssl::MidHandshakeSslStream">MidHandshakeSslStream</a>&lt;S&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1682' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../openssl/ssl/struct.MidHandshakeSslStream.html" title="struct openssl::ssl::MidHandshakeSslStream">MidHandshakeSslStream</a>&lt;S&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1616' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
@@ -123,7 +123,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

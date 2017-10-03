@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>reqwest</a>::<wbr><a href='../index.html'>header</a></p><script>window.sidebarCurrent = {name: 'parsing', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module parsing</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>reqwest</a>::<wbr><a href='../index.html'>header</a></p><script>window.sidebarCurrent = {name: 'parsing', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#1-224' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#1-246' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Utility functions for Header implementations.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -58,14 +58,6 @@
                            <td class='docblock-short'>
                                 <p>An extended header parameter value (i.e., tagged with a character set and optionally,
 a language), as defined in <a href="https://tools.ietf.org/html/rfc5987#section-3.2">RFC 5987</a>.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.HTTP_VALUE.html"
-                                  title='struct reqwest::header::parsing::HTTP_VALUE'>HTTP_VALUE</a></td>
-                           <td class='docblock-short'>
-                                <p>This encode set is used for HTTP header values and is defined at
-<a href="https://tools.ietf.org/html/rfc5987#section-3.2">https://tools.ietf.org/html/rfc5987#section-3.2</a></p>
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -95,6 +87,14 @@ a language), as defined in <a href="https://tools.ietf.org/html/rfc5987#section-
                                   title='fn reqwest::header::parsing::from_raw_str'>from_raw_str</a></td>
                            <td class='docblock-short'>
                                 <p>Reads a raw string into a value.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.http_percent_encode.html"
+                                  title='fn reqwest::header::parsing::http_percent_encode'>http_percent_encode</a></td>
+                           <td class='docblock-short'>
+                                <p>Percent encode a sequence of bytes with a character set defined in
+<a href="https://tools.ietf.org/html/rfc5987#section-3.2">https://tools.ietf.org/html/rfc5987#section-3.2</a></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -161,7 +161,6 @@ a language), as defined in <a href="https://tools.ietf.org/html/rfc5987#section-
         window.rootPath = "../../../";
         window.currentCrate = "reqwest";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

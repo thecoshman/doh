@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/stack.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/stack.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>stack.rs.html -- source</title>
@@ -399,8 +399,12 @@
 <span id="354">354</span>
 <span id="355">355</span>
 <span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">foreign_types</span>::{<span class="ident">ForeignTypeRef</span>, <span class="ident">ForeignType</span>};
+<span class="kw">use</span> <span class="ident">foreign_types</span>::{<span class="ident">ForeignTypeRef</span>, <span class="ident">ForeignType</span>, <span class="ident">Opaque</span>};
 <span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_int</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Borrow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">AsRef</span>;
@@ -412,8 +416,6 @@
 <span class="kw">use</span> {<span class="ident">cvt</span>, <span class="ident">cvt_p</span>};
 <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">ErrorStack</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Index</span>, <span class="ident">IndexMut</span>};
-
-<span class="kw">use</span> <span class="ident">util</span>::<span class="ident">Opaque</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">ossl10x</span>)]</span>
 <span class="kw">use</span> <span class="ident">ffi</span>::{<span class="ident">sk_pop</span> <span class="kw">as</span> <span class="ident">OPENSSL_sk_pop</span>, <span class="ident">sk_free</span> <span class="kw">as</span> <span class="ident">OPENSSL_sk_free</span>, <span class="ident">sk_num</span> <span class="kw">as</span> <span class="ident">OPENSSL_sk_num</span>,
@@ -488,8 +490,11 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_ptr</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>::<span class="ident">StackType</span>) <span class="op">-&gt;</span> <span class="ident">Stack</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>(), <span class="string">&quot;Must not instantiate a Stack from a null-ptr - use Stack::new() in \
-                                 that case&quot;</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>(),
+            <span class="string">&quot;Must not instantiate a Stack from a null-ptr - use Stack::new() in \
+                                 that case&quot;</span>
+        );
         <span class="ident">Stack</span>(<span class="ident">ptr</span>)
     }
 
@@ -619,7 +624,9 @@
     <span class="doccomment">/// Pushes a value onto the top of the stack.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">OPENSSL_sk_push</span>(<span class="self">self</span>.<span class="ident">as_stack</span>(), <span class="ident">data</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _)));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(
+                <span class="ident">OPENSSL_sk_push</span>(<span class="self">self</span>.<span class="ident">as_stack</span>(), <span class="ident">data</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _),
+            ));
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">data</span>);
             <span class="prelude-val">Ok</span>(())
         }
@@ -694,7 +701,8 @@
 
 <span class="doccomment">/// An iterator over the stack&#39;s contents.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Stackable</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="lifetime">&#39;a</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="lifetime">&#39;a</span>,
 {
     <span class="ident">stack</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">StackRef</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">pos</span>: <span class="ident">usize</span>,
@@ -814,7 +822,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

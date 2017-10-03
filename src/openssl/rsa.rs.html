@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/rsa.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/rsa.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>rsa.rs.html -- source</title>
@@ -487,6 +487,57 @@
 <span id="442">442</span>
 <span id="443">443</span>
 <span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -528,11 +579,18 @@
 }
 
 <span class="kw">impl</span> <span class="ident">RsaRef</span> {
+    <span class="comment">// FIXME these need to specify output format</span>
     <span class="macro">private_key_to_pem</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">PEM_write_bio_RSAPrivateKey</span>);
     <span class="macro">public_key_to_pem</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">PEM_write_bio_RSA_PUBKEY</span>);
 
     <span class="macro">private_key_to_der</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">i2d_RSAPrivateKey</span>);
     <span class="macro">public_key_to_der</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">i2d_RSA_PUBKEY</span>);
+
+    <span class="macro">to_der_inner</span><span class="macro">!</span>(
+        <span class="doccomment">/// Serializes the public key to DER-encoded PKCS#1.</span>
+        <span class="ident">public_key_to_der_pkcs1</span>,
+        <span class="ident">ffi</span>::<span class="ident">i2d_RSAPublicKey</span>
+    );
 
     <span class="comment">// FIXME should return u32</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
@@ -549,21 +607,24 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `self` has no private components, or if `to` is smaller</span>
     <span class="doccomment">/// than `self.size()`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_decrypt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
-                           <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-                           <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
-                           <span class="ident">padding</span>: <span class="ident">Padding</span>)
-                           <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_decrypt</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+        <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
+        <span class="ident">padding</span>: <span class="ident">Padding</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">d</span>().<span class="ident">is_some</span>(), <span class="string">&quot;private components missing&quot;</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">i32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_decrypt</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
-                                                          <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
-                                                          <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
-                                                          <span class="self">self</span>.<span class="ident">as_ptr</span>(),
-                                                          <span class="ident">padding</span>.<span class="number">0</span>)));
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_decrypt</span>(
+                <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+                <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">padding</span>.<span class="number">0</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -574,21 +635,24 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `self` has no private components, or if `to` is smaller</span>
     <span class="doccomment">/// than `self.size()`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_encrypt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
-                           <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-                           <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
-                           <span class="ident">padding</span>: <span class="ident">Padding</span>)
-                           <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_encrypt</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+        <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
+        <span class="ident">padding</span>: <span class="ident">Padding</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">d</span>().<span class="ident">is_some</span>(), <span class="string">&quot;private components missing&quot;</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">i32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_encrypt</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
-                                                          <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
-                                                          <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
-                                                          <span class="self">self</span>.<span class="ident">as_ptr</span>(),
-                                                          <span class="ident">padding</span>.<span class="number">0</span>)));
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_encrypt</span>(
+                <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+                <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">padding</span>.<span class="number">0</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -598,43 +662,49 @@
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `to` is smaller than `self.size()`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">public_decrypt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
-                          <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-                          <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
-                          <span class="ident">padding</span>: <span class="ident">Padding</span>)
-                          <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">public_decrypt</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+        <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
+        <span class="ident">padding</span>: <span class="ident">Padding</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">i32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_decrypt</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
-                                                         <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
-                                                         <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
-                                                         <span class="self">self</span>.<span class="ident">as_ptr</span>(),
-                                                         <span class="ident">padding</span>.<span class="number">0</span>)));
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_decrypt</span>(
+                <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+                <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">padding</span>.<span class="number">0</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
 
-    <span class="doccomment">/// Encrypts data using the private key, returning the number of encrypted bytes.</span>
+    <span class="doccomment">/// Encrypts data using the public key, returning the number of encrypted bytes.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `to` is smaller than `self.size()`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">public_encrypt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
-                          <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-                          <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
-                          <span class="ident">padding</span>: <span class="ident">Padding</span>)
-                          <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">public_encrypt</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">from</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+        <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>],
+        <span class="ident">padding</span>: <span class="ident">Padding</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">i32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_encrypt</span>(<span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
-                                                         <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
-                                                         <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
-                                                         <span class="self">self</span>.<span class="ident">as_ptr</span>(),
-                                                         <span class="ident">padding</span>.<span class="number">0</span>)));
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_encrypt</span>(
+                <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+                <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
+                <span class="self">self</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">padding</span>.<span class="number">0</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -701,32 +771,41 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_public_components</span>(<span class="ident">n</span>: <span class="ident">BigNum</span>, <span class="ident">e</span>: <span class="ident">BigNum</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_key</span>(<span class="ident">rsa</span>.<span class="number">0</span>,
-                                     <span class="ident">n</span>.<span class="ident">as_ptr</span>(),
-                                     <span class="ident">e</span>.<span class="ident">as_ptr</span>(),
-                                     <span class="ident">ptr</span>::<span class="ident">null_mut</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_key</span>(
+                <span class="ident">rsa</span>.<span class="number">0</span>,
+                <span class="ident">n</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">e</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">n</span>, <span class="ident">e</span>));
             <span class="prelude-val">Ok</span>(<span class="ident">rsa</span>)
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_private_components</span>(<span class="ident">n</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">e</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">d</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">p</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">q</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">dp</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">dq</span>: <span class="ident">BigNum</span>,
-                                   <span class="ident">qi</span>: <span class="ident">BigNum</span>)
-                                   <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_private_components</span>(
+        <span class="ident">n</span>: <span class="ident">BigNum</span>,
+        <span class="ident">e</span>: <span class="ident">BigNum</span>,
+        <span class="ident">d</span>: <span class="ident">BigNum</span>,
+        <span class="ident">p</span>: <span class="ident">BigNum</span>,
+        <span class="ident">q</span>: <span class="ident">BigNum</span>,
+        <span class="ident">dp</span>: <span class="ident">BigNum</span>,
+        <span class="ident">dq</span>: <span class="ident">BigNum</span>,
+        <span class="ident">qi</span>: <span class="ident">BigNum</span>,
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_key</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">n</span>.<span class="ident">as_ptr</span>(), <span class="ident">e</span>.<span class="ident">as_ptr</span>(), <span class="ident">d</span>.<span class="ident">as_ptr</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(
+                <span class="ident">compat</span>::<span class="ident">set_key</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">n</span>.<span class="ident">as_ptr</span>(), <span class="ident">e</span>.<span class="ident">as_ptr</span>(), <span class="ident">d</span>.<span class="ident">as_ptr</span>()),
+            ));
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">n</span>, <span class="ident">e</span>, <span class="ident">d</span>));
             <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_factors</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">p</span>.<span class="ident">as_ptr</span>(), <span class="ident">q</span>.<span class="ident">as_ptr</span>())));
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">p</span>, <span class="ident">q</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_crt_params</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">dp</span>.<span class="ident">as_ptr</span>(), <span class="ident">dq</span>.<span class="ident">as_ptr</span>(),
-                                            <span class="ident">qi</span>.<span class="ident">as_ptr</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_crt_params</span>(
+                <span class="ident">rsa</span>.<span class="number">0</span>,
+                <span class="ident">dp</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">dq</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">qi</span>.<span class="ident">as_ptr</span>(),
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">dp</span>, <span class="ident">dq</span>, <span class="ident">qi</span>));
             <span class="prelude-val">Ok</span>(<span class="ident">rsa</span>)
         }
@@ -740,19 +819,33 @@
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())));
             <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">BigNum</span>::<span class="ident">from_u32</span>(<span class="ident">ffi</span>::<span class="ident">RSA_F4</span> <span class="kw">as</span> <span class="ident">u32</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">RSA_generate_key_ex</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">bits</span> <span class="kw">as</span> <span class="ident">c_int</span>, <span class="ident">e</span>.<span class="ident">as_ptr</span>(), <span class="ident">ptr</span>::<span class="ident">null_mut</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">RSA_generate_key_ex</span>(
+                <span class="ident">rsa</span>.<span class="number">0</span>,
+                <span class="ident">bits</span> <span class="kw">as</span> <span class="ident">c_int</span>,
+                <span class="ident">e</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">rsa</span>)
         }
     }
 
+    <span class="comment">// FIXME these need to identify input formats</span>
     <span class="macro">private_key_from_pem</span><span class="macro">!</span>(<span class="ident">Rsa</span>, <span class="ident">ffi</span>::<span class="ident">PEM_read_bio_RSAPrivateKey</span>);
     <span class="macro">private_key_from_der</span><span class="macro">!</span>(<span class="ident">Rsa</span>, <span class="ident">ffi</span>::<span class="ident">d2i_RSAPrivateKey</span>);
     <span class="macro">public_key_from_pem</span><span class="macro">!</span>(<span class="ident">Rsa</span>, <span class="ident">ffi</span>::<span class="ident">PEM_read_bio_RSA_PUBKEY</span>);
     <span class="macro">public_key_from_der</span><span class="macro">!</span>(<span class="ident">Rsa</span>, <span class="ident">ffi</span>::<span class="ident">d2i_RSA_PUBKEY</span>);
 
+    <span class="macro">from_der_inner</span><span class="macro">!</span>(
+        <span class="doccomment">/// Deserializes a public key from DER-encoded PKCS#1 data.</span>
+        <span class="ident">public_key_from_der_pkcs1</span>,
+        <span class="ident">Rsa</span>,
+        <span class="ident">ffi</span>::<span class="ident">d2i_RSAPublicKey</span>
+    );
+
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.9.2&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use private_key_from_pem_callback&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">private_key_from_pem_cb</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">pass_cb</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">c_char</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>
+    <span class="kw">where</span>
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">c_char</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>,
     {
         <span class="ident">ffi</span>::<span class="ident">init</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">CallbackState</span>::<span class="ident">new</span>(<span class="ident">pass_cb</span>);
@@ -760,10 +853,12 @@
 
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">cb_ptr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
-            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_RSAPrivateKey</span>(<span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
-                                                                 <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                                                                 <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
-                                                                 <span class="ident">cb_ptr</span>)));
+            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_RSAPrivateKey</span>(
+                <span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
+                <span class="ident">cb_ptr</span>,
+            )));
             <span class="prelude-val">Ok</span>(<span class="ident">Rsa</span>(<span class="ident">rsa</span>))
         }
     }
@@ -802,11 +897,12 @@
         <span class="ident">ffi</span>::<span class="ident">RSA_set0_factors</span>(<span class="ident">r</span>, <span class="ident">p</span>, <span class="ident">q</span>)
     }
 
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_crt_params</span>(<span class="ident">r</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RSA</span>,
-                                 <span class="ident">dmp1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
-                                 <span class="ident">dmq1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
-                                 <span class="ident">iqmp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>)
-                                 <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_crt_params</span>(
+        <span class="ident">r</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RSA</span>,
+        <span class="ident">dmp1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
+        <span class="ident">dmq1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
+        <span class="ident">iqmp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
         <span class="ident">ffi</span>::<span class="ident">RSA_set0_crt_params</span>(<span class="ident">r</span>, <span class="ident">dmp1</span>, <span class="ident">dmq1</span>, <span class="ident">iqmp</span>)
     }
 }
@@ -837,11 +933,12 @@
         <span class="number">1</span> <span class="comment">// TODO: is this right? should it be 0? what&#39;s success?</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_crt_params</span>(<span class="ident">r</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RSA</span>,
-                                 <span class="ident">dmp1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
-                                 <span class="ident">dmq1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
-                                 <span class="ident">iqmp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>)
-                                 <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_crt_params</span>(
+        <span class="ident">r</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RSA</span>,
+        <span class="ident">dmp1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
+        <span class="ident">dmq1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
+        <span class="ident">iqmp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIGNUM</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
         (<span class="kw-2">*</span><span class="ident">r</span>).<span class="ident">dmp1</span> <span class="op">=</span> <span class="ident">dmp1</span>;
         (<span class="kw-2">*</span><span class="ident">r</span>).<span class="ident">dmq1</span> <span class="op">=</span> <span class="ident">dmq1</span>;
         (<span class="kw-2">*</span><span class="ident">r</span>).<span class="ident">iqmp</span> <span class="op">=</span> <span class="ident">iqmp</span>;
@@ -866,11 +963,10 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;../test/rsa-encrypted.pem&quot;</span>);
         <span class="ident">Rsa</span>::<span class="ident">private_key_from_pem_callback</span>(<span class="ident">key</span>, <span class="op">|</span><span class="ident">password</span><span class="op">|</span> {
-                <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">true</span>;
-                <span class="ident">password</span>[..<span class="number">6</span>].<span class="ident">copy_from_slice</span>(<span class="string">b&quot;mypass&quot;</span>);
-                <span class="prelude-val">Ok</span>(<span class="number">6</span>)
-            })
-            .<span class="ident">unwrap</span>();
+            <span class="ident">password_queried</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="ident">password</span>[..<span class="number">6</span>].<span class="ident">copy_from_slice</span>(<span class="string">b&quot;mypass&quot;</span>);
+            <span class="prelude-val">Ok</span>(<span class="number">6</span>)
+        }).<span class="ident">unwrap</span>();
 
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">password_queried</span>);
     }
@@ -878,7 +974,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_to_password</span>() {
         <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">Rsa</span>::<span class="ident">generate</span>(<span class="number">2048</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">pem</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">private_key_to_pem_passphrase</span>(<span class="ident">Cipher</span>::<span class="ident">aes_128_cbc</span>(), <span class="string">b&quot;foobar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">pem</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">private_key_to_pem_passphrase</span>(<span class="ident">Cipher</span>::<span class="ident">aes_128_cbc</span>(), <span class="string">b&quot;foobar&quot;</span>)
+            .<span class="ident">unwrap</span>();
         <span class="ident">Rsa</span>::<span class="ident">private_key_from_pem_passphrase</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>, <span class="string">b&quot;foobar&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">Rsa</span>::<span class="ident">private_key_from_pem_passphrase</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>, <span class="string">b&quot;fizzbuzz&quot;</span>).<span class="ident">is_err</span>());
     }
@@ -890,13 +987,17 @@
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">public_key</span>.<span class="ident">size</span>()];
         <span class="kw">let</span> <span class="ident">original_data</span> <span class="op">=</span> <span class="string">b&quot;This is test&quot;</span>;
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">public_key</span>.<span class="ident">public_encrypt</span>(<span class="ident">original_data</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>, <span class="ident">PKCS1_PADDING</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">public_key</span>
+            .<span class="ident">public_encrypt</span>(<span class="ident">original_data</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">result</span>, <span class="ident">PKCS1_PADDING</span>)
+            .<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">len</span>, <span class="number">256</span>);
 
         <span class="kw">let</span> <span class="ident">pkey</span> <span class="op">=</span> <span class="macro">include_bytes</span><span class="macro">!</span>(<span class="string">&quot;../test/rsa.pem&quot;</span>);
         <span class="kw">let</span> <span class="ident">private_key</span> <span class="op">=</span> <span class="ident">Rsa</span>::<span class="ident">private_key_from_pem</span>(<span class="ident">pkey</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dec_result</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">private_key</span>.<span class="ident">size</span>()];
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">private_key</span>.<span class="ident">private_decrypt</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dec_result</span>, <span class="ident">PKCS1_PADDING</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">private_key</span>
+            .<span class="ident">private_decrypt</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dec_result</span>, <span class="ident">PKCS1_PADDING</span>)
+            .<span class="ident">unwrap</span>();
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">dec_result</span>[..<span class="ident">len</span>], <span class="ident">original_data</span>);
     }
@@ -912,7 +1013,8 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">emesg</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">k0</span>.<span class="ident">size</span>()];
         <span class="ident">k0</span>.<span class="ident">private_encrypt</span>(<span class="kw-2">&amp;</span><span class="ident">msg</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">emesg</span>, <span class="ident">PKCS1_PADDING</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dmesg</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">k1</span>.<span class="ident">size</span>()];
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">k1</span>.<span class="ident">public_decrypt</span>(<span class="kw-2">&amp;</span><span class="ident">emesg</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dmesg</span>, <span class="ident">PKCS1_PADDING</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">k1</span>.<span class="ident">public_decrypt</span>(<span class="kw-2">&amp;</span><span class="ident">emesg</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dmesg</span>, <span class="ident">PKCS1_PADDING</span>)
+            .<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">msg</span>, <span class="kw-2">&amp;</span><span class="ident">dmesg</span>[..<span class="ident">len</span>]);
     }
 
@@ -927,10 +1029,10 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">emesg</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">k0</span>.<span class="ident">size</span>()];
         <span class="ident">k0</span>.<span class="ident">public_encrypt</span>(<span class="kw-2">&amp;</span><span class="ident">msg</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">emesg</span>, <span class="ident">PKCS1_PADDING</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dmesg</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">k1</span>.<span class="ident">size</span>()];
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">k1</span>.<span class="ident">private_decrypt</span>(<span class="kw-2">&amp;</span><span class="ident">emesg</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dmesg</span>, <span class="ident">PKCS1_PADDING</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">k1</span>.<span class="ident">private_decrypt</span>(<span class="kw-2">&amp;</span><span class="ident">emesg</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dmesg</span>, <span class="ident">PKCS1_PADDING</span>)
+            .<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">msg</span>, <span class="kw-2">&amp;</span><span class="ident">dmesg</span>[..<span class="ident">len</span>]);
     }
-
 }
 </pre>
 </section>
@@ -990,7 +1092,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

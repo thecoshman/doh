@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.7/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -74,9 +74,13 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A Rust implementation of DEFLATE algorithm and related formats (ZLIB, GZIP).</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">adler32</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">byteorder</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">finish</span>::<span class="ident">Finish</span>;
@@ -101,11 +105,13 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">zlib</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gzip</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">deflate</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">non_blocking</span>;
 
 <span class="kw">mod</span> <span class="ident">bit</span>;
 <span class="kw">mod</span> <span class="ident">finish</span>;
 <span class="kw">mod</span> <span class="ident">huffman</span>;
 <span class="kw">mod</span> <span class="ident">checksum</span>;
+<span class="kw">mod</span> <span class="ident">util</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -164,7 +170,6 @@
         window.rootPath = "../../";
         window.currentCrate = "libflate";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

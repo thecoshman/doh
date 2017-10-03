@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/accept_encoding.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/accept_encoding.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>accept_encoding.rs.html -- source</title>
@@ -162,14 +162,14 @@
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use hyper::header::{Headers, AcceptEncoding, Encoding, QualityItem, Quality, qitem};</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AcceptEncoding, Encoding, QualityItem, q, qitem};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     AcceptEncoding(vec![</span>
     <span class="doccomment">///         qitem(Encoding::Chunked),</span>
-    <span class="doccomment">///         QualityItem::new(Encoding::Gzip, Quality(600)),</span>
-    <span class="doccomment">///         QualityItem::new(Encoding::EncodingExt(&quot;*&quot;.to_owned()), Quality(0)),</span>
+    <span class="doccomment">///         QualityItem::new(Encoding::Gzip, q(600)),</span>
+    <span class="doccomment">///         QualityItem::new(Encoding::EncodingExt(&quot;*&quot;.to_owned()), q(0)),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
@@ -244,7 +244,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

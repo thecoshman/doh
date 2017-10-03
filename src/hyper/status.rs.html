@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/status.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/status.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>status.rs.html -- source</title>
@@ -791,13 +791,47 @@
 <span id="746">746</span>
 <span id="747">747</span>
 <span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! HTTP status codes</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 
-<span class="comment">// shamelessly lifted from Teepee. I tried a few schemes, this really</span>
-<span class="comment">// does seem like the best. Improved scheme to support arbitrary status codes.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compat&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">http</span>;
 
 <span class="doccomment">/// An HTTP status code (`status-code` in RFC 7230 et al.).</span>
 <span class="doccomment">///</span>
@@ -806,17 +840,6 @@
 <span class="doccomment">/// `u16` integer may be used as a status code for XHR requests. It is</span>
 <span class="doccomment">/// recommended to only use values between [100, 599], since only these are</span>
 <span class="doccomment">/// defined as valid status codes with a status class by HTTP.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// If you encounter a status code that you do not know how to deal with, you</span>
-<span class="doccomment">/// should treat it as the `x00` status code—e.g. for code 123, treat it as</span>
-<span class="doccomment">/// 100 (Continue). This can be achieved with</span>
-<span class="doccomment">/// `self.class().default_code()`:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use hyper::status::StatusCode;</span>
-<span class="doccomment">/// let status = StatusCode::Unregistered(123);</span>
-<span class="doccomment">/// assert_eq!(status.class().default_code(), StatusCode::Continue);</span>
-<span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// IANA maintain the [Hypertext Transfer Protocol (HTTP) Status Code</span>
 <span class="doccomment">/// Registry](http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) which is</span>
@@ -1021,10 +1044,35 @@
     <span class="ident">Unregistered</span>(<span class="ident">u16</span>),
 }
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InvalidStatusCode</span> {
+    <span class="ident">_inner</span>: (),
+}
+
 <span class="kw">impl</span> <span class="ident">StatusCode</span> {
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="ident">StatusCode</span> {
+    <span class="doccomment">/// Try to convert a `u16` into a `StatusCode`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This will return an error if the provided argument is not within the</span>
+    <span class="doccomment">/// range `100...599`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Note</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function is temporary. When the `TryFrom` trait becomes stable,</span>
+    <span class="doccomment">/// this will be deprecated and replaced by `TryFrom&lt;u16&gt;`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StatusCode</span>, <span class="ident">InvalidStatusCode</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;</span> <span class="number">100</span> <span class="op">||</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="number">599</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">InvalidStatusCode</span> {
+                <span class="ident">_inner</span>: (),
+            })
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">StatusCode</span>::<span class="ident">from_u16</span>(<span class="ident">n</span>))
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="ident">StatusCode</span> {
         <span class="kw">match</span> <span class="ident">n</span> {
             <span class="number">100</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="ident">Continue</span>,
             <span class="number">101</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="ident">SwitchingProtocols</span>,
@@ -1090,8 +1138,28 @@
         }
     }
 
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_u16</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+    <span class="doccomment">/// Get the `u16` code from this `StatusCode`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Also available as `From`/`Into&lt;u16&gt;`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use hyper::StatusCode;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let status = StatusCode::Ok;</span>
+    <span class="doccomment">/// assert_eq!(status.as_u16(), 200);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// // Into</span>
+    <span class="doccomment">/// let num: u16 = status.into();</span>
+    <span class="doccomment">/// assert_eq!(num, 200);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// // From</span>
+    <span class="doccomment">/// let other = u16::from(status);</span>
+    <span class="doccomment">/// assert_eq!(num, other);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_u16</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">StatusCode</span>::<span class="ident">Continue</span> <span class="op">=&gt;</span> <span class="number">100</span>,
             <span class="ident">StatusCode</span>::<span class="ident">SwitchingProtocols</span> <span class="op">=&gt;</span> <span class="number">101</span>,
@@ -1245,9 +1313,44 @@
         }
     }
 
-    <span class="doccomment">/// Determine the class of a status code, based on its first digit.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StatusClass</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_u16</span>() {
+    <span class="doccomment">/// Check if this `StatusCode` is within 100-199.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_informational</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">Informational</span>
+    }
+
+    <span class="doccomment">/// Check if this `StatusCode` is within 200-299.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">Success</span>
+    }
+
+    <span class="doccomment">/// Check if this `StatusCode` is within 300-399.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_redirection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">Redirection</span>
+    }
+
+    <span class="doccomment">/// Check if this `StatusCode` is within 400-499.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_client_error</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">ClientError</span>
+    }
+
+    <span class="doccomment">/// Check if this `StatusCode` is within 500-599.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_server_error</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">ServerError</span>
+    }
+
+    <span class="doccomment">/// Check if this `StatusCode` is not within 100-599.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_strange_status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">NoClass</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StatusClass</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">as_u16</span>() {
             <span class="number">100</span>...<span class="number">199</span> <span class="op">=&gt;</span> <span class="ident">StatusClass</span>::<span class="ident">Informational</span>,
             <span class="number">200</span>...<span class="number">299</span> <span class="op">=&gt;</span> <span class="ident">StatusClass</span>::<span class="ident">Success</span>,
             <span class="number">300</span>...<span class="number">399</span> <span class="op">=&gt;</span> <span class="ident">StatusClass</span>::<span class="ident">Redirection</span>,
@@ -1256,36 +1359,6 @@
             _ <span class="op">=&gt;</span> <span class="ident">StatusClass</span>::<span class="ident">NoClass</span>,
         }
     }
-
-    <span class="doccomment">/// Check if class is Informational.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_informational</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">Informational</span>
-    }
-
-    <span class="doccomment">/// Check if class is Success.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">Success</span>
-    }
-
-    <span class="doccomment">/// Check if class is Redirection.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_redirection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">Redirection</span>
-    }
-
-    <span class="doccomment">/// Check if class is ClientError.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_client_error</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">ClientError</span>
-    }
-
-    <span class="doccomment">/// Check if class is ServerError.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_server_error</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">ServerError</span>
-    }
-
-    <span class="doccomment">/// Check if class is NoClass</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_strange_status</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">class</span>() <span class="op">==</span> <span class="ident">StatusClass</span>::<span class="ident">NoClass</span>
-    }
 }
 
 <span class="kw">impl</span> <span class="ident">Copy</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {}
@@ -1293,14 +1366,15 @@
 <span class="doccomment">/// Formats the status code, *including* the canonical reason.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # use hyper::status::StatusCode::{ImATeapot, Unregistered};</span>
+<span class="doccomment">/// # use hyper::StatusCode::{ImATeapot, Unregistered};</span>
 <span class="doccomment">/// assert_eq!(format!(&quot;{}&quot;, ImATeapot), &quot;418 I&#39;m a teapot&quot;);</span>
 <span class="doccomment">/// assert_eq!(format!(&quot;{}&quot;, Unregistered(123)),</span>
 <span class="doccomment">///            &quot;123 &lt;unknown status code&gt;&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{} {}&quot;</span>, <span class="self">self</span>.<span class="ident">to_u16</span>(),
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{} {}&quot;</span>, <span class="self">self</span>.<span class="ident">as_u16</span>(),
                <span class="self">self</span>.<span class="ident">canonical_reason</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;&lt;unknown status code&gt;&quot;</span>))
     }
 }
@@ -1308,7 +1382,7 @@
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">StatusCode</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">to_u16</span>() <span class="op">==</span> <span class="ident">other</span>.<span class="ident">to_u16</span>()
+        <span class="self">self</span>.<span class="ident">as_u16</span>() <span class="op">==</span> <span class="ident">other</span>.<span class="ident">as_u16</span>()
     }
 }
 
@@ -1324,7 +1398,7 @@
 <span class="kw">impl</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">StatusCode</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">to_u16</span>().<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span>(<span class="ident">other</span>.<span class="ident">to_u16</span>()))
+        <span class="self">self</span>.<span class="ident">as_u16</span>().<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span>(<span class="ident">other</span>.<span class="ident">as_u16</span>()))
     }
 }
 
@@ -1338,6 +1412,34 @@
         } <span class="kw">else</span> {
             <span class="ident">Ordering</span>::<span class="ident">Equal</span>
         }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">StatusCode</span> {
+        <span class="ident">StatusCode</span>::<span class="prelude-val">Ok</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">StatusCode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u16</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">code</span>: <span class="ident">StatusCode</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+        <span class="ident">code</span>.<span class="ident">as_u16</span>()
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compat&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">http</span>::<span class="ident">StatusCode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">status</span>: <span class="ident">http</span>::<span class="ident">StatusCode</span>) <span class="op">-&gt;</span> <span class="ident">StatusCode</span> {
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="ident">status</span>.<span class="ident">as_u16</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;attempted to convert invalid status code&quot;</span>)
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compat&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">StatusCode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">http</span>::<span class="ident">StatusCode</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">status</span>: <span class="ident">StatusCode</span>) <span class="op">-&gt;</span> <span class="ident">http</span>::<span class="ident">StatusCode</span> {
+        <span class="ident">http</span>::<span class="ident">StatusCode</span>::<span class="ident">from_u16</span>(<span class="ident">status</span>.<span class="ident">as_u16</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;attempted to convert invalid status code&quot;</span>)
     }
 }
 
@@ -1367,7 +1469,7 @@
 <span class="doccomment">/// This can be used in cases where a status code’s meaning is unknown, also,</span>
 <span class="doccomment">/// to get the appropriate *category* of status.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Copy</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">StatusClass</span> {
+<span class="kw">enum</span> <span class="ident">StatusClass</span> {
     <span class="doccomment">/// 1xx (Informational): The request was received, continuing process</span>
     <span class="ident">Informational</span>,
 
@@ -1387,66 +1489,6 @@
     <span class="ident">NoClass</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">StatusClass</span> {
-    <span class="doccomment">/// Get the default status code for the class.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This produces the x00 status code; thus, for `ClientError` (4xx), for</span>
-    <span class="doccomment">/// example, this will produce `BadRequest` (400):</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// # use hyper::status::StatusClass::ClientError;</span>
-    <span class="doccomment">/// # use hyper::status::StatusCode::BadRequest;</span>
-    <span class="doccomment">/// assert_eq!(ClientError.default_code(), BadRequest);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The use for this is outlined in [RFC 7231, section 6 (Response Status</span>
-    <span class="doccomment">/// Codes)](https://tools.ietf.org/html/rfc7231#section-6):</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// &gt; HTTP status codes are extensible.  HTTP clients are not required to</span>
-    <span class="doccomment">/// &gt; understand the meaning of all registered status codes, though such</span>
-    <span class="doccomment">/// &gt; understanding is obviously desirable.  However, a client MUST</span>
-    <span class="doccomment">/// &gt; understand the class of any status code, as indicated by the first</span>
-    <span class="doccomment">/// &gt; digit, and treat an unrecognized status code as being equivalent to</span>
-    <span class="doccomment">/// &gt; the x00 status code of that class, with the exception that a</span>
-    <span class="doccomment">/// &gt; recipient MUST NOT cache a response with an unrecognized status code.</span>
-    <span class="doccomment">/// &gt;</span>
-    <span class="doccomment">/// &gt; For example, if an unrecognized status code of 471 is received by a</span>
-    <span class="doccomment">/// &gt; client, the client can assume that there was something wrong with its</span>
-    <span class="doccomment">/// &gt; request and treat the response as if it had received a 400 (Bad</span>
-    <span class="doccomment">/// &gt; Request) status code.  The response message will usually contain a</span>
-    <span class="doccomment">/// &gt; representation that explains the status.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This is demonstrated thusly:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// # use hyper::status::StatusCode::{Unregistered, BadRequest};</span>
-    <span class="doccomment">/// // Suppose we have received this status code.</span>
-    <span class="doccomment">/// // You will never directly create an unregistered status code.</span>
-    <span class="doccomment">/// let status = Unregistered(471);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // Uh oh! Don’t know what to do with it.</span>
-    <span class="doccomment">/// // Let’s fall back to the default:</span>
-    <span class="doccomment">/// let status = status.class().default_code();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // And look! That is 400 Bad Request.</span>
-    <span class="doccomment">/// assert_eq!(status, BadRequest);</span>
-    <span class="doccomment">/// // So now let’s treat it as that.</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// All status codes that do not map to an existing status class are matched</span>
-    <span class="doccomment">/// by a `NoClass`, variant that resolves to 200 (Ok) as default code.</span>
-    <span class="doccomment">/// This is a common handling for unknown status codes in major browsers.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_code</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StatusCode</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">StatusClass</span>::<span class="ident">Informational</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="ident">Continue</span>,
-            <span class="ident">StatusClass</span>::<span class="ident">Success</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="prelude-val">Ok</span>,
-            <span class="ident">StatusClass</span>::<span class="ident">Redirection</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="ident">MultipleChoices</span>,
-            <span class="ident">StatusClass</span>::<span class="ident">ClientError</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="ident">BadRequest</span>,
-            <span class="ident">StatusClass</span>::<span class="ident">ServerError</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="ident">InternalServerError</span>,
-            <span class="ident">StatusClass</span>::<span class="ident">NoClass</span> <span class="op">=&gt;</span> <span class="ident">StatusCode</span>::<span class="prelude-val">Ok</span>,
-        }
-    }
-}
-
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
@@ -1457,10 +1499,10 @@
     <span class="comment">//   - status code</span>
     <span class="comment">//   - default code (for the given status code)</span>
     <span class="comment">//   - canonical reason</span>
-    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">num</span>: <span class="ident">u16</span>, <span class="ident">status_code</span>: <span class="ident">StatusCode</span>, <span class="ident">default_code</span>: <span class="ident">StatusCode</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">validate</span>(<span class="ident">num</span>: <span class="ident">u16</span>, <span class="ident">status_code</span>: <span class="ident">StatusCode</span>, <span class="ident">_default_code</span>: <span class="ident">StatusCode</span>, <span class="ident">reason</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">StatusCode</span>::<span class="ident">from_u16</span>(<span class="ident">num</span>), <span class="ident">status_code</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">status_code</span>.<span class="ident">to_u16</span>(), <span class="ident">num</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">status_code</span>.<span class="ident">class</span>().<span class="ident">default_code</span>(), <span class="ident">default_code</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">status_code</span>.<span class="ident">as_u16</span>(), <span class="ident">num</span>);
+        <span class="comment">//assert_eq!(status_code.class().default_code(), default_code);</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">status_code</span>.<span class="ident">canonical_reason</span>(), <span class="ident">reason</span>);
     }
 
@@ -1539,6 +1581,32 @@
             <span class="prelude-val">Some</span>(<span class="string">&quot;Network Authentication Required&quot;</span>));
 
     }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">try_from</span>() {
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">100</span>).<span class="ident">unwrap</span>();
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">599</span>).<span class="ident">unwrap</span>();
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">200</span>).<span class="ident">unwrap</span>();
+
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">99</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">600</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">0</span>).<span class="ident">unwrap_err</span>();
+        <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="number">1000</span>).<span class="ident">unwrap_err</span>();
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compat&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">test_compat</span>() {
+        <span class="kw">use</span> <span class="ident">http</span>::{<span class="self">self</span>, <span class="ident">HttpTryFrom</span>};
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">100</span>..<span class="number">600</span> {
+            <span class="kw">let</span> <span class="ident">orig_hyper_status</span> <span class="op">=</span> <span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">orig_http_status</span> <span class="op">=</span> <span class="ident">http</span>::<span class="ident">StatusCode</span>::<span class="ident">try_from</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">conv_hyper_status</span>: <span class="ident">StatusCode</span> <span class="op">=</span> <span class="ident">orig_http_status</span>.<span class="ident">into</span>();
+            <span class="kw">let</span> <span class="ident">conv_http_status</span>: <span class="ident">http</span>::<span class="ident">StatusCode</span> <span class="op">=</span> <span class="ident">orig_hyper_status</span>.<span class="ident">into</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">orig_hyper_status</span>, <span class="ident">conv_hyper_status</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">orig_http_status</span>, <span class="ident">conv_http_status</span>);
+        }
+    }
 }
 </pre>
 </section>
@@ -1598,7 +1666,6 @@
         window.rootPath = "../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

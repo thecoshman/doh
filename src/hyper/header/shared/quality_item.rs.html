@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/shared/quality_item.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/shared/quality_item.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>quality_item.rs.html -- source</title>
@@ -258,11 +258,65 @@
 <span id="213">213</span>
 <span id="214">214</span>
 <span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
 </pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">default</span>::<span class="ident">Default</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
+
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">internal</span>::<span class="ident">IntoQuality</span>;
 
 <span class="doccomment">/// Represents a quality used in quality values.</span>
 <span class="doccomment">///</span>
@@ -271,7 +325,7 @@
 <span class="doccomment">/// # Implementation notes</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The quality value is defined as a number between 0 and 1 with three decimal places. This means</span>
-<span class="doccomment">/// there are 1000 possible values. Since floating point numbers are not exact and the smallest</span>
+<span class="doccomment">/// there are 1001 possible values. Since floating point numbers are not exact and the smallest</span>
 <span class="doccomment">/// floating point data type (`f32`) consumes four bytes, hyper uses an `u16` value to store the</span>
 <span class="doccomment">/// quality internally. For performance reasons you may set quality directly to a value between</span>
 <span class="doccomment">/// 0 and 1000 e.g. `Quality(532)` matches the quality `q=0.532`.</span>
@@ -279,17 +333,7 @@
 <span class="doccomment">/// [RFC7231 Section 5.3.1](https://tools.ietf.org/html/rfc7231#section-5.3.1)</span>
 <span class="doccomment">/// gives more information on quality values in HTTP header fields.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">Ord</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Quality</span>(<span class="kw">pub</span> <span class="ident">u16</span>);
-
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Quality</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span> {
-            <span class="number">1000</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;; q=0&quot;</span>),
-            <span class="ident">x</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;; q=0.{}&quot;</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:03}&quot;</span>, <span class="ident">x</span>).<span class="ident">trim_right_matches</span>(<span class="string">&#39;0&#39;</span>))
-        }
-    }
-}
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Quality</span>(<span class="ident">u16</span>);
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Quality</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Quality</span> {
@@ -327,19 +371,30 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}{}&quot;</span>, <span class="self">self</span>.<span class="ident">item</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">quality</span>))
+        <span class="macro">try</span><span class="macro">!</span>(<span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">item</span>, <span class="ident">f</span>));
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">quality</span>.<span class="number">0</span> {
+            <span class="number">1000</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="number">0</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;; q=0&quot;</span>),
+            <span class="ident">x</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;; q=0.{}&quot;</span>, <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:03}&quot;</span>, <span class="ident">x</span>).<span class="ident">trim_right_matches</span>(<span class="string">&#39;0&#39;</span>))
+        }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">str</span>::<span class="ident">FromStr</span><span class="op">&gt;</span> <span class="ident">str</span>::<span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> ::<span class="ident">Error</span>;
     <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> ::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">s</span>.<span class="ident">is_ascii</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">Error</span>::<span class="ident">Header</span>);
+        }
         <span class="comment">// Set defaults used if parsing fails.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">raw_item</span> <span class="op">=</span> <span class="ident">s</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">quality</span> <span class="op">=</span> <span class="number">1f32</span>;
 
         <span class="kw">let</span> <span class="ident">parts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">rsplitn</span>(<span class="number">2</span>, <span class="string">&#39;;&#39;</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">trim</span>()).<span class="ident">collect</span>();
         <span class="kw">if</span> <span class="ident">parts</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">2</span> {
+            <span class="kw">if</span> <span class="ident">parts</span>[<span class="number">0</span>].<span class="ident">len</span>() <span class="op">&lt;</span> <span class="number">2</span> {
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">Error</span>::<span class="ident">Header</span>);
+            }
             <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">parts</span>[<span class="number">0</span>][<span class="number">0</span>..<span class="number">2</span>];
             <span class="kw">if</span> <span class="ident">start</span> <span class="op">==</span> <span class="string">&quot;q=&quot;</span> <span class="op">||</span> <span class="ident">start</span> <span class="op">==</span> <span class="string">&quot;Q=&quot;</span> {
                 <span class="kw">let</span> <span class="ident">q_part</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">parts</span>[<span class="number">0</span>][<span class="number">2</span>..<span class="ident">parts</span>[<span class="number">0</span>].<span class="ident">len</span>()];
@@ -367,6 +422,7 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">fn</span> <span class="ident">from_f32</span>(<span class="ident">f</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Quality</span> {
     <span class="comment">// this function is only used internally. A check that `f` is within range</span>
     <span class="comment">// should be done before calling this method. Just in case, this</span>
@@ -375,16 +431,51 @@
     <span class="ident">Quality</span>((<span class="ident">f</span> <span class="op">*</span> <span class="number">1000f32</span>) <span class="kw">as</span> <span class="ident">u16</span>)
 }
 
-<span class="doccomment">/// Convinience function to wrap a value in a `QualityItem`</span>
+<span class="doccomment">/// Convenience function to wrap a value in a `QualityItem`</span>
 <span class="doccomment">/// Sets `q` to the default 1.0</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">qitem</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">item</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="ident">item</span>, <span class="ident">Default</span>::<span class="ident">default</span>())
 }
 
-<span class="doccomment">/// Convenience function to create a `Quality` from a float.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">q</span>(<span class="ident">f</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">Quality</span> {
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">f</span> <span class="op">&gt;=</span> <span class="number">0f32</span> <span class="op">&amp;&amp;</span> <span class="ident">f</span> <span class="op">&lt;=</span> <span class="number">1f32</span>, <span class="string">&quot;q value must be between 0.0 and 1.0&quot;</span>);
-    <span class="ident">from_f32</span>(<span class="ident">f</span>)
+<span class="doccomment">/// Convenience function to create a `Quality` from a float or integer.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// Implemented for `u16` and `f32`. Panics if value is out of range.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">q</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoQuality</span><span class="op">&gt;</span>(<span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Quality</span> {
+    <span class="ident">val</span>.<span class="ident">into_quality</span>()
+}
+
+<span class="kw">mod</span> <span class="ident">internal</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Quality</span>;
+
+    <span class="comment">// TryFrom is probably better, but it&#39;s not stable. For now, we want to</span>
+    <span class="comment">// keep the functionality of the `q` function, while allowing it to be</span>
+    <span class="comment">// generic over `f32` and `u16`.</span>
+    <span class="comment">//</span>
+    <span class="comment">// `q` would panic before, so keep that behavior. `TryFrom` can be</span>
+    <span class="comment">// introduced later for a non-panicking conversion.</span>
+
+    <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">IntoQuality</span>: <span class="ident">Sealed</span> <span class="op">+</span> <span class="ident">Sized</span> {
+        <span class="kw">fn</span> <span class="ident">into_quality</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Quality</span>;
+    }
+
+    <span class="kw">impl</span> <span class="ident">IntoQuality</span> <span class="kw">for</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">into_quality</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Quality</span> {
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span> <span class="op">&gt;=</span> <span class="number">0f32</span> <span class="op">&amp;&amp;</span> <span class="self">self</span> <span class="op">&lt;=</span> <span class="number">1f32</span>, <span class="string">&quot;float must be between 0.0 and 1.0&quot;</span>);
+            <span class="kw">super</span>::<span class="ident">from_f32</span>(<span class="self">self</span>)
+        }
+    }
+
+    <span class="kw">impl</span> <span class="ident">IntoQuality</span> <span class="kw">for</span> <span class="ident">u16</span> {
+        <span class="kw">fn</span> <span class="ident">into_quality</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Quality</span> {
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span> <span class="op">&lt;=</span> <span class="number">1000</span>, <span class="string">&quot;u16 must be between 0 and 1000&quot;</span>);
+            <span class="ident">Quality</span>(<span class="self">self</span>)
+        }
+    }
+
+
+    <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Sealed</span> {}
+    <span class="kw">impl</span> <span class="ident">Sealed</span> <span class="kw">for</span> <span class="ident">u16</span> {}
+    <span class="kw">impl</span> <span class="ident">Sealed</span> <span class="kw">for</span> <span class="ident">f32</span> {}
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -393,23 +484,33 @@
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">encoding</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_quality_item_show1</span>() {
+    <span class="kw">fn</span> <span class="ident">test_quality_item_fmt_q_1</span>() {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">qitem</span>(<span class="ident">Chunked</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">x</span>), <span class="string">&quot;chunked&quot;</span>);
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_quality_item_show2</span>() {
+    <span class="kw">fn</span> <span class="ident">test_quality_item_fmt_q_0001</span>() {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">QualityItem</span>::<span class="ident">new</span>(<span class="ident">Chunked</span>, <span class="ident">Quality</span>(<span class="number">1</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">x</span>), <span class="string">&quot;chunked; q=0.001&quot;</span>);
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_quality_item_show3</span>() {
+    <span class="kw">fn</span> <span class="ident">test_quality_item_fmt_q_05</span>() {
         <span class="comment">// Custom value</span>
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">QualityItem</span>{
             <span class="ident">item</span>: <span class="ident">EncodingExt</span>(<span class="string">&quot;identity&quot;</span>.<span class="ident">to_owned</span>()),
             <span class="ident">quality</span>: <span class="ident">Quality</span>(<span class="number">500</span>),
         };
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">x</span>), <span class="string">&quot;identity; q=0.5&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_quality_item_fmt_q_0</span>() {
+        <span class="comment">// Custom value</span>
+        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">QualityItem</span>{
+            <span class="ident">item</span>: <span class="ident">EncodingExt</span>(<span class="string">&quot;identity&quot;</span>.<span class="ident">to_owned</span>()),
+            <span class="ident">quality</span>: <span class="ident">Quality</span>(<span class="number">0</span>),
+        };
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">x</span>.<span class="ident">to_string</span>(), <span class="string">&quot;identity; q=0&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -456,11 +557,6 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_quality2</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">q</span>(<span class="number">0.0</span>)), <span class="string">&quot;; q=0&quot;</span>);
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">should_panic</span>]</span> <span class="comment">// FIXME - 32-bit msvc unwinding broken</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">target_arch</span><span class="op">=</span><span class="string">&quot;x86&quot;</span>, <span class="ident">target_env</span><span class="op">=</span><span class="string">&quot;msvc&quot;</span>), <span class="ident">ignore</span>)]</span>
     <span class="kw">fn</span> <span class="ident">test_quality_invalid</span>() {
@@ -472,6 +568,12 @@
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">target_arch</span><span class="op">=</span><span class="string">&quot;x86&quot;</span>, <span class="ident">target_env</span><span class="op">=</span><span class="string">&quot;msvc&quot;</span>), <span class="ident">ignore</span>)]</span>
     <span class="kw">fn</span> <span class="ident">test_quality_invalid2</span>() {
         <span class="ident">q</span>(<span class="number">2.0</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_fuzzing_bugs</span>() {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="string">&quot;99999;&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>().<span class="ident">is_err</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="string">&quot;\x0d;;;=\u{d6aa}==&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">QualityItem</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>().<span class="ident">is_err</span>())
     }
 }
 </pre>
@@ -532,7 +634,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Getch",""]]});
+initSidebarItems({"enum":[["Getch",""]]});

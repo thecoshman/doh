@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/header/common/accept_charset.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/accept_charset.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>accept_charset.rs.html -- source</title>
@@ -131,13 +131,13 @@
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use hyper::header::{Headers, AcceptCharset, Charset, Quality, QualityItem};</span>
+    <span class="doccomment">/// use hyper::header::{Headers, AcceptCharset, Charset, q, QualityItem};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(</span>
     <span class="doccomment">///     AcceptCharset(vec![</span>
-    <span class="doccomment">///         QualityItem::new(Charset::Us_Ascii, Quality(900)),</span>
-    <span class="doccomment">///         QualityItem::new(Charset::Iso_8859_10, Quality(200)),</span>
+    <span class="doccomment">///         QualityItem::new(Charset::Us_Ascii, q(900)),</span>
+    <span class="doccomment">///         QualityItem::new(Charset::Iso_8859_10, q(200)),</span>
     <span class="doccomment">///     ])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
@@ -214,7 +214,6 @@
         window.rootPath = "../../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../../jquery.js"></script>
     <script src="../../../../main.js"></script>
     <script defer src="../../../../search-index.js"></script>
 </body>

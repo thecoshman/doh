@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         <a href='../../../num_traits/index.html'><img src='https://rust-num.github.io/num/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
-        <p class='location'><a href='../../index.html'>num_traits</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>checked</a></p><script>window.sidebarCurrent = {name: 'CheckedMul', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait CheckedMul</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../../index.html'>num_traits</a>::<wbr><a href='../index.html'>ops</a>::<wbr><a href='index.html'>checked</a></p><script>window.sidebarCurrent = {name: 'CheckedMul', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/num_traits/ops/checked.rs.html#55-59' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait CheckedMul: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;Self, Output=Self&gt; {
+<pre class='rust trait'>pub trait CheckedMul: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Mul.html" title="trait core::ops::arith::Mul">Mul</a>&lt;Self, Output = Self&gt; {
     fn <a href='#tymethod.checked_mul' class='fnname'>checked_mul</a>(&amp;self, v: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self&gt;;
 }</pre><div class='docblock'><p>Performs multiplication that returns <code>None</code> instead of wrapping around on underflow or
 overflow.</p>
@@ -130,7 +130,6 @@ or overflow happens, <code>None</code> is returned.</p>
         window.rootPath = "../../../";
         window.currentCrate = "num_traits";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

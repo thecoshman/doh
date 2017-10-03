@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/dh.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/dh.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>dh.rs.html -- source</title>
@@ -186,6 +186,23 @@
 <span id="141">141</span>
 <span id="142">142</span>
 <span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">ErrorStack</span>;
 <span class="kw">use</span> <span class="ident">ffi</span>;
@@ -193,7 +210,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 
-<span class="kw">use</span> {<span class="ident">cvt</span>, <span class="ident">cvt_p</span>, <span class="ident">init</span>};
+<span class="kw">use</span> {<span class="ident">cvt</span>, <span class="ident">cvt_p</span>};
 <span class="kw">use</span> <span class="ident">bn</span>::<span class="ident">BigNum</span>;
 
 <span class="macro">foreign_type</span><span class="macro">!</span> {
@@ -213,9 +230,13 @@
 <span class="kw">impl</span> <span class="ident">Dh</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_params</span>(<span class="ident">p</span>: <span class="ident">BigNum</span>, <span class="ident">g</span>: <span class="ident">BigNum</span>, <span class="ident">q</span>: <span class="ident">BigNum</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dh</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="ident">init</span>();
             <span class="kw">let</span> <span class="ident">dh</span> <span class="op">=</span> <span class="ident">Dh</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_new</span>())));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">DH_set0_pqg</span>(<span class="ident">dh</span>.<span class="number">0</span>, <span class="ident">p</span>.<span class="ident">as_ptr</span>(), <span class="ident">q</span>.<span class="ident">as_ptr</span>(), <span class="ident">g</span>.<span class="ident">as_ptr</span>())));
+            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">DH_set0_pqg</span>(
+                <span class="ident">dh</span>.<span class="number">0</span>,
+                <span class="ident">p</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">q</span>.<span class="ident">as_ptr</span>(),
+                <span class="ident">g</span>.<span class="ident">as_ptr</span>(),
+            )));
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">p</span>, <span class="ident">g</span>, <span class="ident">q</span>));
             <span class="prelude-val">Ok</span>(<span class="ident">dh</span>)
         }
@@ -227,19 +248,28 @@
     <span class="doccomment">/// Requires the `v102` or `v110` features and OpenSSL 1.0.2 or OpenSSL 1.1.0.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v102&quot;</span>, <span class="ident">ossl102</span>), <span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v110&quot;</span>, <span class="ident">ossl110</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_1024_160</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dh</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_get_1024_160</span>()).<span class="ident">map</span>(<span class="ident">Dh</span>) }
+        <span class="kw">unsafe</span> {
+            <span class="ident">ffi</span>::<span class="ident">init</span>();
+            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_get_1024_160</span>()).<span class="ident">map</span>(<span class="ident">Dh</span>)
+        }
     }
 
     <span class="doccomment">/// Requires the `v102` or `v110` features and OpenSSL 1.0.2 or OpenSSL 1.1.0.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v102&quot;</span>, <span class="ident">ossl102</span>), <span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v110&quot;</span>, <span class="ident">ossl110</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_2048_224</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dh</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_get_2048_224</span>()).<span class="ident">map</span>(<span class="ident">Dh</span>) }
+        <span class="kw">unsafe</span> {
+            <span class="ident">ffi</span>::<span class="ident">init</span>();
+            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_get_2048_224</span>()).<span class="ident">map</span>(<span class="ident">Dh</span>)
+        }
     }
 
     <span class="doccomment">/// Requires the `v102` or `v110` features and OpenSSL 1.0.2 or OpenSSL 1.1.0.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v102&quot;</span>, <span class="ident">ossl102</span>), <span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v110&quot;</span>, <span class="ident">ossl110</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_2048_256</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dh</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_get_2048_256</span>()).<span class="ident">map</span>(<span class="ident">Dh</span>) }
+        <span class="kw">unsafe</span> {
+            <span class="ident">ffi</span>::<span class="ident">init</span>();
+            <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">DH_get_2048_256</span>()).<span class="ident">map</span>(<span class="ident">Dh</span>)
+        }
     }
 }
 
@@ -254,11 +284,12 @@
     <span class="kw">use</span> <span class="ident">ffi</span>;
     <span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_int</span>;
 
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">DH_set0_pqg</span>(<span class="ident">dh</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">DH</span>,
-                              <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">BIGNUM</span>,
-                              <span class="ident">q</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">BIGNUM</span>,
-                              <span class="ident">g</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">BIGNUM</span>)
-                              <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">DH_set0_pqg</span>(
+        <span class="ident">dh</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">DH</span>,
+        <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">BIGNUM</span>,
+        <span class="ident">q</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">BIGNUM</span>,
+        <span class="ident">g</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">BIGNUM</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
         (<span class="kw-2">*</span><span class="ident">dh</span>).<span class="ident">p</span> <span class="op">=</span> <span class="ident">p</span>;
         (<span class="kw-2">*</span><span class="ident">dh</span>).<span class="ident">q</span> <span class="op">=</span> <span class="ident">q</span>;
         (<span class="kw-2">*</span><span class="ident">dh</span>).<span class="ident">g</span> <span class="op">=</span> <span class="ident">g</span>;
@@ -287,7 +318,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_dh</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">SslContext</span>::<span class="ident">builder</span>(<span class="ident">SslMethod</span>::<span class="ident">tls</span>()).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_hex_str</span>(<span class="string">&quot;87A8E61DB4B6663CFFBBD19C651959998CEEF608660DD0F25D2CEED4435\
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_hex_str</span>(
+            <span class="string">&quot;87A8E61DB4B6663CFFBBD19C651959998CEEF608660DD0F25D2CEED4435\
                                       E3B00E00DF8F1D61957D4FAF7DF4561B2AA3016C3D91134096FAA3BF429\
                                       6D830E9A7C209E0C6497517ABD5A8A9D306BCF67ED91F9E6725B4758C02\
                                       2E0B1EF4275BF7B6C5BFC11D45F9088B941F54EB1E59BB8BC39A0BF1230\
@@ -295,9 +327,10 @@
                                       A51BFA4AB3AD8347796524D8EF6A167B5A41825D967E144E5140564251C\
                                       CACB83E6B486F6B3CA3F7971506026C0B857F689962856DED4010ABD0BE\
                                       621C3A3960A54E710C375F26375D7014103A4B54330C198AF126116D227\
-                                      6E11715F693877FAD7EF09CADB094AE91E1A1597&quot;</span>)
-            .<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_hex_str</span>(<span class="string">&quot;3FB32C9B73134D0B2E77506660EDBD484CA7B18F21EF205407F4793A1A0\
+                                      6E11715F693877FAD7EF09CADB094AE91E1A1597&quot;</span>,
+        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_hex_str</span>(
+            <span class="string">&quot;3FB32C9B73134D0B2E77506660EDBD484CA7B18F21EF205407F4793A1A0\
                                       BA12510DBC15077BE463FFF4FED4AAC0BB555BE3A6C1B0C6B47B1BC3773\
                                       BF7E8C6F62901228F8C28CBB18A55AE31341000A650196F931C77A57F2D\
                                       DF463E5E9EC144B777DE62AAAB8A8628AC376D282D6ED3864E67982428E\
@@ -305,11 +338,12 @@
                                       FE83B9C80D052B985D182EA0ADB2A3B7313D3FE14C8484B1E052588B9B7\
                                       D2BBD2DF016199ECD06E1557CD0915B3353BBB64E0EC377FD028370DF92\
                                       B52C7891428CDC67EB6184B523D1DB246C32F63078490F00EF8D647D148\
-                                      D47954515E2327CFEF98C582664B4C0F6CC41659&quot;</span>)
-            .<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_hex_str</span>(<span class="string">&quot;8CF83642A709A097B447997640129DA299B1A47D1EB3750BA308B0FE64F\
-                                      5FBD3&quot;</span>)
-            .<span class="ident">unwrap</span>();
+                                      D47954515E2327CFEF98C582664B4C0F6CC41659&quot;</span>,
+        ).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_hex_str</span>(
+            <span class="string">&quot;8CF83642A709A097B447997640129DA299B1A47D1EB3750BA308B0FE64F\
+                                      5FBD3&quot;</span>,
+        ).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">dh</span> <span class="op">=</span> <span class="ident">Dh</span>::<span class="ident">from_params</span>(<span class="ident">p</span>, <span class="ident">g</span>, <span class="ident">q</span>).<span class="ident">unwrap</span>();
         <span class="ident">ctx</span>.<span class="ident">set_tmp_dh</span>(<span class="kw-2">&amp;</span><span class="ident">dh</span>).<span class="ident">unwrap</span>();
     }
@@ -388,7 +422,6 @@
         window.rootPath = "../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

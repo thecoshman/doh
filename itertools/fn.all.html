@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/itertools/free.rs.html#134-139' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn all&lt;I, F&gt;(iterable: I, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>, F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html" title="trait core::ops::FnMut">FnMut</a>(I::<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">Item</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></span></pre><div class='docblock'><p>Test whether the predicate holds for all elements in the iterable.</p>
+<pre class='rust fn'>pub fn all&lt;I, F&gt;(iterable: I, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnMut.html" title="trait core::ops::function::FnMut">FnMut</a>(I::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.Item" title="type core::iter::traits::IntoIterator::Item">Item</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,&nbsp;</span></pre><div class='docblock'><p>Test whether the predicate holds for all elements in the iterable.</p>
 
 <p><code>IntoIterator</code> enabled version of <code>i.all(f)</code></p>
 
@@ -114,7 +114,6 @@
         window.rootPath = "../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.13/src/ssl/bio.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/ssl/bio.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bio.rs.html -- source</title>
@@ -321,6 +321,7 @@
 <span id="276">276</span>
 <span id="277">277</span>
 <span id="278">278</span>
+<span id="279">279</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_char</span>, <span class="ident">c_int</span>, <span class="ident">c_long</span>, <span class="ident">c_void</span>, <span class="ident">strlen</span>};
 <span class="kw">use</span> <span class="ident">ffi</span>::{<span class="ident">BIO</span>, <span class="ident">BIO_CTRL_FLUSH</span>, <span class="ident">BIO_new</span>, <span class="ident">BIO_clear_retry_flags</span>, <span class="ident">BIO_set_retry_read</span>,
@@ -395,7 +396,7 @@
     <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">compat</span>::<span class="ident">BIO_get_data</span>(<span class="ident">bio</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _)
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">bwrite</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">len</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">bwrite</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">len</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
     <span class="ident">BIO_clear_retry_flags</span>(<span class="ident">bio</span>);
 
     <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">bio</span>);
@@ -417,7 +418,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">bread</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>, <span class="ident">len</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">bread</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>, <span class="ident">len</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
     <span class="ident">BIO_clear_retry_flags</span>(<span class="ident">bio</span>);
 
     <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">bio</span>);
@@ -447,15 +448,16 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">bputs</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">bputs</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>, <span class="ident">s</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
     <span class="ident">bwrite</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">bio</span>, <span class="ident">s</span>, <span class="ident">strlen</span>(<span class="ident">s</span>) <span class="kw">as</span> <span class="ident">c_int</span>)
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">ctrl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>,
-                                    <span class="ident">cmd</span>: <span class="ident">c_int</span>,
-                                    <span class="ident">_num</span>: <span class="ident">c_long</span>,
-                                    <span class="ident">_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)
-                                    <span class="op">-&gt;</span> <span class="ident">c_long</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ctrl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Write</span><span class="op">&gt;</span>(
+    <span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>,
+    <span class="ident">cmd</span>: <span class="ident">c_int</span>,
+    <span class="ident">_num</span>: <span class="ident">c_long</span>,
+    <span class="ident">_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+) <span class="op">-&gt;</span> <span class="ident">c_long</span> {
     <span class="kw">if</span> <span class="ident">cmd</span> <span class="op">==</span> <span class="ident">BIO_CTRL_FLUSH</span> {
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">state</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">bio</span>);
 
@@ -475,7 +477,7 @@
     }
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
     <span class="ident">compat</span>::<span class="ident">BIO_set_init</span>(<span class="ident">bio</span>, <span class="number">0</span>);
     <span class="ident">compat</span>::<span class="ident">BIO_set_num</span>(<span class="ident">bio</span>, <span class="number">0</span>);
     <span class="ident">compat</span>::<span class="ident">BIO_set_data</span>(<span class="ident">bio</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
@@ -483,7 +485,7 @@
     <span class="number">1</span>
 }
 
-<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">destroy</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">destroy</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">bio</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">BIO</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
     <span class="kw">if</span> <span class="ident">bio</span>.<span class="ident">is_null</span>() {
         <span class="kw">return</span> <span class="number">0</span>;
     }
@@ -658,7 +660,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "openssl";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

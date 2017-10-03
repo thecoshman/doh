@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/itertools/free.rs.html#102-107' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn cloned&lt;'a, I, T:&nbsp;'a&gt;(iterable: I) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/core/iter/struct.Cloned.html" title="struct core::iter::Cloned">Cloned</a>&lt;I::<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIter</a>&gt; <span class="where fmt-newline">where I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item=&amp;'a T&gt;, T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a></span></pre><div class='docblock'><p>Create an iterator that clones each element from &amp;T to T</p>
+<pre class='rust fn'>pub fn cloned&lt;'a, I, T:&nbsp;'a&gt;(iterable: I) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/core/iter/struct.Cloned.html" title="struct core::iter::Cloned">Cloned</a>&lt;I::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.IntoIter" title="type core::iter::traits::IntoIterator::IntoIter">IntoIter</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = &amp;'a T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></pre><div class='docblock'><p>Create an iterator that clones each element from &amp;T to T</p>
 
 <p><code>IntoIterator</code> enabled version of <code>i.cloned()</code>.</p>
 
@@ -114,7 +114,6 @@
         window.rootPath = "../";
         window.currentCrate = "itertools";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>
