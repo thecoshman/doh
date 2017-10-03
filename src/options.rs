@@ -12,7 +12,7 @@
 //! ```
 
 
-use clap::{AppSettings, Arg, App};
+use clap::{AppSettings, Arg};
 use reqwest::Url;
 
 
@@ -26,10 +26,7 @@ pub struct Options {
 impl Options {
     /// Parse `env`-wide command-line arguments into an `Options` instance
     pub fn parse() -> Options {
-        let matches = App::new("doh")
-            .version(crate_version!())
-            .author(crate_authors!("\n"))
-            .about(crate_description!())
+        let matches = app_from_crate!("\n")
             .setting(AppSettings::ColoredHelp)
             .arg(Arg::from_usage("<URL> 'Remote directory to browse'").validator(Options::url_validator))
             .get_matches();

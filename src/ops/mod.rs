@@ -2,7 +2,7 @@ use self::super::util::{human_readable_size, percent_decode, parent_url, GETCH_S
                         GETCH_ARROW_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_ESC};
 use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
-use reqwest::{Response, IntoUrl, Client, Url};
+use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
 use reqwest::header::UserAgent;
 use std::path::{PathBuf, Path};
 use itertools::Itertools;
@@ -17,12 +17,12 @@ pub mod term;
 
 /// PUT a resource.
 pub fn upload<U: IntoUrl>(u: U, f: File) -> Response {
-    client().put(u).header(UserAgent(USER_AGENT.to_string())).body(f).send().unwrap()
+    client().put(u).header(UserAgent::new(USER_AGENT)).body(f).send().unwrap()
 }
 
 /// DELETE a resource.
 pub fn delete<U: IntoUrl>(u: U) -> Response {
-    client().delete(u).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
+    client().delete(u).header(UserAgent::new(USER_AGENT)).send().unwrap()
 }
 
 /// GET a resource with the RFSAPI header, auto-unpacking gzip.
@@ -36,13 +36,11 @@ pub fn download_raw<U: IntoUrl>(u: U) -> Response {
 }
 
 fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
-    client().get(u).header(RawFsApiHeader(raw)).header(UserAgent(USER_AGENT.to_string())).send().unwrap()
+    client().get(u).header(RawFsApiHeader(raw)).header(UserAgent::new(USER_AGENT)).send().unwrap()
 }
 
-pub fn client() -> Client {
-    let mut client = Client::new().unwrap();
-    client.gzip(true);
-    client
+fn client() -> Client {
+    ClientBuilder::new().gzip(true).build().unwrap()
 }
 
 
@@ -339,7 +337,7 @@ impl ListContext {
         if let Some(inp) = term::open_file_picker() {
             try!(writeln!(out, "<Uploading {} to {}...>", inp.display(), percent_decode(&self.cururl.to_string()).unwrap()));
             let upurl = self.cururl.join(&Path::new(inp.file_name().unwrap()).display().to_string()).unwrap();
-            let status = *upload(upurl, try!(File::open(inp))).status();
+            let status = upload(upurl, try!(File::open(inp))).status();
             if status.is_success() {
                 try!(writeln!(out, "<Success!>"));
             } else {
@@ -352,7 +350,7 @@ impl ListContext {
     fn delete<W: Write>(&mut self, out: &mut W) -> io::Result<()> {
         let delurl = self.cururl.join(&self.files[self.selected].full_name).unwrap();
         try!(writeln!(out, "<Deleting {}...>", percent_decode(&delurl.to_string()).unwrap()));
-        let status = *delete(delurl.clone()).status();
+        let status = delete(delurl.clone()).status();
         if status.is_success() {
             try!(writeln!(out, "<Success!>"));
         } else {

@@ -27,7 +27,7 @@ fn real_main() -> Result<(), (String, i32)> {
     let _cursor = doh::util::RaiiGuard::new(|| print!("{}", doh::ops::term::show_cursor(false)),
                                             || print!("{}", doh::ops::term::show_cursor(true)));
 
-    let input = try!(Getch::new().map_err(|e| (format!("Failed to initialize getch(): {}", e), 2)));
+    let input = Getch::new();
     let mut ctx = doh::ops::ListContext::new(opts.remote_dir.clone());
     while try!(ctx.one_loop(&mut stdout(), &input, termsize).map_err(|e| (format!("Listing failure: {}", e), 3))) {
         println!();
