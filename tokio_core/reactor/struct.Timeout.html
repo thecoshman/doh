@@ -56,25 +56,25 @@
 Note that timeouts are not intended for high resolution timers, but rather
 they will likely fire some granularity after the exact instant that they&#39;re
 otherwise indicated to fire at.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_core/reactor/timeout.rs.html#27-67' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_core/reactor/timeout.rs.html#27-88' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(dur: <a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>, handle: &amp;<a class="struct" href="../../tokio_core/reactor/struct.Handle.html" title="struct tokio_core::reactor::Handle">Handle</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a>&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new timeout which will fire at <code>dur</code> time into the future.</p>
 
-<p>This function will return a future that will resolve to the actual
-timeout object. The timeout object itself is then a future which will be
+<p>This function will return a Result with the actual timeout object or an
+error. The timeout object itself is then a future which will be
 set to fire at the specified point in the future.</p>
 </div><h4 id='method.new_at' class="method"><span id='new_at.v' class='invisible'><code>fn <a href='#method.new_at' class='fnname'>new_at</a>(at: <a class="struct" href="https://doc.rust-lang.org/nightly/std/time/struct.Instant.html" title="struct std::time::Instant">Instant</a>, handle: &amp;<a class="struct" href="../../tokio_core/reactor/struct.Handle.html" title="struct tokio_core::reactor::Handle">Handle</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a>&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new timeout which will fire at the time specified by <code>at</code>.</p>
 
-<p>This function will return a future that will resolve to the actual
-timeout object. The timeout object itself is then a future which will be
+<p>This function will return a Result with the actual timeout object or an
+error. The timeout object itself is then a future which will be
 set to fire at the specified point in the future.</p>
 </div><h4 id='method.reset' class="method"><span id='reset.v' class='invisible'><code>fn <a href='#method.reset' class='fnname'>reset</a>(&amp;mut self, at: <a class="struct" href="https://doc.rust-lang.org/nightly/std/time/struct.Instant.html" title="struct std::time::Instant">Instant</a>)</code></span></h4>
 <div class='docblock'><p>Resets this timeout to an new timeout which will fire at the time
 specified by <code>at</code>.</p>
 
 <p>This method is usable even of this instance of <code>Timeout</code> has &quot;already
-fired&quot;. That is, if this future has resovled, calling this method means
+fired&quot;. That is, if this future has resolved, calling this method means
 that the future will still re-resolve at the specified instant.</p>
 
 <p>If <code>at</code> is in the past then this future will immediately be resolved
@@ -82,8 +82,8 @@ that the future will still re-resolve at the specified instant.</p>
 
 <p>Note that if any task is currently blocked on this future then that task
 will be dropped. It is required to call <code>poll</code> again after this method
-has been called to ensure tha ta task is blocked on this future.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a> for <a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_core/reactor/timeout.rs.html#69-83' title='goto source code'>[src]</a></span></h3>
+has been called to ensure that a task is blocked on this future.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a> for <a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_core/reactor/timeout.rs.html#90-98' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Item' class="type"><span id='Item.t' class='invisible'><code>type <a href='../../futures/future/trait.Future.html#associatedtype.Item' class="type">Item</a> = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a></code></span></h4>
 <div class='docblock'><p>The type of value that this future will resolved with if it is successful. <a href="../../futures/future/trait.Future.html#associatedtype.Item">Read more</a></p>
 </div><h4 id='associatedtype.Error' class="type"><span id='Error.t' class='invisible'><code>type <a href='../../futures/future/trait.Future.html#associatedtype.Error' class="type">Error</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a></code></span></h4>
@@ -130,7 +130,7 @@ has been called to ensure tha ta task is blocked on this future.</p>
 <div class='docblock'><p>Catches unwinding panics while polling the future. <a href="../../futures/future/trait.Future.html#method.catch_unwind">Read more</a></p>
 </div><h4 id='method.shared' class="method"><span id='shared.v' class='invisible'><code>fn <a href='../../futures/future/trait.Future.html#method.shared' class='fnname'>shared</a>(self) -&gt; <a class="struct" href="../../futures/future/shared/struct.Shared.html" title="struct futures::future::shared::Shared">Shared</a>&lt;Self&gt;</code></span></h4>
 <div class='docblock'><p>Create a cloneable handle to this future where all handles will resolve to the same result. <a href="../../futures/future/trait.Future.html#method.shared">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_core/reactor/timeout.rs.html#85-89' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../../tokio_core/reactor/struct.Timeout.html" title="struct tokio_core::reactor::Timeout">Timeout</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_core/reactor/timeout.rs.html#100-104' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.drop' class="method"><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop">Read more</a></p>
 </div></div></section>

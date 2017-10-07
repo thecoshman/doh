@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/iovec-0.1.0/src/sys/unix.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/iovec-0.1.1/src/sys/unix.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>unix.rs.html -- source</title>
@@ -93,6 +93,8 @@
 <span id="48">48</span>
 <span id="49">49</span>
 <span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">libc</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">mem</span>, <span class="ident">slice</span>, <span class="ident">usize</span>};
@@ -125,6 +127,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">IoVec</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">src</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="kw">unsafe</span> {
             <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">libc</span>::<span class="ident">iovec</span> {
                 <span class="ident">iov_base</span>: <span class="ident">src</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,
@@ -136,6 +139,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">IoVec</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">src</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="kw">unsafe</span> {
             <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">libc</span>::<span class="ident">iovec</span> {
                 <span class="ident">iov_base</span>: <span class="ident">src</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _,

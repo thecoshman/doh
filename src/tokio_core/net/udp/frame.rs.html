@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.9/src/net/udp/frame.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/net/udp/frame.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>frame.rs.html -- source</title>
@@ -202,6 +202,14 @@
 <span id="157">157</span>
 <span id="158">158</span>
 <span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">SocketAddr</span>, <span class="ident">Ipv4Addr</span>, <span class="ident">SocketAddrV4</span>};
@@ -266,6 +274,7 @@
     <span class="ident">rd</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
     <span class="ident">wr</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
     <span class="ident">out_addr</span>: <span class="ident">SocketAddr</span>,
+    <span class="ident">flushed</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">UdpCodec</span><span class="op">&gt;</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">UdpFramed</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
@@ -286,29 +295,35 @@
     <span class="kw">type</span> <span class="ident">SinkError</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>;
 
     <span class="kw">fn</span> <span class="ident">start_send</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">item</span>: <span class="ident">C</span>::<span class="ident">Out</span>) <span class="op">-&gt;</span> <span class="ident">StartSend</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Out</span>, <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">poll_complete</span>());
-            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">AsyncSink</span>::<span class="ident">NotReady</span>(<span class="ident">item</span>));
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;sending frame&quot;</span>);
+
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">flushed</span> {
+            <span class="kw">match</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">poll_complete</span>()) {
+                <span class="ident">Async</span>::<span class="ident">Ready</span>(()) <span class="op">=&gt;</span> {},
+                <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">AsyncSink</span>::<span class="ident">NotReady</span>(<span class="ident">item</span>)),
             }
         }
 
         <span class="self">self</span>.<span class="ident">out_addr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">codec</span>.<span class="ident">encode</span>(<span class="ident">item</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">wr</span>);
+        <span class="self">self</span>.<span class="ident">flushed</span> <span class="op">=</span> <span class="bool-val">false</span>;
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;frame encoded; length={}&quot;</span>, <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">len</span>());
+
         <span class="prelude-val">Ok</span>(<span class="ident">AsyncSink</span>::<span class="ident">Ready</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">poll_complete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span>(), <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;flushing framed transport&quot;</span>);
-
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">is_empty</span>() {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">flushed</span> {
             <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(()))
         }
 
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;writing; remaining={}&quot;</span>, <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">len</span>());
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;flushing frame; length={}&quot;</span>, <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">len</span>());
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="macro">try_nb</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">socket</span>.<span class="ident">send_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">wr</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">out_addr</span>));
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;written {}&quot;</span>, <span class="ident">n</span>);
+
         <span class="kw">let</span> <span class="ident">wrote_all</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">len</span>();
         <span class="self">self</span>.<span class="ident">wr</span>.<span class="ident">clear</span>();
+        <span class="self">self</span>.<span class="ident">flushed</span> <span class="op">=</span> <span class="bool-val">true</span>;
+
         <span class="kw">if</span> <span class="ident">wrote_all</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(()))
         } <span class="kw">else</span> {
@@ -330,6 +345,7 @@
         <span class="ident">out_addr</span>: <span class="ident">SocketAddr</span>::<span class="ident">V4</span>(<span class="ident">SocketAddrV4</span>::<span class="ident">new</span>(<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">0</span>)),
         <span class="ident">rd</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="number">64</span> <span class="op">*</span> <span class="number">1024</span>],
         <span class="ident">wr</span>: <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="number">8</span> <span class="op">*</span> <span class="number">1024</span>),
+        <span class="ident">flushed</span>: <span class="bool-val">true</span>,
     }
 }
 

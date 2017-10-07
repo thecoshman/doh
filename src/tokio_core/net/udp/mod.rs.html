@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.9/src/net/udp/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/net/udp/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -485,6 +485,67 @@
 <span id="440">440</span>
 <span id="441">441</span>
 <span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
@@ -562,6 +623,46 @@
         <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">local_addr</span>()
     }
 
+    <span class="doccomment">/// Connects the UDP socket setting the default destination for send() and</span>
+    <span class="doccomment">/// limiting packets that are read via recv from the address specified in addr.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">connect</span>(<span class="kw-2">*</span><span class="ident">addr</span>)
+    }
+
+    <span class="doccomment">/// Sends data on the socket to the address previously bound via connect().</span>
+    <span class="doccomment">/// On success, returns the number of bytes written.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_write</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
+        }
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">send</span>(<span class="ident">buf</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">n</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> {
+                    <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_write</span>();
+                }
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>)
+            }
+        }
+    }
+
+    <span class="doccomment">/// Receives data from the socket previously bound with connect().</span>
+    <span class="doccomment">/// On success, returns the number of bytes read.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
+        }
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">recv</span>(<span class="ident">buf</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">n</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> {
+                    <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_read</span>();
+                }
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>)
+            }
+        }
+    }
+
     <span class="doccomment">/// Test whether this socket is ready to be read or not.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the socket is *not* readable then the current task is scheduled to</span>
@@ -585,11 +686,11 @@
     <span class="doccomment">/// Sends data on the socket to the given address. On success, returns the</span>
     <span class="doccomment">/// number of bytes written.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Address type can be any implementor of `ToSocketAddrs` trait. See its</span>
+    <span class="doccomment">/// Address type can be any implementer of `ToSocketAddrs` trait. See its</span>
     <span class="doccomment">/// documentation for concrete examples.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">send_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_write</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">send_to</span>(<span class="ident">buf</span>, <span class="ident">target</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">n</span>),
@@ -633,7 +734,7 @@
     <span class="doccomment">/// read and the address from whence the data came.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recv_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">SocketAddr</span>)<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">recv_from</span>(<span class="ident">buf</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">n</span>),
@@ -810,6 +911,27 @@
                               <span class="ident">interface</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">leave_multicast_v6</span>(<span class="ident">multiaddr</span>, <span class="ident">interface</span>)
     }
+
+    <span class="doccomment">/// Sets the value for the `IPV6_V6ONLY` option on this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If this is set to `true` then the socket is restricted to sending and</span>
+    <span class="doccomment">/// receiving IPv6 packets only. In this case two IPv4 and IPv6 applications</span>
+    <span class="doccomment">/// can bind the same port at the same time.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If this is set to `false` then the socket can be used to send and</span>
+    <span class="doccomment">/// receive packets from an IPv4-mapped IPv6 address.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_only_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">only_v6</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">set_only_v6</span>(<span class="ident">only_v6</span>)
+    }
+
+    <span class="doccomment">/// Gets the value of the `IPV6_V6ONLY` option for this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For more information about this option, see [`set_only_v6`][link].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [link]: #method.set_only_v6</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">only_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">only_v6</span>()
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">UdpSocket</span> {
@@ -903,7 +1025,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">unix</span>, <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)))]</span>
 <span class="kw">mod</span> <span class="ident">sys</span> {
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">UdpSocket</span>;

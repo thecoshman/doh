@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.9/src/reactor/poll_evented.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/reactor/poll_evented.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>poll_evented.rs.html -- source</title>
@@ -500,7 +500,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Readiness to read/write</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// A `PollEvented` allows listenting and waiting for an arbitrary `mio::Ready`</span>
+<span class="doccomment">/// A `PollEvented` allows listening and waiting for an arbitrary `mio::Ready`</span>
 <span class="doccomment">/// instance, including the platform-specific contents of `mio::Ready`. At most</span>
 <span class="doccomment">/// two future tasks, however, can be waiting on a `PollEvented`. The</span>
 <span class="doccomment">/// `need_read` and `need_write` methods can block two separate tasks, one on</span>
@@ -554,7 +554,7 @@
     <span class="doccomment">/// object with the event loop that the `handle` provided points to.</span>
     <span class="doccomment">/// Typically this method is not required as this automatically happens when</span>
     <span class="doccomment">/// `E` is dropped, but for some use cases the `E` object doesn&#39;t represent</span>
-    <span class="doccomment">/// an owned reference, so dropping it won&#39;t automatically unreigster with</span>
+    <span class="doccomment">/// an owned reference, so dropping it won&#39;t automatically unregister with</span>
     <span class="doccomment">/// the event loop.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This consumes `self` as it will no longer provide events after the</span>
@@ -729,7 +729,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">PollEvented</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_read</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_mut</span>().<span class="ident">read</span>(<span class="ident">buf</span>);
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
@@ -742,7 +742,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">Write</span> <span class="kw">for</span> <span class="ident">PollEvented</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_write</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_mut</span>().<span class="ident">write</span>(<span class="ident">buf</span>);
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
@@ -753,7 +753,7 @@
 
     <span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_write</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_mut</span>().<span class="ident">flush</span>();
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
@@ -788,7 +788,7 @@
 {
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_read</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_ref</span>().<span class="ident">read</span>(<span class="ident">buf</span>);
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
@@ -803,7 +803,7 @@
 {
     <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_write</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_ref</span>().<span class="ident">write</span>(<span class="ident">buf</span>);
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
@@ -814,7 +814,7 @@
 
     <span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_write</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">would_block</span>())
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_ref</span>().<span class="ident">flush</span>();
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {

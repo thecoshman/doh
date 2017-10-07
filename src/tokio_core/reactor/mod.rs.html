@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.9/src/reactor/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/reactor/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -919,6 +919,40 @@
 <span id="874">874</span>
 <span id="875">875</span>
 <span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! The core reactor driving all I/O</span>
 <span class="doccomment">//!</span>
@@ -1287,7 +1321,7 @@
             }
             <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(())) <span class="op">|</span>
             <span class="prelude-val">Err</span>(()) <span class="op">=&gt;</span> {
-                <span class="ident">_task_to_drop</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">task_dispatch</span>.<span class="ident">remove</span>(<span class="ident">token</span>).<span class="ident">unwrap</span>();
+                <span class="ident">_task_to_drop</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">task_dispatch</span>.<span class="ident">remove</span>(<span class="ident">token</span>);
             }
         }
         <span class="ident">drop</span>(<span class="ident">inner</span>);
@@ -1391,18 +1425,20 @@
             <span class="ident">reader</span>: <span class="prelude-val">None</span>,
             <span class="ident">writer</span>: <span class="prelude-val">None</span>,
         };
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">vacant_entry</span>().<span class="ident">is_none</span>() {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">capacity</span>() {
             <span class="kw">let</span> <span class="ident">amt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">len</span>();
             <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">reserve_exact</span>(<span class="ident">amt</span>);
         }
-        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">vacant_entry</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">vacant_entry</span>();
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">entry</span>.<span class="ident">key</span>();
         <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">io</span>.<span class="ident">register</span>(<span class="ident">source</span>,
-                              <span class="ident">mio</span>::<span class="ident">Token</span>(<span class="ident">TOKEN_START</span> <span class="op">+</span> <span class="ident">entry</span>.<span class="ident">index</span>() <span class="op">*</span> <span class="number">2</span>),
+                              <span class="ident">mio</span>::<span class="ident">Token</span>(<span class="ident">TOKEN_START</span> <span class="op">+</span> <span class="ident">key</span> <span class="op">*</span> <span class="number">2</span>),
                               <span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>() <span class="op">|</span>
                                 <span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">writable</span>() <span class="op">|</span>
                                 <span class="ident">platform</span>::<span class="ident">all</span>(),
                               <span class="ident">mio</span>::<span class="ident">PollOpt</span>::<span class="ident">edge</span>()));
-        <span class="prelude-val">Ok</span>((<span class="ident">sched</span>.<span class="ident">readiness</span>.<span class="ident">clone</span>(), <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">sched</span>).<span class="ident">index</span>()))
+        <span class="kw">let</span> <span class="ident">sched</span> <span class="op">=</span> <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">sched</span>);
+        <span class="prelude-val">Ok</span>((<span class="ident">sched</span>.<span class="ident">readiness</span>.<span class="ident">clone</span>(), <span class="ident">key</span>))
     }
 
     <span class="kw">fn</span> <span class="ident">deregister_source</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="ident">Evented</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -1411,7 +1447,7 @@
 
     <span class="kw">fn</span> <span class="ident">drop_source</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="ident">usize</span>) {
         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;dropping I/O source: {}&quot;</span>, <span class="ident">token</span>);
-        <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">remove</span>(<span class="ident">token</span>).<span class="ident">unwrap</span>();
+        <span class="self">self</span>.<span class="ident">io_dispatch</span>.<span class="ident">remove</span>(<span class="ident">token</span>);
     }
 
     <span class="kw">fn</span> <span class="ident">schedule</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="ident">usize</span>, <span class="ident">wake</span>: <span class="ident">Task</span>, <span class="ident">dir</span>: <span class="ident">Direction</span>)
@@ -1434,15 +1470,16 @@
     }
 
     <span class="kw">fn</span> <span class="ident">add_timeout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">at</span>: <span class="ident">Instant</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">vacant_entry</span>().<span class="ident">is_none</span>() {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">capacity</span>() {
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">len</span>();
             <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">reserve_exact</span>(<span class="ident">len</span>);
         }
-        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">vacant_entry</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">slot</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timer_heap</span>.<span class="ident">push</span>((<span class="ident">at</span>, <span class="ident">entry</span>.<span class="ident">index</span>()));
-        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="ident">entry</span>.<span class="ident">insert</span>((<span class="prelude-val">Some</span>(<span class="ident">slot</span>), <span class="ident">TimeoutState</span>::<span class="ident">NotFired</span>));
-        <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;added a timeout: {}&quot;</span>, <span class="ident">entry</span>.<span class="ident">index</span>());
-        <span class="kw">return</span> <span class="ident">entry</span>.<span class="ident">index</span>();
+        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">vacant_entry</span>();
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">entry</span>.<span class="ident">key</span>();
+        <span class="kw">let</span> <span class="ident">slot</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timer_heap</span>.<span class="ident">push</span>((<span class="ident">at</span>, <span class="ident">key</span>));
+        <span class="ident">entry</span>.<span class="ident">insert</span>((<span class="prelude-val">Some</span>(<span class="ident">slot</span>), <span class="ident">TimeoutState</span>::<span class="ident">NotFired</span>));
+        <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;added a timeout: {}&quot;</span>, <span class="ident">key</span>);
+        <span class="kw">return</span> <span class="ident">key</span>;
     }
 
     <span class="kw">fn</span> <span class="ident">update_timeout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="ident">usize</span>, <span class="ident">handle</span>: <span class="ident">Task</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Task</span><span class="op">&gt;</span> {
@@ -1466,18 +1503,18 @@
     <span class="kw">fn</span> <span class="ident">cancel_timeout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">token</span>: <span class="ident">usize</span>) {
         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;cancel a timeout: {}&quot;</span>, <span class="ident">token</span>);
         <span class="kw">let</span> <span class="ident">pair</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timeouts</span>.<span class="ident">remove</span>(<span class="ident">token</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="prelude-val">Some</span>(<span class="ident">slot</span>), <span class="ident">_state</span>)) <span class="op">=</span> <span class="ident">pair</span> {
+        <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="ident">slot</span>), <span class="ident">_state</span>) <span class="op">=</span> <span class="ident">pair</span> {
             <span class="self">self</span>.<span class="ident">timer_heap</span>.<span class="ident">remove</span>(<span class="ident">slot</span>);
         }
     }
 
     <span class="kw">fn</span> <span class="ident">spawn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">future</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(), <span class="ident">Error</span><span class="op">=</span>()<span class="op">&gt;&gt;</span>) {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">vacant_entry</span>().<span class="ident">is_none</span>() {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">capacity</span>() {
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">len</span>();
             <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">reserve_exact</span>(<span class="ident">len</span>);
         }
-        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">vacant_entry</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">token</span> <span class="op">=</span> <span class="ident">TOKEN_START</span> <span class="op">+</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">entry</span>.<span class="ident">index</span>() <span class="op">+</span> <span class="number">1</span>;
+        <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">task_dispatch</span>.<span class="ident">vacant_entry</span>();
+        <span class="kw">let</span> <span class="ident">token</span> <span class="op">=</span> <span class="ident">TOKEN_START</span> <span class="op">+</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">entry</span>.<span class="ident">key</span>() <span class="op">+</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">pair</span> <span class="op">=</span> <span class="ident">mio</span>::<span class="ident">Registration</span>::<span class="ident">new2</span>();
         <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">pair</span>.<span class="number">0</span>,
                          <span class="ident">mio</span>::<span class="ident">Token</span>(<span class="ident">token</span>),
@@ -1499,13 +1536,26 @@
         <span class="self">self</span>.<span class="ident">with_loop</span>(<span class="op">|</span><span class="ident">lp</span><span class="op">|</span> {
             <span class="kw">match</span> <span class="ident">lp</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">lp</span>) <span class="op">=&gt;</span> {
-                    <span class="comment">// Need to execute all existing requests first, to ensure</span>
-                    <span class="comment">// that our message is processed &quot;in order&quot;</span>
-                    <span class="ident">lp</span>.<span class="ident">consume_queue</span>();
+                    <span class="comment">// We want to make sure that all messages are received in</span>
+                    <span class="comment">// order, so we need to consume pending messages before</span>
+                    <span class="comment">// delivering this message to the core. The actually</span>
+                    <span class="comment">// `consume_queue` function, however, can be somewhat slow</span>
+                    <span class="comment">// right now where receiving on a channel will acquire a</span>
+                    <span class="comment">// lock and block the current task.</span>
+                    <span class="comment">//</span>
+                    <span class="comment">// To speed this up check the message queue&#39;s readiness as a</span>
+                    <span class="comment">// sort of preflight check to see if we&#39;ve actually got any</span>
+                    <span class="comment">// messages. This should just involve some atomics and if it</span>
+                    <span class="comment">// comes back false then we know for sure there are no</span>
+                    <span class="comment">// pending messages, so we can immediately deliver our</span>
+                    <span class="comment">// message.</span>
+                    <span class="kw">if</span> <span class="ident">lp</span>.<span class="ident">rx_readiness</span>.<span class="number">0</span>.<span class="ident">readiness</span>().<span class="ident">is_readable</span>() {
+                        <span class="ident">lp</span>.<span class="ident">consume_queue</span>();
+                    }
                     <span class="ident">lp</span>.<span class="ident">notify</span>(<span class="ident">msg</span>);
                 }
                 <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
-                    <span class="kw">match</span> <span class="ident">mpsc</span>::<span class="ident">UnboundedSender</span>::<span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">tx</span>, <span class="ident">msg</span>) {
+                    <span class="kw">match</span> <span class="self">self</span>.<span class="ident">tx</span>.<span class="ident">unbounded_send</span>(<span class="ident">msg</span>) {
                         <span class="prelude-val">Ok</span>(()) <span class="op">=&gt;</span> {}
 
                         <span class="comment">// TODO: this error should punt upwards and we should</span>
@@ -1543,6 +1593,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that while the closure, `F`, requires the `Send` bound as it might</span>
     <span class="doccomment">/// cross threads, the future `R` does not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method will **not** catch panics from polling the future `f`. If</span>
+    <span class="doccomment">/// the future panics then it&#39;s the responsibility of the caller to catch</span>
+    <span class="doccomment">/// that panic and handle it as appropriate.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">Handle</span>) <span class="op">-&gt;</span> <span class="ident">R</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
               <span class="ident">R</span>: <span class="ident">IntoFuture</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(), <span class="ident">Error</span><span class="op">=</span>()<span class="op">&gt;</span>,
@@ -1611,6 +1667,12 @@
     }
 
     <span class="doccomment">/// Spawns a new future on the event loop this handle is associated with.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method will **not** catch panics from polling the future `f`. If</span>
+    <span class="doccomment">/// the future panics then it&#39;s the responsibility of the caller to catch</span>
+    <span class="doccomment">/// that panic and handle it as appropriate.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(), <span class="ident">Error</span><span class="op">=</span>()<span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
@@ -1627,6 +1689,12 @@
     <span class="doccomment">/// for running a closure wrapped in `futures::lazy`. It will spawn the</span>
     <span class="doccomment">/// function `f` provided onto the event loop, and continue to run the</span>
     <span class="doccomment">/// future returned by `f` on the event loop as well.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method will **not** catch panics from polling the future `f`. If</span>
+    <span class="doccomment">/// the future panics then it&#39;s the responsibility of the caller to catch</span>
+    <span class="doccomment">/// that panic and handle it as appropriate.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn_fn</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-&gt;</span> <span class="ident">R</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
               <span class="ident">R</span>: <span class="ident">IntoFuture</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(), <span class="ident">Error</span><span class="op">=</span>()<span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
@@ -1724,7 +1792,7 @@
     <span class="ident">ready</span> <span class="op">|</span> <span class="ident">platform</span>::<span class="ident">usize2ready</span>(<span class="ident">bits</span>)
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">unix</span>, <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)))]</span>
 <span class="kw">mod</span> <span class="ident">platform</span> {
     <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">Ready</span>;
     <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">unix</span>::<span class="ident">UnixReady</span>;
@@ -1775,7 +1843,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">windows</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>))]</span>
 <span class="kw">mod</span> <span class="ident">platform</span> {
     <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">Ready</span>;
 
