@@ -34,7 +34,7 @@ deploy:
   provider: GitHub
   artifact: doh-v0.1.0.exe
   auth_token:
-    secure: mN9QCtTHK89PMZm5HGmIIKwjfxCYtiL93raLE19llmLIUa858xfxj5ZOT+807zMU
+    secure: ZTXvCrv9y01s7Hd60w8W7NaouPnPoaw9YJt9WhWQ2Pep8HLvCikt9Exjkz8SGP9P
   on:
     appveyor_repo_tag: true
 
