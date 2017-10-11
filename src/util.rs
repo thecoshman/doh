@@ -26,6 +26,14 @@ pub const GETCH_ARROW_LEFT: u8 = 75;
 pub const GETCH_ARROW_RIGHT: u8 = 77;
 /// Second byte returned by `getch()` for Delete.
 pub const GETCH_DELETE: u8 = 83;
+/// Second byte returned by `getch()` for Home key.
+pub const GETCH_HOME: u8 = 71;
+/// Second byte returned by `getch()` for End key.
+pub const GETCH_END: u8 = 79;
+/// Second byte returned by `getch()` for Page Up key.
+pub const GETCH_PAGE_UP: u8 = 73;
+/// Second byte returned by `getch()` for Page Down key.
+pub const GETCH_PAGE_DOWN: u8 = 81;
 
 /// Amount of spaces to expand tabs to.
 ///

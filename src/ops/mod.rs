@@ -1,5 +1,6 @@
 use self::super::util::{human_readable_size, max_listing_lines, percent_decode, parent_url, GETCH_SPECIAL_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT,
-                        GETCH_ARROW_DOWN, GETCH_ARROW_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_ESC};
+                        GETCH_ARROW_DOWN, GETCH_ARROW_UP, GETCH_PAGE_DOWN, GETCH_PAGE_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_HOME,
+                        GETCH_ESC, GETCH_END};
 use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
 use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
@@ -168,6 +169,10 @@ impl ListContext {
     /// Up Arrow | move selection 1 entry up
     /// Down Arrow | move selection 1 entry down
     /// Left Arrow | go up one level, if not at root
+    /// Home | set selection to first item
+    /// End | set selection to last item
+    /// Page Up | move selection page's worth of entries up
+    /// Page Down | move selection page's worth of entries down
     /// Delete | `DELETE` highlighted entry
     ///
     /// ### Entering entries
@@ -290,11 +295,11 @@ impl ListContext {
                     GETCH_ARROW_UP => {
                         if self.selected != 0 {
                             try!(self.update_selected(out, ' ', term_size));
-                            self.selected -= 1;
-                            if self.selected % lines_per_screen == 0 {
+                            if self.selected != 1 && self.selected % lines_per_screen == 0 {
                                 self.cur_screen -= 1;
                                 try!(self.list_file_screen(out, term_size));
                             }
+                            self.selected -= 1;
                             try!(self.update_selected(out, '>', term_size));
                         }
                         Ok((true, false))
@@ -309,6 +314,56 @@ impl ListContext {
                             }
                             try!(self.update_selected(out, '>', term_size));
                         }
+                        Ok((true, false))
+                    }
+                    GETCH_PAGE_UP => {
+                        try!(self.update_selected(out, ' ', term_size));
+                        if self.selected > lines_per_screen {
+                            self.selected -= lines_per_screen;
+                            self.cur_screen -= 1;
+                        } else {
+                            self.selected = 0;
+                            self.cur_screen = 0;
+                        }
+                        try!(self.list_file_screen(out, term_size));
+                        try!(self.update_selected(out, '>', term_size));
+                        Ok((true, false))
+                    }
+                    GETCH_PAGE_DOWN => {
+                        try!(self.update_selected(out, ' ', term_size));
+                        if self.selected + lines_per_screen < self.files.len() {
+                            self.selected += lines_per_screen;
+                            self.cur_screen += 1;
+                        } else {
+                            let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
+
+                            self.selected = self.files.len() - 1;
+                            self.cur_screen = screen_count - 1;
+                        }
+                        try!(self.list_file_screen(out, term_size));
+                        try!(self.update_selected(out, '>', term_size));
+                        Ok((true, false))
+                    }
+                    GETCH_HOME => {
+                        try!(self.update_selected(out, ' ', term_size));
+                        self.selected = 0;
+                        if self.cur_screen != 0 {
+                            self.cur_screen = 0;
+                            try!(self.list_file_screen(out, term_size));
+                        }
+                        try!(self.update_selected(out, '>', term_size));
+                        Ok((true, false))
+                    }
+                    GETCH_END => {
+                        let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
+
+                        try!(self.update_selected(out, ' ', term_size));
+                        self.selected = self.files.len() - 1;
+                        if self.cur_screen != screen_count - 1 {
+                            self.cur_screen = screen_count - 1;
+                            try!(self.list_file_screen(out, term_size));
+                        }
+                        try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
                     GETCH_ARROW_LEFT => Ok((self.back(), false)),
