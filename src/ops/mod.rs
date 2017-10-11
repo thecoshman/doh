@@ -1,5 +1,5 @@
-use self::super::util::{human_readable_size, percent_decode, parent_url, GETCH_SPECIAL_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT, GETCH_ARROW_DOWN,
-                        GETCH_ARROW_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_ESC};
+use self::super::util::{human_readable_size, max_listing_lines, percent_decode, parent_url, GETCH_SPECIAL_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT,
+                        GETCH_ARROW_DOWN, GETCH_ARROW_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_ESC};
 use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
 use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
@@ -7,9 +7,9 @@ use reqwest::header::UserAgent;
 use std::path::{PathBuf, Path};
 use itertools::Itertools;
 use tabwriter::TabWriter;
-use std::{cmp, fmt};
 use std::fs::File;
 use getch::Getch;
+use std::fmt;
 use time::Tm;
 
 pub mod term;
@@ -134,6 +134,7 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
 pub struct ListContext {
     cururl: Url,
     files: Vec<RemoteFile>,
+    cur_screen: usize,
     selected: usize,
     have_write: bool,
     bad_response_counter: usize,
@@ -145,6 +146,7 @@ impl ListContext {
         ListContext {
             cururl: starting_url,
             files: vec![],
+            cur_screen: 0,
             selected: 0,
             have_write: false,
             bad_response_counter: 0,
@@ -196,9 +198,9 @@ impl ListContext {
     ///
     /// The file isn't uploaded if the user cancels the picker.
     pub fn one_loop<W: Write>(&mut self, mut out: &mut W, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
-        try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
         let mut resp = download(self.cururl.clone());
         if !resp.status().is_success() {
+            try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
             try!(writeln!(out, "<Got {}...>", resp.status()));
             self.back();
             return Ok(true);
@@ -207,9 +209,11 @@ impl ListContext {
         let data = match resp.json::<FilesetData>() {
             Ok(d) => d,
             Err(e) => {
+                try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
                 try!(writeln!(out, "<Couldn't parse server response: {}...>", e));
                 self.bad_response_counter += !self.back() as usize;
                 if self.bad_response_counter == 3 {
+                    try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
                     try!(writeln!(out, "<Server at {} doesn't support RFSAPI.>", self.cururl));
                 }
                 return Ok(self.bad_response_counter != 3);
@@ -219,21 +223,17 @@ impl ListContext {
 
         if data.is_file {
             if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], input, term_size)) {
+                try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
                 try!(writeln!(out, "<Not UTF-8, select download destination>"));
                 try!(self.download_file(out, self.cururl.clone()));
             }
             self.cururl = parent_url(&self.cururl);
         } else {
             self.files = RemoteFile::from_response(data);
-            {
-                let mut tout = TabWriter::new(&mut out);
-                for (i, f) in self.files.iter().enumerate() {
-                    try!(writeln!(tout, "{}{}", if i == self.selected { ">" } else { " " }, f));
-                }
-                try!(tout.flush());
-            }
+            self.cur_screen = 0;
 
-            while let (true, exit) = try!(self.process_input(out, input)) {
+            try!(self.list_file_screen(out, term_size));
+            while let (true, exit) = try!(self.process_input(out, input, term_size)) {
                 if exit {
                     return Ok(false);
                 }
@@ -243,7 +243,27 @@ impl ListContext {
         Ok(true)
     }
 
-    fn process_input<W: Write>(&mut self, out: &mut W, input: &Getch) -> io::Result<(bool, bool)> {
+    fn list_file_screen<W: Write>(&self, mut out: &mut W, term_size: (usize, usize)) -> io::Result<()> {
+        let (_, ty) = term_size;
+        let lines_per_screen = max_listing_lines(ty);
+        let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
+
+        try!(writeln!(out,
+                      "Contents of {} -- page {}/{}:",
+                      percent_decode(&self.cururl.to_string()).unwrap(),
+                      self.cur_screen + 1,
+                      screen_count));
+
+        let mut tout = TabWriter::new(&mut out);
+        for (i, f) in self.files.iter().enumerate().skip(self.cur_screen * lines_per_screen).take(lines_per_screen) {
+            try!(writeln!(tout, "{}{}\t{}", if i == self.selected { ">" } else { " " }, f, i));
+        }
+        try!(tout.flush());
+
+        Ok(())
+    }
+
+    fn process_input<W: Write>(&mut self, out: &mut W, input: &Getch, term_size: (usize, usize)) -> io::Result<(bool, bool)> {
         match try!(input.getch()) {
             GETCH_ENTER => Ok((self.select(), false)),
             GETCH_ESC | b'q' | b'Q' => Ok((true, true)),
@@ -263,19 +283,32 @@ impl ListContext {
                 Ok((false, false))
             }
             GETCH_SPECIAL_PREFIX => {
+                let (_, ty) = term_size;
+                let lines_per_screen = max_listing_lines(ty);
+
                 match try!(input.getch()) {
                     GETCH_ARROW_UP => {
                         if self.selected != 0 {
-                            try!(self.update_selected(out, ' '));
+                            try!(self.update_selected(out, ' ', term_size));
                             self.selected -= 1;
-                            try!(self.update_selected(out, '>'));
+                            if self.selected % lines_per_screen == 0 {
+                                self.cur_screen -= 1;
+                                try!(self.list_file_screen(out, term_size));
+                            }
+                            try!(self.update_selected(out, '>', term_size));
                         }
                         Ok((true, false))
                     }
                     GETCH_ARROW_DOWN => {
-                        try!(self.update_selected(out, ' '));
-                        self.selected = cmp::min(self.selected + 1, self.files.len() - 1);
-                        try!(self.update_selected(out, '>'));
+                        if self.selected + 1 != self.files.len() {
+                            try!(self.update_selected(out, ' ', term_size));
+                            self.selected += 1;
+                            if self.selected % lines_per_screen == 0 {
+                                self.cur_screen += 1;
+                                try!(self.list_file_screen(out, term_size));
+                            }
+                            try!(self.update_selected(out, '>', term_size));
+                        }
                         Ok((true, false))
                     }
                     GETCH_ARROW_LEFT => Ok((self.back(), false)),
@@ -295,12 +328,23 @@ impl ListContext {
         }
     }
 
-    fn update_selected<W: Write>(&self, out: &mut W, c: char) -> io::Result<()> {
-        try!(write!(out, "{}", term::move_cursor_up(self.files.len() - self.selected)));
+    fn update_selected<W: Write>(&self, out: &mut W, c: char, term_size: (usize, usize)) -> io::Result<()> {
+        let (_, ty) = term_size;
+        let lines_per_screen = max_listing_lines(ty);
+        let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
+        let lines_this_screen = if self.cur_screen == screen_count - 1 {
+            self.files.len() % lines_per_screen
+        } else {
+            lines_per_screen
+        };
+        let delta_h = lines_this_screen - (self.selected - (self.cur_screen * lines_per_screen));
+
+        try!(write!(out, "{}", term::move_cursor_up(delta_h)));
         try!(write!(out, "{}", c));
         try!(out.flush());
         try!(write!(out, "{}", term::move_cursor_back(1)));
-        try!(write!(out, "{}", term::move_cursor_down(self.files.len() - self.selected)));
+        try!(write!(out, "{}", term::move_cursor_down(delta_h)));
+
         Ok(())
     }
 
@@ -308,6 +352,7 @@ impl ListContext {
         if !self.files.is_empty() {
             self.cururl = self.cururl.join(&self.files[self.selected].full_name).unwrap();
             self.selected = 0;
+            self.cur_screen = 0;
         }
         self.files.is_empty()
     }
@@ -317,6 +362,7 @@ impl ListContext {
         if parent != self.cururl {
             self.cururl = parent;
             self.selected = 0;
+            self.cur_screen = 0;
             true
         } else {
             false
@@ -357,6 +403,7 @@ impl ListContext {
             try!(writeln!(out, "<Got {}...>", status));
         }
         self.selected = 0;
+        self.cur_screen = 0;
         Ok(())
     }
 }

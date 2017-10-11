@@ -191,3 +191,10 @@ pub fn parent_url(u: &Url) -> Url {
 pub fn percent_decode(s: &str) -> Option<Cow<str>> {
     percent_encoding::percent_decode(s.as_bytes()).decode_utf8().ok()
 }
+
+/// Get max amount of listed elements per page, based on term height
+///
+/// Leaves out 1 line for header and 1 line for spacing
+pub fn max_listing_lines(term_h: usize) -> usize {
+    term_h - 2
+}
