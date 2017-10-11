@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/mime/lib.rs.html#1-844' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/mime/lib.rs.html#1-854' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h1 id='mime' class='section-header'><a href='#mime'>Mime</a></h1>
 <p>Mime is now Media Type, technically, but <code>Mime</code> is more immediately
@@ -111,28 +111,28 @@ understandable, so the main type here is <code>Mime</code>.</p>
                            <td><a class="constant" href="constant.APPLICATION_JSON.html"
                                   title='constant reqwest::mime::APPLICATION_JSON'>APPLICATION_JSON</a></td>
                            <td class='docblock-short'>
-                                <p>application/json</p>
+                                <p><code>application/json</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.APPLICATION_MSGPACK.html"
                                   title='constant reqwest::mime::APPLICATION_MSGPACK'>APPLICATION_MSGPACK</a></td>
                            <td class='docblock-short'>
-                                <p>application/msgpack</p>
+                                <p><code>application/msgpack</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.APPLICATION_OCTET_STREAM.html"
                                   title='constant reqwest::mime::APPLICATION_OCTET_STREAM'>APPLICATION_OCTET_STREAM</a></td>
                            <td class='docblock-short'>
-                                <p>application/octet-stream</p>
+                                <p><code>application/octet-stream</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.APPLICATION_WWW_FORM_URLENCODED.html"
                                   title='constant reqwest::mime::APPLICATION_WWW_FORM_URLENCODED'>APPLICATION_WWW_FORM_URLENCODED</a></td>
                            <td class='docblock-short'>
-                                <p>application/x-www-form-urlencoded</p>
+                                <p><code>application/x-www-form-urlencoded</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -230,35 +230,35 @@ understandable, so the main type here is <code>Mime</code>.</p>
                            <td><a class="constant" href="constant.IMAGE_BMP.html"
                                   title='constant reqwest::mime::IMAGE_BMP'>IMAGE_BMP</a></td>
                            <td class='docblock-short'>
-                                <p>image/bmp</p>
+                                <p><code>image/bmp</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.IMAGE_GIF.html"
                                   title='constant reqwest::mime::IMAGE_GIF'>IMAGE_GIF</a></td>
                            <td class='docblock-short'>
-                                <p>image/gif</p>
+                                <p><code>image/gif</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.IMAGE_JPEG.html"
                                   title='constant reqwest::mime::IMAGE_JPEG'>IMAGE_JPEG</a></td>
                            <td class='docblock-short'>
-                                <p>image/jpeg</p>
+                                <p><code>image/jpeg</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.IMAGE_PNG.html"
                                   title='constant reqwest::mime::IMAGE_PNG'>IMAGE_PNG</a></td>
                            <td class='docblock-short'>
-                                <p>image/png</p>
+                                <p><code>image/png</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.IMAGE_STAR.html"
                                   title='constant reqwest::mime::IMAGE_STAR'>IMAGE_STAR</a></td>
                            <td class='docblock-short'>
-                                <p>image/*</p>
+                                <p><code>image/*</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -328,7 +328,7 @@ understandable, so the main type here is <code>Mime</code>.</p>
                            <td><a class="constant" href="constant.MULTIPART_FORM_DATA.html"
                                   title='constant reqwest::mime::MULTIPART_FORM_DATA'>MULTIPART_FORM_DATA</a></td>
                            <td class='docblock-short'>
-                                <p>multipart/form-data</p>
+                                <p><code>multipart/form-data</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -370,7 +370,7 @@ understandable, so the main type here is <code>Mime</code>.</p>
                            <td><a class="constant" href="constant.STAR_STAR.html"
                                   title='constant reqwest::mime::STAR_STAR'>STAR_STAR</a></td>
                            <td class='docblock-short'>
-                                <p><em>/</em></p>
+                                <p><code>*/*</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -384,63 +384,91 @@ understandable, so the main type here is <code>Mime</code>.</p>
                            <td><a class="constant" href="constant.TEXT_CSS.html"
                                   title='constant reqwest::mime::TEXT_CSS'>TEXT_CSS</a></td>
                            <td class='docblock-short'>
-                                <p>text/css</p>
+                                <p><code>text/css</code></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TEXT_CSV.html"
+                                  title='constant reqwest::mime::TEXT_CSV'>TEXT_CSV</a></td>
+                           <td class='docblock-short'>
+                                <p><code>text/csv</code></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TEXT_CSV_UTF_8.html"
+                                  title='constant reqwest::mime::TEXT_CSV_UTF_8'>TEXT_CSV_UTF_8</a></td>
+                           <td class='docblock-short'>
+                                <p><code>text/csv; charset=utf-8</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_EVENT_STREAM.html"
                                   title='constant reqwest::mime::TEXT_EVENT_STREAM'>TEXT_EVENT_STREAM</a></td>
                            <td class='docblock-short'>
-                                <p>text/event-stream</p>
+                                <p><code>text/event-stream</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_HTML.html"
                                   title='constant reqwest::mime::TEXT_HTML'>TEXT_HTML</a></td>
                            <td class='docblock-short'>
-                                <p>text/html</p>
+                                <p><code>text/html</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_HTML_UTF_8.html"
                                   title='constant reqwest::mime::TEXT_HTML_UTF_8'>TEXT_HTML_UTF_8</a></td>
                            <td class='docblock-short'>
-                                <p>text/html; charset=utf-8</p>
+                                <p><code>text/html; charset=utf-8</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_JAVASCRIPT.html"
                                   title='constant reqwest::mime::TEXT_JAVASCRIPT'>TEXT_JAVASCRIPT</a></td>
                            <td class='docblock-short'>
-                                <p>text/javascript</p>
+                                <p><code>text/javascript</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_PLAIN.html"
                                   title='constant reqwest::mime::TEXT_PLAIN'>TEXT_PLAIN</a></td>
                            <td class='docblock-short'>
-                                <p>text/plain</p>
+                                <p><code>text/plain</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_PLAIN_UTF_8.html"
                                   title='constant reqwest::mime::TEXT_PLAIN_UTF_8'>TEXT_PLAIN_UTF_8</a></td>
                            <td class='docblock-short'>
-                                <p>text/plain; charset=utf-8</p>
+                                <p><code>text/plain; charset=utf-8</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_STAR.html"
                                   title='constant reqwest::mime::TEXT_STAR'>TEXT_STAR</a></td>
                            <td class='docblock-short'>
-                                <p>text/*</p>
+                                <p><code>text/*</code></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TEXT_TAB_SEPARATED_VALUES.html"
+                                  title='constant reqwest::mime::TEXT_TAB_SEPARATED_VALUES'>TEXT_TAB_SEPARATED_VALUES</a></td>
+                           <td class='docblock-short'>
+                                <p><code>text/tab-separated-values</code></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TEXT_TAB_SEPARATED_VALUES_UTF_8.html"
+                                  title='constant reqwest::mime::TEXT_TAB_SEPARATED_VALUES_UTF_8'>TEXT_TAB_SEPARATED_VALUES_UTF_8</a></td>
+                           <td class='docblock-short'>
+                                <p><code>text/tab-separated-values; charset=utf-8</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.TEXT_XML.html"
                                   title='constant reqwest::mime::TEXT_XML'>TEXT_XML</a></td>
                            <td class='docblock-short'>
-                                <p>text/xml</p>
+                                <p><code>text/xml</code></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mime-0.3.4/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mime-0.3.5/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -887,6 +887,16 @@
 <span id="842">842</span>
 <span id="843">843</span>
 <span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! # Mime</span>
 <span class="doccomment">//!</span>
@@ -913,7 +923,7 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/mime/0.3.4&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/mime/0.3.5&quot;</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_debug_implementations</span>)]</span>
@@ -1531,7 +1541,9 @@
 
 
     (<span class="ident">FULL</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">plus</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
+        <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;`&quot;</span>]</span>
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>]</span>
+        <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;`&quot;</span>]</span>
         <span class="kw">pub</span> <span class="kw">const</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>: <span class="ident">Mime</span> <span class="op">=</span> <span class="ident">Mime</span> {
             <span class="ident">source</span>: <span class="ident">Source</span>::<span class="ident">Atom</span>(<span class="ident">__Atoms</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span> <span class="kw">as</span> <span class="ident">u8</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">src</span>),
             <span class="ident">slash</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">slash</span>,
@@ -1590,6 +1602,10 @@
     <span class="ident">TEXT_JAVASCRIPT</span>, <span class="string">&quot;text/javascript&quot;</span>, <span class="number">4</span>;
     <span class="ident">TEXT_XML</span>, <span class="string">&quot;text/xml&quot;</span>, <span class="number">4</span>;
     <span class="ident">TEXT_EVENT_STREAM</span>, <span class="string">&quot;text/event-stream&quot;</span>, <span class="number">4</span>;
+    <span class="ident">TEXT_CSV</span>, <span class="string">&quot;text/csv&quot;</span>, <span class="number">4</span>;
+    <span class="ident">TEXT_CSV_UTF_8</span>, <span class="string">&quot;text/csv; charset=utf-8&quot;</span>, <span class="number">4</span>, <span class="prelude-val">None</span>, <span class="number">8</span>;
+    <span class="ident">TEXT_TAB_SEPARATED_VALUES</span>, <span class="string">&quot;text/tab-separated-values&quot;</span>, <span class="number">4</span>;
+    <span class="ident">TEXT_TAB_SEPARATED_VALUES_UTF_8</span>, <span class="string">&quot;text/tab-separated-values; charset=utf-8&quot;</span>, <span class="number">4</span>, <span class="prelude-val">None</span>, <span class="number">25</span>;
 
     <span class="ident">IMAGE_STAR</span>, <span class="string">&quot;image/*&quot;</span>, <span class="number">5</span>;
     <span class="ident">IMAGE_JPEG</span>, <span class="string">&quot;image/jpeg&quot;</span>, <span class="number">5</span>;
@@ -1658,6 +1674,10 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;TEXT/PLAIN&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain; charset=utf-8&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">TEXT_PLAIN_UTF_8</span>);
+
+        <span class="comment">// quotes + semi colon</span>
+        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot;; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
+        <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;text/plain;charset=\&quot;utf-8\&quot; ; foo=bar&quot;</span>).<span class="ident">unwrap</span>();
 
         <span class="kw">let</span> <span class="ident">upper</span> <span class="op">=</span> <span class="ident">Mime</span>::<span class="ident">from_str</span>(<span class="string">&quot;TEXT/PLAIN&quot;</span>).<span class="ident">unwrap</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">upper</span>, <span class="ident">TEXT_PLAIN</span>);

@@ -581,9 +581,65 @@
 <span id="536">536</span>
 <span id="537">537</span>
 <span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">util</span>::{<span class="ident">human_readable_size</span>, <span class="ident">max_listing_lines</span>, <span class="ident">percent_decode</span>, <span class="ident">parent_url</span>, <span class="ident">GETCH_SPECIAL_PREFIX</span>, <span class="ident">GETCH_ARROW_RIGHT</span>, <span class="ident">GETCH_ARROW_LEFT</span>,
-                        <span class="ident">GETCH_ARROW_DOWN</span>, <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">TAB_SPACING</span>, <span class="ident">GETCH_DELETE</span>, <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_ESC</span>};
+                        <span class="ident">GETCH_ARROW_DOWN</span>, <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">GETCH_PAGE_DOWN</span>, <span class="ident">GETCH_PAGE_UP</span>, <span class="ident">TAB_SPACING</span>, <span class="ident">GETCH_DELETE</span>, <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_HOME</span>,
+                        <span class="ident">GETCH_ESC</span>, <span class="ident">GETCH_END</span>};
 <span class="kw">use</span> <span class="ident">rfsapi</span>::{<span class="ident">RawFsApiHeader</span>, <span class="ident">FilesetData</span>, <span class="ident">RawFileData</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">BufRead</span>, <span class="ident">Write</span>, <span class="ident">Read</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">ClientBuilder</span>, <span class="ident">Response</span>, <span class="ident">IntoUrl</span>, <span class="ident">Client</span>, <span class="ident">Url</span>};
@@ -752,6 +808,10 @@
     <span class="doccomment">/// Up Arrow | move selection 1 entry up</span>
     <span class="doccomment">/// Down Arrow | move selection 1 entry down</span>
     <span class="doccomment">/// Left Arrow | go up one level, if not at root</span>
+    <span class="doccomment">/// Home | set selection to first item</span>
+    <span class="doccomment">/// End | set selection to last item</span>
+    <span class="doccomment">/// Page Up | move selection page&#39;s worth of entries up</span>
+    <span class="doccomment">/// Page Down | move selection page&#39;s worth of entries down</span>
     <span class="doccomment">/// Delete | `DELETE` highlighted entry</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ### Entering entries</span>
@@ -874,11 +934,11 @@
                     <span class="ident">GETCH_ARROW_UP</span> <span class="op">=&gt;</span> {
                         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">selected</span> <span class="op">!=</span> <span class="number">0</span> {
                             <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39; &#39;</span>, <span class="ident">term_size</span>));
-                            <span class="self">self</span>.<span class="ident">selected</span> <span class="op">-=</span> <span class="number">1</span>;
-                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">selected</span> <span class="op">%</span> <span class="ident">lines_per_screen</span> <span class="op">==</span> <span class="number">0</span> {
+                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">selected</span> <span class="op">!=</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">selected</span> <span class="op">%</span> <span class="ident">lines_per_screen</span> <span class="op">==</span> <span class="number">0</span> {
                                 <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">-=</span> <span class="number">1</span>;
                                 <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">list_file_screen</span>(<span class="ident">out</span>, <span class="ident">term_size</span>));
                             }
+                            <span class="self">self</span>.<span class="ident">selected</span> <span class="op">-=</span> <span class="number">1</span>;
                             <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39;&gt;&#39;</span>, <span class="ident">term_size</span>));
                         }
                         <span class="prelude-val">Ok</span>((<span class="bool-val">true</span>, <span class="bool-val">false</span>))
@@ -893,6 +953,56 @@
                             }
                             <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39;&gt;&#39;</span>, <span class="ident">term_size</span>));
                         }
+                        <span class="prelude-val">Ok</span>((<span class="bool-val">true</span>, <span class="bool-val">false</span>))
+                    }
+                    <span class="ident">GETCH_PAGE_UP</span> <span class="op">=&gt;</span> {
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39; &#39;</span>, <span class="ident">term_size</span>));
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">selected</span> <span class="op">&gt;</span> <span class="ident">lines_per_screen</span> {
+                            <span class="self">self</span>.<span class="ident">selected</span> <span class="op">-=</span> <span class="ident">lines_per_screen</span>;
+                            <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">-=</span> <span class="number">1</span>;
+                        } <span class="kw">else</span> {
+                            <span class="self">self</span>.<span class="ident">selected</span> <span class="op">=</span> <span class="number">0</span>;
+                            <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">=</span> <span class="number">0</span>;
+                        }
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">list_file_screen</span>(<span class="ident">out</span>, <span class="ident">term_size</span>));
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39;&gt;&#39;</span>, <span class="ident">term_size</span>));
+                        <span class="prelude-val">Ok</span>((<span class="bool-val">true</span>, <span class="bool-val">false</span>))
+                    }
+                    <span class="ident">GETCH_PAGE_DOWN</span> <span class="op">=&gt;</span> {
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39; &#39;</span>, <span class="ident">term_size</span>));
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">selected</span> <span class="op">+</span> <span class="ident">lines_per_screen</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">files</span>.<span class="ident">len</span>() {
+                            <span class="self">self</span>.<span class="ident">selected</span> <span class="op">+=</span> <span class="ident">lines_per_screen</span>;
+                            <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">+=</span> <span class="number">1</span>;
+                        } <span class="kw">else</span> {
+                            <span class="kw">let</span> <span class="ident">screen_count</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">files</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="ident">lines_per_screen</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ceil</span>() <span class="kw">as</span> <span class="ident">usize</span>;
+
+                            <span class="self">self</span>.<span class="ident">selected</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">files</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
+                            <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">=</span> <span class="ident">screen_count</span> <span class="op">-</span> <span class="number">1</span>;
+                        }
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">list_file_screen</span>(<span class="ident">out</span>, <span class="ident">term_size</span>));
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39;&gt;&#39;</span>, <span class="ident">term_size</span>));
+                        <span class="prelude-val">Ok</span>((<span class="bool-val">true</span>, <span class="bool-val">false</span>))
+                    }
+                    <span class="ident">GETCH_HOME</span> <span class="op">=&gt;</span> {
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39; &#39;</span>, <span class="ident">term_size</span>));
+                        <span class="self">self</span>.<span class="ident">selected</span> <span class="op">=</span> <span class="number">0</span>;
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">!=</span> <span class="number">0</span> {
+                            <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">=</span> <span class="number">0</span>;
+                            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">list_file_screen</span>(<span class="ident">out</span>, <span class="ident">term_size</span>));
+                        }
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39;&gt;&#39;</span>, <span class="ident">term_size</span>));
+                        <span class="prelude-val">Ok</span>((<span class="bool-val">true</span>, <span class="bool-val">false</span>))
+                    }
+                    <span class="ident">GETCH_END</span> <span class="op">=&gt;</span> {
+                        <span class="kw">let</span> <span class="ident">screen_count</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">files</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="ident">lines_per_screen</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">ceil</span>() <span class="kw">as</span> <span class="ident">usize</span>;
+
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39; &#39;</span>, <span class="ident">term_size</span>));
+                        <span class="self">self</span>.<span class="ident">selected</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">files</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>;
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">!=</span> <span class="ident">screen_count</span> <span class="op">-</span> <span class="number">1</span> {
+                            <span class="self">self</span>.<span class="ident">cur_screen</span> <span class="op">=</span> <span class="ident">screen_count</span> <span class="op">-</span> <span class="number">1</span>;
+                            <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">list_file_screen</span>(<span class="ident">out</span>, <span class="ident">term_size</span>));
+                        }
+                        <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">update_selected</span>(<span class="ident">out</span>, <span class="string">&#39;&gt;&#39;</span>, <span class="ident">term_size</span>));
                         <span class="prelude-val">Ok</span>((<span class="bool-val">true</span>, <span class="bool-val">false</span>))
                     }
                     <span class="ident">GETCH_ARROW_LEFT</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class="self">self</span>.<span class="ident">back</span>(), <span class="bool-val">false</span>)),
