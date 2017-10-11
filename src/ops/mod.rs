@@ -216,7 +216,6 @@ impl ListContext {
                 try!(writeln!(out, "<Couldn't parse server response: {}...>", e));
                 self.bad_response_counter += !self.back() as usize;
                 if self.bad_response_counter == 3 {
-                    try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
                     try!(writeln!(out, "<Server at {} doesn't support RFSAPI.>", self.cururl));
                 }
                 return Ok(self.bad_response_counter != 3);
@@ -248,7 +247,7 @@ impl ListContext {
     fn list_file_screen<W: Write>(&self, mut out: &mut W, term_size: (usize, usize)) -> io::Result<()> {
         let (_, ty) = term_size;
         let lines_per_screen = max_listing_lines(ty);
-        let cur_screen = (self.selected as f64 / lines_per_screen as f64).floor() as usize;
+        let cur_screen = self.selected / lines_per_screen;
         let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
 
         try!(writeln!(out,
@@ -377,7 +376,7 @@ impl ListContext {
     fn update_selected<W: Write>(&self, out: &mut W, c: char, term_size: (usize, usize)) -> io::Result<()> {
         let (_, ty) = term_size;
         let lines_per_screen = max_listing_lines(ty);
-        let cur_screen = (self.selected as f64 / lines_per_screen as f64).floor() as usize;
+        let cur_screen = self.selected / lines_per_screen;
         let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
         let lines_this_screen = if cur_screen == screen_count - 1 {
             self.files.len() % lines_per_screen
