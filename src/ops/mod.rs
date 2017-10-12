@@ -200,7 +200,7 @@ impl ListContext {
     /// with the name of the picked file.
     ///
     /// The file isn't uploaded if the user cancels the picker.
-    pub fn one_loop<W: Write>(&mut self, mut out: &mut W, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
+    pub fn one_loop<W: Write>(&mut self, out: &mut W, input: &Getch, term_size: (usize, usize)) -> io::Result<bool> {
         let mut resp = download(self.cururl.clone());
         if !resp.status().is_success() {
             try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
@@ -259,7 +259,7 @@ impl ListContext {
 
         let mut tout = TabWriter::new(&mut out);
         for (i, f) in self.files.iter().enumerate().skip(cur_screen * lines_per_screen).take(lines_per_screen) {
-            try!(writeln!(tout, "{}{}\t{}", if i == self.selected { ">" } else { " " }, f, i));
+            try!(writeln!(tout, "{}{}", if i == self.selected { ">" } else { " " }, f));
         }
         try!(tout.flush());
 
@@ -293,10 +293,10 @@ impl ListContext {
                     GETCH_ARROW_UP => {
                         if self.selected != 0 {
                             try!(self.update_selected(out, ' ', term_size));
-                            if self.selected != 1 && self.selected % lines_per_screen == 0 {
+                            self.selected -= 1;
+                            if self.selected != 0 && (self.selected + 1) % lines_per_screen == 0 {
                                 try!(self.list_file_screen(out, term_size));
                             }
-                            self.selected -= 1;
                             try!(self.update_selected(out, '>', term_size));
                         }
                         Ok((true, false))
@@ -335,22 +335,25 @@ impl ListContext {
                         Ok((true, false))
                     }
                     GETCH_HOME => {
+                        let selecteded = self.selected;
+
                         try!(self.update_selected(out, ' ', term_size));
-                        if self.selected >= lines_per_screen {
+                        self.selected = 0;
+                        if selecteded >= lines_per_screen {
                             try!(self.list_file_screen(out, term_size));
                         }
-                        self.selected = 0;
                         try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
                     GETCH_END => {
+                        let selecteded = self.selected;
                         let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
 
                         try!(self.update_selected(out, ' ', term_size));
-                        if self.selected < (screen_count - 1) * lines_per_screen {
+                        self.selected = self.files.len() - 1;
+                        if selecteded < (screen_count - 2) * lines_per_screen {
                             try!(self.list_file_screen(out, term_size));
                         }
-                        self.selected = self.files.len() - 1;
                         try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
