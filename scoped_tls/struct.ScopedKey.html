@@ -56,8 +56,12 @@ to the type parameter <code>T</code>.</p>
 type <code>T</code> scoped to a particular lifetime. Keys provides two methods, <code>set</code>
 and <code>with</code>, both of which currently use closures to control the scope of
 their contents.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="struct" href="../scoped_tls/struct.ScopedKey.html" title="struct scoped_tls::ScopedKey">ScopedKey</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#83-177' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.set' class="method"><span id='set.v' class='invisible'><code>fn <a href='#method.set' class='fnname'>set</a>&lt;F, R&gt;(&amp;'static self, t: &amp;T, f: F) -&gt; R <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>() -&gt; R,&nbsp;</span></code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="struct" href="../scoped_tls/struct.ScopedKey.html" title="struct scoped_tls::ScopedKey">ScopedKey</a>&lt;T&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#83-177' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.set' class="method"><span id='set.v' class='invisible'><code>fn <a href='#method.set' class='fnname'>set</a>&lt;F, R&gt;(&amp;'static self, t: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T, f: F) -&gt; R <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>() -&gt; R,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#117-136' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Inserts a value into this scoped thread local storage slot for a
 duration of a closure.</p>
 
@@ -87,7 +91,7 @@ was available.</p>
     <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="ident">FOO</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span>);
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">val</span>, <span class="number">100</span>);
 });</pre>
-</div><h4 id='method.with' class="method"><span id='with.v' class='invisible'><code>fn <a href='#method.with' class='fnname'>with</a>&lt;F, R&gt;(&amp;'static self, f: F) -&gt; R <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(&amp;T) -&gt; R,&nbsp;</span></code></span></h4>
+</div><h4 id='method.with' class="method"><span id='with.v' class='invisible'><code>fn <a href='#method.with' class='fnname'>with</a>&lt;F, R&gt;(&amp;'static self, f: F) -&gt; R <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T) -&gt; R,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#162-171' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Gets a value out of this scoped variable.</p>
 
 <p>This function takes a closure which receives the value of this
@@ -106,9 +110,13 @@ variable.</p>
 <span class="ident">FOO</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">slot</span><span class="op">|</span> {
     <span class="comment">// work with `slot`</span>
 });</pre>
-</div><h4 id='method.is_set' class="method"><span id='is_set.v' class='invisible'><code>fn <a href='#method.is_set' class='fnname'>is_set</a>(&amp;'static self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+</div><h4 id='method.is_set' class="method"><span id='is_set.v' class='invisible'><code>fn <a href='#method.is_set' class='fnname'>is_set</a>(&amp;'static self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#174-176' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Test whether this TLS key has been <code>set</code> for the current thread.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../scoped_tls/struct.ScopedKey.html" title="struct scoped_tls::ScopedKey">ScopedKey</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#81' title='goto source code'>[src]</a></span></h3>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Sync' class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../scoped_tls/struct.ScopedKey.html" title="struct scoped_tls::ScopedKey">ScopedKey</a>&lt;T&gt;</code><a href='#impl-Sync' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/scoped_tls/lib.rs.html#81' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 

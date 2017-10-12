@@ -60,13 +60,17 @@ for more information.</p>
 but also by a few iterators that can be peeked natively, like the slice’s
 by reference iterator (<code>std::slice::Iter</code>).</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.peeking_next' class='method'><span id='peeking_next.v' class='invisible'><code>fn <a href='#tymethod.peeking_next' class='fnname'>peeking_next</a>&lt;F&gt;(&amp;mut self, accept: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(&amp;Self::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Pass a reference to the next iterator element to the closure <code>accept</code>;
 if <code>accept</code> returns true, return it as the next element,
 else None.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;I&gt; PeekingNext for <a class="struct" href="https://doc.rust-lang.org/nightly/core/iter/struct.Peekable.html" title="struct core::iter::Peekable">Peekable</a>&lt;I&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,&nbsp;</span></code></li>
 <li><code>impl&lt;I&gt; PeekingNext for <a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,&nbsp;</span></code></li>

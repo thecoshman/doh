@@ -109,7 +109,9 @@
 <div class='item-spacer'></div>    fn <a href='#method.to_degrees' class='fnname'>to_degrees</a>(self) -&gt; Self { ... }
 <div class='item-spacer'></div>    fn <a href='#method.to_radians' class='fnname'>to_radians</a>(self) -&gt; Self { ... }
 }</pre>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.nan' class='method'><span id='nan.v' class='invisible'><code>fn <a href='#tymethod.nan' class='fnname'>nan</a>() -&gt; Self</code></span></h3><div class='docblock'><p>Returns the <code>NaN</code> value.</p>
 
@@ -807,7 +809,9 @@ The floating point encoding is documented in the <a href="../../../../../referen
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">abs_difference</span> <span class="op">&lt;</span> <span class="number">1e-10</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=extern%20crate%20num_traits%3B%0Afn%20main()%20%7B%0Ause%20num_traits%3A%3AFloat%3B%0A%0Alet%20num%20%3D%202.0f32%3B%0A%0A%2F%2F%20(8388608%2C%20-22%2C%201)%0Alet%20(mantissa%2C%20exponent%2C%20sign)%20%3D%20Float%3A%3Ainteger_decode(num)%3B%0Alet%20sign_f%20%3D%20sign%20as%20f32%3B%0Alet%20mantissa_f%20%3D%20mantissa%20as%20f32%3B%0Alet%20exponent_f%20%3D%20num.powf(exponent%20as%20f32)%3B%0A%0A%2F%2F%201%20*%208388608%20*%202%5E(-22)%20%3D%3D%202%0Alet%20abs_difference%20%3D%20(sign_f%20*%20mantissa_f%20*%20exponent_f%20-%20num).abs()%3B%0A%0Aassert!(abs_difference%20%3C%201e-10)%3B%0A%7D">Run</a></pre>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='method.epsilon' class='method'><span id='epsilon.v' class='invisible'><code>fn <a href='#method.epsilon' class='fnname'>epsilon</a>() -&gt; Self</code></span></h3><div class='docblock'><p>Returns epsilon, a small positive value.</p>
 
@@ -843,7 +847,9 @@ be cast to <code>Self</code>.</p>
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">abs_difference</span> <span class="op">&lt;</span> <span class="number">1e-10</span>);<a class="test-arrow" target="_blank" href="http://play.integer32.com/?code=fn%20main()%20%7B%0Ause%20std%3A%3Af64%3A%3Aconsts%3B%0A%0Alet%20angle%20%3D%20180.0_f64%3B%0A%0Alet%20abs_difference%20%3D%20(angle.to_radians()%20-%20consts%3A%3API).abs()%3B%0A%0Aassert!(abs_difference%20%3C%201e-10)%3B%0A%7D">Run</a></pre>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl Float for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a></code></li>
 <li><code>impl Float for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a></code></li>

@@ -75,7 +75,7 @@
     { ... }
 <div class='item-spacer'></div>    fn <a href='#method.chain' class='fnname'>chain</a>&lt;U&gt;(self, next: U) -&gt; <a class="struct" href="../../bytes/buf/struct.Chain.html" title="struct bytes::buf::Chain">Chain</a>&lt;Self, U::<a class="type" href="../../bytes/buf/trait.IntoBuf.html#associatedtype.Buf" title="type bytes::buf::IntoBuf::Buf">Buf</a>&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;U: <a class="trait" href="../../bytes/buf/trait.IntoBuf.html" title="trait bytes::buf::IntoBuf">IntoBuf</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
     { ... }
-<div class='item-spacer'></div>    fn <a href='#method.by_ref' class='fnname'>by_ref</a>(&amp;mut self) -&gt; &amp;mut Self<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
+<div class='item-spacer'></div>    fn <a href='#method.by_ref' class='fnname'>by_ref</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
     { ... }
 <div class='item-spacer'></div>    fn <a href='#method.reader' class='fnname'>reader</a>(self) -&gt; <a class="struct" href="../../bytes/buf/struct.Reader.html" title="struct bytes::buf::Reader">Reader</a>&lt;Self&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
     { ... }
@@ -106,7 +106,9 @@ bytes.</p>
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">rest</span>[..], <span class="string">b&quot;lo world&quot;</span>);</pre>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.remaining' class='method'><span id='remaining.v' class='invisible'><code>fn <a href='#tymethod.remaining' class='fnname'>remaining</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Returns the number of bytes between the current position and the end of
 the buffer.</p>
@@ -181,7 +183,9 @@ behave as if <code>cnt == self.remaining()</code>.</p>
 
 <p>A call with <code>cnt == 0</code> should never panic and be a no-op.</p>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='method.bytes_vec' class='method'><span id='bytes_vec.v' class='invisible'><code>fn <a href='#method.bytes_vec' class='fnname'>bytes_vec</a>&lt;'a&gt;(&amp;'a self, dst: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a>&amp;'a <a class="struct" href="../../iovec/struct.IoVec.html" title="struct iovec::IoVec">IoVec</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Fills <code>dst</code> with potentially multiple slices starting at <code>self</code>&#39;s
 current position.</p>
@@ -462,7 +466,7 @@ Afterwards the output is equivalent to the output of next.</p>
 
 <span class="kw">let</span> <span class="ident">full</span>: <span class="ident">Bytes</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">collect</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">full</span>[..], <span class="string">b&quot;hello world&quot;</span>[..]);</pre>
-</div><h3 id='method.by_ref' class='method'><span id='by_ref.v' class='invisible'><code>fn <a href='#method.by_ref' class='fnname'>by_ref</a>(&amp;mut self) -&gt; &amp;mut Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Creates a &quot;by reference&quot; adaptor for this instance of <code>Buf</code>.</p>
+</div><h3 id='method.by_ref' class='method'><span id='by_ref.v' class='invisible'><code>fn <a href='#method.by_ref' class='fnname'>by_ref</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Creates a &quot;by reference&quot; adaptor for this instance of <code>Buf</code>.</p>
 
 <p>The returned adaptor also implements <code>Buf</code> and will simply borrow <code>self</code>.</p>
 
@@ -518,9 +522,11 @@ return with <code>Err</code>.</p>
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">Some</span>(<span class="string">b&#39;c&#39;</span>));
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>(), <span class="prelude-val">None</span>);</pre>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'a, T:&nbsp;<a class="trait" href="../../bytes/buf/trait.Buf.html" title="trait bytes::buf::Buf">Buf</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; Buf for &amp;'a mut T</code></li>
+    <li><code>impl&lt;'a, T:&nbsp;<a class="trait" href="../../bytes/buf/trait.Buf.html" title="trait bytes::buf::Buf">Buf</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; Buf for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a mut </a>T</code></li>
 <li><code>impl&lt;T:&nbsp;<a class="trait" href="../../bytes/buf/trait.Buf.html" title="trait bytes::buf::Buf">Buf</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt; Buf for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;&gt; Buf for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html" title="struct std::io::cursor::Cursor">Cursor</a>&lt;T&gt;</code></li>
 <li><code>impl Buf for <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 1]</a>&gt;</code></li>

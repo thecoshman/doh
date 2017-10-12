@@ -1,8 +1,4 @@
 (function() {var implementors = {};
-implementors["doh"] = [];
-implementors["mime_guess"] = [];
-implementors["phf"] = [];
-implementors["reqwest"] = [];
 implementors["siphasher"] = [];
 
             if (window.register_implementors) {

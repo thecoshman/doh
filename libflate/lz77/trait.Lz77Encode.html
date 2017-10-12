@@ -57,12 +57,16 @@
 <div class='item-spacer'></div>    fn <a href='#method.window_size' class='fnname'>window_size</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> { ... }
 }</pre><div class='docblock'><p>The <code>LZ77Encode</code> trait defines the interface of LZ77 encoding algorithm.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.encode' class='method'><span id='encode.v' class='invisible'><code>fn <a href='#tymethod.encode' class='fnname'>encode</a>&lt;S&gt;(&amp;mut self, buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, sink: S) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../libflate/lz77/trait.Sink.html" title="trait libflate::lz77::Sink">Sink</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Encodes a buffer and writes result LZ77 codes to <code>sink</code>.</p>
 </div><h3 id='tymethod.flush' class='method'><span id='flush.v' class='invisible'><code>fn <a href='#tymethod.flush' class='fnname'>flush</a>&lt;S&gt;(&amp;mut self, sink: S) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../libflate/lz77/trait.Sink.html" title="trait libflate::lz77::Sink">Sink</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Flushes the encoder, ensuring that all intermediately buffered codes are consumed by <code>sink</code>.</p>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='method.compression_level' class='method'><span id='compression_level.v' class='invisible'><code>fn <a href='#method.compression_level' class='fnname'>compression_level</a>(&amp;self) -&gt; <a class="enum" href="../../libflate/lz77/enum.CompressionLevel.html" title="enum libflate::lz77::CompressionLevel">CompressionLevel</a></code></span></h3><div class='docblock'><p>Returns the compression level of the encoder.</p>
 
@@ -71,7 +75,9 @@
 
 <p>If the implementation is omitted, <code>MAX_WINDOW_SIZE</code> will be returned.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl Lz77Encode for <a class="struct" href="../../libflate/lz77/struct.DefaultLz77Encoder.html" title="struct libflate::lz77::DefaultLz77Encoder">DefaultLz77Encoder</a></code></li>
 <li><code>impl Lz77Encode for <a class="struct" href="../../libflate/lz77/struct.NoCompressionLz77Encoder.html" title="struct libflate::lz77::NoCompressionLz77Encoder">NoCompressionLz77Encoder</a></code></li>

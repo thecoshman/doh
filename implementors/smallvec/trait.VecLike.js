@@ -1,7 +1,4 @@
 (function() {var implementors = {};
-implementors["doh"] = [];
-implementors["hyper"] = [];
-implementors["reqwest"] = [];
 implementors["smallvec"] = [];
 
             if (window.register_implementors) {

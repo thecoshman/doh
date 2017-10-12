@@ -50,8 +50,12 @@
                    </a>
                </span><a class='srclink' href='../../src/hyper/header/mod.rs.html#158' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Formatter&lt;'a, 'b: 'a&gt;(_);</pre><div class='docblock'><p>A formatter used to serialize headers to an output stream.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class="struct" href="../../hyper/header/struct.Formatter.html" title="struct hyper::header::Formatter">Formatter</a>&lt;'a, 'b&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#166-230' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt_line' class="method"><span id='fmt_line.v' class='invisible'><code>fn <a href='#method.fmt_line' class='fnname'>fmt_line</a>(&amp;mut self, line: &amp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class="struct" href="../../hyper/header/struct.Formatter.html" title="struct hyper::header::Formatter">Formatter</a>&lt;'a, 'b&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#166-230' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt_line' class="method"><span id='fmt_line.v' class='invisible'><code>fn <a href='#method.fmt_line' class='fnname'>fmt_line</a>(&amp;mut self, line: &amp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#179-203' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Format one &#39;line&#39; of a header.</p>
 
 <p>This writes the header name plus the <code>Display</code> value as a single line.</p>

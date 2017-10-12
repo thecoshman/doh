@@ -49,14 +49,16 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/num_traits/lib.rs.html#93' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait RefNum&lt;Base&gt;: <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;Base, Base&gt; + for&lt;'r&gt; <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;&amp;'r Base, Base&gt; { }</pre><div class='docblock'><p>The trait for references which implement numeric operations, taking the
+<pre class='rust trait'>pub trait RefNum&lt;Base&gt;: <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;Base, Base&gt; + for&lt;'r&gt; <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'r </a>Base, Base&gt; { }</pre><div class='docblock'><p>The trait for references which implement numeric operations, taking the
 second operand either by value or by reference.</p>
 
 <p>This is automatically implemented for types which implement the operators.</p>
 </div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T, Base&gt; RefNum&lt;Base&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;Base, Base&gt; + for&lt;'r&gt; <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;&amp;'r Base, Base&gt;,&nbsp;</span></code></li>
+    <li><code>impl&lt;T, Base&gt; RefNum&lt;Base&gt; for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;Base, Base&gt; + for&lt;'r&gt; <a class="trait" href="../num_traits/trait.NumOps.html" title="trait num_traits::NumOps">NumOps</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'r </a>Base, Base&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/num_traits/trait.RefNum.js">
                  </script></section>

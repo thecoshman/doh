@@ -50,15 +50,19 @@
                    </a>
                </span><a class='srclink' href='../../../src/num_traits/ops/wrapping.rs.html#43-47' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait WrappingSub: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Sub.html" title="trait core::ops::arith::Sub">Sub</a>&lt;Self, Output = Self&gt; {
-    fn <a href='#tymethod.wrapping_sub' class='fnname'>wrapping_sub</a>(&amp;self, v: &amp;Self) -&gt; Self;
+    fn <a href='#tymethod.wrapping_sub' class='fnname'>wrapping_sub</a>(&amp;self, v: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; Self;
 }</pre><div class='docblock'><p>Performs subtraction that wraps around on overflow.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.wrapping_sub' class='method'><span id='wrapping_sub.v' class='invisible'><code>fn <a href='#tymethod.wrapping_sub' class='fnname'>wrapping_sub</a>(&amp;self, v: &amp;Self) -&gt; Self</code></span></h3><div class='docblock'><p>Wrapping (modular) subtraction. Computes <code>self - other</code>, wrapping around at the boundary
+        <h3 id='tymethod.wrapping_sub' class='method'><span id='wrapping_sub.v' class='invisible'><code>fn <a href='#tymethod.wrapping_sub' class='fnname'>wrapping_sub</a>(&amp;self, v: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; Self</code></span></h3><div class='docblock'><p>Wrapping (modular) subtraction. Computes <code>self - other</code>, wrapping around at the boundary
 of the type.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl WrappingSub for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></li>
 <li><code>impl WrappingSub for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a></code></li>

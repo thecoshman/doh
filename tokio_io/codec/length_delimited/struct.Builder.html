@@ -54,8 +54,12 @@
 <p><code>Builder</code> enables constructing configured length delimited framers. Note
 that not all configuration settings apply to both encoding and decoding. See
 the documentation for specific methods for more detail.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#537-830' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#537-830' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#556-576' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new length delimited framer builder with default configuration
 values.</p>
 
@@ -69,7 +73,7 @@ values.</p>
     .<span class="ident">length_adjustment</span>(<span class="number">0</span>)
     .<span class="ident">num_skip</span>(<span class="number">0</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.big_endian' class="method"><span id='big_endian.v' class='invisible'><code>fn <a href='#method.big_endian' class='fnname'>big_endian</a>(&amp;mut self) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.big_endian' class="method"><span id='big_endian.v' class='invisible'><code>fn <a href='#method.big_endian' class='fnname'>big_endian</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#596-599' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Read the length field as a big endian integer</p>
 
 <p>This is the default setting.</p>
@@ -83,7 +87,7 @@ values.</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">big_endian</span>()
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.little_endian' class="method"><span id='little_endian.v' class='invisible'><code>fn <a href='#method.little_endian' class='fnname'>little_endian</a>(&amp;mut self) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.little_endian' class="method"><span id='little_endian.v' class='invisible'><code>fn <a href='#method.little_endian' class='fnname'>little_endian</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#619-622' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Read the length field as a little endian integer</p>
 
 <p>The default setting is big endian.</p>
@@ -97,7 +101,7 @@ values.</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">little_endian</span>()
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.max_frame_length' class="method"><span id='max_frame_length.v' class='invisible'><code>fn <a href='#method.max_frame_length' class='fnname'>max_frame_length</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.max_frame_length' class="method"><span id='max_frame_length.v' class='invisible'><code>fn <a href='#method.max_frame_length' class='fnname'>max_frame_length</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#646-649' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the max frame length</p>
 
 <p>This configuration option applies to both encoding and decoding. The
@@ -115,7 +119,7 @@ setting.</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">max_frame_length</span>(<span class="number">8</span> <span class="op">*</span> <span class="number">1024</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.length_field_length' class="method"><span id='length_field_length.v' class='invisible'><code>fn <a href='#method.length_field_length' class='fnname'>length_field_length</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.length_field_length' class="method"><span id='length_field_length.v' class='invisible'><code>fn <a href='#method.length_field_length' class='fnname'>length_field_length</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#669-673' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the number of bytes used to represent the length field</p>
 
 <p>The default value is <code>4</code>. The max value is <code>8</code>.</p>
@@ -129,7 +133,7 @@ setting.</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">length_field_length</span>(<span class="number">4</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.length_field_offset' class="method"><span id='length_field_offset.v' class='invisible'><code>fn <a href='#method.length_field_offset' class='fnname'>length_field_offset</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.length_field_offset' class="method"><span id='length_field_offset.v' class='invisible'><code>fn <a href='#method.length_field_offset' class='fnname'>length_field_offset</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#691-694' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the number of bytes in the header before the length field</p>
 
 <p>This configuration option only applies to decoding.</p>
@@ -141,7 +145,7 @@ setting.</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">length_field_offset</span>(<span class="number">1</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.length_adjustment' class="method"><span id='length_adjustment.v' class='invisible'><code>fn <a href='#method.length_adjustment' class='fnname'>length_adjustment</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.length_adjustment' class="method"><span id='length_adjustment.v' class='invisible'><code>fn <a href='#method.length_adjustment' class='fnname'>length_adjustment</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#711-714' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Delta between the payload length specified in the header and the real
 payload length</p>
 
@@ -152,7 +156,7 @@ payload length</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">length_adjustment</span>(<span class="op">-</span><span class="number">2</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.num_skip' class="method"><span id='num_skip.v' class='invisible'><code>fn <a href='#method.num_skip' class='fnname'>num_skip</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.num_skip' class="method"><span id='num_skip.v' class='invisible'><code>fn <a href='#method.num_skip' class='fnname'>num_skip</a>(&amp;mut self, val: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#734-737' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the number of bytes to skip before reading the payload</p>
 
 <p>Default value is <code>length_field_len + length_field_offset</code></p>
@@ -166,7 +170,7 @@ payload length</p>
 <span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">num_skip</span>(<span class="number">4</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.new_read' class="method"><span id='new_read.v' class='invisible'><code>fn <a href='#method.new_read' class='fnname'>new_read</a>&lt;T&gt;(&amp;self, upstream: T) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.FramedRead.html" title="struct tokio_io::codec::length_delimited::FramedRead">FramedRead</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a>,&nbsp;</span></code></span></h4>
+</div><h4 id='method.new_read' class="method"><span id='new_read.v' class='invisible'><code>fn <a href='#method.new_read' class='fnname'>new_read</a>&lt;T&gt;(&amp;self, upstream: T) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.FramedRead.html" title="struct tokio_io::codec::length_delimited::FramedRead">FramedRead</a>&lt;T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#756-765' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Create a configured length delimited <code>FramedRead</code></p>
 
 <h1 id='examples-8' class='section-header'><a href='#examples-8'>Examples</a></h1>
@@ -179,7 +183,7 @@ payload length</p>
     .<span class="ident">length_adjustment</span>(<span class="number">0</span>)
     .<span class="ident">num_skip</span>(<span class="number">0</span>)
     .<span class="ident">new_read</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.new_write' class="method"><span id='new_write.v' class='invisible'><code>fn <a href='#method.new_write' class='fnname'>new_write</a>&lt;T, B&gt;(&amp;self, inner: T) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.FramedWrite.html" title="struct tokio_io::codec::length_delimited::FramedWrite">FramedWrite</a>&lt;T, B&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;B: <a class="trait" href="../../../bytes/buf/into_buf/trait.IntoBuf.html" title="trait bytes::buf::into_buf::IntoBuf">IntoBuf</a>,&nbsp;</span></code></span></h4>
+</div><h4 id='method.new_write' class="method"><span id='new_write.v' class='invisible'><code>fn <a href='#method.new_write' class='fnname'>new_write</a>&lt;T, B&gt;(&amp;self, inner: T) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.FramedWrite.html" title="struct tokio_io::codec::length_delimited::FramedWrite">FramedWrite</a>&lt;T, B&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;B: <a class="trait" href="../../../bytes/buf/into_buf/trait.IntoBuf.html" title="trait bytes::buf::into_buf::IntoBuf">IntoBuf</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#785-794' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Create a configured length delimited <code>FramedWrite</code></p>
 
 <h1 id='examples-9' class='section-header'><a href='#examples-9'>Examples</a></h1>
@@ -187,7 +191,7 @@ payload length</p>
 <span class="ident">length_delimited</span>::<span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">length_field_length</span>(<span class="number">2</span>)
     .<span class="ident">new_write</span>(<span class="ident">io</span>);</pre>
-</div><h4 id='method.new_framed' class="method"><span id='new_framed.v' class='invisible'><code>fn <a href='#method.new_framed' class='fnname'>new_framed</a>&lt;T, B&gt;(&amp;self, inner: T) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Framed.html" title="struct tokio_io::codec::length_delimited::Framed">Framed</a>&lt;T, B&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a> + <a class="trait" href="../../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;B: <a class="trait" href="../../../bytes/buf/into_buf/trait.IntoBuf.html" title="trait bytes::buf::into_buf::IntoBuf">IntoBuf</a>,&nbsp;</span></code></span></h4>
+</div><h4 id='method.new_framed' class="method"><span id='new_framed.v' class='invisible'><code>fn <a href='#method.new_framed' class='fnname'>new_framed</a>&lt;T, B&gt;(&amp;self, inner: T) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Framed.html" title="struct tokio_io::codec::length_delimited::Framed">Framed</a>&lt;T, B&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a> + <a class="trait" href="../../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;B: <a class="trait" href="../../../bytes/buf/into_buf/trait.IntoBuf.html" title="trait bytes::buf::into_buf::IntoBuf">IntoBuf</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#814-820' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Create a configured length delimited <code>Framed</code></p>
 
 <h1 id='examples-10' class='section-header'><a href='#examples-10'>Examples</a></h1>
@@ -195,15 +199,19 @@ payload length</p>
 <span class="ident">length_delimited</span>::<span class="ident">Builder</span>::<span class="ident">new</span>()
     .<span class="ident">length_field_length</span>(<span class="number">2</span>)
     .<span class="ident">new_framed</span>(<span class="ident">io</span>);</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span></h4>
+</div></div><h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 id='impl-Copy' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="struct" href="../../../tokio_io/codec/length_delimited/struct.Builder.html" title="struct tokio_io::codec::length_delimited::Builder">Builder</a></code><a href='#impl-Copy' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/tokio_io/length_delimited.rs.html#16' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 

@@ -50,7 +50,11 @@
                    </a>
                </span></span></h1>
 <pre class='rust struct'>pub struct TAB_SPACING { /* fields omitted */ }</pre><div class='docblock'><p>Filler to replace tabs with of length <a href="constant.TAB_WIDTH.html"><code>TAB_WIDTH</code></a>.</p>
-</div><h2 id='deref-methods'>Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">__Deref</a>&lt;Target = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</h2><div class='impl-items'><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div>
+                    <h2 id='deref-methods' class='small-section-header'>
+                      Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">__Deref</a>&lt;Target = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;<a href='#deref-methods' class='anchor'></a>
+                    </h2>
+                <div class='impl-items'><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#741-743' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Converts a <code>String</code> into a byte vector.</p>
 
 <p>This consumes the <code>String</code>, so we do not need to copy its contents.</p>
@@ -63,9 +67,9 @@
 <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">into_bytes</span>();
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span>[<span class="number">104</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>][..], <span class="kw-2">&amp;</span><span class="ident">bytes</span>[..]);</pre>
-</div><h4 id='method.as_str' class="method"><span id='as_str.v' class='invisible'><code>fn <a href='#method.as_str' class='fnname'>as_str</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code><div class='since' title='Stable since Rust version 1.7.0'>1.7.0</div></span></h4>
+</div><h4 id='method.as_str' class="method"><span id='as_str.v' class='invisible'><code>fn <a href='#method.as_str' class='fnname'>as_str</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.7.0'>1.7.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#748-750' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Extracts a string slice containing the entire string.</p>
-</div><h4 id='method.capacity' class="method"><span id='capacity.v' class='invisible'><code>fn <a href='#method.capacity' class='fnname'>capacity</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.capacity' class="method"><span id='capacity.v' class='invisible'><code>fn <a href='#method.capacity' class='fnname'>capacity</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#791-793' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns this <code>String</code>&#39;s capacity, in bytes.</p>
 
 <h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
@@ -75,7 +79,7 @@
 <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">with_capacity</span>(<span class="number">10</span>);
 
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">s</span>.<span class="ident">capacity</span>() <span class="op">&gt;=</span> <span class="number">10</span>);</pre>
-</div><h4 id='method.as_bytes' class="method"><span id='as_bytes.v' class='invisible'><code>fn <a href='#method.as_bytes' class='fnname'>as_bytes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.as_bytes' class="method"><span id='as_bytes.v' class='invisible'><code>fn <a href='#method.as_bytes' class='fnname'>as_bytes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#957-959' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a byte slice of this <code>String</code>&#39;s contents.</p>
 
 <p>The inverse of this method is <a href="#method.from_utf8"><code>from_utf8</code></a>.</p>
@@ -87,7 +91,7 @@
 <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;hello&quot;</span>);
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span>[<span class="number">104</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>], <span class="ident">s</span>.<span class="ident">as_bytes</span>());</pre>
-</div><h4 id='method.len' class="method"><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.len' class="method"><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#1248-1250' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the length of this <code>String</code>, in bytes.</p>
 
 <h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
@@ -97,7 +101,7 @@
 <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;foo&quot;</span>);
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">len</span>(), <span class="number">3</span>);</pre>
-</div><h4 id='method.is_empty' class="method"><span id='is_empty.v' class='invisible'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.is_empty' class="method"><span id='is_empty.v' class='invisible'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#1269-1271' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns <code>true</code> if this <code>String</code> has a length of zero.</p>
 
 <p>Returns <code>false</code> otherwise.</p>
@@ -111,8 +115,8 @@
 
 <span class="ident">v</span>.<span class="ident">push</span>(<span class="string">&#39;a&#39;</span>);
 <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">v</span>.<span class="ident">is_empty</span>());</pre>
-</div><h4 id='method.into_boxed_str' class="method"><span id='into_boxed_str.v' class='invisible'><code>fn <a href='#method.into_boxed_str' class='fnname'>into_boxed_str</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;</code><div class='since' title='Stable since Rust version 1.4.0'>1.4.0</div></span></h4>
-<div class='docblock'><p>Converts this <code>String</code> into a <code>Box&lt;str&gt;</code>.</p>
+</div><h4 id='method.into_boxed_str' class="method"><span id='into_boxed_str.v' class='invisible'><code>fn <a href='#method.into_boxed_str' class='fnname'>into_boxed_str</a>(self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.4.0'>1.4.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/string.rs.html#1477-1480' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Converts this <code>String</code> into a <a href="../../std/boxed/struct.Box.html"><code>Box</code></a><code>&lt;</code><a href="../../std/primitive.str.html"><code>str</code></a><code>&gt;</code>.</p>
 
 <p>This will drop any excess capacity.</p>
 
@@ -123,13 +127,17 @@
 <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;hello&quot;</span>);
 
 <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">into_boxed_str</span>();</pre>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">__Deref</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code></span><span class='out-of-band'></span></h3>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-__Deref' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">__Deref</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code><a href='#impl-__Deref' class='anchor'></a></span><span class='out-of-band'></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Target' class="type"><span id='Target.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html#associatedtype.Target' class="type">Target</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></h4>
-<div class='docblock'><p>The resulting type after dereferencing</p>
+<div class='docblock'><p>The resulting type after dereferencing.</p>
 </div><h4 id='method.deref' class="method"><span id='deref.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html#tymethod.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span></h4>
-<div class='docblock'><p>The method called to dereference a value</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lazy_static/trait.LazyStatic.html" title="trait lazy_static::LazyStatic">LazyStatic</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code></span><span class='out-of-band'></span></h3>
-<div class='impl-items'><h4 id='method.initialize' class="method"><span id='initialize.v' class='invisible'><code>fn <a href='../../lazy_static/trait.LazyStatic.html#tymethod.initialize' class='fnname'>initialize</a>(lazy: &amp;Self)</code></span></h4>
+<div class='docblock'><p>Dereferences the value.</p>
+</div></div><h3 id='impl-LazyStatic' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../lazy_static/trait.LazyStatic.html" title="trait lazy_static::LazyStatic">LazyStatic</a> for <a class="struct" href="../../doh/util/struct.TAB_SPACING.html" title="struct doh::util::TAB_SPACING">TAB_SPACING</a></code><a href='#impl-LazyStatic' class='anchor'></a></span><span class='out-of-band'></span></h3>
+<div class='impl-items'><h4 id='method.initialize' class="method"><span id='initialize.v' class='invisible'><code>fn <a href='../../lazy_static/trait.LazyStatic.html#tymethod.initialize' class='fnname'>initialize</a>(lazy: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

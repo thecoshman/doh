@@ -1,6 +1,4 @@
 (function() {var implementors = {};
-implementors["doh"] = [];
-implementors["reqwest"] = [];
 implementors["tokio_service"] = [];
 
             if (window.register_implementors) {

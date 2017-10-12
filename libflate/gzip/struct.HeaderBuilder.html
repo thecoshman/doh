@@ -50,8 +50,12 @@
                    </a>
                </span><a class='srclink' href='../../src/libflate/gzip.rs.html#127-129' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct HeaderBuilder { /* fields omitted */ }</pre><div class='docblock'><p>GZIP header builder.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#130-268' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#130-268' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#146-162' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Makes a new builder instance.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
@@ -66,7 +70,7 @@
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">extra_field</span>(), <span class="prelude-val">None</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">filename</span>(), <span class="prelude-val">None</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">comment</span>(), <span class="prelude-val">None</span>);</pre>
-</div><h4 id='method.modification_time' class="method"><span id='modification_time.v' class='invisible'><code>fn <a href='#method.modification_time' class='fnname'>modification_time</a>(&amp;mut self, modification_time: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.modification_time' class="method"><span id='modification_time.v' class='invisible'><code>fn <a href='#method.modification_time' class='fnname'>modification_time</a>(&amp;mut self, modification_time: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#173-176' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the modification time (UNIX timestamp).</p>
 
 <h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
@@ -75,7 +79,7 @@
 
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">modification_time</span>(<span class="number">10</span>).<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">modification_time</span>(), <span class="number">10</span>);</pre>
-</div><h4 id='method.os' class="method"><span id='os.v' class='invisible'><code>fn <a href='#method.os' class='fnname'>os</a>(&amp;mut self, os: <a class="enum" href="../../libflate/gzip/enum.Os.html" title="enum libflate::gzip::Os">Os</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.os' class="method"><span id='os.v' class='invisible'><code>fn <a href='#method.os' class='fnname'>os</a>(&amp;mut self, os: <a class="enum" href="../../libflate/gzip/enum.Os.html" title="enum libflate::gzip::Os">Os</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#186-189' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the OS type.</p>
 
 <pre class="rust rust-example-rendered">
@@ -83,7 +87,7 @@
 
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">os</span>(<span class="ident">Os</span>::<span class="ident">Ntfs</span>).<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">os</span>(), <span class="ident">Os</span>::<span class="ident">Ntfs</span>);</pre>
-</div><h4 id='method.text' class="method"><span id='text.v' class='invisible'><code>fn <a href='#method.text' class='fnname'>text</a>(&amp;mut self) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.text' class="method"><span id='text.v' class='invisible'><code>fn <a href='#method.text' class='fnname'>text</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#200-203' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Indicates the encoding data is a ASCII text.</p>
 
 <h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
@@ -92,7 +96,7 @@
 
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">text</span>().<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">is_text</span>(), <span class="bool-val">true</span>);</pre>
-</div><h4 id='method.verify' class="method"><span id='verify.v' class='invisible'><code>fn <a href='#method.verify' class='fnname'>verify</a>(&amp;mut self) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.verify' class="method"><span id='verify.v' class='invisible'><code>fn <a href='#method.verify' class='fnname'>verify</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#214-217' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Specifies toe verify header bytes using CRC-16.</p>
 
 <h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
@@ -101,7 +105,7 @@
 
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">verify</span>().<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">is_verified</span>(), <span class="bool-val">true</span>);</pre>
-</div><h4 id='method.extra_field' class="method"><span id='extra_field.v' class='invisible'><code>fn <a href='#method.extra_field' class='fnname'>extra_field</a>(&amp;mut self, extra: <a class="struct" href="../../libflate/gzip/struct.ExtraField.html" title="struct libflate::gzip::ExtraField">ExtraField</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.extra_field' class="method"><span id='extra_field.v' class='invisible'><code>fn <a href='#method.extra_field' class='fnname'>extra_field</a>(&amp;mut self, extra: <a class="struct" href="../../libflate/gzip/struct.ExtraField.html" title="struct libflate::gzip::ExtraField">ExtraField</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#229-232' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the extra field.</p>
 
 <h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
@@ -111,7 +115,7 @@
 <span class="kw">let</span> <span class="ident">extra</span> <span class="op">=</span> <span class="ident">ExtraField</span>{<span class="ident">id</span>: [<span class="number">0</span>, <span class="number">1</span>], <span class="ident">data</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]};
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">extra_field</span>(<span class="ident">extra</span>.<span class="ident">clone</span>()).<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">extra_field</span>(), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">extra</span>));</pre>
-</div><h4 id='method.filename' class="method"><span id='filename.v' class='invisible'><code>fn <a href='#method.filename' class='fnname'>filename</a>(&amp;mut self, filename: <a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CString.html" title="struct std::ffi::c_str::CString">CString</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.filename' class="method"><span id='filename.v' class='invisible'><code>fn <a href='#method.filename' class='fnname'>filename</a>(&amp;mut self, filename: <a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CString.html" title="struct std::ffi::c_str::CString">CString</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#244-247' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the file name.</p>
 
 <h1 id='examples-5' class='section-header'><a href='#examples-5'>Examples</a></h1>
@@ -121,7 +125,7 @@
 
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">filename</span>(<span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>()).<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">filename</span>(), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>()));</pre>
-</div><h4 id='method.comment' class="method"><span id='comment.v' class='invisible'><code>fn <a href='#method.comment' class='fnname'>comment</a>(&amp;mut self, comment: <a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CString.html" title="struct std::ffi::c_str::CString">CString</a>) -&gt; &amp;mut Self</code></span></h4>
+</div><h4 id='method.comment' class="method"><span id='comment.v' class='invisible'><code>fn <a href='#method.comment' class='fnname'>comment</a>(&amp;mut self, comment: <a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CString.html" title="struct std::ffi::c_str::CString">CString</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#259-262' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the comment.</p>
 
 <h1 id='examples-6' class='section-header'><a href='#examples-6'>Examples</a></h1>
@@ -131,15 +135,19 @@
 
 <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="ident">HeaderBuilder</span>::<span class="ident">new</span>().<span class="ident">comment</span>(<span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>()).<span class="ident">finish</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">header</span>.<span class="ident">comment</span>(), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;foo&quot;</span>).<span class="ident">unwrap</span>()));</pre>
-</div><h4 id='method.finish' class="method"><span id='finish.v' class='invisible'><code>fn <a href='#method.finish' class='fnname'>finish</a>(&amp;self) -&gt; <a class="struct" href="../../libflate/gzip/struct.Header.html" title="struct libflate::gzip::Header">Header</a></code></span></h4>
+</div><h4 id='method.finish' class="method"><span id='finish.v' class='invisible'><code>fn <a href='#method.finish' class='fnname'>finish</a>(&amp;self) -&gt; <a class="struct" href="../../libflate/gzip/struct.Header.html" title="struct libflate::gzip::Header">Header</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#265-267' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the result header.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#126' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#126' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#126' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#126' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code></span></h4>
+</div></div><h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#126' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../../libflate/gzip/struct.HeaderBuilder.html" title="struct libflate::gzip::HeaderBuilder">HeaderBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/gzip.rs.html#126' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

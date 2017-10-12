@@ -50,16 +50,20 @@
                    </a>
                </span><a class='srclink' href='../../../src/num_traits/ops/checked.rs.html#55-59' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait CheckedMul: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/arith/trait.Mul.html" title="trait core::ops::arith::Mul">Mul</a>&lt;Self, Output = Self&gt; {
-    fn <a href='#tymethod.checked_mul' class='fnname'>checked_mul</a>(&amp;self, v: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self&gt;;
+    fn <a href='#tymethod.checked_mul' class='fnname'>checked_mul</a>(&amp;self, v: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self&gt;;
 }</pre><div class='docblock'><p>Performs multiplication that returns <code>None</code> instead of wrapping around on underflow or
 overflow.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.checked_mul' class='method'><span id='checked_mul.v' class='invisible'><code>fn <a href='#tymethod.checked_mul' class='fnname'>checked_mul</a>(&amp;self, v: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Multiplies two numbers, checking for underflow or overflow. If underflow
+        <h3 id='tymethod.checked_mul' class='method'><span id='checked_mul.v' class='invisible'><code>fn <a href='#tymethod.checked_mul' class='fnname'>checked_mul</a>(&amp;self, v: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Multiplies two numbers, checking for underflow or overflow. If underflow
 or overflow happens, <code>None</code> is returned.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl CheckedMul for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></li>
 <li><code>impl CheckedMul for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a></code></li>

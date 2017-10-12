@@ -60,7 +60,9 @@ typically get turned into a <em>task</em> and are then driven to completion.</p>
 <p>On spawn, the executor takes ownership of the future and becomes responsible
 to call <code>Future::poll()</code> whenever a readiness notification is raised.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.execute' class='method'><span id='execute.v' class='invisible'><code>fn <a href='#tymethod.execute' class='fnname'>execute</a>(&amp;self, future: F) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../futures/future/struct.ExecuteError.html" title="struct futures::future::ExecuteError">ExecuteError</a>&lt;F&gt;&gt;</code></span></h3><div class='docblock'><p>Spawns a future to run on this <code>Executor</code>, typically in the
 &quot;background&quot;.</p>
@@ -84,7 +86,9 @@ as well. This can happen for various reason such as:</p>
 <p>The decision is left to the caller how to work with this form of error.
 The error returned transfers ownership of the future back to the caller.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     </ul><script type="text/javascript" async
                          src="../../implementors/futures/future/trait.Executor.js">

@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/safemem/lib.rs.html#58-75' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn prepend&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a>&gt;(elems: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a>T<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, vec: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;)</pre><div class='docblock'><p>Prepend <code>elems</code> to <code>vec</code>, resizing if necessary.</p>
+<pre class='rust fn'>pub fn prepend&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a>&gt;(elems: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[T]</a>, vec: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;T&gt;)</pre><div class='docblock'><p>Prepend <code>elems</code> to <code>vec</code>, resizing if necessary.</p>
 
 <h3 id='panics' class='section-header'><a href='#panics'>Panics</a></h3>
 <p>If <code>vec.len() + elems.len()</code> overflows.</p>
