@@ -135,7 +135,6 @@ pub fn paging_copy<R: Read, W: Write>(reader: &mut R, writer: &mut W, label: &st
 pub struct ListContext {
     cururl: Url,
     files: Vec<RemoteFile>,
-    cur_screen: usize,
     selected: usize,
     have_write: bool,
     bad_response_counter: usize,
@@ -147,7 +146,6 @@ impl ListContext {
         ListContext {
             cururl: starting_url,
             files: vec![],
-            cur_screen: 0,
             selected: 0,
             have_write: false,
             bad_response_counter: 0,
@@ -235,7 +233,6 @@ impl ListContext {
             self.cururl = parent_url(&self.cururl);
         } else {
             self.files = RemoteFile::from_response(data);
-            self.cur_screen = 0;
 
             try!(self.list_file_screen(out, term_size));
             while let (true, exit) = try!(self.process_input(out, input, term_size)) {
@@ -251,16 +248,17 @@ impl ListContext {
     fn list_file_screen<W: Write>(&self, mut out: &mut W, term_size: (usize, usize)) -> io::Result<()> {
         let (_, ty) = term_size;
         let lines_per_screen = max_listing_lines(ty);
+        let cur_screen = (self.selected as f64 / lines_per_screen as f64).floor() as usize;
         let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
 
         try!(writeln!(out,
                       "Contents of {} -- page {}/{}:",
                       percent_decode(&self.cururl.to_string()).unwrap(),
-                      self.cur_screen + 1,
+                      cur_screen + 1,
                       screen_count));
 
         let mut tout = TabWriter::new(&mut out);
-        for (i, f) in self.files.iter().enumerate().skip(self.cur_screen * lines_per_screen).take(lines_per_screen) {
+        for (i, f) in self.files.iter().enumerate().skip(cur_screen * lines_per_screen).take(lines_per_screen) {
             try!(writeln!(tout, "{}{}\t{}", if i == self.selected { ">" } else { " " }, f, i));
         }
         try!(tout.flush());
@@ -296,7 +294,6 @@ impl ListContext {
                         if self.selected != 0 {
                             try!(self.update_selected(out, ' ', term_size));
                             if self.selected != 1 && self.selected % lines_per_screen == 0 {
-                                self.cur_screen -= 1;
                                 try!(self.list_file_screen(out, term_size));
                             }
                             self.selected -= 1;
@@ -309,7 +306,6 @@ impl ListContext {
                             try!(self.update_selected(out, ' ', term_size));
                             self.selected += 1;
                             if self.selected % lines_per_screen == 0 {
-                                self.cur_screen += 1;
                                 try!(self.list_file_screen(out, term_size));
                             }
                             try!(self.update_selected(out, '>', term_size));
@@ -318,14 +314,12 @@ impl ListContext {
                     }
                     GETCH_PAGE_UP => {
                         try!(self.update_selected(out, ' ', term_size));
-                        if self.selected > lines_per_screen {
+                        if self.selected >= lines_per_screen {
                             self.selected -= lines_per_screen;
-                            self.cur_screen -= 1;
+                            try!(self.list_file_screen(out, term_size));
                         } else {
                             self.selected = 0;
-                            self.cur_screen = 0;
                         }
-                        try!(self.list_file_screen(out, term_size));
                         try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
@@ -333,24 +327,19 @@ impl ListContext {
                         try!(self.update_selected(out, ' ', term_size));
                         if self.selected + lines_per_screen < self.files.len() {
                             self.selected += lines_per_screen;
-                            self.cur_screen += 1;
+                            try!(self.list_file_screen(out, term_size));
                         } else {
-                            let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
-
                             self.selected = self.files.len() - 1;
-                            self.cur_screen = screen_count - 1;
                         }
-                        try!(self.list_file_screen(out, term_size));
                         try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
                     GETCH_HOME => {
                         try!(self.update_selected(out, ' ', term_size));
-                        self.selected = 0;
-                        if self.cur_screen != 0 {
-                            self.cur_screen = 0;
+                        if self.selected >= lines_per_screen {
                             try!(self.list_file_screen(out, term_size));
                         }
+                        self.selected = 0;
                         try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
@@ -358,11 +347,10 @@ impl ListContext {
                         let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
 
                         try!(self.update_selected(out, ' ', term_size));
-                        self.selected = self.files.len() - 1;
-                        if self.cur_screen != screen_count - 1 {
-                            self.cur_screen = screen_count - 1;
+                        if self.selected < (screen_count - 1) * lines_per_screen {
                             try!(self.list_file_screen(out, term_size));
                         }
+                        self.selected = self.files.len() - 1;
                         try!(self.update_selected(out, '>', term_size));
                         Ok((true, false))
                     }
@@ -386,13 +374,14 @@ impl ListContext {
     fn update_selected<W: Write>(&self, out: &mut W, c: char, term_size: (usize, usize)) -> io::Result<()> {
         let (_, ty) = term_size;
         let lines_per_screen = max_listing_lines(ty);
+        let cur_screen = (self.selected as f64 / lines_per_screen as f64).floor() as usize;
         let screen_count = (self.files.len() as f64 / lines_per_screen as f64).ceil() as usize;
-        let lines_this_screen = if self.cur_screen == screen_count - 1 {
+        let lines_this_screen = if cur_screen == screen_count - 1 {
             self.files.len() % lines_per_screen
         } else {
             lines_per_screen
         };
-        let delta_h = lines_this_screen - (self.selected - (self.cur_screen * lines_per_screen));
+        let delta_h = lines_this_screen - (self.selected - (cur_screen * lines_per_screen));
 
         try!(write!(out, "{}", term::move_cursor_up(delta_h)));
         try!(write!(out, "{}", c));
@@ -407,7 +396,6 @@ impl ListContext {
         if !self.files.is_empty() {
             self.cururl = self.cururl.join(&self.files[self.selected].full_name).unwrap();
             self.selected = 0;
-            self.cur_screen = 0;
         }
         self.files.is_empty()
     }
@@ -417,7 +405,6 @@ impl ListContext {
         if parent != self.cururl {
             self.cururl = parent;
             self.selected = 0;
-            self.cur_screen = 0;
             true
         } else {
             false
@@ -458,7 +445,6 @@ impl ListContext {
             try!(writeln!(out, "<Got {}...>", status));
         }
         self.selected = 0;
-        self.cur_screen = 0;
         Ok(())
     }
 }
