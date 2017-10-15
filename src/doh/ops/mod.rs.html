@@ -624,6 +624,33 @@
 <span id="579">579</span>
 <span id="580">580</span>
 <span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">util</span>::{<span class="ident">human_readable_size</span>, <span class="ident">max_listing_lines</span>, <span class="ident">percent_decode</span>, <span class="ident">parent_url</span>, <span class="ident">GETCH_SPECIAL_PREFIX</span>, <span class="ident">GETCH_ARROW_RIGHT</span>, <span class="ident">GETCH_ARROW_LEFT</span>,
                         <span class="ident">GETCH_ARROW_DOWN</span>, <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">GETCH_PAGE_DOWN</span>, <span class="ident">GETCH_PAGE_UP</span>, <span class="ident">TAB_SPACING</span>, <span class="ident">GETCH_DELETE</span>, <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_HOME</span>,
@@ -631,7 +658,8 @@
 <span class="kw">use</span> <span class="ident">rfsapi</span>::{<span class="ident">RawFsApiHeader</span>, <span class="ident">FilesetData</span>, <span class="ident">RawFileData</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">BufReader</span>, <span class="ident">BufRead</span>, <span class="ident">Write</span>, <span class="ident">Read</span>};
 <span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">ClientBuilder</span>, <span class="ident">Response</span>, <span class="ident">IntoUrl</span>, <span class="ident">Client</span>, <span class="ident">Url</span>};
-<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>::<span class="ident">UserAgent</span>;
+<span class="kw">use</span> <span class="ident">pbr</span>::{<span class="ident">Units</span> <span class="kw">as</span> <span class="ident">ProgressBarUnits</span>, <span class="ident">ProgressBar</span>};
+<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>::{<span class="ident">ContentLength</span>, <span class="ident">UserAgent</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">PathBuf</span>, <span class="ident">Path</span>};
 <span class="kw">use</span> <span class="ident">itertools</span>::<span class="ident">Itertools</span>;
 <span class="kw">use</span> <span class="ident">tabwriter</span>::<span class="ident">TabWriter</span>;
@@ -815,6 +843,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The file isn&#39;t saved if the user cancels the picker.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// A progress bar is shown to the user indicating the download progress.</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ### Uploading files</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the server, in the last RFSAPI request, specified `writes_supported` as `false`, an error is printed,</span>
@@ -854,7 +884,7 @@
             <span class="kw">if</span> <span class="op">!</span><span class="macro">try</span><span class="macro">!</span>(<span class="ident">paging_copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">download_raw</span>(<span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">clone</span>()), <span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">path</span>()[<span class="number">1</span>..], <span class="ident">input</span>, <span class="ident">term_size</span>)) {
                 <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;Contents of {}:&quot;</span>, <span class="ident">percent_decode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">to_string</span>()).<span class="ident">unwrap</span>()));
                 <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Not UTF-8, select download destination&gt;&quot;</span>));
-                <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">download_file</span>(<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">clone</span>()));
+                <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">download_file</span>(<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">clone</span>(), <span class="ident">term_size</span>));
             }
             <span class="self">self</span>.<span class="ident">cururl</span> <span class="op">=</span> <span class="ident">parent_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cururl</span>);
         } <span class="kw">else</span> {
@@ -899,7 +929,7 @@
             <span class="string">b&#39;d&#39;</span> <span class="op">|</span> <span class="string">b&#39;D&#39;</span> <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">download_ok</span> <span class="op">=</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">files</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">files</span>[<span class="self">self</span>.<span class="ident">selected</span>].<span class="ident">size</span>.<span class="ident">is_some</span>();
                 <span class="kw">if</span> <span class="ident">download_ok</span> {
-                    <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">download_file</span>(<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">files</span>[<span class="self">self</span>.<span class="ident">selected</span>].<span class="ident">full_name</span>).<span class="ident">unwrap</span>()));
+                    <span class="macro">try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">download_file</span>(<span class="ident">out</span>, <span class="self">self</span>.<span class="ident">cururl</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">files</span>[<span class="self">self</span>.<span class="ident">selected</span>].<span class="ident">full_name</span>).<span class="ident">unwrap</span>(), <span class="ident">term_size</span>));
                 }
                 <span class="prelude-val">Ok</span>((<span class="op">!</span><span class="ident">download_ok</span>, <span class="bool-val">false</span>))
             }
@@ -1040,11 +1070,35 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">download_file</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>, <span class="ident">u</span>: <span class="ident">Url</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">download_file</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>, <span class="ident">u</span>: <span class="ident">Url</span>, <span class="ident">term_size</span>: (<span class="ident">usize</span>, <span class="ident">usize</span>)) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">u</span>.<span class="ident">path</span>()[<span class="number">1</span>..]);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">outp</span>) <span class="op">=</span> <span class="ident">term</span>::<span class="ident">save_file_picker</span>(<span class="ident">f</span>.<span class="ident">file_name</span>().<span class="ident">unwrap</span>(), <span class="ident">f</span>.<span class="ident">extension</span>()) {
             <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Downloading to {}...&gt;&quot;</span>, <span class="ident">outp</span>.<span class="ident">display</span>()));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">download_raw</span>(<span class="ident">u</span>), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">outp</span>))));
+
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">resp</span> <span class="op">=</span> <span class="ident">download_raw</span>(<span class="ident">u</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">outf</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">outp</span>));
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">size</span>) <span class="op">=</span> <span class="ident">resp</span>.<span class="ident">headers</span>().<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">ContentLength</span><span class="op">&gt;</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">cl</span><span class="op">|</span> <span class="ident">cl</span>.<span class="number">0</span>) {
+                <span class="kw">let</span> (<span class="ident">tx</span>, _) <span class="op">=</span> <span class="ident">term_size</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pb</span> <span class="op">=</span> <span class="ident">ProgressBar</span>::<span class="ident">on</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">size</span>);
+                <span class="ident">pb</span>.<span class="ident">set_units</span>(<span class="ident">ProgressBarUnits</span>::<span class="ident">Bytes</span>);
+                <span class="ident">pb</span>.<span class="ident">set_width</span>(<span class="prelude-val">Some</span>(<span class="ident">tx</span>));
+
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="number">4096</span>];
+                <span class="kw">loop</span> {
+                    <span class="kw">let</span> <span class="ident">read</span> <span class="op">=</span> <span class="ident">resp</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[..]).<span class="ident">unwrap</span>();
+                    <span class="kw">if</span> <span class="ident">read</span> <span class="op">==</span> <span class="number">0</span> {
+                        <span class="kw">break</span>;
+                    }
+
+                    <span class="macro">try</span><span class="macro">!</span>(<span class="ident">outf</span>.<span class="ident">write_all</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>));
+                    <span class="ident">pb</span>.<span class="ident">add</span>(<span class="ident">read</span> <span class="kw">as</span> <span class="ident">u64</span>);
+                }
+
+                <span class="ident">pb</span>.<span class="ident">finish_println</span>(<span class="string">&quot;&quot;</span>);
+            } <span class="kw">else</span> {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">resp</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">outf</span>));
+            }
+
             <span class="macro">try</span><span class="macro">!</span>(<span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;&lt;Done!&gt;&quot;</span>));
         }
         <span class="prelude-val">Ok</span>(())
