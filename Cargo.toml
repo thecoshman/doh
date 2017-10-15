@@ -23,6 +23,7 @@ getch = "0.2"
 clap = "2.26"
 time = "0.1"
 url = "1.5"
+pbr = "1.0"
 
 [target.'cfg(target_os="windows")'.dependencies]
 kernel32-sys = "0.2"

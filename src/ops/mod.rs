@@ -4,7 +4,8 @@ use self::super::util::{human_readable_size, max_listing_lines, percent_decode, 
 use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
 use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
-use reqwest::header::UserAgent;
+use pbr::{Units as ProgressBarUnits, ProgressBar};
+use reqwest::header::{ContentLength, UserAgent};
 use std::path::{PathBuf, Path};
 use itertools::Itertools;
 use tabwriter::TabWriter;
@@ -188,6 +189,8 @@ impl ListContext {
     ///
     /// The file isn't saved if the user cancels the picker.
     ///
+    /// A progress bar is shown to the user indicating the download progress.
+    ///
     /// ### Uploading files
     ///
     /// If the server, in the last RFSAPI request, specified `writes_supported` as `false`, an error is printed,
@@ -227,7 +230,7 @@ impl ListContext {
             if !try!(paging_copy(&mut download_raw(self.cururl.clone()), out, &self.cururl.path()[1..], input, term_size)) {
                 try!(writeln!(out, "Contents of {}:", percent_decode(&self.cururl.to_string()).unwrap()));
                 try!(writeln!(out, "<Not UTF-8, select download destination>"));
-                try!(self.download_file(out, self.cururl.clone()));
+                try!(self.download_file(out, self.cururl.clone(), term_size));
             }
             self.cururl = parent_url(&self.cururl);
         } else {
@@ -272,7 +275,7 @@ impl ListContext {
             b'd' | b'D' => {
                 let download_ok = !self.files.is_empty() && self.files[self.selected].size.is_some();
                 if download_ok {
-                    try!(self.download_file(out, self.cururl.join(&self.files[self.selected].full_name).unwrap()));
+                    try!(self.download_file(out, self.cururl.join(&self.files[self.selected].full_name).unwrap(), term_size));
                 }
                 Ok((!download_ok, false))
             }
@@ -413,11 +416,35 @@ impl ListContext {
         }
     }
 
-    fn download_file<W: Write>(&self, out: &mut W, u: Url) -> io::Result<()> {
+    fn download_file<W: Write>(&self, mut out: &mut W, u: Url, term_size: (usize, usize)) -> io::Result<()> {
         let f = PathBuf::from(&u.path()[1..]);
         if let Some(outp) = term::save_file_picker(f.file_name().unwrap(), f.extension()) {
             try!(writeln!(out, "<Downloading to {}...>", outp.display()));
-            try!(io::copy(&mut download_raw(u), &mut try!(File::create(&outp))));
+
+            let mut resp = download_raw(u);
+            let mut outf = try!(File::create(&outp));
+            if let Some(size) = resp.headers().get::<ContentLength>().map(|cl| cl.0) {
+                let (tx, _) = term_size;
+                let mut pb = ProgressBar::on(&mut out, size);
+                pb.set_units(ProgressBarUnits::Bytes);
+                pb.set_width(Some(tx));
+
+                let mut buf = vec![0; 4096];
+                loop {
+                    let read = resp.read(&mut buf[..]).unwrap();
+                    if read == 0 {
+                        break;
+                    }
+
+                    try!(outf.write_all(&buf));
+                    pb.add(read as u64);
+                }
+
+                pb.finish_println("");
+            } else {
+                try!(io::copy(&mut resp, &mut outf));
+            }
+
             try!(writeln!(out, "<Done!>"));
         }
         Ok(())

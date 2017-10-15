@@ -10,6 +10,7 @@ extern crate getch;
 extern crate clap;
 extern crate time;
 extern crate url;
+extern crate pbr;
 
 mod options;
 
