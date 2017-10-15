@@ -48,8 +48,53 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/openssl/sha.rs.html#1-340' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/openssl/sha.rs.html#1-388' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The SHA family of hashes.</p>
+
+<p>SHA, or Secure Hash Algorithms, are a family of cryptographic hashing algorithms published by
+the National Institute of Standards and Technology (NIST).  Hash algorithms such as those in
+the SHA family are used to map data of an arbitrary size to a fixed-size string of bytes.
+As cryptographic hashing algorithms, these mappings have the property of being irreversable.
+This property makes hash algorithms like these excellent for uses such as verifying the
+contents of a file- if you know the hash you expect beforehand, then you can verify that the
+data you have is correct if it hashes to the same value.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>When dealing with data that becomes available in chunks, such as while buffering data from IO,
+you can create a hasher that you can repeatedly update to add bytes to.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">openssl</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">hex</span>;
+ 
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">sha</span>;
+<span class="kw">use</span> <span class="ident">hex</span>::<span class="ident">ToHex</span>;
+ 
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">sha</span>::<span class="ident">Sha256</span>::<span class="ident">new</span>();
+ 
+    <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="string">b&quot;Hello, &quot;</span>);
+    <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="string">b&quot;world&quot;</span>);
+ 
+    <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">hasher</span>.<span class="ident">finish</span>();
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Hashed \&quot;Hello, world\&quot; to {}&quot;</span>, <span class="ident">hash</span>.<span class="ident">to_hex</span>());
+}</pre>
+
+<p>On the other hand, if you already have access to all of the data you woud like to hash, you
+may prefer to use the slightly simpler method of simply calling the hash function corresponding
+to the algorithm you want to use.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">openssl</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">hex</span>;
+
+<span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">sha</span>::<span class="ident">sha256</span>;
+<span class="kw">use</span> <span class="ident">hex</span>::<span class="ident">ToHex</span>;
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">sha256</span>(<span class="string">b&quot;your data or message&quot;</span>);
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Hash = {}&quot;</span>, <span class="ident">hash</span>.<span class="ident">to_hex</span>());
+}</pre>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>

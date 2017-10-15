@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/ssl/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/ssl/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -2414,7 +2414,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">method</span>: <span class="ident">SslMethod</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SslContextBuilder</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">init</span>();
-            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_new</span>(<span class="ident">method</span>.<span class="ident">as_ptr</span>())));
+            <span class="kw">let</span> <span class="ident">ctx</span> <span class="op">=</span> <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_new</span>(<span class="ident">method</span>.<span class="ident">as_ptr</span>()))<span class="question-mark">?</span>;
 
             <span class="prelude-val">Ok</span>(<span class="ident">SslContextBuilder</span>::<span class="ident">from_ptr</span>(<span class="ident">ctx</span>))
         }
@@ -2487,10 +2487,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_verify_cert_store</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cert_store</span>: <span class="ident">X509Store</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">cert_store</span>.<span class="ident">as_ptr</span>();
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(
+            <span class="ident">cvt</span>(
                 <span class="ident">ffi</span>::<span class="ident">SSL_CTX_set0_verify_cert_store</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">ptr</span>) <span class="kw">as</span>
                     <span class="ident">c_int</span>,
-            ));
+            )<span class="question-mark">?</span>;
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">cert_store</span>);
 
             <span class="prelude-val">Ok</span>(())
@@ -2650,10 +2650,10 @@
     <span class="doccomment">/// `set_certificate` to a trusted root.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_extra_chain_cert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cert</span>: <span class="ident">X509</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_add_extra_chain_cert</span>(
+            <span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_add_extra_chain_cert</span>(
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">cert</span>.<span class="ident">as_ptr</span>(),
-            ) <span class="kw">as</span> <span class="ident">c_int</span>));
+            ) <span class="kw">as</span> <span class="ident">c_int</span>)<span class="question-mark">?</span>;
             <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">cert</span>);
             <span class="prelude-val">Ok</span>(())
         }
@@ -2723,7 +2723,7 @@
 
     <span class="doccomment">/// Set the protocols to be used during Next Protocol Negotiation (the protocols</span>
     <span class="doccomment">/// supported by the application).</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">libressl261</span>))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_npn_protocols</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">protocols</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>[<span class="ident">u8</span>]]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="comment">// Firstly, convert the list of protocols to a byte-array that can be passed to OpenSSL</span>
         <span class="comment">// APIs -- a list of length-prefixed strings.</span>
@@ -2732,11 +2732,11 @@
         <span class="kw">unsafe</span> {
             <span class="comment">// Attach the protocol list to the OpenSSL context structure,</span>
             <span class="comment">// so that we can refer to it within the callback.</span>
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_set_ex_data</span>(
+            <span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_set_ex_data</span>(
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="kw-2">*</span><span class="ident">NPN_PROTOS_IDX</span>,
                 <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">protocols</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="comment">// Now register the callback that performs the default protocol</span>
             <span class="comment">// matching based on the client-supported list of protocols that</span>
             <span class="comment">// has been saved.</span>
@@ -2783,11 +2783,11 @@
             <span class="comment">// ssl ctx&#39;s ex_data so that we can configure a function to free it later. In the</span>
             <span class="comment">// future, it might make sense to pull this into our internal struct Ssl instead of</span>
             <span class="comment">// leaning on openssl and using function pointers.</span>
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_set_ex_data</span>(
+            <span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_CTX_set_ex_data</span>(
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="kw-2">*</span><span class="ident">ALPN_PROTOS_IDX</span>,
                 <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">protocols</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-            )));
+            ))<span class="question-mark">?</span>;
 
             <span class="comment">// Now register the callback that performs the default protocol</span>
             <span class="comment">// matching based on the client-supported list of protocols that</span>
@@ -2930,7 +2930,7 @@
     {
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">init</span>();
-            <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">compat</span>::<span class="ident">get_new_idx</span>(<span class="ident">free_data_box</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)));
+            <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">cvt_n</span>(<span class="ident">compat</span>::<span class="ident">get_new_idx</span>(<span class="ident">free_data_box</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">Index</span>::<span class="ident">from_raw</span>(<span class="ident">idx</span>))
         }
     }
@@ -3159,7 +3159,7 @@
     {
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">init</span>();
-            <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">compat</span>::<span class="ident">get_new_ssl_idx</span>(<span class="ident">free_data_box</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)));
+            <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">cvt_n</span>(<span class="ident">compat</span>::<span class="ident">get_new_ssl_idx</span>(<span class="ident">free_data_box</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">Index</span>::<span class="ident">from_raw</span>(<span class="ident">idx</span>))
         }
     }
@@ -3382,7 +3382,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The protocol&#39;s name is returned is an opaque sequence of bytes. It is up to the client</span>
     <span class="doccomment">/// to interpret it.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">libressl261</span>))]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>)))]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">selected_npn_protocol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_uchar</span> <span class="op">=</span> <span class="ident">ptr</span>::<span class="ident">null</span>();
@@ -3555,11 +3555,11 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ocsp_status</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">response</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">response</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">c_int</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>);
-            <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">CRYPTO_malloc</span>(
+            <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">CRYPTO_malloc</span>(
                 <span class="ident">response</span>.<span class="ident">len</span>() <span class="kw">as</span> _,
                 <span class="macro">concat</span><span class="macro">!</span>(<span class="macro">file</span><span class="macro">!</span>(), <span class="string">&quot;\0&quot;</span>).<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _,
                 <span class="macro">line</span><span class="macro">!</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">response</span>.<span class="ident">as_ptr</span>(), <span class="ident">p</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">response</span>.<span class="ident">len</span>());
             <span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">SSL_set_tlsext_status_ocsp_resp</span>(
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
@@ -3611,7 +3611,7 @@
 <span class="kw">impl</span> <span class="ident">Ssl</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ctx</span>: <span class="kw-2">&amp;</span><span class="ident">SslContext</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Ssl</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">ssl</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">SSL_new</span>(<span class="ident">ctx</span>.<span class="ident">as_ptr</span>())));
+            <span class="kw">let</span> <span class="ident">ssl</span> <span class="op">=</span> <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">SSL_new</span>(<span class="ident">ctx</span>.<span class="ident">as_ptr</span>()))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">Ssl</span>::<span class="ident">from_ptr</span>(<span class="ident">ssl</span>))
         }
     }

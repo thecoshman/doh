@@ -49,11 +49,20 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span></span></h1>
-<pre class='rust struct'>pub struct Asn1Object(_);</pre>
+<pre class='rust struct'>pub struct Asn1Object(_);</pre><div class='docblock'><p>Object Identifier</p>
+
+<p>Represents an ASN.1 Object.  Typically, NIDs, or numeric identifiers
+are stored as a table within the <a href="../nid/index.html"><code>Nid</code></a> module.  These constants are
+used to determine attributes of a certificate, such as mapping the
+attribute &quot;CommonName&quot; to &quot;CN&quot; which is represented as the OID of 13.
+This attribute is a constant in the <a href="../nid/constant.COMMONNAME.html"><code>nid::COMMONNAME</code></a>.</p>
+
+<p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/OBJ_obj2nid.html"><code>OBJ_nid2obj</code></a></p>
+</div>
                     <h2 id='deref-methods' class='small-section-header'>
                       Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">Deref</a>&lt;Target = <a class="struct" href="../../openssl/asn1/struct.Asn1ObjectRef.html" title="struct openssl::asn1::Asn1ObjectRef">Asn1ObjectRef</a>&gt;<a href='#deref-methods' class='anchor'></a>
                     </h2>
-                <div class='impl-items'><h4 id='method.nid' class="method"><span id='nid.v' class='invisible'><code>fn <a href='#method.nid' class='fnname'>nid</a>(&amp;self) -&gt; <a class="struct" href="../../openssl/nid/struct.Nid.html" title="struct openssl::nid::Nid">Nid</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#146-148' title='goto source code'>[src]</a></span></h4>
+                <div class='impl-items'><h4 id='method.nid' class="method"><span id='nid.v' class='invisible'><code>fn <a href='#method.nid' class='fnname'>nid</a>(&amp;self) -&gt; <a class="struct" href="../../openssl/nid/struct.Nid.html" title="struct openssl::nid::Nid">Nid</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#267-269' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the NID associated with this OID.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>

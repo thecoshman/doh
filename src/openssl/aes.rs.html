@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/aes.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/aes.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>aes.rs.html -- source</title>
@@ -164,19 +164,125 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
 </pre><pre class="rust ">
-<span class="doccomment">//! Low level AES functionality</span>
+<span class="doccomment">//! Low level AES IGE functionality</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The `symm` module should be used in preference to this module in most cases.</span>
+<span class="doccomment">//! AES ECB, CBC, XTS, CTR, CFB, GCM and other conventional symmetric encryption</span>
+<span class="doccomment">//! modes are found in [`symm`].  This is the implementation of AES IGE.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Advanced Encryption Standard (AES) provides symmetric key cipher that</span>
+<span class="doccomment">//! the same key is used to encrypt and decrypt data.  This implementation</span>
+<span class="doccomment">//! uses 128, 192, or 256 bit keys.  This module provides functions to</span>
+<span class="doccomment">//! create a new key with [`new_encrypt`] and perform an encryption/decryption</span>
+<span class="doccomment">//! using that key with [`aes_ige`].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [`new_encrypt`]: struct.AesKey.html#method.new_encrypt</span>
+<span class="doccomment">//! [`aes_ige`]: fn.aes_ige.html</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The [`symm`] module should be used in preference to this module in most cases.</span>
+<span class="doccomment">//! The IGE block cypher is a non-traditional cipher mode.  More traditional AES</span>
+<span class="doccomment">//! encryption methods are found in the [`Crypter`] and [`Cipher`] structs.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [`symm`]: ../symm/index.html</span>
+<span class="doccomment">//! [`Crypter`]: ../symm/struct.Crypter.html</span>
+<span class="doccomment">//! [`Cipher`]: ../symm/struct.Cipher.html</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! # extern crate openssl;</span>
+<span class="doccomment">//! extern crate hex;</span>
+<span class="doccomment">//! use openssl::aes::{AesKey, KeyError, aes_ige};</span>
+<span class="doccomment">//! use openssl::symm::Mode;</span>
+<span class="doccomment">//! use hex::{FromHex, ToHex};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn decrypt() -&gt; Result&lt;(), KeyError&gt; {</span>
+<span class="doccomment">//!   let raw_key = &quot;000102030405060708090A0B0C0D0E0F&quot;;</span>
+<span class="doccomment">//!   let hex_cipher = &quot;12345678901234561234567890123456&quot;;</span>
+<span class="doccomment">//!   let randomness = &quot;000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F&quot;;</span>
+<span class="doccomment">//!   if let (Ok(key_as_u8), Ok(cipher_as_u8), Ok(mut iv_as_u8)) =</span>
+<span class="doccomment">//!       (Vec::from_hex(raw_key), Vec::from_hex(hex_cipher), Vec::from_hex(randomness)) {</span>
+<span class="doccomment">//!     let key = AesKey::new_encrypt(&amp;key_as_u8)?;</span>
+<span class="doccomment">//!     let mut output = vec![0u8; cipher_as_u8.len()];</span>
+<span class="doccomment">//!     aes_ige(&amp;cipher_as_u8, &amp;mut output, &amp;key, &amp;mut iv_as_u8, Mode::Encrypt);</span>
+<span class="doccomment">//!     assert_eq!(output.to_hex(), &quot;a6ad974d5cea1d36d2f367980907ed32&quot;);</span>
+<span class="doccomment">//!   }</span>
+<span class="doccomment">//!   Ok(())</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # fn main() {</span>
+<span class="doccomment">//! #   decrypt();</span>
+<span class="doccomment">//! # }</span>
 <span class="kw">use</span> <span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_int</span>;
 
 <span class="kw">use</span> <span class="ident">symm</span>::<span class="ident">Mode</span>;
 
+<span class="doccomment">/// Provides Error handling for parsing keys.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">KeyError</span>(());
 
+<span class="doccomment">/// The key used to encrypt or decrypt cipher blocks.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AesKey</span>(<span class="ident">ffi</span>::<span class="ident">AES_KEY</span>);
 
 <span class="kw">impl</span> <span class="ident">AesKey</span> {
@@ -229,6 +335,18 @@
 }
 
 <span class="doccomment">/// Performs AES IGE encryption or decryption</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// AES IGE (Infinite Garble Extension) is a form of AES block cipher utilized in</span>
+<span class="doccomment">/// OpenSSL.  Infinite Garble referes to propogating forward errors.  IGE, like other</span>
+<span class="doccomment">/// block ciphers implemented for AES requires an initalization vector.  The IGE mode</span>
+<span class="doccomment">/// allows a stream of blocks to be encrypted or decrypted without having the entire</span>
+<span class="doccomment">/// plaintext available.  For more information, visit [AES IGE Encryption].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This block cipher uses 16 byte blocks.  The rust implmentation will panic</span>
+<span class="doccomment">/// if the input or output does not meet this 16-byte boundry.  Attention must</span>
+<span class="doccomment">/// be made in this low level implementation to pad the value to the 128-bit boundry.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [AES IGE Encryption]: http://www.links.org/files/openssl-ige.pdf</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Panics</span>
 <span class="doccomment">///</span>

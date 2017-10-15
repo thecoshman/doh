@@ -49,15 +49,26 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span></span></h1>
-<pre class='rust struct'>pub struct Asn1StringRef(_);</pre>
+<pre class='rust struct'>pub struct Asn1StringRef(_);</pre><div class='docblock'><p>Reference to <a href="struct.Asn1String.html"><code>Asn1String</code></a></p>
+</div>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/asn1/struct.Asn1StringRef.html" title="struct openssl::asn1::Asn1StringRef">Asn1StringRef</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#78-98' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.as_utf8' class="method"><span id='as_utf8.v' class='invisible'><code>fn <a href='#method.as_utf8' class='fnname'>as_utf8</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/string/struct.OpensslString.html" title="struct openssl::string::OpensslString">OpensslString</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#79-89' title='goto source code'>[src]</a></span></h4>
-<h4 id='method.as_slice' class="method"><span id='as_slice.v' class='invisible'><code>fn <a href='#method.as_slice' class='fnname'>as_slice</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#91-93' title='goto source code'>[src]</a></span></h4>
-<h4 id='method.len' class="method"><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#95-97' title='goto source code'>[src]</a></span></h4>
-</div>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/asn1/struct.Asn1StringRef.html" title="struct openssl::asn1::Asn1StringRef">Asn1StringRef</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#139-171' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.as_utf8' class="method"><span id='as_utf8.v' class='invisible'><code>fn <a href='#method.as_utf8' class='fnname'>as_utf8</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/string/struct.OpensslString.html" title="struct openssl::string::OpensslString">OpensslString</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#145-155' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Converts the ASN.1 underlying format to UTF8</p>
+
+<p>ASN.1 strings may utilize UTF-16, ASCII, BMP, or UTF8.  This is important to
+consume the string in a meaningful way without knowing the underlying
+format.</p>
+</div><h4 id='method.as_slice' class="method"><span id='as_slice.v' class='invisible'><code>fn <a href='#method.as_slice' class='fnname'>as_slice</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#163-165' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the string as an array of bytes</p>
+
+<p>The bytes do not directly corespond to UTF-8 encoding.  To interact with
+strings in rust, it is preferable to use <a href="struct.Asn1String.html#method.as_utf8"><code>as_utf8</code></a></p>
+</div><h4 id='method.len' class="method"><span id='len.v' class='invisible'><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#168-170' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return the length of the Asn1String (number of bytes)</p>
+</div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>

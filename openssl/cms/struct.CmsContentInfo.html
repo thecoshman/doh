@@ -49,18 +49,31 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span></span></h1>
-<pre class='rust struct'>pub struct CmsContentInfo(_);</pre>
+<pre class='rust struct'>pub struct CmsContentInfo(_);</pre><div class='docblock'><p>High level CMS wrapper</p>
+
+<p>CMS supports nesting various types of data, including signatures, certificates,
+encrypted data, smime messages (encrypted email), and data digest.  The ContentInfo
+content type is the encapsulation of all those content types.  <a href="https://tools.ietf.org/html/rfc5652#page-6"><code>RFC 5652</code></a> describes
+CMS and OpenSSL follows this RFC&#39;s implmentation.</p>
+</div>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/cms/struct.CmsContentInfo.html" title="struct openssl::cms::CmsContentInfo">CmsContentInfo</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/cms.rs.html#47-60' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.smime_read_cms' class="method"><span id='smime_read_cms.v' class='invisible'><code>fn <a href='#method.smime_read_cms' class='fnname'>smime_read_cms</a>(smime: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/cms/struct.CmsContentInfo.html" title="struct openssl::cms::CmsContentInfo">CmsContentInfo</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/cms.rs.html#48-59' title='goto source code'>[src]</a></span></h4>
-</div>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/cms/struct.CmsContentInfo.html" title="struct openssl::cms::CmsContentInfo">CmsContentInfo</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/cms.rs.html#69-87' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.smime_read_cms' class="method"><span id='smime_read_cms.v' class='invisible'><code>fn <a href='#method.smime_read_cms' class='fnname'>smime_read_cms</a>(smime: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/cms/struct.CmsContentInfo.html" title="struct openssl::cms::CmsContentInfo">CmsContentInfo</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/cms.rs.html#75-86' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Parses a smime formatted <code>vec</code> of bytes into a <code>CmsContentInfo</code>.</p>
+
+<p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.0.2/crypto/SMIME_read_CMS.html"><code>SMIME_read_CMS</code></a></p>
+</div></div>
                     <h2 id='deref-methods' class='small-section-header'>
                       Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">Deref</a>&lt;Target = <a class="struct" href="../../openssl/cms/struct.CmsContentInfoRef.html" title="struct openssl::cms::CmsContentInfoRef">CmsContentInfoRef</a>&gt;<a href='#deref-methods' class='anchor'></a>
                     </h2>
-                <div class='impl-items'><h4 id='method.decrypt' class="method"><span id='decrypt.v' class='invisible'><code>fn <a href='#method.decrypt' class='fnname'>decrypt</a>(&amp;self, pkey: &amp;<a class="struct" href="../../openssl/pkey/struct.PKeyRef.html" title="struct openssl::pkey::PKeyRef">PKeyRef</a>, cert: &amp;<a class="struct" href="../../openssl/x509/struct.X509.html" title="struct openssl::x509::X509">X509</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/cms.rs.html#25-43' title='goto source code'>[src]</a></span></h4>
-</div>
+                <div class='impl-items'><h4 id='method.decrypt' class="method"><span id='decrypt.v' class='invisible'><code>fn <a href='#method.decrypt' class='fnname'>decrypt</a>(&amp;self, pkey: &amp;<a class="struct" href="../../openssl/pkey/struct.PKeyRef.html" title="struct openssl::pkey::PKeyRef">PKeyRef</a>, cert: &amp;<a class="struct" href="../../openssl/x509/struct.X509.html" title="struct openssl::x509::X509">X509</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/cms.rs.html#47-65' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Given the sender&#39;s private key, <code>pkey</code> and the recipient&#39;s certificiate, <code>cert</code>,
+decrypt the data in <code>self</code>.</p>
+
+<p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/CMS_decrypt.html"><code>CMS_decrypt</code></a></p>
+</div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>

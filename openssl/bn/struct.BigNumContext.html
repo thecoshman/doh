@@ -49,13 +49,20 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span></span></h1>
-<pre class='rust struct'>pub struct BigNumContext(_);</pre>
+<pre class='rust struct'>pub struct BigNumContext(_);</pre><div class='docblock'><p>Temporary storage for BigNums on the secure heap</p>
+
+<p>BigNum values are stored dynamically and therefore can be expensive
+to allocate.  BigNumContext and the OpenSSL <a href="https://www.openssl.org/docs/man1.1.0/crypto/BN_CTX_new.html"><code>BN_CTX</code></a> structure are used
+internally when passing BigNum values between subroutines.</p>
+</div>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/bn/struct.BigNumContext.html" title="struct openssl::bn::BigNumContext">BigNumContext</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/bn.rs.html#52-60' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/bn/struct.BigNumContext.html" title="struct openssl::bn::BigNumContext">BigNumContext</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/bn.rs.html#54-59' title='goto source code'>[src]</a></span></h4>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/bn/struct.BigNumContext.html" title="struct openssl::bn::BigNumContext">BigNumContext</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/bn.rs.html#88-100' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/bn/struct.BigNumContext.html" title="struct openssl::bn::BigNumContext">BigNumContext</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/bn.rs.html#94-99' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a new <code>BigNumContext</code>.</p>
+
+<p>See OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/BN_CTX_new.html"><code>BN_CTX_new</code></a>.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>

@@ -49,7 +49,16 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span></span></h1>
-<pre class='rust struct'>pub struct Asn1GeneralizedTime(_);</pre>
+<pre class='rust struct'>pub struct Asn1GeneralizedTime(_);</pre><div class='docblock'><p>Non-UTC representation of time</p>
+
+<p>If a time can be represented by UTCTime, UTCTime is used
+otherwise, ASN1_GENERALIZEDTIME is used.  This would be, for
+example outside the year range of 1950-2049.</p>
+
+<p><a href="https://www.openssl.org/docs/manmaster/man3/ASN1_GENERALIZEDTIME_set.html">ASN1_GENERALIZEDTIME_set</a> documentation from OpenSSL provides
+further details of implmentation.  Note: these docs are from the master
+branch as documentation on the 1.1.0 branch did not include this page.</p>
+</div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/zlib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/zlib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>zlib.rs.html -- source</title>
@@ -861,7 +861,7 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">size</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Lz77WindowSize</span>::<span class="kw-2">*</span>;
-        <span class="kw">if</span> <span class="number">16384</span> <span class="op">&lt;</span> <span class="ident">size</span> {
+        <span class="kw">if</span> <span class="number">16_384</span> <span class="op">&lt;</span> <span class="ident">size</span> {
             <span class="ident">KB32</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="number">8192</span> <span class="op">&lt;</span> <span class="ident">size</span> {
             <span class="ident">KB16</span>
@@ -897,8 +897,8 @@
             <span class="ident">KB2</span> <span class="op">=&gt;</span> <span class="number">2048</span>,
             <span class="ident">KB4</span> <span class="op">=&gt;</span> <span class="number">4096</span>,
             <span class="ident">KB8</span> <span class="op">=&gt;</span> <span class="number">8192</span>,
-            <span class="ident">KB16</span> <span class="op">=&gt;</span> <span class="number">16384</span>,
-            <span class="ident">KB32</span> <span class="op">=&gt;</span> <span class="number">32768</span>,
+            <span class="ident">KB16</span> <span class="op">=&gt;</span> <span class="number">16_384</span>,
+            <span class="ident">KB32</span> <span class="op">=&gt;</span> <span class="number">32_768</span>,
         }
     }
 }
@@ -933,7 +933,7 @@
     {
         <span class="kw">let</span> <span class="ident">cmf</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">flg</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">check</span> <span class="op">=</span> ((<span class="ident">cmf</span> <span class="kw">as</span> <span class="ident">u16</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span>) <span class="op">+</span> <span class="ident">flg</span> <span class="kw">as</span> <span class="ident">u16</span>;
+        <span class="kw">let</span> <span class="ident">check</span> <span class="op">=</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">cmf</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span>) <span class="op">+</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">flg</span>);
         <span class="kw">if</span> <span class="ident">check</span> <span class="op">%</span> <span class="number">31</span> <span class="op">!=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
                 <span class="string">&quot;Inconsistent ZLIB check bits: `CMF({}) * 256 + \
@@ -956,7 +956,7 @@
             <span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;CINFO above 7 are not allowed: value={}&quot;</span>, <span class="ident">compression_info</span>)
         })<span class="question-mark">?</span>;
 
-        <span class="kw">let</span> <span class="ident">dict_flag</span> <span class="op">=</span> (<span class="ident">flg</span> <span class="op">&amp;</span> <span class="number">0b100000</span>) <span class="op">!=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="ident">dict_flag</span> <span class="op">=</span> (<span class="ident">flg</span> <span class="op">&amp;</span> <span class="number">0b100_000</span>) <span class="op">!=</span> <span class="number">0</span>;
         <span class="kw">if</span> <span class="ident">dict_flag</span> {
             <span class="kw">let</span> <span class="ident">dictionary_id</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
@@ -977,7 +977,7 @@
     {
         <span class="kw">let</span> <span class="ident">cmf</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">window_size</span>.<span class="ident">as_u4</span>() <span class="op">&lt;&lt;</span> <span class="number">4</span>) <span class="op">|</span> <span class="ident">COMPRESSION_METHOD_DEFLATE</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">flg</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">compression_level</span>.<span class="ident">as_u2</span>() <span class="op">&lt;&lt;</span> <span class="number">6</span>;
-        <span class="kw">let</span> <span class="ident">check</span> <span class="op">=</span> ((<span class="ident">cmf</span> <span class="kw">as</span> <span class="ident">u16</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span>) <span class="op">+</span> <span class="ident">flg</span> <span class="kw">as</span> <span class="ident">u16</span>;
+        <span class="kw">let</span> <span class="ident">check</span> <span class="op">=</span> (<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">cmf</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span>) <span class="op">+</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">flg</span>);
         <span class="kw">if</span> <span class="ident">check</span> <span class="op">%</span> <span class="number">31</span> <span class="op">!=</span> <span class="number">0</span> {
             <span class="ident">flg</span> <span class="op">+=</span> (<span class="number">31</span> <span class="op">-</span> <span class="ident">check</span> <span class="op">%</span> <span class="number">31</span>) <span class="kw">as</span> <span class="ident">u8</span>;
         }

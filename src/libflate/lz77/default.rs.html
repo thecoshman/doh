@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/lz77/default.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/lz77/default.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>default.rs.html -- source</title>
@@ -159,6 +159,11 @@
 <span id="114">114</span>
 <span id="115">115</span>
 <span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
@@ -212,6 +217,11 @@
             <span class="ident">window_size</span>: <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">size</span>, <span class="kw">super</span>::<span class="ident">MAX_WINDOW_SIZE</span>),
             <span class="ident">buf</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
         }
+    }
+}
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">DefaultLz77Encoder</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">new</span>()
     }
 }
 <span class="kw">impl</span> <span class="ident">Lz77Encode</span> <span class="kw">for</span> <span class="ident">DefaultLz77Encoder</span> {

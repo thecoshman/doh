@@ -49,14 +49,22 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span></span></h1>
-<pre class='rust struct'>pub struct Asn1IntegerRef(_);</pre>
+<pre class='rust struct'>pub struct Asn1IntegerRef(_);</pre><div class='docblock'><p>Reference to <a href="struct.Asn1Integer.html"><code>Asn1Integer</code></a></p>
+</div>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/asn1/struct.Asn1IntegerRef.html" title="struct openssl::asn1::Asn1IntegerRef">Asn1IntegerRef</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#108-116' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.get' class="method"><span id='get.v' class='invisible'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#109-111' title='goto source code'>[src]</a></span></h4>
-<h4 id='method.set' class="method"><span id='set.v' class='invisible'><code>fn <a href='#method.set' class='fnname'>set</a>(&amp;mut self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#113-115' title='goto source code'>[src]</a></span></h4>
-</div>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../openssl/asn1/struct.Asn1IntegerRef.html" title="struct openssl::asn1::Asn1IntegerRef">Asn1IntegerRef</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#193-212' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.get' class="method"><span id='get.v' class='invisible'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#199-201' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns value of ASN.1 integer, or -1 if there is an error, and 0 if the integer is Null.</p>
+
+<p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/ASN1_INTEGER_get.html"><code>ASN1_INTEGER_get</code></a>.</p>
+</div><h4 id='method.set' class="method"><span id='set.v' class='invisible'><code>fn <a href='#method.set' class='fnname'>set</a>(&amp;mut self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#209-211' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Sets the ASN.1 value to the value of a signed 32-bit integer, for larger numbers
+see <a href="../bn/struct.BigNumRef.html#method.to_asn1_integer"><code>bn</code></a>.</p>
+
+<p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/ASN1_INTEGER_set.html"><code>ASN1_INTEGER_set</code></a></p>
+</div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>

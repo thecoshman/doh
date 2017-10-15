@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/gzip.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/gzip.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>gzip.rs.html -- source</title>
@@ -973,6 +973,11 @@
 <span id="928">928</span>
 <span id="929">929</span>
 <span id="930">930</span>
+<span id="931">931</span>
+<span id="932">932</span>
+<span id="933">933</span>
+<span id="934">934</span>
+<span id="935">935</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! The encoder and decoder of the GZIP format.</span>
 <span class="doccomment">//!</span>
@@ -1026,11 +1031,11 @@
 <span class="kw">const</span> <span class="ident">OS_ACORN_RISCOS</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">13</span>;
 <span class="kw">const</span> <span class="ident">OS_UNKNOWN</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">255</span>;
 
-<span class="kw">const</span> <span class="ident">F_TEXT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b000001</span>;
-<span class="kw">const</span> <span class="ident">F_HCRC</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b000010</span>;
-<span class="kw">const</span> <span class="ident">F_EXTRA</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b000100</span>;
-<span class="kw">const</span> <span class="ident">F_NAME</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b001000</span>;
-<span class="kw">const</span> <span class="ident">F_COMMENT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b010000</span>;
+<span class="kw">const</span> <span class="ident">F_TEXT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b00_0001</span>;
+<span class="kw">const</span> <span class="ident">F_HCRC</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b00_0010</span>;
+<span class="kw">const</span> <span class="ident">F_EXTRA</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b00_0100</span>;
+<span class="kw">const</span> <span class="ident">F_NAME</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b00_1000</span>;
+<span class="kw">const</span> <span class="ident">F_COMMENT</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0b01_0000</span>;
 
 <span class="doccomment">/// Compression levels defined by the GZIP format.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
@@ -1240,6 +1245,11 @@
     <span class="doccomment">/// Returns the result header.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Header</span> {
         <span class="self">self</span>.<span class="ident">header</span>.<span class="ident">clone</span>()
+    }
+}
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">HeaderBuilder</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">new</span>()
     }
 }
 

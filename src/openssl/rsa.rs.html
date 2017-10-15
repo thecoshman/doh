@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/rsa.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/rsa.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>rsa.rs.html -- source</title>
@@ -618,13 +618,13 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_decrypt</span>(
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_decrypt</span>(
                 <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
                 <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">padding</span>.<span class="number">0</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -646,13 +646,13 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_encrypt</span>(
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_private_encrypt</span>(
                 <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
                 <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">padding</span>.<span class="number">0</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -672,13 +672,13 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_decrypt</span>(
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_decrypt</span>(
                 <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
                 <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">padding</span>.<span class="number">0</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -698,13 +698,13 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">to</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">size</span>());
 
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_encrypt</span>(
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">cvt_n</span>(<span class="ident">ffi</span>::<span class="ident">RSA_public_encrypt</span>(
                 <span class="ident">from</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
                 <span class="ident">from</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">to</span>.<span class="ident">as_mut_ptr</span>(),
                 <span class="self">self</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">padding</span>.<span class="number">0</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)
         }
     }
@@ -770,13 +770,13 @@
     <span class="doccomment">/// the supplied load and save methods for DER formatted keys.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_public_components</span>(<span class="ident">n</span>: <span class="ident">BigNum</span>, <span class="ident">e</span>: <span class="ident">BigNum</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_key</span>(
+            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())<span class="question-mark">?</span>);
+            <span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_key</span>(
                 <span class="ident">rsa</span>.<span class="number">0</span>,
                 <span class="ident">n</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">e</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">n</span>, <span class="ident">e</span>));
             <span class="prelude-val">Ok</span>(<span class="ident">rsa</span>)
         }
@@ -793,19 +793,19 @@
         <span class="ident">qi</span>: <span class="ident">BigNum</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(
+            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())<span class="question-mark">?</span>);
+            <span class="ident">cvt</span>(
                 <span class="ident">compat</span>::<span class="ident">set_key</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">n</span>.<span class="ident">as_ptr</span>(), <span class="ident">e</span>.<span class="ident">as_ptr</span>(), <span class="ident">d</span>.<span class="ident">as_ptr</span>()),
-            ));
+            )<span class="question-mark">?</span>;
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">n</span>, <span class="ident">e</span>, <span class="ident">d</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_factors</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">p</span>.<span class="ident">as_ptr</span>(), <span class="ident">q</span>.<span class="ident">as_ptr</span>())));
+            <span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_factors</span>(<span class="ident">rsa</span>.<span class="number">0</span>, <span class="ident">p</span>.<span class="ident">as_ptr</span>(), <span class="ident">q</span>.<span class="ident">as_ptr</span>()))<span class="question-mark">?</span>;
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">p</span>, <span class="ident">q</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_crt_params</span>(
+            <span class="ident">cvt</span>(<span class="ident">compat</span>::<span class="ident">set_crt_params</span>(
                 <span class="ident">rsa</span>.<span class="number">0</span>,
                 <span class="ident">dp</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">dq</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">qi</span>.<span class="ident">as_ptr</span>(),
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="ident">mem</span>::<span class="ident">forget</span>((<span class="ident">dp</span>, <span class="ident">dq</span>, <span class="ident">qi</span>));
             <span class="prelude-val">Ok</span>(<span class="ident">rsa</span>)
         }
@@ -817,14 +817,14 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span>(<span class="ident">bits</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Rsa</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="ident">ffi</span>::<span class="ident">init</span>();
         <span class="kw">unsafe</span> {
-            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())));
-            <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">BigNum</span>::<span class="ident">from_u32</span>(<span class="ident">ffi</span>::<span class="ident">RSA_F4</span> <span class="kw">as</span> <span class="ident">u32</span>));
-            <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">RSA_generate_key_ex</span>(
+            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">Rsa</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">RSA_new</span>())<span class="question-mark">?</span>);
+            <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="ident">BigNum</span>::<span class="ident">from_u32</span>(<span class="ident">ffi</span>::<span class="ident">RSA_F4</span> <span class="kw">as</span> <span class="ident">u32</span>)<span class="question-mark">?</span>;
+            <span class="ident">cvt</span>(<span class="ident">ffi</span>::<span class="ident">RSA_generate_key_ex</span>(
                 <span class="ident">rsa</span>.<span class="number">0</span>,
                 <span class="ident">bits</span> <span class="kw">as</span> <span class="ident">c_int</span>,
                 <span class="ident">e</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">rsa</span>)
         }
     }
@@ -849,16 +849,16 @@
     {
         <span class="ident">ffi</span>::<span class="ident">init</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cb</span> <span class="op">=</span> <span class="ident">CallbackState</span>::<span class="ident">new</span>(<span class="ident">pass_cb</span>);
-        <span class="kw">let</span> <span class="ident">mem_bio</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">MemBioSlice</span>::<span class="ident">new</span>(<span class="ident">buf</span>));
+        <span class="kw">let</span> <span class="ident">mem_bio</span> <span class="op">=</span> <span class="ident">MemBioSlice</span>::<span class="ident">new</span>(<span class="ident">buf</span>)<span class="question-mark">?</span>;
 
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">cb_ptr</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _ <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
-            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_RSAPrivateKey</span>(
+            <span class="kw">let</span> <span class="ident">rsa</span> <span class="op">=</span> <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">PEM_read_bio_RSAPrivateKey</span>(
                 <span class="ident">mem_bio</span>.<span class="ident">as_ptr</span>(),
                 <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
                 <span class="prelude-val">Some</span>(<span class="ident">invoke_passwd_cb_old</span>::<span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>),
                 <span class="ident">cb_ptr</span>,
-            )));
+            ))<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>(<span class="ident">Rsa</span>(<span class="ident">rsa</span>))
         }
     }

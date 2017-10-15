@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/huffman.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/huffman.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>huffman.rs.html -- source</title>
@@ -373,6 +373,7 @@
 <span id="328">328</span>
 <span id="329">329</span>
 <span id="330">330</span>
+<span id="331">331</span>
 </pre><pre class="rust ">
 <span class="doccomment">/// Length-limited Huffman Codes</span>
 <span class="doccomment">///</span>
@@ -413,7 +414,7 @@
     <span class="kw">fn</span> <span class="ident">set_mapping</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">symbol</span>: <span class="ident">u16</span>, <span class="ident">code</span>: <span class="ident">Code</span>);
     <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Instance</span>;
     <span class="kw">fn</span> <span class="ident">restore_canonical_huffman_codes</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bitwidthes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Instance</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">bitwidthes</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">bitwidthes</span>.<span class="ident">is_empty</span>());
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">symbols</span> <span class="op">=</span> <span class="ident">bitwidthes</span>
             .<span class="ident">iter</span>()
@@ -445,7 +446,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">max_bitwidth</span>: <span class="ident">u8</span>, <span class="ident">eob_symbol</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">max_bitwidth</span> <span class="op">&lt;=</span> <span class="ident">MAX_BITWIDTH</span>);
         <span class="ident">DecoderBuilder</span> {
-            <span class="ident">table</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">MAX_BITWIDTH</span> <span class="kw">as</span> <span class="ident">u16</span> <span class="op">+</span> <span class="number">1</span>; <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="ident">max_bitwidth</span>],
+            <span class="ident">table</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">MAX_BITWIDTH</span>) <span class="op">+</span> <span class="number">1</span>; <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="ident">max_bitwidth</span>],
             <span class="ident">eob_symbol</span>: <span class="ident">eob_symbol</span>,
             <span class="ident">eob_bitwidth</span>: <span class="ident">max_bitwidth</span>,
             <span class="ident">max_bitwidth</span>: <span class="ident">max_bitwidth</span>,
@@ -465,13 +466,13 @@
         }
 
         <span class="comment">// `bitwidth` encoded `to` value</span>
-        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> (<span class="ident">symbol</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>) <span class="op">|</span> <span class="ident">code</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">u16</span>;
+        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> (<span class="ident">symbol</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>) <span class="op">|</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">code</span>.<span class="ident">width</span>);
 
         <span class="comment">// Sets the mapping to all possible indices</span>
         <span class="kw">let</span> <span class="ident">code_be</span> <span class="op">=</span> <span class="ident">code</span>.<span class="ident">inverse_endian</span>();
         <span class="kw">for</span> <span class="ident">padding</span> <span class="kw">in</span> <span class="number">0</span>..(<span class="number">1</span> <span class="op">&lt;&lt;</span> (<span class="self">self</span>.<span class="ident">max_bitwidth</span> <span class="op">-</span> <span class="ident">code</span>.<span class="ident">width</span>)) {
             <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> ((<span class="ident">padding</span> <span class="op">&lt;&lt;</span> <span class="ident">code</span>.<span class="ident">width</span>) <span class="op">|</span> <span class="ident">code_be</span>.<span class="ident">bits</span>) <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">table</span>[<span class="ident">i</span>], <span class="ident">MAX_BITWIDTH</span> <span class="kw">as</span> <span class="ident">u16</span> <span class="op">+</span> <span class="number">1</span>);
+            <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">table</span>[<span class="ident">i</span>], <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">MAX_BITWIDTH</span>) <span class="op">+</span> <span class="number">1</span>);
             <span class="kw">unsafe</span> {
                 <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">table</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">value</span>;
             }
@@ -510,18 +511,17 @@
     {
         <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">peek_bits_unchecked</span>(<span class="self">self</span>.<span class="ident">eob_bitwidth</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">table</span>.<span class="ident">get_unchecked</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">usize</span>) };
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bitwidth</span> <span class="op">=</span> (<span class="ident">value</span> <span class="op">&amp;</span> <span class="number">0b11111</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bitwidth</span> <span class="op">=</span> (<span class="ident">value</span> <span class="op">&amp;</span> <span class="number">0b1_1111</span>) <span class="kw">as</span> <span class="ident">u8</span>;
         <span class="kw">if</span> <span class="ident">bitwidth</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">eob_bitwidth</span> {
             <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">peek_bits_unchecked</span>(<span class="self">self</span>.<span class="ident">max_bitwidth</span>);
             <span class="ident">value</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">table</span>.<span class="ident">get_unchecked</span>(<span class="ident">code</span> <span class="kw">as</span> <span class="ident">usize</span>) };
-            <span class="ident">bitwidth</span> <span class="op">=</span> (<span class="ident">value</span> <span class="op">&amp;</span> <span class="number">0b11111</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+            <span class="ident">bitwidth</span> <span class="op">=</span> (<span class="ident">value</span> <span class="op">&amp;</span> <span class="number">0b1_1111</span>) <span class="kw">as</span> <span class="ident">u8</span>;
             <span class="kw">if</span> <span class="ident">bitwidth</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">max_bitwidth</span> {
                 <span class="ident">reader</span>.<span class="ident">set_last_error</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(<span class="string">&quot;Invalid huffman coded stream&quot;</span>));
             }
         }
         <span class="ident">reader</span>.<span class="ident">skip_bits</span>(<span class="ident">bitwidth</span> <span class="kw">as</span> <span class="ident">u8</span>);
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">value</span> <span class="op">&gt;&gt;</span> <span class="number">5</span>;
-        <span class="ident">symbol</span>
+        <span class="ident">value</span> <span class="op">&gt;&gt;</span> <span class="number">5</span>
     }
 }
 
@@ -574,7 +574,7 @@
         <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
     {
         <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lookup</span>(<span class="ident">symbol</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">code</span> <span class="op">!=</span> <span class="ident">Code</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>));
+        <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="ident">code</span>, <span class="ident">Code</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>));
         <span class="ident">writer</span>.<span class="ident">write_bits</span>(<span class="ident">code</span>.<span class="ident">width</span>, <span class="ident">code</span>.<span class="ident">bits</span>)
     }
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -688,8 +688,10 @@
     <span class="kw">fn</span> <span class="ident">package</span>(<span class="kw-2">mut</span> <span class="ident">nodes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Node</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Node</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">nodes</span>.<span class="ident">len</span>() <span class="op">&gt;=</span> <span class="number">2</span> {
             <span class="kw">let</span> <span class="ident">new_len</span> <span class="op">=</span> <span class="ident">nodes</span>.<span class="ident">len</span>() <span class="op">/</span> <span class="number">2</span>;
+
+            <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">needless_range_loop</span>))]</span>
             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">new_len</span> {
-                <span class="ident">nodes</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nodes</span>[<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span> <span class="op">+</span> <span class="number">0</span>], <span class="ident">Node</span>::<span class="ident">empty</span>());
+                <span class="ident">nodes</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nodes</span>[<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>], <span class="ident">Node</span>::<span class="ident">empty</span>());
                 <span class="kw">let</span> <span class="ident">other</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nodes</span>[<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span> <span class="op">+</span> <span class="number">1</span>], <span class="ident">Node</span>::<span class="ident">empty</span>());
                 <span class="ident">nodes</span>[<span class="ident">i</span>].<span class="ident">merge</span>(<span class="ident">other</span>);
             }

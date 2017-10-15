@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/conf.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/conf.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>conf.rs.html -- source</title>
@@ -80,7 +80,23 @@
 <span id="35">35</span>
 <span id="36">36</span>
 <span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
 </pre><pre class="rust ">
+<span class="doccomment">//! Interface for processing OpenSSL configuration files.</span>
 <span class="kw">use</span> <span class="ident">ffi</span>;
 
 <span class="kw">use</span> <span class="ident">cvt_p</span>;
@@ -89,17 +105,22 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConfMethod</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">CONF_METHOD</span>);
 
 <span class="kw">impl</span> <span class="ident">ConfMethod</span> {
+    <span class="doccomment">/// Retrieve handle to the default OpenSSL configuration file processing function.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">ConfMethod</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">init</span>();
+            <span class="comment">// `NCONF` stands for &quot;New Conf&quot;, as described in crypto/conf/conf_lib.c. This is</span>
+            <span class="comment">// a newer API than the &quot;CONF classic&quot; functions.</span>
             <span class="ident">ConfMethod</span>(<span class="ident">ffi</span>::<span class="ident">NCONF_default</span>())
         }
     }
 
+    <span class="doccomment">/// Construct from raw pointer.</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_ptr</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">CONF_METHOD</span>) <span class="op">-&gt;</span> <span class="ident">ConfMethod</span> {
         <span class="ident">ConfMethod</span>(<span class="ident">ptr</span>)
     }
 
+    <span class="doccomment">/// Convert to raw pointer.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi</span>::<span class="ident">CONF_METHOD</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
@@ -114,6 +135,15 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Conf</span> {
+    <span class="doccomment">/// Create a configuration parser.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use openssl::conf::{Conf, ConfMethod};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let conf = Conf::new(ConfMethod::default());</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">method</span>: <span class="ident">ConfMethod</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Conf</span>, <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">cvt_p</span>(<span class="ident">ffi</span>::<span class="ident">NCONF_new</span>(<span class="ident">method</span>.<span class="ident">as_ptr</span>())).<span class="ident">map</span>(<span class="ident">Conf</span>) }
     }

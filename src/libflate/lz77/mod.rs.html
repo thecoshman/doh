@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.11/src/lz77/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/lz77/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -186,7 +186,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_LENGTH</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">258</span>;
 
 <span class="doccomment">/// Maximum backward distance of a pointer.</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_DISTANCE</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">32768</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_DISTANCE</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">32_768</span>;
 
 <span class="doccomment">/// Maximum size of a sliding window.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_WINDOW_SIZE</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">MAX_DISTANCE</span>;
@@ -267,7 +267,7 @@
 }
 
 <span class="doccomment">/// A no compression implementation of `LZ77Encode` trait.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NoCompressionLz77Encoder</span>;
 <span class="kw">impl</span> <span class="ident">NoCompressionLz77Encoder</span> {
     <span class="doccomment">/// Makes a new encoder instance.</span>

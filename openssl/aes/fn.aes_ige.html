@@ -48,8 +48,18 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/openssl/aes.rs.html#70-89' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/openssl/aes.rs.html#129-148' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn aes_ige(<br>&nbsp;&nbsp;&nbsp;&nbsp;in_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;out: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;key: &amp;<a class="struct" href="../../openssl/aes/struct.AesKey.html" title="struct openssl::aes::AesKey">AesKey</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;iv: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;mode: <a class="enum" href="../../openssl/symm/enum.Mode.html" title="enum openssl::symm::Mode">Mode</a><br>)</pre><div class='docblock'><p>Performs AES IGE encryption or decryption</p>
+
+<p>AES IGE (Infinite Garble Extension) is a form of AES block cipher utilized in
+OpenSSL.  Infinite Garble referes to propogating forward errors.  IGE, like other
+block ciphers implemented for AES requires an initalization vector.  The IGE mode
+allows a stream of blocks to be encrypted or decrypted without having the entire
+plaintext available.  For more information, visit <a href="http://www.links.org/files/openssl-ige.pdf">AES IGE Encryption</a>.</p>
+
+<p>This block cipher uses 16 byte blocks.  The rust implmentation will panic
+if the input or output does not meet this 16-byte boundry.  Attention must
+be made in this low level implementation to pad the value to the 128-bit boundry.</p>
 
 <h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>Panics if <code>in_</code> is not the same length as <code>out</code>, if that length is not a multiple of 16, or if

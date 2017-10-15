@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.19/src/rand.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/rand.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>rand.rs.html -- source</title>
@@ -67,13 +67,69 @@
 <span id="22">22</span>
 <span id="23">23</span>
 <span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
 </pre><pre class="rust ">
+<span class="doccomment">//! Utilities for secure random number generation.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! To generate a buffer with cryptographically strong bytes:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use openssl::rand::rand_bytes;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut buf = [0; 256];</span>
+<span class="doccomment">//! rand_bytes(&amp;mut buf).unwrap();</span>
+<span class="doccomment">//! ```</span>
 <span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_int</span>;
 <span class="kw">use</span> <span class="ident">ffi</span>;
 
 <span class="kw">use</span> <span class="ident">cvt</span>;
 <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">ErrorStack</span>;
 
+<span class="doccomment">/// Fill buffer with cryptographically strong pseudo-random bytes.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// To generate a buffer with cryptographically strong bytes:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use openssl::rand::rand_bytes;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let mut buf = [0; 256];</span>
+<span class="doccomment">/// rand_bytes(&amp;mut buf).unwrap();</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # External OpenSSL Documentation</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [RAND_bytes](https://www.openssl.org/docs/man1.1.0/crypto/RAND_bytes.html)</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rand_bytes</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorStack</span><span class="op">&gt;</span> {
     <span class="kw">unsafe</span> {
         <span class="ident">ffi</span>::<span class="ident">init</span>();
