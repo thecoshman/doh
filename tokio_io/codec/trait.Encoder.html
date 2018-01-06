@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Trait Encoder</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>tokio_io</a>::<wbr><a href='index.html'>codec</a></p><script>window.sidebarCurrent = {name: 'Encoder', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Encoder</p><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Item">Item</a><a href="#associatedtype.Error">Error</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.encode">encode</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>tokio_io</a>::<wbr><a href='index.html'>codec</a></p><script>window.sidebarCurrent = {name: 'Encoder', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -52,7 +52,7 @@
 <pre class='rust trait'>pub trait Encoder {
     type <a href='#associatedtype.Item' class="type">Item</a>;
     type <a href='#associatedtype.Error' class="type">Error</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;;
-    fn <a href='#tymethod.encode' class='fnname'>encode</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item: Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Item" title="type tokio_io::codec::Encoder::Item">Item</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst: &amp;mut <a class="struct" href="../../bytes/bytes/struct.BytesMut.html" title="struct bytes::bytes::BytesMut">BytesMut</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Error" title="type tokio_io::codec::Encoder::Error">Error</a>&gt;;
+    fn <a href='#tymethod.encode' class='fnname'>encode</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item: Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Item" title="type tokio_io::codec::Encoder::Item">Item</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dst: &amp;mut <a class="struct" href="../../bytes/bytes/struct.BytesMut.html" title="struct bytes::bytes::BytesMut">BytesMut</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Error" title="type tokio_io::codec::Encoder::Error">Error</a>&gt;;
 }</pre><div class='docblock'><p>Trait of helper objects to write out messages as bytes, for use with
 <code>FramedWrite</code>.</p>
 </div>
@@ -70,17 +70,19 @@ in the interest letting it return <code>Error</code>s directly.</p>
               Required Methods<a href='#required-methods' class='anchor'></a>
             </h2>
             <div class='methods'>
-        <h3 id='tymethod.encode' class='method'><span id='encode.v' class='invisible'><code>fn <a href='#tymethod.encode' class='fnname'>encode</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;item: Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Item" title="type tokio_io::codec::Encoder::Item">Item</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;dst: &amp;mut <a class="struct" href="../../bytes/bytes/struct.BytesMut.html" title="struct bytes::bytes::BytesMut">BytesMut</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Error" title="type tokio_io::codec::Encoder::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Encodes a frame into the buffer provided.</p>
+        <h3 id='tymethod.encode' class='method'><span id='encode.v' class='invisible'><code>fn <a href='#tymethod.encode' class='fnname'>encode</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;item: Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Item" title="type tokio_io::codec::Encoder::Item">Item</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;dst: &amp;mut <a class="struct" href="../../bytes/bytes/struct.BytesMut.html" title="struct bytes::bytes::BytesMut">BytesMut</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, Self::<a class="type" href="../../tokio_io/codec/trait.Encoder.html#associatedtype.Error" title="type tokio_io::codec::Encoder::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Encodes a frame into the buffer provided.</p>
 
-<p>This method will encode <code>msg</code> into the byte buffer provided by <code>buf</code>.
-The <code>buf</code> provided is an internal buffer of the <code>Framed</code> instance and
+<p>This method will encode <code>item</code> into the byte buffer provided by <code>dst</code>.
+The <code>dst</code> provided is an internal buffer of the <code>Framed</code> instance and
 will be written out when possible.</p>
 </div></div>
         <h2 id='implementors' class='small-section-header'>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
+    <li><div class='out-of-band'><a class='srclink' href='../../src/tokio_io/codecs.rs.html#28-36' title='goto source code'>[src]</a></div><code>impl Encoder for <a class="struct" href="../../tokio_io/codec/struct.BytesCodec.html" title="struct tokio_io::codec::BytesCodec">BytesCodec</a><span class="where fmt-newline">  type <a href='#associatedtype.Item' class="type">Item</a> = <a class="struct" href="../../bytes/bytes/struct.Bytes.html" title="struct bytes::bytes::Bytes">Bytes</a>;</span><span class="where fmt-newline">  type <a href='#associatedtype.Error' class="type">Error</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/tokio_io/codecs.rs.html#109-118' title='goto source code'>[src]</a></div><code>impl Encoder for <a class="struct" href="../../tokio_io/codec/struct.LinesCodec.html" title="struct tokio_io::codec::LinesCodec">LinesCodec</a><span class="where fmt-newline">  type <a href='#associatedtype.Item' class="type">Item</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>;</span><span class="where fmt-newline">  type <a href='#associatedtype.Error' class="type">Error</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>;</span></code></li>
+</ul><script type="text/javascript" async
                          src="../../implementors/tokio_io/codec/trait.Encoder.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
@@ -99,13 +101,15 @@ will be written out when possible.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

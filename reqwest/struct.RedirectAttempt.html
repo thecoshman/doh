@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct RedirectAttempt</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>reqwest</a></p><script>window.sidebarCurrent = {name: 'RedirectAttempt', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct RedirectAttempt</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.url">url</a><a href="#method.previous">previous</a><a href="#method.follow">follow</a><a href="#method.stop">stop</a><a href="#method.loop_detected">loop_detected</a><a href="#method.too_many_redirects">too_many_redirects</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='index.html'>reqwest</a></p><script>window.sidebarCurrent = {name: 'RedirectAttempt', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -56,21 +56,21 @@ in redirect chain.</p>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../reqwest/struct.RedirectAttempt.html" title="struct reqwest::RedirectAttempt">RedirectAttempt</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#117-160' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.url' class="method"><span id='url.v' class='invisible'><code>fn <a href='#method.url' class='fnname'>url</a>(&amp;self) -&gt; &amp;<a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#119-121' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.url' class="method"><span id='url.v' class='invisible'><code>pub fn <a href='#method.url' class='fnname'>url</a>(&amp;self) -&gt; &amp;<a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#119-121' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get the next URL to redirect to.</p>
-</div><h4 id='method.previous' class="method"><span id='previous.v' class='invisible'><code>fn <a href='#method.previous' class='fnname'>previous</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#124-126' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.previous' class="method"><span id='previous.v' class='invisible'><code>pub fn <a href='#method.previous' class='fnname'>previous</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../reqwest/struct.Url.html" title="struct reqwest::Url">Url</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#124-126' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get the list of previous URLs that have already been requested in this chain.</p>
-</div><h4 id='method.follow' class="method"><span id='follow.v' class='invisible'><code>fn <a href='#method.follow' class='fnname'>follow</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#128-132' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.follow' class="method"><span id='follow.v' class='invisible'><code>pub fn <a href='#method.follow' class='fnname'>follow</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#128-132' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns an action meaning reqwest should follow the next URL.</p>
-</div><h4 id='method.stop' class="method"><span id='stop.v' class='invisible'><code>fn <a href='#method.stop' class='fnname'>stop</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#137-141' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.stop' class="method"><span id='stop.v' class='invisible'><code>pub fn <a href='#method.stop' class='fnname'>stop</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#137-141' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns an action meaning reqwest should not follow the next URL.</p>
 
 <p>The 30x response will be returned as the <code>Ok</code> result.</p>
-</div><h4 id='method.loop_detected' class="method"><span id='loop_detected.v' class='invisible'><code>fn <a href='#method.loop_detected' class='fnname'>loop_detected</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#146-150' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.loop_detected' class="method"><span id='loop_detected.v' class='invisible'><code>pub fn <a href='#method.loop_detected' class='fnname'>loop_detected</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#146-150' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns an action meaning there was a loop of redirects found.</p>
 
 <p>An <code>Error</code> will be returned for the result of the sent request.</p>
-</div><h4 id='method.too_many_redirects' class="method"><span id='too_many_redirects.v' class='invisible'><code>fn <a href='#method.too_many_redirects' class='fnname'>too_many_redirects</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#155-159' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.too_many_redirects' class="method"><span id='too_many_redirects.v' class='invisible'><code>pub fn <a href='#method.too_many_redirects' class='fnname'>too_many_redirects</a>(self) -&gt; <a class="struct" href="../reqwest/struct.RedirectAction.html" title="struct reqwest::RedirectAction">RedirectAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#155-159' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns an action meaning there was a loop of redirects found.</p>
 
 <p>An <code>Error</code> will be returned for the result of the sent request.</p>
@@ -80,7 +80,7 @@ in redirect chain.</p>
             </h2>
         <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../reqwest/struct.RedirectAttempt.html" title="struct reqwest::RedirectAttempt">RedirectAttempt</a>&lt;'a&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#18' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/redirect.rs.html#18' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -98,13 +98,15 @@ in redirect chain.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

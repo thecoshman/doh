@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/access_control_request_headers.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/access_control_request_headers.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>access_control_request_headers.rs.html -- source</title>
@@ -101,6 +101,9 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">unicase</span>::<span class="ident">Ascii</span>;
 
@@ -113,7 +116,8 @@
     <span class="doccomment">/// during the actual request.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
-    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
     <span class="doccomment">/// Access-Control-Allow-Headers: &quot;Access-Control-Allow-Headers&quot; &quot;:&quot; #field-name</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
@@ -121,6 +125,7 @@
     <span class="doccomment">/// * `accept-language, date`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// # extern crate hyper;</span>
     <span class="doccomment">/// # extern crate unicase;</span>
@@ -136,6 +141,7 @@
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// # extern crate hyper;</span>
     <span class="doccomment">/// # extern crate unicase;</span>
@@ -178,13 +184,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

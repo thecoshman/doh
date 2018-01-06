@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct ExtendedValue</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../../index.html'>hyper</a>::<wbr><a href='../index.html'>header</a>::<wbr><a href='index.html'>parsing</a></p><script>window.sidebarCurrent = {name: 'ExtendedValue', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ExtendedValue</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.charset">charset</a><a href="#structfield.language_tag">language_tag</a><a href="#structfield.value">value</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Display">Display</a></div></div><p class='location'><a href='../../index.html'>hyper</a>::<wbr><a href='../index.html'>header</a>::<wbr><a href='index.html'>parsing</a></p><script>window.sidebarCurrent = {name: 'ExtendedValue', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -56,16 +56,19 @@
 }</pre><div class='docblock'><p>An extended header parameter value (i.e., tagged with a character set and optionally,
 a language), as defined in <a href="https://tools.ietf.org/html/rfc5987#section-3.2">RFC 5987</a>.</p>
 </div><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.charset' class="structfield">
-                           <span id='charset.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.charset" class="structfield small-section-header">
+                           <a href="#structfield.charset" class="anchor field"></a>
+                           <span id="charset.v" class='invisible'>
                            <code>charset: <a class="enum" href="../../../hyper/header/enum.Charset.html" title="enum hyper::header::Charset">Charset</a></code>
                            </span></span><div class='docblock'><p>The character set that is used to encode the <code>value</code> to a string.</p>
-</div><span id='structfield.language_tag' class="structfield">
-                           <span id='language_tag.v' class='invisible'>
+</div><span id="structfield.language_tag" class="structfield small-section-header">
+                           <a href="#structfield.language_tag" class="anchor field"></a>
+                           <span id="language_tag.v" class='invisible'>
                            <code>language_tag: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../../hyper/header/struct.LanguageTag.html" title="struct hyper::header::LanguageTag">LanguageTag</a>&gt;</code>
                            </span></span><div class='docblock'><p>The human language details of the <code>value</code>, if available.</p>
-</div><span id='structfield.value' class="structfield">
-                           <span id='value.v' class='invisible'>
+</div><span id="structfield.value" class="structfield small-section-header">
+                           <a href="#structfield.value" class="anchor field"></a>
+                           <span id="value.v" class='invisible'>
                            <code>value: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code>
                            </span></span><div class='docblock'><p>The parameter value, as expressed in octets.</p>
 </div>
@@ -79,14 +82,14 @@ a language), as defined in <a href="https://tools.ietf.org/html/rfc5987#section-
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../hyper/header/parsing/struct.ExtendedValue.html" title="struct hyper::header::parsing::ExtendedValue">ExtendedValue</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#60' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#60' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-PartialEq' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="struct" href="../../../hyper/header/parsing/struct.ExtendedValue.html" title="struct hyper::header::parsing::ExtendedValue">ExtendedValue</a></code><a href='#impl-PartialEq' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#60' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="struct" href="../../../hyper/header/parsing/struct.ExtendedValue.html" title="struct hyper::header::parsing::ExtendedValue">ExtendedValue</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#60' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
 </div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class="struct" href="../../../hyper/header/parsing/struct.ExtendedValue.html" title="struct hyper::header::parsing::ExtendedValue">ExtendedValue</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#60' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This method tests for <code>!=</code>.</p>
-</div></div><h3 id='impl-Display' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../../hyper/header/parsing/struct.ExtendedValue.html" title="struct hyper::header::parsing::ExtendedValue">ExtendedValue</a></code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#139-149' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#140-148' title='goto source code'>[src]</a></span></h4>
+</div></div><h3 id='impl-Display' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../../hyper/header/parsing/struct.ExtendedValue.html" title="struct hyper::header::parsing::ExtendedValue">ExtendedValue</a></code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#140-150' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/hyper/header/parsing.rs.html#141-149' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -105,13 +108,15 @@ a language), as defined in <a href="https://tools.ietf.org/html/rfc5987#section-
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -542,6 +542,9 @@
 <span id="497">497</span>
 <span id="498">498</span>
 <span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A Collection of Header implementations for common HTTP Headers.</span>
 <span class="doccomment">//!</span>
@@ -595,6 +598,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pragma</span>::<span class="ident">Pragma</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">prefer</span>::{<span class="ident">Prefer</span>, <span class="ident">Preference</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">preference_applied</span>::<span class="ident">PreferenceApplied</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">proxy_authorization</span>::<span class="ident">ProxyAuthorization</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">range</span>::{<span class="ident">Range</span>, <span class="ident">ByteRangeSpec</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">referer</span>::<span class="ident">Referer</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">referrer_policy</span>::<span class="ident">ReferrerPolicy</span>;
@@ -687,6 +691,7 @@
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">raw</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> {
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">id</span>() {
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused</span>)]</span>
             <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
             <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">raw</span>;
             <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="ident">raw</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">to_vec</span>()).<span class="ident">collect</span>();
@@ -1029,6 +1034,7 @@
 <span class="kw">mod</span> <span class="ident">pragma</span>;
 <span class="kw">mod</span> <span class="ident">prefer</span>;
 <span class="kw">mod</span> <span class="ident">preference_applied</span>;
+<span class="kw">mod</span> <span class="ident">proxy_authorization</span>;
 <span class="kw">mod</span> <span class="ident">range</span>;
 <span class="kw">mod</span> <span class="ident">referer</span>;
 <span class="kw">mod</span> <span class="ident">referrer_policy</span>;
@@ -1060,13 +1066,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

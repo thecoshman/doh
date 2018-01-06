@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/content_disposition.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/content_disposition.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>content_disposition.rs.html -- source</title>
@@ -305,6 +305,8 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
 </pre><pre class="rust ">
 <span class="comment">// # References</span>
 <span class="comment">//</span>
@@ -322,7 +324,7 @@
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">parsing</span>::{<span class="ident">parse_extended_value</span>, <span class="ident">http_percent_encode</span>};
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">shared</span>::<span class="ident">Charset</span>;
 
-<span class="doccomment">/// The implied disposition of the content of the HTTP body</span>
+<span class="doccomment">/// The implied disposition of the content of the HTTP body.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DispositionType</span> {
     <span class="doccomment">/// Inline implies default processing</span>
@@ -334,7 +336,7 @@
     <span class="ident">Ext</span>(<span class="ident">String</span>)
 }
 
-<span class="doccomment">/// A parameter to the disposition type</span>
+<span class="doccomment">/// A parameter to the disposition type.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DispositionParam</span> {
     <span class="doccomment">/// A Filename consisting of a Charset, an optional LanguageTag, and finally a sequence of</span>
@@ -345,7 +347,7 @@
     <span class="ident">Ext</span>(<span class="ident">String</span>, <span class="ident">String</span>)
 }
 
-<span class="doccomment">/// A `Content-Disposition` header, (re)defined in [RFC6266](https://tools.ietf.org/html/rfc6266)</span>
+<span class="doccomment">/// A `Content-Disposition` header, (re)defined in [RFC6266](https://tools.ietf.org/html/rfc6266).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The Content-Disposition response header field is used to convey</span>
 <span class="doccomment">/// additional information about how to process the response payload, and</span>
@@ -353,7 +355,8 @@
 <span class="doccomment">/// to use when saving the response payload locally.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # ABNF</span>
-<span class="doccomment">/// ```plain</span>
+
+<span class="doccomment">/// ```text</span>
 <span class="doccomment">/// content-disposition = &quot;Content-Disposition&quot; &quot;:&quot;</span>
 <span class="doccomment">///                       disposition-type *( &quot;;&quot; disposition-parm )</span>
 <span class="doccomment">///</span>
@@ -374,6 +377,7 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use hyper::header::{Headers, ContentDisposition, DispositionType, DispositionParam, Charset};</span>
 <span class="doccomment">///</span>
@@ -586,13 +590,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

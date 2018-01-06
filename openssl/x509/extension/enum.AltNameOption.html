@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Enum AltNameOption</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../../index.html'>openssl</a>::<wbr><a href='../index.html'>x509</a>::<wbr><a href='index.html'>extension</a></p><script>window.sidebarCurrent = {name: 'AltNameOption', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum AltNameOption</p><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.Other">Other</a><a href="#variant.Email">Email</a><a href="#variant.DNS">DNS</a><a href="#variant.Directory">Directory</a><a href="#variant.URI">URI</a><a href="#variant.IPAddress">IPAddress</a><a href="#variant.RegisteredID">RegisteredID</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Copy">Copy</a><a href="#impl-Display">Display</a></div></div><p class='location'><a href='../../index.html'>openssl</a>::<wbr><a href='../index.html'>x509</a>::<wbr><a href='index.html'>extension</a></p><script>window.sidebarCurrent = {name: 'AltNameOption', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -60,7 +60,7 @@
 }</pre><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
-<span id='variant.Other' class='variant'><span id='Other.v' class='invisible'><code>Other</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+<span id="variant.Other" class="variant small-section-header"><a href="#variant.Other" class="anchor field"></a><span id='Other.v' class='invisible'><code>Other</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>The value is specified as OID;content. See <code>man ASN1_generate_nconf</code> for more information on the content syntax.</p>
 
 <pre class="rust rust-example-rendered">
@@ -68,12 +68,12 @@
 <span class="kw">use</span> <span class="ident">openssl</span>::<span class="ident">x509</span>::<span class="ident">extension</span>::<span class="ident">AltNameOption</span>::<span class="ident">Other</span> <span class="kw">as</span> <span class="ident">OtherName</span>;
 
 <span class="ident">generator</span>.<span class="ident">add_extension</span>(<span class="ident">SubjectAltName</span>(<span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">OtherName</span>,<span class="string">&quot;2.999.3;ASN1:UTF8:some other name&quot;</span>.<span class="ident">to_owned</span>())]));</pre>
-</div><span id='variant.Email' class='variant'><span id='Email.v' class='invisible'><code>Email</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
-</div></div><span id='variant.DNS' class='variant'><span id='DNS.v' class='invisible'><code>DNS</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
-</div></div><span id='variant.Directory' class='variant'><span id='Directory.v' class='invisible'><code>Directory</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
-</div></div><span id='variant.URI' class='variant'><span id='URI.v' class='invisible'><code>URI</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
-</div></div><span id='variant.IPAddress' class='variant'><span id='IPAddress.v' class='invisible'><code>IPAddress</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
-</div></div><span id='variant.RegisteredID' class='variant'><span id='RegisteredID.v' class='invisible'><code>RegisteredID</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+</div><span id="variant.Email" class="variant small-section-header"><a href="#variant.Email" class="anchor field"></a><span id='Email.v' class='invisible'><code>Email</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+</div></div><span id="variant.DNS" class="variant small-section-header"><a href="#variant.DNS" class="anchor field"></a><span id='DNS.v' class='invisible'><code>DNS</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+</div></div><span id="variant.Directory" class="variant small-section-header"><a href="#variant.Directory" class="anchor field"></a><span id='Directory.v' class='invisible'><code>Directory</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+</div></div><span id="variant.URI" class="variant small-section-header"><a href="#variant.URI" class="anchor field"></a><span id='URI.v' class='invisible'><code>URI</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+</div></div><span id="variant.IPAddress" class="variant small-section-header"><a href="#variant.IPAddress" class="anchor field"></a><span id='IPAddress.v' class='invisible'><code>IPAddress</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
+</div></div><span id="variant.RegisteredID" class="variant small-section-header"><a href="#variant.RegisteredID" class="anchor field"></a><span id='RegisteredID.v' class='invisible'><code>RegisteredID</code></span></span><div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
@@ -85,7 +85,7 @@
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div><h3 id='impl-Copy' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="enum" href="../../../openssl/x509/extension/enum.AltNameOption.html" title="enum openssl::x509::extension::AltNameOption">AltNameOption</a></code><a href='#impl-Copy' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/openssl/x509/extension.rs.html#204' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div><h3 id='impl-Display' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="enum" href="../../../openssl/x509/extension/enum.AltNameOption.html" title="enum openssl::x509::extension::AltNameOption">AltNameOption</a></code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/openssl/x509/extension.rs.html#227-239' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/openssl/x509/extension.rs.html#228-238' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/openssl/x509/extension.rs.html#228-238' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -104,13 +104,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

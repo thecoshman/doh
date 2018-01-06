@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Trait OpenSslTypeRef</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>types</a></p><script>window.sidebarCurrent = {name: 'OpenSslTypeRef', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait OpenSslTypeRef</p><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.CType">CType</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.from_ptr">from_ptr</a><a href="#method.from_ptr_mut">from_ptr_mut</a><a href="#method.as_ptr">as_ptr</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>types</a></p><script>window.sidebarCurrent = {name: 'OpenSslTypeRef', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/foreign_types/lib.rs.html#195-216' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/foreign_types_shared/lib.rs.html#30-51' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait OpenSslTypeRef {
     type <a href='#associatedtype.CType' class="type">CType</a>;
     unsafe fn <a href='#method.from_ptr' class='fnname'>from_ptr</a>&lt;'a&gt;(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a>Self::<a class="type" href="../../openssl/types/trait.OpenSslTypeRef.html#associatedtype.CType" title="type openssl::types::OpenSslTypeRef::CType">CType</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>Self { ... }
@@ -100,10 +100,10 @@
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/pkey/struct.PKeyCtxRef.html" title="struct openssl::pkey::PKeyCtxRef">PKeyCtxRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="enum" href="../../openssl_sys/enum.EVP_PKEY_CTX.html" title="enum openssl_sys::EVP_PKEY_CTX">EVP_PKEY_CTX</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/rsa/struct.RsaRef.html" title="struct openssl::rsa::RsaRef">RsaRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="struct" href="../../openssl_sys/ossl10x/struct.RSA.html" title="struct openssl_sys::ossl10x::RSA">RSA</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/ssl/struct.SslContextRef.html" title="struct openssl::ssl::SslContextRef">SslContextRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="struct" href="../../openssl_sys/ossl10x/struct.SSL_CTX.html" title="struct openssl_sys::ossl10x::SSL_CTX">SSL_CTX</a>;</span></code></li>
-<li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/ssl/struct.SslCipherRef.html" title="struct openssl::ssl::SslCipherRef">SslCipherRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="enum" href="../../openssl_sys/enum.SSL_CIPHER.html" title="enum openssl_sys::SSL_CIPHER">SSL_CIPHER</a>;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1308-1310' title='goto source code'>[src]</a></div><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/ssl/struct.SslCipherRef.html" title="struct openssl::ssl::SslCipherRef">SslCipherRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="enum" href="../../openssl_sys/enum.SSL_CIPHER.html" title="enum openssl_sys::SSL_CIPHER">SSL_CIPHER</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/ssl/struct.SslSessionRef.html" title="struct openssl::ssl::SslSessionRef">SslSessionRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="struct" href="../../openssl_sys/ossl10x/struct.SSL_SESSION.html" title="struct openssl_sys::ossl10x::SSL_SESSION">SSL_SESSION</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/ssl/struct.SslRef.html" title="struct openssl::ssl::SslRef">SslRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="struct" href="../../openssl_sys/ossl10x/struct.SSL.html" title="struct openssl_sys::ossl10x::SSL">SSL</a>;</span></code></li>
-<li><code>impl&lt;T:&nbsp;<a class="trait" href="../../openssl/stack/trait.Stackable.html" title="trait openssl::stack::Stackable">Stackable</a>&gt; ForeignTypeRef for <a class="struct" href="../../openssl/stack/struct.StackRef.html" title="struct openssl::stack::StackRef">StackRef</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = T::<a class="type" href="../../openssl/stack/trait.Stackable.html#associatedtype.StackType" title="type openssl::stack::Stackable::StackType">StackType</a>;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/openssl/stack.rs.html#160-162' title='goto source code'>[src]</a></div><code>impl&lt;T:&nbsp;<a class="trait" href="../../openssl/stack/trait.Stackable.html" title="trait openssl::stack::Stackable">Stackable</a>&gt; ForeignTypeRef for <a class="struct" href="../../openssl/stack/struct.StackRef.html" title="struct openssl::stack::StackRef">StackRef</a>&lt;T&gt;<span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = T::<a class="type" href="../../openssl/stack/trait.Stackable.html#associatedtype.StackType" title="type openssl::stack::Stackable::StackType">StackType</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/string/struct.OpensslStringRef.html" title="struct openssl::string::OpensslStringRef">OpensslStringRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="type" href="../../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/x509/store/struct.X509StoreBuilderRef.html" title="struct openssl::x509::store::X509StoreBuilderRef">X509StoreBuilderRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="enum" href="../../openssl_sys/enum.X509_STORE.html" title="enum openssl_sys::X509_STORE">X509_STORE</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/x509/store/struct.X509StoreRef.html" title="struct openssl::x509::store::X509StoreRef">X509StoreRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="enum" href="../../openssl_sys/enum.X509_STORE.html" title="enum openssl_sys::X509_STORE">X509_STORE</a>;</span></code></li>
@@ -116,7 +116,7 @@
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/x509/struct.GeneralNameRef.html" title="struct openssl::x509::GeneralNameRef">GeneralNameRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="struct" href="../../openssl_sys/struct.GENERAL_NAME.html" title="struct openssl_sys::GENERAL_NAME">GENERAL_NAME</a>;</span></code></li>
 <li><code>impl ForeignTypeRef for <a class="struct" href="../../openssl/x509/struct.X509AlgorithmRef.html" title="struct openssl::x509::X509AlgorithmRef">X509AlgorithmRef</a><span class="where fmt-newline">  type <a href='#associatedtype.CType' class="type">CType</a> = <a class="struct" href="../../openssl_sys/ossl10x/struct.X509_ALGOR.html" title="struct openssl_sys::ossl10x::X509_ALGOR">X509_ALGOR</a>;</span></code></li>
 </ul><script type="text/javascript" async
-                         src="../../implementors/foreign_types/trait.OpenSslTypeRef.js">
+                         src="../../implementors/foreign_types_shared/trait.OpenSslTypeRef.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
 
@@ -134,13 +134,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

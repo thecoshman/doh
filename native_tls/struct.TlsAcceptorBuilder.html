@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct TlsAcceptorBuilder</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>native_tls</a></p><script>window.sidebarCurrent = {name: 'TlsAcceptorBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct TlsAcceptorBuilder</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.supported_protocols">supported_protocols</a><a href="#method.build">build</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-TlsAcceptorBuilderExt">TlsAcceptorBuilderExt</a></div></div><p class='location'><a href='index.html'>native_tls</a></p><script>window.sidebarCurrent = {name: 'TlsAcceptorBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -55,12 +55,12 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../native_tls/struct.TlsAcceptorBuilder.html" title="struct native_tls::TlsAcceptorBuilder">TlsAcceptorBuilder</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#423-441' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.supported_protocols' class="method"><span id='supported_protocols.v' class='invisible'><code>fn <a href='#method.supported_protocols' class='fnname'>supported_protocols</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;protocols: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="enum" href="../native_tls/enum.Protocol.html" title="enum native_tls::Protocol">Protocol</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="type" href="../native_tls/type.Result.html" title="type native_tls::Result">Result</a>&lt;&amp;mut <a class="struct" href="../native_tls/struct.TlsAcceptorBuilder.html" title="struct native_tls::TlsAcceptorBuilder">TlsAcceptorBuilder</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#428-434' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.supported_protocols' class="method"><span id='supported_protocols.v' class='invisible'><code>pub fn <a href='#method.supported_protocols' class='fnname'>supported_protocols</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;protocols: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="enum" href="../native_tls/enum.Protocol.html" title="enum native_tls::Protocol">Protocol</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="type" href="../native_tls/type.Result.html" title="type native_tls::Result">Result</a>&lt;&amp;mut <a class="struct" href="../native_tls/struct.TlsAcceptorBuilder.html" title="struct native_tls::TlsAcceptorBuilder">TlsAcceptorBuilder</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#428-434' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the protocols which the acceptor will support.</p>
 
 <p>The protocols supported by default are currently TLS 1.0, TLS 1.1, and TLS 1.2, though this
 is subject to change.</p>
-</div><h4 id='method.build' class="method"><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class="type" href="../native_tls/type.Result.html" title="type native_tls::Result">Result</a>&lt;<a class="struct" href="../native_tls/struct.TlsAcceptor.html" title="struct native_tls::TlsAcceptor">TlsAcceptor</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#437-440' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.build' class="method"><span id='build.v' class='invisible'><code>pub fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class="type" href="../native_tls/type.Result.html" title="type native_tls::Result">Result</a>&lt;<a class="struct" href="../native_tls/struct.TlsAcceptor.html" title="struct native_tls::TlsAcceptor">TlsAcceptor</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#437-440' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Consumes the builder, returning a <code>TlsAcceptor</code>.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
@@ -90,13 +90,15 @@ is subject to change.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

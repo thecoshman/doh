@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Trait FromBuf</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>bytes</a>::<wbr><a href='index.html'>buf</a></p><script>window.sidebarCurrent = {name: 'FromBuf', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait FromBuf</p><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.from_buf">from_buf</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-FromBuf">Vec&lt;u8&gt;</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>bytes</a>::<wbr><a href='index.html'>buf</a></p><script>window.sidebarCurrent = {name: 'FromBuf', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -128,13 +128,18 @@ through <a href="trait.Buf.html#method.collect"><code>Buf::collect</code></a>. S
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">vec</span>, <span class="kw-2">&amp;</span><span class="string">b&quot;hello world&quot;</span>[..]);</pre>
 </div></div>
+                <h2 id='foreign-impls' class='small-section-header'>
+                  Implementations on Foreign Types<a href='#foreign-impls' class='anchor'></a>
+                </h2>
+            <h3 id='impl-FromBuf' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../bytes/buf/trait.FromBuf.html" title="trait bytes::buf::FromBuf">FromBuf</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code><a href='#impl-FromBuf' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/from_buf.rs.html#89-98' title='goto source code'>[src]</a></span></h3>
+<span class='docblock autohide'><div class='impl-items'><h4 id='method.from_buf' class="method"><span id='from_buf.v-1' class='invisible'><code>fn <a href='#method.from_buf' class='fnname'>from_buf</a>&lt;T&gt;(buf: T) -&gt; Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../bytes/buf/trait.IntoBuf.html" title="trait bytes::buf::IntoBuf">IntoBuf</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/from_buf.rs.html#90-97' title='goto source code'>[src]</a></span></h4>
+</div></span>
         <h2 id='implementors' class='small-section-header'>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl FromBuf for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></li>
-<li><code>impl FromBuf for <a class="struct" href="../../bytes/struct.Bytes.html" title="struct bytes::Bytes">Bytes</a></code></li>
-<li><code>impl FromBuf for <a class="struct" href="../../bytes/struct.BytesMut.html" title="struct bytes::BytesMut">BytesMut</a></code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/bytes/buf/from_buf.rs.html#100-106' title='goto source code'>[src]</a></div><code>impl FromBuf for <a class="struct" href="../../bytes/struct.Bytes.html" title="struct bytes::Bytes">Bytes</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/bytes/buf/from_buf.rs.html#108-117' title='goto source code'>[src]</a></div><code>impl FromBuf for <a class="struct" href="../../bytes/struct.BytesMut.html" title="struct bytes::BytesMut">BytesMut</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/bytes/buf/trait.FromBuf.js">
                  </script></section>
@@ -154,13 +159,15 @@ through <a href="trait.Buf.html#method.collect"><code>Buf::collect</code></a>. S
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

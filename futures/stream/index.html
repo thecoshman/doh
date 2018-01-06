@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/futures/stream/mod.rs.html#1-1096' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/futures/stream/mod.rs.html#1-1104' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Asynchronous streams</p>
 
 <p>This module contains the <code>Stream</code> trait and a number of adaptors for this
@@ -232,6 +232,13 @@ to a sink and then waits until the sink has fully flushed those values.</p>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.IterOk.html"
                                   title='struct futures::stream::IterOk'>IterOk</a></td>
+                           <td class='docblock-short'>
+                                <p>A stream which is just a shim over an underlying instance of <code>Iterator</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.IterResult.html"
+                                  title='struct futures::stream::IterResult'>IterResult</a></td>
                            <td class='docblock-short'>
                                 <p>A stream which is just a shim over an underlying instance of <code>Iterator</code>.</p>
                            </td>
@@ -446,6 +453,14 @@ to yield the next value.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="fn" href="fn.iter_result.html"
+                                  title='fn futures::stream::iter_result'>iter_result</a></td>
+                           <td class='docblock-short'>
+                                <p>Converts an <code>Iterator</code> over <code>Result</code>s into a <code>Stream</code> which is always ready
+to yield the next value.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.once.html"
                                   title='fn futures::stream::once'>once</a></td>
                            <td class='docblock-short'>
@@ -489,13 +504,15 @@ to yield the next value.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

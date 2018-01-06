@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.8.0/src/proxy.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/reqwest-0.8.2/src/proxy.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>proxy.rs.html -- source</title>
@@ -338,8 +338,6 @@
 <span id="293">293</span>
 <span id="294">294</span>
 <span id="295">295</span>
-<span id="296">296</span>
-<span id="297">297</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
@@ -356,13 +354,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// For instance, let&#39;s look at `Proxy::http`:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">/// # extern crate reqwest;</span>
+<span class="doccomment">/// ```rust</span>
 <span class="doccomment">/// # fn run() -&gt; Result&lt;(), Box&lt;::std::error::Error&gt;&gt; {</span>
 <span class="doccomment">/// let proxy = reqwest::Proxy::http(&quot;https://secure.example&quot;)?;</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
-<span class="doccomment">/// # fn main() {}</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This proxy will intercept all HTTP requests, and make use of the proxy</span>
@@ -656,13 +652,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

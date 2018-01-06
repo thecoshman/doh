@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct ClientBuilder</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>reqwest</a></p><script>window.sidebarCurrent = {name: 'ClientBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ClientBuilder</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.build">build</a><a href="#method.add_root_certificate">add_root_certificate</a><a href="#method.identity">identity</a><a href="#method.danger_disable_hostname_verification">danger_disable_hostname_verification</a><a href="#method.enable_hostname_verification">enable_hostname_verification</a><a href="#method.default_headers">default_headers</a><a href="#method.gzip">gzip</a><a href="#method.proxy">proxy</a><a href="#method.redirect">redirect</a><a href="#method.referer">referer</a><a href="#method.timeout">timeout</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='index.html'>reqwest</a></p><script>window.sidebarCurrent = {name: 'ClientBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -63,10 +63,10 @@
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#59-216' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#61-66' title='goto source code'>[src]</a></span></h4>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#59-260' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#61-66' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Constructs a new <code>ClientBuilder</code></p>
-</div><h4 id='method.build' class="method"><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(&amp;mut self) -&gt; <a class="type" href="../reqwest/type.Result.html" title="type reqwest::Result">Result</a>&lt;<a class="struct" href="../reqwest/struct.Client.html" title="struct reqwest::Client">Client</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#78-82' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.build' class="method"><span id='build.v' class='invisible'><code>pub fn <a href='#method.build' class='fnname'>build</a>(&amp;mut self) -&gt; <a class="type" href="../reqwest/type.Result.html" title="type reqwest::Result">Result</a>&lt;<a class="struct" href="../reqwest/struct.Client.html" title="struct reqwest::Client">Client</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#78-82' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a <code>Client</code> that uses this <code>ClientBuilder</code> configuration.</p>
 
 <h1 id='errors' class='section-header'><a href='#errors'>Errors</a></h1>
@@ -75,7 +75,7 @@
 <h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>This method consumes the internal state of the builder.
 Trying to use this builder again after calling <code>build</code> will panic.</p>
-</div><h4 id='method.add_root_certificate' class="method"><span id='add_root_certificate.v' class='invisible'><code>fn <a href='#method.add_root_certificate' class='fnname'>add_root_certificate</a>(&amp;mut self, cert: <a class="struct" href="../reqwest/struct.Certificate.html" title="struct reqwest::Certificate">Certificate</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#113-116' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.add_root_certificate' class="method"><span id='add_root_certificate.v' class='invisible'><code>pub fn <a href='#method.add_root_certificate' class='fnname'>add_root_certificate</a>(&amp;mut self, cert: <a class="struct" href="../reqwest/struct.Certificate.html" title="struct reqwest::Certificate">Certificate</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#113-116' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Add a custom root certificate.</p>
 
 <p>This can be used to connect to a server that has a self-signed
@@ -97,7 +97,7 @@ certificate for example.</p>
 
 <h1 id='errors-1' class='section-header'><a href='#errors-1'>Errors</a></h1>
 <p>This method fails if adding root certificate was unsuccessful.</p>
-</div><h4 id='method.identity' class="method"><span id='identity.v' class='invisible'><code>fn <a href='#method.identity' class='fnname'>identity</a>(&amp;mut self, identity: <a class="struct" href="../reqwest/struct.Identity.html" title="struct reqwest::Identity">Identity</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#141-144' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.identity' class="method"><span id='identity.v' class='invisible'><code>pub fn <a href='#method.identity' class='fnname'>identity</a>(&amp;mut self, identity: <a class="struct" href="../reqwest/struct.Identity.html" title="struct reqwest::Identity">Identity</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#141-144' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the identity to be used for client certificate authentication.</p>
 
 <h1 id='example-2' class='section-header'><a href='#example-2'>Example</a></h1>
@@ -113,7 +113,7 @@ certificate for example.</p>
 <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">reqwest</span>::<span class="ident">Client</span>::<span class="ident">builder</span>()
     .<span class="ident">identity</span>(<span class="ident">pkcs12</span>)
     .<span class="ident">build</span>()<span class="question-mark">?</span>;</pre>
-</div><h4 id='method.danger_disable_hostname_verification' class="method"><span id='danger_disable_hostname_verification.v' class='invisible'><code>fn <a href='#method.danger_disable_hostname_verification' class='fnname'>danger_disable_hostname_verification</a>(&amp;mut self) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#156-159' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.danger_disable_hostname_verification' class="method"><span id='danger_disable_hostname_verification.v' class='invisible'><code>pub fn <a href='#method.danger_disable_hostname_verification' class='fnname'>danger_disable_hostname_verification</a>(&amp;mut self) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#156-159' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Disable hostname verification.</p>
 
 <h1 id='warning' class='section-header'><a href='#warning'>Warning</a></h1>
@@ -121,25 +121,55 @@ certificate for example.</p>
 hostname verification is not used, any valid certificate for any
 site will be trusted for use from any other. This introduces a
 significant vulnerability to man-in-the-middle attacks.</p>
-</div><h4 id='method.enable_hostname_verification' class="method"><span id='enable_hostname_verification.v' class='invisible'><code>fn <a href='#method.enable_hostname_verification' class='fnname'>enable_hostname_verification</a>(&amp;mut self) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#165-168' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.enable_hostname_verification' class="method"><span id='enable_hostname_verification.v' class='invisible'><code>pub fn <a href='#method.enable_hostname_verification' class='fnname'>enable_hostname_verification</a>(&amp;mut self) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#165-168' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Enable hostname verification.</p>
 
 <p>Default is enabled.</p>
-</div><h4 id='method.gzip' class="method"><span id='gzip.v' class='invisible'><code>fn <a href='#method.gzip' class='fnname'>gzip</a>(&amp;mut self, enable: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#174-177' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.default_headers' class="method"><span id='default_headers.v' class='invisible'><code>pub fn <a href='#method.default_headers' class='fnname'>default_headers</a>(&amp;mut self, headers: <a class="struct" href="../reqwest/header/struct.Headers.html" title="struct reqwest::header::Headers">Headers</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#209-212' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Sets the default headers for every request.</p>
+
+<h1 id='example-3' class='section-header'><a href='#example-3'>Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>;
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">header</span>::<span class="ident">Headers</span>::<span class="ident">new</span>();
+<span class="ident">headers</span>.<span class="ident">set</span>(<span class="ident">header</span>::<span class="ident">Authorization</span>(<span class="string">&quot;secret&quot;</span>.<span class="ident">to_string</span>()));
+
+<span class="comment">// get a client builder</span>
+<span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">reqwest</span>::<span class="ident">Client</span>::<span class="ident">builder</span>()
+    .<span class="ident">default_headers</span>(<span class="ident">headers</span>)
+    .<span class="ident">build</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">get</span>(<span class="string">&quot;https://www.rust-lang.org&quot;</span>).<span class="ident">send</span>()<span class="question-mark">?</span>;</pre>
+
+<p>Override the default headers:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>;
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">header</span>::<span class="ident">Headers</span>::<span class="ident">new</span>();
+<span class="ident">headers</span>.<span class="ident">set</span>(<span class="ident">header</span>::<span class="ident">Authorization</span>(<span class="string">&quot;secret&quot;</span>.<span class="ident">to_string</span>()));
+
+<span class="comment">// get a client builder</span>
+<span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">reqwest</span>::<span class="ident">Client</span>::<span class="ident">builder</span>()
+    .<span class="ident">default_headers</span>(<span class="ident">headers</span>)
+    .<span class="ident">build</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">client</span>
+    .<span class="ident">get</span>(<span class="string">&quot;https://www.rust-lang.org&quot;</span>)
+    .<span class="ident">header</span>(<span class="ident">header</span>::<span class="ident">Authorization</span>(<span class="string">&quot;token&quot;</span>.<span class="ident">to_string</span>()))
+    .<span class="ident">send</span>()<span class="question-mark">?</span>;</pre>
+</div><h4 id='method.gzip' class="method"><span id='gzip.v' class='invisible'><code>pub fn <a href='#method.gzip' class='fnname'>gzip</a>(&amp;mut self, enable: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#218-221' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Enable auto gzip decompression by checking the ContentEncoding response header.</p>
 
 <p>Default is enabled.</p>
-</div><h4 id='method.proxy' class="method"><span id='proxy.v' class='invisible'><code>fn <a href='#method.proxy' class='fnname'>proxy</a>(&amp;mut self, proxy: <a class="struct" href="../reqwest/struct.Proxy.html" title="struct reqwest::Proxy">Proxy</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#181-184' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.proxy' class="method"><span id='proxy.v' class='invisible'><code>pub fn <a href='#method.proxy' class='fnname'>proxy</a>(&amp;mut self, proxy: <a class="struct" href="../reqwest/struct.Proxy.html" title="struct reqwest::Proxy">Proxy</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#225-228' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Add a <code>Proxy</code> to the list of proxies the <code>Client</code> will use.</p>
-</div><h4 id='method.redirect' class="method"><span id='redirect.v' class='invisible'><code>fn <a href='#method.redirect' class='fnname'>redirect</a>(&amp;mut self, policy: <a class="struct" href="../reqwest/struct.RedirectPolicy.html" title="struct reqwest::RedirectPolicy">RedirectPolicy</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#190-193' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.redirect' class="method"><span id='redirect.v' class='invisible'><code>pub fn <a href='#method.redirect' class='fnname'>redirect</a>(&amp;mut self, policy: <a class="struct" href="../reqwest/struct.RedirectPolicy.html" title="struct reqwest::RedirectPolicy">RedirectPolicy</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#234-237' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set a <code>RedirectPolicy</code> for this client.</p>
 
 <p>Default will follow redirects up to a maximum of 10.</p>
-</div><h4 id='method.referer' class="method"><span id='referer.v' class='invisible'><code>fn <a href='#method.referer' class='fnname'>referer</a>(&amp;mut self, enable: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#199-202' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.referer' class="method"><span id='referer.v' class='invisible'><code>pub fn <a href='#method.referer' class='fnname'>referer</a>(&amp;mut self, enable: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#243-246' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Enable or disable automatic setting of the <code>Referer</code> header.</p>
 
 <p>Default is <code>true</code>.</p>
-</div><h4 id='method.timeout' class="method"><span id='timeout.v' class='invisible'><code>fn <a href='#method.timeout' class='fnname'>timeout</a>&lt;T&gt;(&amp;mut self, timeout: T) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#210-215' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.timeout' class="method"><span id='timeout.v' class='invisible'><code>pub fn <a href='#method.timeout' class='fnname'>timeout</a>&lt;T&gt;(&amp;mut self, timeout: T) -&gt; &amp;mut <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#254-259' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set a timeout for connect, read and write operations of a <code>Client</code>.</p>
 
 <p>Default is 30 seconds.</p>
@@ -149,9 +179,9 @@ significant vulnerability to man-in-the-middle attacks.</p>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>
-        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#337-342' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#338-341' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../reqwest/struct.ClientBuilder.html" title="struct reqwest::ClientBuilder">ClientBuilder</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#381-386' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/reqwest/client.rs.html#382-385' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -169,13 +199,15 @@ significant vulnerability to man-in-the-middle attacks.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

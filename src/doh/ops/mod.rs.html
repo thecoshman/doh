@@ -651,6 +651,8 @@
 <span id="606">606</span>
 <span id="607">607</span>
 <span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::<span class="ident">util</span>::{<span class="ident">human_readable_size</span>, <span class="ident">max_listing_lines</span>, <span class="ident">percent_decode</span>, <span class="ident">parent_url</span>, <span class="ident">GETCH_SPECIAL_PREFIX</span>, <span class="ident">GETCH_ARROW_RIGHT</span>, <span class="ident">GETCH_ARROW_LEFT</span>,
                         <span class="ident">GETCH_ARROW_DOWN</span>, <span class="ident">GETCH_ARROW_UP</span>, <span class="ident">GETCH_PAGE_DOWN</span>, <span class="ident">GETCH_PAGE_UP</span>, <span class="ident">TAB_SPACING</span>, <span class="ident">GETCH_DELETE</span>, <span class="ident">GETCH_ENTER</span>, <span class="ident">USER_AGENT</span>, <span class="ident">GETCH_HOME</span>,
@@ -663,6 +665,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">PathBuf</span>, <span class="ident">Path</span>};
 <span class="kw">use</span> <span class="ident">itertools</span>::<span class="ident">Itertools</span>;
 <span class="kw">use</span> <span class="ident">tabwriter</span>::<span class="ident">TabWriter</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fs</span>::<span class="ident">File</span>;
 <span class="kw">use</span> <span class="ident">getch</span>::<span class="ident">Getch</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
@@ -1082,6 +1085,7 @@
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pb</span> <span class="op">=</span> <span class="ident">ProgressBar</span>::<span class="ident">on</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">size</span>);
                 <span class="ident">pb</span>.<span class="ident">set_units</span>(<span class="ident">ProgressBarUnits</span>::<span class="ident">Bytes</span>);
                 <span class="ident">pb</span>.<span class="ident">set_width</span>(<span class="prelude-val">Some</span>(<span class="ident">tx</span>));
+                <span class="ident">pb</span>.<span class="ident">set_max_refresh_rate</span>(<span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>)));
 
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="number">4096</span>];
                 <span class="kw">loop</span> {
@@ -1278,13 +1282,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

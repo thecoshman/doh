@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/shared/entity.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/shared/entity.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>entity.rs.html -- source</title>
@@ -260,14 +260,15 @@
 <span id="215">215</span>
 <span id="216">216</span>
 <span id="217">217</span>
+<span id="218">218</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 
-<span class="comment">// check that each char in the slice is either:</span>
-<span class="comment">// 1. %x21, or</span>
-<span class="comment">// 2. in the range %x23 to %x7E, or</span>
-<span class="comment">// 3. above %x80</span>
+<span class="doccomment">/// check that each char in the slice is either:</span>
+<span class="doccomment">/// 1. `%x21`, or</span>
+<span class="doccomment">/// 2. in the range `%x23` to `%x7E`, or</span>
+<span class="doccomment">/// 3. above `%x80`</span>
 <span class="kw">fn</span> <span class="ident">check_slice_validity</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
     <span class="ident">slice</span>.<span class="ident">bytes</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span>
         <span class="ident">c</span> <span class="op">==</span> <span class="string">b&#39;\x21&#39;</span> <span class="op">||</span> (<span class="ident">c</span> <span class="op">&gt;=</span> <span class="string">b&#39;\x23&#39;</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="op">&lt;=</span> <span class="string">b&#39;\x7e&#39;</span>) <span class="op">|</span> (<span class="ident">c</span> <span class="op">&gt;=</span> <span class="string">b&#39;\x80&#39;</span>))
@@ -280,7 +281,8 @@
 <span class="doccomment">/// which always looks like `W/`. Examples for valid tags are `&quot;xyzzy&quot;` and `W/&quot;xyzzy&quot;`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # ABNF</span>
-<span class="doccomment">/// ```plain</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```text</span>
 <span class="doccomment">/// entity-tag = [ weak ] opaque-tag</span>
 <span class="doccomment">/// weak       = %x57.2F ; &quot;W/&quot;, case-sensitive</span>
 <span class="doccomment">/// opaque-tag = DQUOTE *etagc DQUOTE</span>
@@ -496,13 +498,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

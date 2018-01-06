@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/zlib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.14/src/zlib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>zlib.rs.html -- source</title>
@@ -725,6 +725,43 @@
 <span id="680">680</span>
 <span id="681">681</span>
 <span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
+<span id="716">716</span>
+<span id="717">717</span>
+<span id="718">718</span>
+<span id="719">719</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! The encoder and decoder of the ZLIB format.</span>
 <span class="doccomment">//!</span>
@@ -755,7 +792,7 @@
 <span class="kw">use</span> <span class="ident">lz77</span>;
 <span class="kw">use</span> <span class="ident">deflate</span>;
 <span class="kw">use</span> <span class="ident">checksum</span>;
-<span class="kw">use</span> <span class="ident">finish</span>::<span class="ident">Finish</span>;
+<span class="kw">use</span> <span class="ident">finish</span>::{<span class="ident">Complete</span>, <span class="ident">Finish</span>};
 
 <span class="kw">const</span> <span class="ident">COMPRESSION_METHOD_DEFLATE</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">8</span>;
 
@@ -937,7 +974,7 @@
         <span class="kw">if</span> <span class="ident">check</span> <span class="op">%</span> <span class="number">31</span> <span class="op">!=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
                 <span class="string">&quot;Inconsistent ZLIB check bits: `CMF({}) * 256 + \
-                                            FLG({})` must be a multiple of 31&quot;</span>,
+                 FLG({})` must be a multiple of 31&quot;</span>,
                 <span class="ident">cmf</span>,
                 <span class="ident">flg</span>
             ));
@@ -948,7 +985,7 @@
         <span class="kw">if</span> <span class="ident">compression_method</span> <span class="op">!=</span> <span class="ident">COMPRESSION_METHOD_DEFLATE</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
                 <span class="string">&quot;Compression methods other than DEFLATE(8) are \
-                                            unsupported: method={}&quot;</span>,
+                 unsupported: method={}&quot;</span>,
                 <span class="ident">compression_method</span>
             ));
         }
@@ -961,7 +998,7 @@
             <span class="kw">let</span> <span class="ident">dictionary_id</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">read_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
                 <span class="string">&quot;Preset dictionaries are not supported: \
-                                            dictionary_id=0x{:X}&quot;</span>,
+                 dictionary_id=0x{:X}&quot;</span>,
                 <span class="ident">dictionary_id</span>
             ));
         }
@@ -1278,19 +1315,37 @@
     <span class="doccomment">///            [120, 156, 5, 128, 65, 9, 0, 0, 8, 3, 171, 104, 27, 27, 88, 64, 127,</span>
     <span class="doccomment">///             7, 131, 245, 127, 140, 121, 80, 173, 204, 117, 0, 28, 73, 4, 62]);</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Note</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If you are not concerned the result of this encoding,</span>
+    <span class="doccomment">/// it may be convenient to use `AutoFinishUnchecked` instead of the explicit invocation of this method.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use std::io;</span>
+    <span class="doccomment">/// use libflate::finish::AutoFinishUnchecked;</span>
+    <span class="doccomment">/// use libflate::zlib::Encoder;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let plain = b&quot;Hello World!&quot;;</span>
+    <span class="doccomment">/// let mut buf = Vec::new();</span>
+    <span class="doccomment">/// let mut encoder = AutoFinishUnchecked::new(Encoder::new(&amp;mut buf).unwrap());</span>
+    <span class="doccomment">/// io::copy(&amp;mut &amp;plain[..], &amp;mut encoder).unwrap();</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Finish</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">finish_try</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">writer</span>.<span class="ident">finish</span>());
         <span class="kw">match</span> <span class="ident">inner</span>
             .<span class="ident">write_u32</span>::<span class="op">&lt;</span><span class="ident">BigEndian</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">adler32</span>.<span class="ident">value</span>())
-            .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">inner</span>.<span class="ident">flush</span>()) {
+            .<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">inner</span>.<span class="ident">flush</span>())
+        {
             <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="ident">Finish</span>::<span class="ident">new</span>(<span class="ident">inner</span>, <span class="prelude-val">None</span>),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">Finish</span>::<span class="ident">new</span>(<span class="ident">inner</span>, <span class="prelude-val">Some</span>(<span class="ident">e</span>)),
         }
     }
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="ident">Write</span> <span class="kw">for</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="ident">Write</span> <span class="kw">for</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">E</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
+    <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>,
 {
     <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">written_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">writer</span>.<span class="ident">write</span>(<span class="ident">buf</span>)<span class="question-mark">?</span>;
@@ -1301,10 +1356,20 @@
         <span class="self">self</span>.<span class="ident">writer</span>.<span class="ident">flush</span>()
     }
 }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="ident">Complete</span> <span class="kw">for</span> <span class="ident">Encoder</span><span class="op">&lt;</span><span class="ident">W</span>, <span class="ident">E</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">W</span>: <span class="ident">io</span>::<span class="ident">Write</span>,
+    <span class="ident">E</span>: <span class="ident">lz77</span>::<span class="ident">Lz77Encode</span>,
+{
+    <span class="kw">fn</span> <span class="ident">complete</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">finish</span>().<span class="ident">into_result</span>().<span class="ident">map</span>(<span class="op">|</span>_<span class="op">|</span> ())
+    }
+}
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+    <span class="kw">use</span> <span class="ident">finish</span>::<span class="ident">AutoFinish</span>;
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="kw">fn</span> <span class="ident">decode_all</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
@@ -1327,7 +1392,6 @@
         }
     }
 
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
     <span class="kw">const</span> <span class="ident">DECODE_WORKS_TESTDATA</span>: [<span class="ident">u8</span>; <span class="number">20</span>] <span class="op">=</span> [
         <span class="number">120</span>, <span class="number">156</span>, <span class="number">243</span>, <span class="number">72</span>, <span class="number">205</span>, <span class="number">201</span>, <span class="number">201</span>, <span class="number">87</span>, <span class="number">8</span>, <span class="number">207</span>, <span class="number">47</span>, <span class="number">202</span>, <span class="number">73</span>, <span class="number">81</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">28</span>, <span class="number">73</span>, <span class="number">4</span>, <span class="number">62</span>
     ];
@@ -1370,15 +1434,15 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">decode_all</span>(<span class="kw-2">&amp;</span><span class="ident">encoded</span>).<span class="ident">unwrap</span>(), <span class="ident">plain</span>);
     }
 
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
     <span class="kw">const</span> <span class="ident">RAW_ENCODE_WORKS_EXPECTED</span>: [<span class="ident">u8</span>; <span class="number">23</span>] <span class="op">=</span> [
-        <span class="number">120</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">243</span>, <span class="number">255</span>, <span class="number">72</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">32</span>, <span class="number">87</span>, <span class="number">111</span>, <span class="number">114</span>, <span class="number">108</span>, <span class="number">100</span>, <span class="number">33</span>, <span class="number">28</span>, <span class="number">73</span>, <span class="number">4</span>, <span class="number">62</span>
+        <span class="number">120</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">243</span>, <span class="number">255</span>, <span class="number">72</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">32</span>, <span class="number">87</span>, <span class="number">111</span>, <span class="number">114</span>, <span class="number">108</span>, <span class="number">100</span>, <span class="number">33</span>, <span class="number">28</span>, <span class="number">73</span>,
+        <span class="number">4</span>, <span class="number">62</span>,
     ];
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">raw_encode_works</span>() {
         <span class="kw">let</span> <span class="ident">plain</span> <span class="op">=</span> <span class="string">b&quot;Hello World!&quot;</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">EncodeOptions</span>::<span class="ident">new</span>().<span class="ident">no_compression</span>())
-            .<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span>
+            <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">EncodeOptions</span>::<span class="ident">new</span>().<span class="ident">no_compression</span>()).<span class="ident">unwrap</span>();
         <span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">&amp;</span><span class="ident">plain</span>[..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">encoded</span> <span class="op">=</span> <span class="ident">encoder</span>.<span class="ident">finish</span>().<span class="ident">into_result</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">RAW_ENCODE_WORKS_EXPECTED</span>;
@@ -1387,25 +1451,35 @@
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">encoder_auto_finish_works</span>() {
+        <span class="kw">let</span> <span class="ident">plain</span> <span class="op">=</span> <span class="string">b&quot;Hello World! Hello ZLIB!!&quot;</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+        {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">AutoFinish</span>::<span class="ident">new</span>(<span class="ident">Encoder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>).<span class="ident">unwrap</span>());
+            <span class="ident">io</span>::<span class="ident">copy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">&amp;</span><span class="ident">plain</span>[..], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">encoder</span>).<span class="ident">unwrap</span>();
+        }
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">decode_all</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>).<span class="ident">unwrap</span>(), <span class="ident">plain</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_issue_2</span>() {
         <span class="comment">// See: https://github.com/sile/libflate/issues/2</span>
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
-            [<span class="number">163</span>, <span class="number">181</span>, <span class="number">167</span>, <span class="number">40</span>, <span class="number">62</span>, <span class="number">239</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">217</span>, <span class="number">61</span>, <span class="number">122</span>, <span class="number">20</span>,
-             <span class="number">136</span>, <span class="number">160</span>, <span class="number">178</span>, <span class="number">119</span>, <span class="number">217</span>, <span class="number">217</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">97</span>, <span class="number">195</span>, <span class="number">101</span>, <span class="number">47</span>, <span class="number">170</span>]
-        );
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
-            [<span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">211</span>, <span class="number">7</span>, <span class="number">64</span>, <span class="number">96</span>, <span class="number">36</span>, <span class="number">57</span>, <span class="number">155</span>, <span class="number">53</span>, <span class="number">166</span>, <span class="number">76</span>, <span class="number">14</span>, <span class="number">238</span>, <span class="number">66</span>, <span class="number">66</span>, <span class="number">148</span>, <span class="number">154</span>, <span class="number">124</span>,
-             <span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">188</span>, <span class="number">138</span>, <span class="number">131</span>, <span class="number">171</span>, <span class="number">189</span>, <span class="number">54</span>, <span class="number">229</span>, <span class="number">192</span>, <span class="number">38</span>, <span class="number">29</span>, <span class="number">240</span>, <span class="number">122</span>, <span class="number">28</span>]
-        );
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
-            [<span class="number">239</span>, <span class="number">238</span>, <span class="number">212</span>, <span class="number">42</span>, <span class="number">5</span>, <span class="number">46</span>, <span class="number">186</span>, <span class="number">67</span>, <span class="number">122</span>, <span class="number">247</span>, <span class="number">30</span>, <span class="number">61</span>, <span class="number">219</span>, <span class="number">62</span>, <span class="number">228</span>, <span class="number">202</span>, <span class="number">164</span>, <span class="number">205</span>,
-             <span class="number">139</span>, <span class="number">109</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">122</span>, <span class="number">30</span>, <span class="number">12</span>, <span class="number">62</span>, <span class="number">46</span>, <span class="number">27</span>, <span class="number">145</span>, <span class="number">241</span>, <span class="number">183</span>, <span class="number">137</span>]
-        );
-        <span class="macro">assert_encode_decode</span><span class="macro">!</span>(
-            [<span class="number">88</span>, <span class="number">202</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">108</span>, <span class="number">153</span>, <span class="number">49</span>, <span class="number">164</span>, <span class="number">250</span>, <span class="number">71</span>, <span class="number">19</span>, <span class="number">4</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">108</span>, <span class="number">237</span>, <span class="number">205</span>,
-             <span class="number">208</span>, <span class="number">77</span>, <span class="number">217</span>, <span class="number">100</span>, <span class="number">118</span>, <span class="number">49</span>, <span class="number">10</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">51</span>, <span class="number">202</span>, <span class="number">69</span>, <span class="number">67</span>, <span class="number">181</span>, <span class="number">146</span>, <span class="number">86</span>]
-        );
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([
+            <span class="number">163</span>, <span class="number">181</span>, <span class="number">167</span>, <span class="number">40</span>, <span class="number">62</span>, <span class="number">239</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">217</span>, <span class="number">61</span>, <span class="number">122</span>, <span class="number">20</span>, <span class="number">136</span>, <span class="number">160</span>, <span class="number">178</span>, <span class="number">119</span>, <span class="number">217</span>,
+            <span class="number">217</span>, <span class="number">41</span>, <span class="number">125</span>, <span class="number">189</span>, <span class="number">97</span>, <span class="number">195</span>, <span class="number">101</span>, <span class="number">47</span>, <span class="number">170</span>,
+        ]);
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([
+            <span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">211</span>, <span class="number">7</span>, <span class="number">64</span>, <span class="number">96</span>, <span class="number">36</span>, <span class="number">57</span>, <span class="number">155</span>, <span class="number">53</span>, <span class="number">166</span>, <span class="number">76</span>, <span class="number">14</span>, <span class="number">238</span>, <span class="number">66</span>, <span class="number">66</span>, <span class="number">148</span>, <span class="number">154</span>, <span class="number">124</span>,
+            <span class="number">162</span>, <span class="number">58</span>, <span class="number">99</span>, <span class="number">188</span>, <span class="number">138</span>, <span class="number">131</span>, <span class="number">171</span>, <span class="number">189</span>, <span class="number">54</span>, <span class="number">229</span>, <span class="number">192</span>, <span class="number">38</span>, <span class="number">29</span>, <span class="number">240</span>, <span class="number">122</span>, <span class="number">28</span>,
+        ]);
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([
+            <span class="number">239</span>, <span class="number">238</span>, <span class="number">212</span>, <span class="number">42</span>, <span class="number">5</span>, <span class="number">46</span>, <span class="number">186</span>, <span class="number">67</span>, <span class="number">122</span>, <span class="number">247</span>, <span class="number">30</span>, <span class="number">61</span>, <span class="number">219</span>, <span class="number">62</span>, <span class="number">228</span>, <span class="number">202</span>, <span class="number">164</span>, <span class="number">205</span>, <span class="number">139</span>,
+            <span class="number">109</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">181</span>, <span class="number">99</span>, <span class="number">122</span>, <span class="number">30</span>, <span class="number">12</span>, <span class="number">62</span>, <span class="number">46</span>, <span class="number">27</span>, <span class="number">145</span>, <span class="number">241</span>, <span class="number">183</span>, <span class="number">137</span>,
+        ]);
+        <span class="macro">assert_encode_decode</span><span class="macro">!</span>([
+            <span class="number">88</span>, <span class="number">202</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">108</span>, <span class="number">153</span>, <span class="number">49</span>, <span class="number">164</span>, <span class="number">250</span>, <span class="number">71</span>, <span class="number">19</span>, <span class="number">4</span>, <span class="number">108</span>, <span class="number">111</span>, <span class="number">108</span>, <span class="number">237</span>, <span class="number">205</span>, <span class="number">208</span>,
+            <span class="number">77</span>, <span class="number">217</span>, <span class="number">100</span>, <span class="number">118</span>, <span class="number">49</span>, <span class="number">10</span>, <span class="number">64</span>, <span class="number">12</span>, <span class="number">125</span>, <span class="number">51</span>, <span class="number">202</span>, <span class="number">69</span>, <span class="number">67</span>, <span class="number">181</span>, <span class="number">146</span>, <span class="number">86</span>,
+        ]);
     }
 }
 </pre>
@@ -1426,13 +1500,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

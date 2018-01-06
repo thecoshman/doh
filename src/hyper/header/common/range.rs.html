@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/range.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/range.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>range.rs.html -- source</title>
@@ -335,6 +335,103 @@
 <span id="290">290</span>
 <span id="291">291</span>
 <span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
@@ -350,7 +447,8 @@
 <span class="doccomment">/// representation data.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # ABNF</span>
-<span class="doccomment">/// ```plain</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```text</span>
 <span class="doccomment">/// Range =	byte-ranges-specifier / other-ranges-specifier</span>
 <span class="doccomment">/// other-ranges-specifier = other-range-unit &quot;=&quot; other-range-set</span>
 <span class="doccomment">/// other-range-set = 1*VCHAR</span>
@@ -365,6 +463,7 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example values</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// * `bytes=1000-`</span>
 <span class="doccomment">/// * `bytes=-2000`</span>
 <span class="doccomment">/// * `bytes=0-1,30-40`</span>
@@ -373,6 +472,7 @@
 <span class="doccomment">/// * `custom_unit=xxx-yyy`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use hyper::header::{Headers, Range, ByteRangeSpec};</span>
 <span class="doccomment">///</span>
@@ -384,6 +484,7 @@
 <span class="doccomment">/// headers.clear();</span>
 <span class="doccomment">/// headers.set(Range::Unregistered(&quot;letters&quot;.to_owned(), &quot;a-f&quot;.to_owned()));</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use hyper::header::{Headers, Range};</span>
 <span class="doccomment">///</span>
@@ -412,6 +513,77 @@
     <span class="ident">AllFrom</span>(<span class="ident">u64</span>),
     <span class="doccomment">/// Get last x bytes (&quot;-x&quot;)</span>
     <span class="ident">Last</span>(<span class="ident">u64</span>)
+}
+
+<span class="kw">impl</span> <span class="ident">ByteRangeSpec</span> {
+    <span class="doccomment">/// Given the full length of the entity, attempt to normalize the byte range</span>
+    <span class="doccomment">/// into an satisfiable end-inclusive (from, to) range.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The resulting range is guaranteed to be a satisfiable range within the bounds</span>
+    <span class="doccomment">/// of `0 &lt;= from &lt;= to &lt; full_length`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the byte range is deemed unsatisfiable, `None` is returned.</span>
+    <span class="doccomment">/// An unsatisfiable range is generally cause for a server to either reject</span>
+    <span class="doccomment">/// the client request with a `416 Range Not Satisfiable` status code, or to</span>
+    <span class="doccomment">/// simply ignore the range header and serve the full entity using a `200 OK`</span>
+    <span class="doccomment">/// status code.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function closely follows [RFC 7233][1] section 2.1.</span>
+    <span class="doccomment">/// As such, it considers ranges to be satisfiable if they meet the following</span>
+    <span class="doccomment">/// conditions: </span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// &gt; If a valid byte-range-set includes at least one byte-range-spec with</span>
+    <span class="doccomment">/// a first-byte-pos that is less than the current length of the</span>
+    <span class="doccomment">/// representation, or at least one suffix-byte-range-spec with a</span>
+    <span class="doccomment">/// non-zero suffix-length, then the byte-range-set is satisfiable.</span>
+    <span class="doccomment">/// Otherwise, the byte-range-set is unsatisfiable.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The function also computes remainder ranges based on the RFC:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// &gt; If the last-byte-pos value is</span>
+    <span class="doccomment">/// absent, or if the value is greater than or equal to the current</span>
+    <span class="doccomment">/// length of the representation data, the byte range is interpreted as</span>
+    <span class="doccomment">/// the remainder of the representation (i.e., the server replaces the</span>
+    <span class="doccomment">/// value of last-byte-pos with a value that is one less than the current</span>
+    <span class="doccomment">/// length of the selected representation).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [1]: https://tools.ietf.org/html/rfc7233</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_satisfiable_range</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">full_length</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u64</span>, <span class="ident">u64</span>)<span class="op">&gt;</span> {
+        <span class="comment">// If the full length is zero, there is no satisfiable end-inclusive range.</span>
+        <span class="kw">if</span> <span class="ident">full_length</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span> <span class="prelude-val">None</span>;
+        }
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="kw-2">&amp;</span><span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="ident">from</span>, <span class="ident">to</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">from</span> <span class="op">&lt;</span> <span class="ident">full_length</span> <span class="op">&amp;&amp;</span> <span class="ident">from</span> <span class="op">&lt;=</span> <span class="ident">to</span> {
+                    <span class="prelude-val">Some</span>((<span class="ident">from</span>, ::<span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">to</span>, <span class="ident">full_length</span> <span class="op">-</span> <span class="number">1</span>)))
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">None</span>
+                }
+            },
+            <span class="kw-2">&amp;</span><span class="ident">ByteRangeSpec</span>::<span class="ident">AllFrom</span>(<span class="ident">from</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">from</span> <span class="op">&lt;</span> <span class="ident">full_length</span> {
+                    <span class="prelude-val">Some</span>((<span class="ident">from</span>, <span class="ident">full_length</span> <span class="op">-</span> <span class="number">1</span>))
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">None</span>
+                }
+            },
+            <span class="kw-2">&amp;</span><span class="ident">ByteRangeSpec</span>::<span class="ident">Last</span>(<span class="ident">last</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">last</span> <span class="op">&gt;</span> <span class="number">0</span> {
+                    <span class="comment">// From the RFC: If the selected representation is shorter</span>
+                    <span class="comment">// than the specified suffix-length,</span>
+                    <span class="comment">// the entire representation is used.</span>
+                    <span class="kw">if</span> <span class="ident">last</span> <span class="op">&gt;</span> <span class="ident">full_length</span> {
+                        <span class="prelude-val">Some</span>((<span class="number">0</span>, <span class="ident">full_length</span> <span class="op">-</span> <span class="number">1</span>))
+                    } <span class="kw">else</span> {
+                        <span class="prelude-val">Some</span>((<span class="ident">full_length</span> <span class="op">-</span> <span class="ident">last</span>, <span class="ident">full_length</span> <span class="op">-</span> <span class="number">1</span>))
+                    }
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">None</span>
+                }
+            }
+        }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Range</span> {
@@ -626,6 +798,28 @@
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>.<span class="ident">to_string</span>(), <span class="string">&quot;Range: custom=1-xxx\r\n&quot;</span>);
 }
 
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_byte_range_spec_to_satisfiable_range</span>() {
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">0</span>, <span class="number">0</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="number">0</span>, <span class="number">0</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="number">1</span>, <span class="number">2</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="number">1</span>, <span class="number">5</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="number">3</span>, <span class="number">3</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="number">2</span>, <span class="number">1</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">FromTo</span>(<span class="number">0</span>, <span class="number">0</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">0</span>));
+
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">0</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">AllFrom</span>(<span class="number">0</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">2</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">AllFrom</span>(<span class="number">2</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">AllFrom</span>(<span class="number">3</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">AllFrom</span>(<span class="number">5</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">AllFrom</span>(<span class="number">0</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">0</span>));
+
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">1</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">Last</span>(<span class="number">2</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">2</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">Last</span>(<span class="number">1</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>((<span class="number">0</span>, <span class="number">2</span>)), <span class="ident">ByteRangeSpec</span>::<span class="ident">Last</span>(<span class="number">5</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">Last</span>(<span class="number">0</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">ByteRangeSpec</span>::<span class="ident">Last</span>(<span class="number">2</span>).<span class="ident">to_satisfiable_range</span>(<span class="number">0</span>));
+}
+
 <span class="macro">bench_header</span><span class="macro">!</span>(<span class="ident">bytes_multi</span>, <span class="ident">Range</span>, { <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;bytes=1-1001,2001-3001,10001-&quot;</span>.<span class="ident">to_vec</span>()]});
 <span class="macro">bench_header</span><span class="macro">!</span>(<span class="ident">custom_unit</span>, <span class="ident">Range</span>, { <span class="macro">vec</span><span class="macro">!</span>[<span class="string">b&quot;other=0-100000&quot;</span>.<span class="ident">to_vec</span>()]});
 </pre>
@@ -646,13 +840,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

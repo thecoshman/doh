@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Task</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>futures</a>::<wbr><a href='index.html'>task</a></p><script>window.sidebarCurrent = {name: 'Task', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Task</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.notify">notify</a><a href="#method.is_current">is_current</a><a href="#method.will_notify_current">will_notify_current</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='../index.html'>futures</a>::<wbr><a href='index.html'>task</a></p><script>window.sidebarCurrent = {name: 'Task', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -62,7 +62,7 @@ the future as notifications arrive, until the future terminates.</p>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../futures/task/struct.Task.html" title="struct futures::task::Task">Task</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#108-194' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.notify' class="method"><span id='notify.v' class='invisible'><code>fn <a href='#method.notify' class='fnname'>notify</a>(&amp;self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#117-120' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.notify' class="method"><span id='notify.v' class='invisible'><code>pub fn <a href='#method.notify' class='fnname'>notify</a>(&amp;self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#117-120' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Indicate that the task should attempt to poll its future in a timely
 fashion.</p>
 
@@ -71,7 +71,7 @@ be called at least once subsequently (unless the future has terminated).
 If the task is currently polling its future when <code>notify</code> is called, it
 must poll the future <em>again</em> afterwards, ensuring that all relevant
 events are eventually observed by the future.</p>
-</div><h4 id='method.is_current' class="method"><span id='is_current.v' class='invisible'><code>fn <a href='#method.is_current' class='fnname'>is_current</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#165-167' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.is_current' class="method"><span id='is_current.v' class='invisible'><code>pub fn <a href='#method.is_current' class='fnname'>is_current</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#165-167' title='goto source code'>[src]</a></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated<p>: intended to be removed, see docs for details</p>
 </div></div><div class='docblock'><p>Returns <code>true</code> when called from within the context of the task.</p>
 
@@ -108,7 +108,7 @@ to learn about other use cases here that we did not consider.</p>
 
 <h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
 <p>This function will panic if no current future is being polled.</p>
-</div><h4 id='method.will_notify_current' class="method"><span id='will_notify_current.v' class='invisible'><code>fn <a href='#method.will_notify_current' class='fnname'>will_notify_current</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#188-193' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.will_notify_current' class="method"><span id='will_notify_current.v' class='invisible'><code>pub fn <a href='#method.will_notify_current' class='fnname'>will_notify_current</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#188-193' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This function is intended as a performance optimization for structures
 which store a <code>Task</code> internally.</p>
 
@@ -137,7 +137,7 @@ this function will not return a false positive, however.</p>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../futures/task/struct.Task.html" title="struct futures::task::Task">Task</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#196-201' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#197-200' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -155,13 +155,15 @@ this function will not return a false positive, however.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/allow.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/allow.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>allow.rs.html -- source</title>
@@ -119,6 +119,9 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">method</span>::<span class="ident">Method</span>;
 
@@ -131,7 +134,8 @@
     <span class="doccomment">/// with the resource.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
-    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
     <span class="doccomment">/// Allow = #method</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
@@ -141,6 +145,7 @@
     <span class="doccomment">/// * ``</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Allow};</span>
     <span class="doccomment">/// use hyper::Method;</span>
@@ -150,6 +155,7 @@
     <span class="doccomment">///     Allow(vec![Method::Get])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Allow};</span>
     <span class="doccomment">/// use hyper::Method;</span>
@@ -214,13 +220,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

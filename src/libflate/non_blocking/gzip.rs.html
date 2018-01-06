@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.12/src/non_blocking/gzip.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/libflate-0.1.14/src/non_blocking/gzip.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>gzip.rs.html -- source</title>
@@ -288,9 +288,9 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">header</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">header</span>)
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reader</span>.<span class="ident">bit_reader_mut</span>().<span class="ident">transaction</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> {
-                <span class="ident">Header</span>::<span class="ident">read_from</span>(<span class="ident">r</span>.<span class="ident">as_inner_mut</span>())
-            })<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reader</span>
+                .<span class="ident">bit_reader_mut</span>()
+                .<span class="ident">transaction</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">Header</span>::<span class="ident">read_from</span>(<span class="ident">r</span>.<span class="ident">as_inner_mut</span>()))<span class="question-mark">?</span>;
             <span class="self">self</span>.<span class="ident">header</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">header</span>);
             <span class="self">self</span>.<span class="ident">header</span>()
         }
@@ -325,9 +325,9 @@
             <span class="kw">let</span> <span class="ident">read_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reader</span>.<span class="ident">read</span>(<span class="ident">buf</span>)<span class="question-mark">?</span>;
             <span class="self">self</span>.<span class="ident">crc32</span>.<span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[..<span class="ident">read_size</span>]);
             <span class="kw">if</span> <span class="ident">read_size</span> <span class="op">==</span> <span class="number">0</span> {
-                <span class="kw">let</span> <span class="ident">trailer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reader</span>.<span class="ident">bit_reader_mut</span>().<span class="ident">transaction</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> {
-                    <span class="ident">Trailer</span>::<span class="ident">read_from</span>(<span class="ident">r</span>.<span class="ident">as_inner_mut</span>())
-                })<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">trailer</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reader</span>
+                    .<span class="ident">bit_reader_mut</span>()
+                    .<span class="ident">transaction</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">Trailer</span>::<span class="ident">read_from</span>(<span class="ident">r</span>.<span class="ident">as_inner_mut</span>()))<span class="question-mark">?</span>;
                 <span class="self">self</span>.<span class="ident">eos</span> <span class="op">=</span> <span class="bool-val">true</span>;
                 <span class="kw">if</span> <span class="ident">trailer</span>.<span class="ident">crc32</span>() <span class="op">!=</span> <span class="self">self</span>.<span class="ident">crc32</span>.<span class="ident">value</span>() {
                     <span class="prelude-val">Err</span>(<span class="macro">invalid_data_error</span><span class="macro">!</span>(
@@ -384,13 +384,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/etag.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/etag.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>etag.rs.html -- source</title>
@@ -135,6 +135,9 @@
 <span id="90">90</span>
 <span id="91">91</span>
 <span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">header</span>::<span class="ident">EntityTag</span>;
 
@@ -152,16 +155,19 @@
     <span class="doccomment">/// prefixed by a weakness indicator.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
-    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
     <span class="doccomment">/// ETag       = entity-tag</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// * `&quot;xyzzy&quot;`</span>
     <span class="doccomment">/// * `W/&quot;xyzzy&quot;`</span>
     <span class="doccomment">/// * `&quot;&quot;`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, ETag, EntityTag};</span>
     <span class="doccomment">///</span>
@@ -246,13 +252,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Entry</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='index.html'>slab</a></p><script>window.sidebarCurrent = {name: 'Entry', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Entry</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.replace">replace</a><a href="#method.replace_with">replace_with</a><a href="#method.remove">remove</a><a href="#method.get">get</a><a href="#method.get_mut">get_mut</a><a href="#method.into_mut">into_mut</a><a href="#method.index">index</a></div></div><p class='location'><a href='index.html'>slab</a></p><script>window.sidebarCurrent = {name: 'Entry', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -55,20 +55,20 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a, T, I:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;&gt; <a class="struct" href="../slab/struct.Entry.html" title="struct slab::Entry">Entry</a>&lt;'a, T, I&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#323-389' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.replace' class="method"><span id='replace.v' class='invisible'><code>fn <a href='#method.replace' class='fnname'>replace</a>(&amp;mut self, val: T) -&gt; T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#326-331' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.replace' class="method"><span id='replace.v' class='invisible'><code>pub fn <a href='#method.replace' class='fnname'>replace</a>(&amp;mut self, val: T) -&gt; T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#326-331' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Replace the value stored in the entry</p>
-</div><h4 id='method.replace_with' class="method"><span id='replace_with.v' class='invisible'><code>fn <a href='#method.replace_with' class='fnname'>replace_with</a>&lt;F&gt;(&amp;mut self, f: F) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(T) -&gt; T,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#335-347' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.replace_with' class="method"><span id='replace_with.v' class='invisible'><code>pub fn <a href='#method.replace_with' class='fnname'>replace_with</a>&lt;F&gt;(&amp;mut self, f: F) <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(T) -&gt; T,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#335-347' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Apply the function to the current value, replacing it with the result
 of the function.</p>
-</div><h4 id='method.remove' class="method"><span id='remove.v' class='invisible'><code>fn <a href='#method.remove' class='fnname'>remove</a>(self) -&gt; T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#350-359' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.remove' class="method"><span id='remove.v' class='invisible'><code>pub fn <a href='#method.remove' class='fnname'>remove</a>(self) -&gt; T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#350-359' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Remove and return the value stored in the entry</p>
-</div><h4 id='method.get' class="method"><span id='get.v' class='invisible'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#362-367' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.get' class="method"><span id='get.v' class='invisible'><code>pub fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#362-367' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get a reference to the value stored in the entry</p>
-</div><h4 id='method.get_mut' class="method"><span id='get_mut.v' class='invisible'><code>fn <a href='#method.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#370-375' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.get_mut' class="method"><span id='get_mut.v' class='invisible'><code>pub fn <a href='#method.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#370-375' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get a mutable reference to the value stored in the entry</p>
-</div><h4 id='method.into_mut' class="method"><span id='into_mut.v' class='invisible'><code>fn <a href='#method.into_mut' class='fnname'>into_mut</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a mut </a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#378-383' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.into_mut' class="method"><span id='into_mut.v' class='invisible'><code>pub fn <a href='#method.into_mut' class='fnname'>into_mut</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a mut </a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#378-383' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Convert the entry handle to a mutable reference</p>
-</div><h4 id='method.index' class="method"><span id='index.v' class='invisible'><code>fn <a href='#method.index' class='fnname'>index</a>(&amp;self) -&gt; I</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#386-388' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.index' class="method"><span id='index.v' class='invisible'><code>pub fn <a href='#method.index' class='fnname'>index</a>(&amp;self) -&gt; I</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/slab/lib.rs.html#386-388' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return the entry index</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -87,13 +87,15 @@ of the function.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

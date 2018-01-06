@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct FilesetData</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>rfsapi</a></p><script>window.sidebarCurrent = {name: 'FilesetData', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct FilesetData</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.writes_supported">writes_supported</a><a href="#structfield.is_root">is_root</a><a href="#structfield.is_file">is_file</a><a href="#structfield.files">files</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Ord">Ord</a><a href="#impl-PartialOrd">PartialOrd</a><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a><a href="#impl-Hash">Hash</a></div></div><p class='location'><a href='index.html'>rfsapi</a></p><script>window.sidebarCurrent = {name: 'FilesetData', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -61,22 +61,26 @@
 <span class="kw">let</span> <span class="ident">resp</span>: <span class="ident">FilesetData</span> <span class="op">=</span> <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">server_response</span>);
 <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Requested directory has {} children.&quot;</span>, <span class="ident">resp</span>.<span class="ident">files</span>.<span class="ident">len</span>());</pre>
 </div><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.writes_supported' class="structfield">
-                           <span id='writes_supported.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.writes_supported" class="structfield small-section-header">
+                           <a href="#structfield.writes_supported" class="anchor field"></a>
+                           <span id="writes_supported.v" class='invisible'>
                            <code>writes_supported: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
                            </span></span><div class='docblock'><p>Whether PUT and DELETE requests are allowed on the server.</p>
-</div><span id='structfield.is_root' class="structfield">
-                           <span id='is_root.v' class='invisible'>
+</div><span id="structfield.is_root" class="structfield small-section-header">
+                           <a href="#structfield.is_root" class="anchor field"></a>
+                           <span id="is_root.v" class='invisible'>
                            <code>is_root: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
                            </span></span><div class='docblock'><p>Whether the requested directory is the root (topmost).</p>
 
 <p><code>false</code> if a singular file was requested.</p>
-</div><span id='structfield.is_file' class="structfield">
-                           <span id='is_file.v' class='invisible'>
+</div><span id="structfield.is_file" class="structfield small-section-header">
+                           <a href="#structfield.is_file" class="anchor field"></a>
+                           <span id="is_file.v" class='invisible'>
                            <code>is_file: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
                            </span></span><div class='docblock'><p>Whether the requested resource is a file.</p>
-</div><span id='structfield.files' class="structfield">
-                           <span id='files.v' class='invisible'>
+</div><span id="structfield.files" class="structfield small-section-header">
+                           <a href="#structfield.files" class="anchor field"></a>
+                           <span id="files.v" class='invisible'>
                            <code>files: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../rfsapi/struct.RawFileData.html" title="struct rfsapi::RawFileData">RawFileData</a>&gt;</code>
                            </span></span><div class='docblock'><p>List of requested files.</p>
 
@@ -115,7 +119,7 @@ only element.</p>
 <div class='docblock'><p>This method tests greater than or equal to (for <code>self</code> and <code>other</code>) and is used by the <code>&gt;=</code> operator. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.ge">Read more</a></p>
 </div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../rfsapi/struct.FilesetData.html" title="struct rfsapi::FilesetData">FilesetData</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/rfsapi/lib.rs.html#79' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/rfsapi/lib.rs.html#79' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../rfsapi/struct.FilesetData.html" title="struct rfsapi::FilesetData">FilesetData</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/rfsapi/lib.rs.html#79' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../rfsapi/struct.FilesetData.html" title="struct rfsapi::FilesetData">FilesetData</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/rfsapi/lib.rs.html#79' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
@@ -143,13 +147,15 @@ only element.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

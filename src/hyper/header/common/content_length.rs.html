@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/content_length.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/content_length.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>content_length.rs.html -- source</title>
@@ -143,6 +143,9 @@
 <span id="98"> 98</span>
 <span id="99"> 99</span>
 <span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
@@ -165,17 +168,20 @@
 <span class="doccomment">/// [RFC7230](http://tools.ietf.org/html/rfc7230#section-3.3.2):</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// &gt; A sender MUST NOT send a Content-Length header field in any message</span>
-<span class="doccomment">/// that &gt; contains a Transfer-Encoding header field.</span>
+<span class="doccomment">/// &gt; that contains a Transfer-Encoding header field.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # ABNF</span>
-<span class="doccomment">/// ```plain</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```text</span>
 <span class="doccomment">/// Content-Length = 1*DIGIT</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example values</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// * `3495`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use hyper::header::{Headers, ContentLength};</span>
 <span class="doccomment">///</span>
@@ -262,13 +268,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

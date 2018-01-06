@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/net/udp/frame.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.11/src/net/udp/frame.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>frame.rs.html -- source</title>
@@ -210,6 +210,7 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
+<span id="168">168</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">SocketAddr</span>, <span class="ident">Ipv4Addr</span>, <span class="ident">SocketAddrV4</span>};
@@ -268,6 +269,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// You can acquire a `UdpFramed` instance by using the `UdpSocket::framed`</span>
 <span class="doccomment">/// adapter.</span>
+<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;sinks do nothing unless polled&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UdpFramed</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="ident">socket</span>: <span class="ident">UdpSocket</span>,
     <span class="ident">codec</span>: <span class="ident">C</span>,
@@ -396,13 +398,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

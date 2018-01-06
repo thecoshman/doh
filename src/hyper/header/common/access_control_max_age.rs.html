@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/access_control_max_age.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/access_control_max_age.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>access_control_max_age.rs.html -- source</title>
@@ -71,6 +71,9 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
 </pre><pre class="rust ">
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Access-Control-Max-Age` header, part of</span>
@@ -80,14 +83,17 @@
     <span class="doccomment">/// preflight request can be cached in a preflight result cache.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
-    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
     <span class="doccomment">/// Access-Control-Max-Age = \&quot;Access-Control-Max-Age\&quot; \&quot;:\&quot; delta-seconds</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// * `531`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, AccessControlMaxAge};</span>
     <span class="doccomment">///</span>
@@ -118,13 +124,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

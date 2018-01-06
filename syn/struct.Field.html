@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Field</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>syn</a></p><script>window.sidebarCurrent = {name: 'Field', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Field</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.ident">ident</a><a href="#structfield.vis">vis</a><a href="#structfield.attrs">attrs</a><a href="#structfield.ty">ty</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-ToTokens">ToTokens</a><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Hash">Hash</a></div></div><p class='location'><a href='index.html'>syn</a></p><script>window.sidebarCurrent = {name: 'Field', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -56,22 +56,26 @@
     pub ty: <a class="enum" href="../syn/enum.Ty.html" title="enum syn::Ty">Ty</a>,
 }</pre><div class='docblock'><p>A field of a struct or enum variant.</p>
 </div><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.ident' class="structfield">
-                           <span id='ident.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.ident" class="structfield small-section-header">
+                           <a href="#structfield.ident" class="anchor field"></a>
+                           <span id="ident.v" class='invisible'>
                            <code>ident: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../syn/struct.Ident.html" title="struct syn::Ident">Ident</a>&gt;</code>
                            </span></span><div class='docblock'><p>Name of the field, if any.</p>
 
 <p>Fields of tuple structs have no names.</p>
-</div><span id='structfield.vis' class="structfield">
-                           <span id='vis.v' class='invisible'>
+</div><span id="structfield.vis" class="structfield small-section-header">
+                           <a href="#structfield.vis" class="anchor field"></a>
+                           <span id="vis.v" class='invisible'>
                            <code>vis: <a class="enum" href="../syn/enum.Visibility.html" title="enum syn::Visibility">Visibility</a></code>
                            </span></span><div class='docblock'><p>Visibility of the field.</p>
-</div><span id='structfield.attrs' class="structfield">
-                           <span id='attrs.v' class='invisible'>
+</div><span id="structfield.attrs" class="structfield small-section-header">
+                           <a href="#structfield.attrs" class="anchor field"></a>
+                           <span id="attrs.v" class='invisible'>
                            <code>attrs: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../syn/struct.Attribute.html" title="struct syn::Attribute">Attribute</a>&gt;</code>
                            </span></span><div class='docblock'><p>Attributes tagged on the field.</p>
-</div><span id='structfield.ty' class="structfield">
-                           <span id='ty.v' class='invisible'>
+</div><span id="structfield.ty" class="structfield small-section-header">
+                           <a href="#structfield.ty" class="anchor field"></a>
+                           <span id="ty.v" class='invisible'>
                            <code>ty: <a class="enum" href="../syn/enum.Ty.html" title="enum syn::Ty">Ty</a></code>
                            </span></span><div class='docblock'><p>Type of the field.</p>
 </div>
@@ -83,7 +87,7 @@
 <div class='docblock'><p>Write <code>self</code> to the given <code>Tokens</code>. <a href="../quote/to_tokens/trait.ToTokens.html#tymethod.to_tokens">Read more</a></p>
 </div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../syn/struct.Field.html" title="struct syn::Field">Field</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/syn/data.rs.html#53' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/syn/data.rs.html#53' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../syn/struct.Field.html" title="struct syn::Field">Field</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/syn/data.rs.html#53' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../syn/struct.Field.html" title="struct syn::Field">Field</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/syn/data.rs.html#53' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
@@ -117,13 +121,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

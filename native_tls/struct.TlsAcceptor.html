@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct TlsAcceptor</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>native_tls</a></p><script>window.sidebarCurrent = {name: 'TlsAcceptor', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct TlsAcceptor</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.builder">builder</a><a href="#method.accept">accept</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a></div></div><p class='location'><a href='index.html'>native_tls</a></p><script>window.sidebarCurrent = {name: 'TlsAcceptor', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -90,13 +90,13 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../native_tls/struct.TlsAcceptor.html" title="struct native_tls::TlsAcceptor">TlsAcceptor</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#484-510' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.builder' class="method"><span id='builder.v' class='invisible'><code>fn <a href='#method.builder' class='fnname'>builder</a>(pkcs12: <a class="struct" href="../native_tls/struct.Pkcs12.html" title="struct native_tls::Pkcs12">Pkcs12</a>) -&gt; <a class="type" href="../native_tls/type.Result.html" title="type native_tls::Result">Result</a>&lt;<a class="struct" href="../native_tls/struct.TlsAcceptorBuilder.html" title="struct native_tls::TlsAcceptorBuilder">TlsAcceptorBuilder</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#490-493' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.builder' class="method"><span id='builder.v' class='invisible'><code>pub fn <a href='#method.builder' class='fnname'>builder</a>(pkcs12: <a class="struct" href="../native_tls/struct.Pkcs12.html" title="struct native_tls::Pkcs12">Pkcs12</a>) -&gt; <a class="type" href="../native_tls/type.Result.html" title="type native_tls::Result">Result</a>&lt;<a class="struct" href="../native_tls/struct.TlsAcceptorBuilder.html" title="struct native_tls::TlsAcceptorBuilder">TlsAcceptorBuilder</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#490-493' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a new builder for a <code>TlsAcceptor</code>.</p>
 
 <p>This builder is created with a key/certificate pair in the <code>pkcs12</code>
 archived passed in. The returned builder will use that key/certificate
 to send to clients which it connects to.</p>
-</div><h4 id='method.accept' class="method"><span id='accept.v' class='invisible'><code>fn <a href='#method.accept' class='fnname'>accept</a>&lt;S&gt;(&amp;self, stream: S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../native_tls/struct.TlsStream.html" title="struct native_tls::TlsStream">TlsStream</a>&lt;S&gt;, <a class="enum" href="../native_tls/enum.HandshakeError.html" title="enum native_tls::HandshakeError">HandshakeError</a>&lt;S&gt;&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#501-509' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.accept' class="method"><span id='accept.v' class='invisible'><code>pub fn <a href='#method.accept' class='fnname'>accept</a>&lt;S&gt;(&amp;self, stream: S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../native_tls/struct.TlsStream.html" title="struct native_tls::TlsStream">TlsStream</a>&lt;S&gt;, <a class="enum" href="../native_tls/enum.HandshakeError.html" title="enum native_tls::HandshakeError">HandshakeError</a>&lt;S&gt;&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html" title="trait std::io::Read">Read</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/native_tls/lib.rs.html#501-509' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Initiates a TLS handshake.</p>
 
 <p>If the socket is nonblocking and a <code>WouldBlock</code> error is returned during
@@ -129,13 +129,15 @@ again.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

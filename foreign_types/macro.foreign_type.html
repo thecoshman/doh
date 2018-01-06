@@ -48,12 +48,14 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/foreign_types/lib.rs.html#239-296' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/foreign_types/lib.rs.html#208-306' title='goto source code'>[src]</a></span></h1>
 <pre class="rust macro">
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">foreign_type</span> {
     (
+        $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">impl_attr</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
         <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctype</span>:<span class="ident">ty</span>;
         <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">drop</span>:<span class="ident">expr</span>;
+        $(<span class="kw">fn</span> <span class="ident">clone</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">clone</span>:<span class="ident">expr</span>;)<span class="op">*</span>
         $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned_attr</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
         <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned</span>:<span class="ident">ident</span>;
         $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed_attr</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
@@ -70,6 +72,7 @@
 <span class="macro">foreign_type</span><span class="macro">!</span> {
     <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="ident">openssl_sys</span>::<span class="ident">SSL</span>;
     <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="ident">openssl_sys</span>::<span class="ident">SSL_free</span>;
+    <span class="kw">fn</span> <span class="ident">clone</span> <span class="op">=</span> <span class="ident">openssl_sys</span>::<span class="ident">SSL_dup</span>;
     <span class="doccomment">/// Documentation for the owned type.</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Ssl</span>;
     <span class="doccomment">/// Documentation for the borrowed type.</span>
@@ -93,13 +96,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

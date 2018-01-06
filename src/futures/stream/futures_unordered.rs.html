@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.1.16/src/stream/futures_unordered.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.1.17/src/stream/futures_unordered.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>futures_unordered.rs.html -- source</title>
@@ -683,9 +683,23 @@
 <span id="638">638</span>
 <span id="639">639</span>
 <span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">UnsafeCell</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Debug</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
@@ -714,7 +728,7 @@
 <span class="doccomment">/// Calling `poll` in this state will result in `Ok(Async::Ready(None))` to be</span>
 <span class="doccomment">/// returned. Futures are submitted to the set using `push`; however, the</span>
 <span class="doccomment">/// future will **not** be polled at this point. `FuturesUnordered` will only</span>
-<span class="doccomment">/// poll managged futures when `FuturesUnordered::poll` is called. As such, it</span>
+<span class="doccomment">/// poll managed futures when `FuturesUnordered::poll` is called. As such, it</span>
 <span class="doccomment">/// is important to call `poll` after pushing new futures.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// If `FuturesUnordered::poll` returns `Ok(Async::Ready(None))` this means that</span>
@@ -776,7 +790,7 @@
 <span class="comment">// `FuturesUnordered`. When a notification is received, the node is scheduled</span>
 <span class="comment">// for polling by being inserted into the concurrent linked list.</span>
 <span class="comment">//</span>
-<span class="comment">// Each node uses an `AtomicUisze` to track it&#39;s state. The node state is the</span>
+<span class="comment">// Each node uses an `AtomicUsize` to track it&#39;s state. The node state is the</span>
 <span class="comment">// reference count (the number of outstanding handles to the node) as well as a</span>
 <span class="comment">// flag tracking if the node is currently inserted in the atomic queue. When the</span>
 <span class="comment">// future is notified, it will only insert itself into the linked list if it</span>
@@ -1113,6 +1127,18 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FuturesUnordered</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> 
+        <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">F</span><span class="op">&gt;</span>
+    {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">FuturesUnordered</span>::<span class="ident">new</span>();
+        <span class="kw">for</span> <span class="ident">future</span> <span class="kw">in</span> <span class="ident">iter</span>.<span class="ident">into_iter</span>() {
+            <span class="ident">new</span>.<span class="ident">push</span>(<span class="ident">future</span>);
+        }
+        <span class="ident">new</span>
+    }
+}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Inner</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// The enqueue function from the 1024cores intrusive MPSC queue algorithm.</span>
     <span class="kw">fn</span> <span class="ident">enqueue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">node</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Node</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
@@ -1342,13 +1368,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

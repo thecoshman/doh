@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.10/src/poll.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.12/src/poll.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>poll.rs.html -- source</title>
@@ -2569,6 +2569,201 @@
 <span id="2524">2524</span>
 <span id="2525">2525</span>
 <span id="2526">2526</span>
+<span id="2527">2527</span>
+<span id="2528">2528</span>
+<span id="2529">2529</span>
+<span id="2530">2530</span>
+<span id="2531">2531</span>
+<span id="2532">2532</span>
+<span id="2533">2533</span>
+<span id="2534">2534</span>
+<span id="2535">2535</span>
+<span id="2536">2536</span>
+<span id="2537">2537</span>
+<span id="2538">2538</span>
+<span id="2539">2539</span>
+<span id="2540">2540</span>
+<span id="2541">2541</span>
+<span id="2542">2542</span>
+<span id="2543">2543</span>
+<span id="2544">2544</span>
+<span id="2545">2545</span>
+<span id="2546">2546</span>
+<span id="2547">2547</span>
+<span id="2548">2548</span>
+<span id="2549">2549</span>
+<span id="2550">2550</span>
+<span id="2551">2551</span>
+<span id="2552">2552</span>
+<span id="2553">2553</span>
+<span id="2554">2554</span>
+<span id="2555">2555</span>
+<span id="2556">2556</span>
+<span id="2557">2557</span>
+<span id="2558">2558</span>
+<span id="2559">2559</span>
+<span id="2560">2560</span>
+<span id="2561">2561</span>
+<span id="2562">2562</span>
+<span id="2563">2563</span>
+<span id="2564">2564</span>
+<span id="2565">2565</span>
+<span id="2566">2566</span>
+<span id="2567">2567</span>
+<span id="2568">2568</span>
+<span id="2569">2569</span>
+<span id="2570">2570</span>
+<span id="2571">2571</span>
+<span id="2572">2572</span>
+<span id="2573">2573</span>
+<span id="2574">2574</span>
+<span id="2575">2575</span>
+<span id="2576">2576</span>
+<span id="2577">2577</span>
+<span id="2578">2578</span>
+<span id="2579">2579</span>
+<span id="2580">2580</span>
+<span id="2581">2581</span>
+<span id="2582">2582</span>
+<span id="2583">2583</span>
+<span id="2584">2584</span>
+<span id="2585">2585</span>
+<span id="2586">2586</span>
+<span id="2587">2587</span>
+<span id="2588">2588</span>
+<span id="2589">2589</span>
+<span id="2590">2590</span>
+<span id="2591">2591</span>
+<span id="2592">2592</span>
+<span id="2593">2593</span>
+<span id="2594">2594</span>
+<span id="2595">2595</span>
+<span id="2596">2596</span>
+<span id="2597">2597</span>
+<span id="2598">2598</span>
+<span id="2599">2599</span>
+<span id="2600">2600</span>
+<span id="2601">2601</span>
+<span id="2602">2602</span>
+<span id="2603">2603</span>
+<span id="2604">2604</span>
+<span id="2605">2605</span>
+<span id="2606">2606</span>
+<span id="2607">2607</span>
+<span id="2608">2608</span>
+<span id="2609">2609</span>
+<span id="2610">2610</span>
+<span id="2611">2611</span>
+<span id="2612">2612</span>
+<span id="2613">2613</span>
+<span id="2614">2614</span>
+<span id="2615">2615</span>
+<span id="2616">2616</span>
+<span id="2617">2617</span>
+<span id="2618">2618</span>
+<span id="2619">2619</span>
+<span id="2620">2620</span>
+<span id="2621">2621</span>
+<span id="2622">2622</span>
+<span id="2623">2623</span>
+<span id="2624">2624</span>
+<span id="2625">2625</span>
+<span id="2626">2626</span>
+<span id="2627">2627</span>
+<span id="2628">2628</span>
+<span id="2629">2629</span>
+<span id="2630">2630</span>
+<span id="2631">2631</span>
+<span id="2632">2632</span>
+<span id="2633">2633</span>
+<span id="2634">2634</span>
+<span id="2635">2635</span>
+<span id="2636">2636</span>
+<span id="2637">2637</span>
+<span id="2638">2638</span>
+<span id="2639">2639</span>
+<span id="2640">2640</span>
+<span id="2641">2641</span>
+<span id="2642">2642</span>
+<span id="2643">2643</span>
+<span id="2644">2644</span>
+<span id="2645">2645</span>
+<span id="2646">2646</span>
+<span id="2647">2647</span>
+<span id="2648">2648</span>
+<span id="2649">2649</span>
+<span id="2650">2650</span>
+<span id="2651">2651</span>
+<span id="2652">2652</span>
+<span id="2653">2653</span>
+<span id="2654">2654</span>
+<span id="2655">2655</span>
+<span id="2656">2656</span>
+<span id="2657">2657</span>
+<span id="2658">2658</span>
+<span id="2659">2659</span>
+<span id="2660">2660</span>
+<span id="2661">2661</span>
+<span id="2662">2662</span>
+<span id="2663">2663</span>
+<span id="2664">2664</span>
+<span id="2665">2665</span>
+<span id="2666">2666</span>
+<span id="2667">2667</span>
+<span id="2668">2668</span>
+<span id="2669">2669</span>
+<span id="2670">2670</span>
+<span id="2671">2671</span>
+<span id="2672">2672</span>
+<span id="2673">2673</span>
+<span id="2674">2674</span>
+<span id="2675">2675</span>
+<span id="2676">2676</span>
+<span id="2677">2677</span>
+<span id="2678">2678</span>
+<span id="2679">2679</span>
+<span id="2680">2680</span>
+<span id="2681">2681</span>
+<span id="2682">2682</span>
+<span id="2683">2683</span>
+<span id="2684">2684</span>
+<span id="2685">2685</span>
+<span id="2686">2686</span>
+<span id="2687">2687</span>
+<span id="2688">2688</span>
+<span id="2689">2689</span>
+<span id="2690">2690</span>
+<span id="2691">2691</span>
+<span id="2692">2692</span>
+<span id="2693">2693</span>
+<span id="2694">2694</span>
+<span id="2695">2695</span>
+<span id="2696">2696</span>
+<span id="2697">2697</span>
+<span id="2698">2698</span>
+<span id="2699">2699</span>
+<span id="2700">2700</span>
+<span id="2701">2701</span>
+<span id="2702">2702</span>
+<span id="2703">2703</span>
+<span id="2704">2704</span>
+<span id="2705">2705</span>
+<span id="2706">2706</span>
+<span id="2707">2707</span>
+<span id="2708">2708</span>
+<span id="2709">2709</span>
+<span id="2710">2710</span>
+<span id="2711">2711</span>
+<span id="2712">2712</span>
+<span id="2713">2713</span>
+<span id="2714">2714</span>
+<span id="2715">2715</span>
+<span id="2716">2716</span>
+<span id="2717">2717</span>
+<span id="2718">2718</span>
+<span id="2719">2719</span>
+<span id="2720">2720</span>
+<span id="2721">2721</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> {<span class="ident">sys</span>, <span class="ident">Token</span>};
 <span class="kw">use</span> <span class="ident">event_imp</span>::{<span class="self">self</span> <span class="kw">as</span> <span class="ident">event</span>, <span class="ident">Ready</span>, <span class="ident">Event</span>, <span class="ident">Evented</span>, <span class="ident">PollOpt</span>};
@@ -2583,8 +2778,6 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicUsize</span>, <span class="ident">AtomicPtr</span>, <span class="ident">AtomicBool</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">Ordering</span>::{<span class="self">self</span>, <span class="ident">Acquire</span>, <span class="ident">Release</span>, <span class="ident">AcqRel</span>, <span class="ident">Relaxed</span>, <span class="ident">SeqCst</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">Instant</span>};
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">unix</span>, <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)))]</span>
-<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">unix</span>::<span class="ident">UnixReady</span>;
 
 <span class="comment">// Poll is backed by two readiness queues. The first is a system readiness queue</span>
 <span class="comment">// represented by `sys::Selector`. The system readiness queue handles events</span>
@@ -2592,7 +2785,7 @@
 <span class="comment">// implemented in user space by `ReadinessQueue`. It provides a way to implement</span>
 <span class="comment">// purely user space `Evented` types.</span>
 <span class="comment">//</span>
-<span class="comment">// `ReadinessQueue` is is backed by a MPSC queue that supports reuse of linked</span>
+<span class="comment">// `ReadinessQueue` is backed by a MPSC queue that supports reuse of linked</span>
 <span class="comment">// list nodes. This significantly reduces the number of required allocations.</span>
 <span class="comment">// Each `Registration` / `SetReadiness` pair allocates a single readiness node</span>
 <span class="comment">// that is used for the lifetime of the registration.</span>
@@ -2661,38 +2854,46 @@
 <span class="doccomment">/// A basic example -- establishing a `TcpStream` connection.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::error::Error;</span>
+<span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
 <span class="doccomment">/// use mio::{Events, Poll, Ready, PollOpt, Token};</span>
-<span class="doccomment">/// use mio::tcp::TcpStream;</span>
+<span class="doccomment">/// use mio::net::TcpStream;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use std::net::{TcpListener, SocketAddr};</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Bind a server socket to connect to.</span>
-<span class="doccomment">/// let addr: SocketAddr = &quot;127.0.0.1:0&quot;.parse().unwrap();</span>
-<span class="doccomment">/// let server = TcpListener::bind(&amp;addr).unwrap();</span>
+<span class="doccomment">/// let addr: SocketAddr = &quot;127.0.0.1:0&quot;.parse()?;</span>
+<span class="doccomment">/// let server = TcpListener::bind(&amp;addr)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Construct a new `Poll` handle as well as the `Events` we&#39;ll store into</span>
-<span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+<span class="doccomment">/// let poll = Poll::new()?;</span>
 <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Connect the stream</span>
-<span class="doccomment">/// let stream = TcpStream::connect(&amp;server.local_addr().unwrap()).unwrap();</span>
+<span class="doccomment">/// let stream = TcpStream::connect(&amp;server.local_addr()?)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Register the stream with `Poll`</span>
-<span class="doccomment">/// poll.register(&amp;stream, Token(0), Ready::all(), PollOpt::edge()).unwrap();</span>
+<span class="doccomment">/// poll.register(&amp;stream, Token(0), Ready::readable() | Ready::writable(), PollOpt::edge())?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Wait for the socket to become ready. This has to happens in a loop to</span>
 <span class="doccomment">/// // handle spurious wakeups.</span>
 <span class="doccomment">/// loop {</span>
-<span class="doccomment">///     poll.poll(&amp;mut events, None).unwrap();</span>
+<span class="doccomment">///     poll.poll(&amp;mut events, None)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     for event in &amp;events {</span>
 <span class="doccomment">///         if event.token() == Token(0) &amp;&amp; event.readiness().is_writable() {</span>
 <span class="doccomment">///             // The socket connected (probably, it could still be a spurious</span>
 <span class="doccomment">///             // wakeup)</span>
-<span class="doccomment">///             return;</span>
+<span class="doccomment">///             return Ok(());</span>
 <span class="doccomment">///         }</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">/// #     Ok(())</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Edge-triggered and level-triggered</span>
@@ -2725,7 +2926,7 @@
 <span class="doccomment">/// assume that [`Poll::poll`] may never return another event for the same token</span>
 <span class="doccomment">/// and readiness until the operation returns [`WouldBlock`].</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// By contrast, when level-triggered notfications was requested, each call to</span>
+<span class="doccomment">/// By contrast, when level-triggered notifications was requested, each call to</span>
 <span class="doccomment">/// [`Poll::poll`] will return an event for the socket as long as data remains</span>
 <span class="doccomment">/// in the socket buffer. Generally, level-triggered events should be avoided if</span>
 <span class="doccomment">/// high performance is a concern.</span>
@@ -2818,31 +3019,39 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`readable`]: struct.Ready.html#method.readable</span>
 <span class="doccomment">/// [`writable`]: struct.Ready.html#method.writable</span>
-<span class="doccomment">/// [`error`]: struct.Ready.html#method.error</span>
-<span class="doccomment">/// [`hup`]: struct.Ready.html#method.hup</span>
+<span class="doccomment">/// [`error`]: unix/struct.UnixReady.html#method.error</span>
+<span class="doccomment">/// [`hup`]: unix/struct.UnixReady.html#method.hup</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ### Registering handles</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Unless otherwise noted, it should be assumed that types implementing</span>
-<span class="doccomment">/// [`Evented`] will never be become ready unless they are registered with `Poll`.</span>
+<span class="doccomment">/// [`Evented`] will never become ready unless they are registered with `Poll`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// For example:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::error::Error;</span>
+<span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
 <span class="doccomment">/// use mio::{Poll, Ready, PollOpt, Token};</span>
-<span class="doccomment">/// use mio::tcp::TcpStream;</span>
+<span class="doccomment">/// use mio::net::TcpStream;</span>
 <span class="doccomment">/// use std::time::Duration;</span>
 <span class="doccomment">/// use std::thread;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let sock = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse().unwrap()).unwrap();</span>
+<span class="doccomment">/// let sock = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse()?)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// thread::sleep(Duration::from_secs(1));</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+<span class="doccomment">/// let poll = Poll::new()?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // The connect is not guaranteed to have started until it is registered at</span>
 <span class="doccomment">/// // this point</span>
-<span class="doccomment">/// poll.register(&amp;sock, Token(0), Ready::all(), PollOpt::edge()).unwrap();</span>
+<span class="doccomment">/// poll.register(&amp;sock, Token(0), Ready::readable() | Ready::writable(), PollOpt::edge())?;</span>
+<span class="doccomment">/// #     Ok(())</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Implementation notes</span>
@@ -2989,6 +3198,11 @@
 <span class="doccomment">/// [`Poll`]: struct.Poll.html</span>
 <span class="doccomment">/// [`Registration::new2`]: struct.Registration.html#method.new2</span>
 <span class="doccomment">/// [`Evented`]: event/trait.Evented.html</span>
+<span class="doccomment">/// [`set_readiness`]: struct.SetReadiness.html#method.set_readiness</span>
+<span class="doccomment">/// [`register`]: struct.Poll.html#method.register</span>
+<span class="doccomment">/// [`reregister`]: struct.Poll.html#method.reregister</span>
+<span class="doccomment">/// [`deregister`]: struct.Poll.html#method.deregister</span>
+<span class="doccomment">/// [portability]: struct.Poll.html#portability</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Registration</span> {
     <span class="ident">inner</span>: <span class="ident">RegistrationInner</span>,
 }
@@ -2996,12 +3210,13 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Registration</span> {}
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">Registration</span> {}
 
-<span class="doccomment">/// Updates the readiness state of the associated [`Registration`].</span>
+<span class="doccomment">/// Updates the readiness state of the associated `Registration`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`Registration`] for more documentation on using `SetReadiness` and</span>
 <span class="doccomment">/// [`Poll`] for high level polling documentation.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`Registration`]</span>
+<span class="doccomment">/// [`Poll`]: struct.Poll.html</span>
+<span class="doccomment">/// [`Registration`]: struct.Registration.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetReadiness</span> {
     <span class="ident">inner</span>: <span class="ident">RegistrationInner</span>,
@@ -3175,6 +3390,8 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Poll, Events};</span>
     <span class="doccomment">/// use std::time::Duration;</span>
     <span class="doccomment">///</span>
@@ -3188,8 +3405,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Wait for events, but none will be received because no `Evented`</span>
     <span class="doccomment">/// // handles have been registered with this `Poll` instance.</span>
-    <span class="doccomment">/// let n = poll.poll(&amp;mut events, Some(Duration::from_millis(500))).unwrap();</span>
+    <span class="doccomment">/// let n = poll.poll(&amp;mut events, Some(Duration::from_millis(500)))?;</span>
     <span class="doccomment">/// assert_eq!(n, 0);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Poll</span><span class="op">&gt;</span> {
         <span class="ident">is_send</span>::<span class="op">&lt;</span><span class="ident">Poll</span><span class="op">&gt;</span>();
@@ -3211,7 +3434,7 @@
 
     <span class="doccomment">/// Register an `Evented` handle with the `Poll` instance.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Once registerd, the `Poll` instance will monitor the `Evented` handle</span>
+    <span class="doccomment">/// Once registered, the `Poll` instance will monitor the `Evented` handle</span>
     <span class="doccomment">/// for readiness state changes. When it notices a state change, it will</span>
     <span class="doccomment">/// return a readiness event for the handle the next time [`poll`] is</span>
     <span class="doccomment">/// called.</span>
@@ -3275,15 +3498,17 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Events, Poll, Ready, PollOpt, Token};</span>
-    <span class="doccomment">/// use mio::tcp::TcpStream;</span>
+    <span class="doccomment">/// use mio::net::TcpStream;</span>
     <span class="doccomment">/// use std::time::{Duration, Instant};</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
-    <span class="doccomment">/// let socket = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse().unwrap()).unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
+    <span class="doccomment">/// let socket = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse()?)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Register the socket with `poll`</span>
-    <span class="doccomment">/// poll.register(&amp;socket, Token(0), Ready::all(), PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">/// poll.register(&amp;socket, Token(0), Ready::readable() | Ready::writable(), PollOpt::edge())?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
     <span class="doccomment">/// let start = Instant::now();</span>
@@ -3294,24 +3519,30 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///     if elapsed &gt;= timeout {</span>
     <span class="doccomment">///         // Connection timed out</span>
-    <span class="doccomment">///         return;</span>
+    <span class="doccomment">///         return Ok(());</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///     let remaining = timeout - elapsed;</span>
-    <span class="doccomment">///     poll.poll(&amp;mut events, Some(remaining)).unwrap();</span>
+    <span class="doccomment">///     poll.poll(&amp;mut events, Some(remaining))?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///     for event in &amp;events {</span>
     <span class="doccomment">///         if event.token() == Token(0) {</span>
     <span class="doccomment">///             // Something (probably) happened on the socket.</span>
-    <span class="doccomment">///             return;</span>
+    <span class="doccomment">///             return Ok(());</span>
     <span class="doccomment">///         }</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>, <span class="ident">token</span>: <span class="ident">Token</span>, <span class="ident">interest</span>: <span class="ident">Ready</span>, <span class="ident">opts</span>: <span class="ident">PollOpt</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">Evented</span>
     {
-        <span class="ident">validate_args</span>(<span class="ident">token</span>, <span class="ident">interest</span>)<span class="question-mark">?</span>;
+        <span class="ident">validate_args</span>(<span class="ident">token</span>)<span class="question-mark">?</span>;
 
         <span class="comment">/*
          * Undefined behavior:
@@ -3352,19 +3583,27 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Poll, Ready, PollOpt, Token};</span>
-    <span class="doccomment">/// use mio::tcp::TcpStream;</span>
+    <span class="doccomment">/// use mio::net::TcpStream;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
-    <span class="doccomment">/// let socket = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse().unwrap()).unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
+    <span class="doccomment">/// let socket = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse()?)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Register the socket with `poll`, requesting readable</span>
-    <span class="doccomment">/// poll.register(&amp;socket, Token(0), Ready::readable(), PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">/// poll.register(&amp;socket, Token(0), Ready::readable(), PollOpt::edge())?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Reregister the socket specifying a different token and write interest</span>
     <span class="doccomment">/// // instead. `PollOpt::edge()` must be specified even though that value</span>
     <span class="doccomment">/// // is not being changed.</span>
-    <span class="doccomment">/// poll.reregister(&amp;socket, Token(2), Ready::writable(), PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">/// poll.reregister(&amp;socket, Token(2), Ready::writable(), PollOpt::edge())?;</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`struct`]: #</span>
@@ -3374,7 +3613,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reregister</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>, <span class="ident">token</span>: <span class="ident">Token</span>, <span class="ident">interest</span>: <span class="ident">Ready</span>, <span class="ident">opts</span>: <span class="ident">PollOpt</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">Evented</span>
     {
-        <span class="ident">validate_args</span>(<span class="ident">token</span>, <span class="ident">interest</span>)<span class="question-mark">?</span>;
+        <span class="ident">validate_args</span>(<span class="ident">token</span>)<span class="question-mark">?</span>;
 
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;registering with poller&quot;</span>);
 
@@ -3401,23 +3640,31 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Events, Poll, Ready, PollOpt, Token};</span>
-    <span class="doccomment">/// use mio::tcp::TcpStream;</span>
+    <span class="doccomment">/// use mio::net::TcpStream;</span>
     <span class="doccomment">/// use std::time::Duration;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
-    <span class="doccomment">/// let socket = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse().unwrap()).unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
+    <span class="doccomment">/// let socket = TcpStream::connect(&amp;&quot;216.58.193.100:80&quot;.parse()?)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Register the socket with `poll`</span>
-    <span class="doccomment">/// poll.register(&amp;socket, Token(0), Ready::readable(), PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">/// poll.register(&amp;socket, Token(0), Ready::readable(), PollOpt::edge())?;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// poll.deregister(&amp;socket).unwrap();</span>
+    <span class="doccomment">/// poll.deregister(&amp;socket)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Set a timeout because this poll should never receive any events.</span>
-    <span class="doccomment">/// let n = poll.poll(&amp;mut events, Some(Duration::from_secs(1))).unwrap();</span>
+    <span class="doccomment">/// let n = poll.poll(&amp;mut events, Some(Duration::from_secs(1)))?;</span>
     <span class="doccomment">/// assert_eq!(0, n);</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deregister</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">Evented</span>
@@ -3438,7 +3685,7 @@
     <span class="doccomment">/// been received or `timeout` has elapsed. A `timeout` of `None` means that</span>
     <span class="doccomment">/// `poll` will block until a readiness event has been received.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// The supplied `events` will be cleared and newly received readinss events</span>
+    <span class="doccomment">/// The supplied `events` will be cleared and newly received readiness events</span>
     <span class="doccomment">/// will be pushed onto the end. At most `events.capacity()` events will be</span>
     <span class="doccomment">/// returned. If there are further pending readiness events, they will be</span>
     <span class="doccomment">/// returned on the next call to `poll`.</span>
@@ -3456,7 +3703,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// `poll` returns the number of readiness events that have been pushed into</span>
     <span class="doccomment">/// `events` or `Err` when an error has been encountered with the system</span>
-    <span class="doccomment">/// selector.</span>
+    <span class="doccomment">/// selector.  The value returned is deprecated and will be removed in 0.7.0.</span>
+    <span class="doccomment">/// Accessing the events by index is also deprecated.  Events can be</span>
+    <span class="doccomment">/// inserted by other events triggering, thus making sequential access</span>
+    <span class="doccomment">/// problematic.  Use the iterator API instead.  See [`iter`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See the [struct] level documentation for a higher level discussion of</span>
     <span class="doccomment">/// polling.</span>
@@ -3464,22 +3714,25 @@
     <span class="doccomment">/// [`readable`]: struct.Ready.html#method.readable</span>
     <span class="doccomment">/// [`writable`]: struct.Ready.html#method.writable</span>
     <span class="doccomment">/// [struct]: #</span>
+    <span class="doccomment">/// [`iter`]: struct.Events.html#method.iter</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// A basic example -- establishing a `TcpStream` connection.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Events, Poll, Ready, PollOpt, Token};</span>
-    <span class="doccomment">/// use mio::tcp::TcpStream;</span>
+    <span class="doccomment">/// use mio::net::TcpStream;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// use std::net::{TcpListener, SocketAddr};</span>
     <span class="doccomment">/// use std::thread;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Bind a server socket to connect to.</span>
-    <span class="doccomment">/// let addr: SocketAddr = &quot;127.0.0.1:0&quot;.parse().unwrap();</span>
-    <span class="doccomment">/// let server = TcpListener::bind(&amp;addr).unwrap();</span>
-    <span class="doccomment">/// let addr = server.local_addr().unwrap().clone();</span>
+    <span class="doccomment">/// let addr: SocketAddr = &quot;127.0.0.1:0&quot;.parse()?;</span>
+    <span class="doccomment">/// let server = TcpListener::bind(&amp;addr)?;</span>
+    <span class="doccomment">/// let addr = server.local_addr()?.clone();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Spawn a thread to accept the socket</span>
     <span class="doccomment">/// thread::spawn(move || {</span>
@@ -3487,28 +3740,34 @@
     <span class="doccomment">/// });</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Construct a new `Poll` handle as well as the `Events` we&#39;ll store into</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
     <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Connect the stream</span>
-    <span class="doccomment">/// let stream = TcpStream::connect(&amp;addr).unwrap();</span>
+    <span class="doccomment">/// let stream = TcpStream::connect(&amp;addr)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Register the stream with `Poll`</span>
-    <span class="doccomment">/// poll.register(&amp;stream, Token(0), Ready::all(), PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">/// poll.register(&amp;stream, Token(0), Ready::readable() | Ready::writable(), PollOpt::edge())?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Wait for the socket to become ready. This has to happens in a loop to</span>
     <span class="doccomment">/// // handle spurious wakeups.</span>
     <span class="doccomment">/// loop {</span>
-    <span class="doccomment">///     poll.poll(&amp;mut events, None).unwrap();</span>
+    <span class="doccomment">///     poll.poll(&amp;mut events, None)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///     for event in &amp;events {</span>
     <span class="doccomment">///         if event.token() == Token(0) &amp;&amp; event.readiness().is_writable() {</span>
     <span class="doccomment">///             // The socket connected (probably, it could still be a spurious</span>
     <span class="doccomment">///             // wakeup)</span>
-    <span class="doccomment">///             return;</span>
+    <span class="doccomment">///             return Ok(());</span>
     <span class="doccomment">///         }</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [struct]: #</span>
@@ -3645,60 +3904,61 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">poll2</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">events</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Events</span>, <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll2</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">events</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Events</span>, <span class="kw-2">mut</span> <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="comment">// Compute the timeout value passed to the system selector. If the</span>
         <span class="comment">// readiness queue has pending nodes, we still want to poll the system</span>
         <span class="comment">// selector for new events, but we don&#39;t want to block the thread to</span>
         <span class="comment">// wait for new events.</span>
-        <span class="kw">let</span> <span class="ident">timeout</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">timeout</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">0</span>)) {
+        <span class="kw">if</span> <span class="ident">timeout</span> <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">0</span>)) {
             <span class="comment">// If blocking is not requested, then there is no need to prepare</span>
             <span class="comment">// the queue for sleep</span>
-            <span class="ident">timeout</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">readiness_queue</span>.<span class="ident">prepare_for_sleep</span>() {
             <span class="comment">// The readiness queue is empty. The call to `prepare_for_sleep`</span>
             <span class="comment">// inserts `sleep_marker` into the queue. This signals to any</span>
             <span class="comment">// threads setting readiness that the `Poll::poll` is going to</span>
             <span class="comment">// sleep, so the awakener should be used.</span>
-            <span class="ident">timeout</span>
         } <span class="kw">else</span> {
             <span class="comment">// The readiness queue is not empty, so do not block the thread.</span>
-            <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">0</span>))
-        };
+            <span class="ident">timeout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">0</span>));
+        }
 
-        <span class="comment">// First get selector events</span>
-        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">selector</span>.<span class="ident">select</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>.<span class="ident">inner</span>, <span class="ident">AWAKEN</span>, <span class="ident">timeout</span>);
-
-        <span class="kw">if</span> <span class="ident">res</span><span class="question-mark">?</span> {
-            <span class="comment">// Some awakeners require reading from a FD.</span>
-            <span class="self">self</span>.<span class="ident">readiness_queue</span>.<span class="ident">inner</span>.<span class="ident">awakener</span>.<span class="ident">cleanup</span>();
+        <span class="kw">loop</span> {
+            <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Instant</span>::<span class="ident">now</span>();
+            <span class="comment">// First get selector events</span>
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">selector</span>.<span class="ident">select</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>.<span class="ident">inner</span>, <span class="ident">AWAKEN</span>, <span class="ident">timeout</span>);
+            <span class="kw">match</span> <span class="ident">res</span> {
+                <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) <span class="op">=&gt;</span> {
+                    <span class="comment">// Some awakeners require reading from a FD.</span>
+                    <span class="self">self</span>.<span class="ident">readiness_queue</span>.<span class="ident">inner</span>.<span class="ident">awakener</span>.<span class="ident">cleanup</span>();
+                    <span class="kw">break</span>;
+                }
+                <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="kw">break</span>,
+                <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Interrupted</span> <span class="op">=&gt;</span> {
+                    <span class="comment">// Interrupted by a signal; update timeout if necessary and retry</span>
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">to</span>) <span class="op">=</span> <span class="ident">timeout</span> {
+                        <span class="kw">let</span> <span class="ident">elapsed</span> <span class="op">=</span> <span class="ident">now</span>.<span class="ident">elapsed</span>();
+                        <span class="kw">if</span> <span class="ident">elapsed</span> <span class="op">&gt;=</span> <span class="ident">to</span> {
+                            <span class="kw">break</span>;
+                        } <span class="kw">else</span> {
+                            <span class="ident">timeout</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">to</span> <span class="op">-</span> <span class="ident">elapsed</span>);
+                        }
+                    }
+                }
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+            }
         }
 
         <span class="comment">// Poll custom event queue</span>
         <span class="self">self</span>.<span class="ident">readiness_queue</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>.<span class="ident">inner</span>);
 
         <span class="comment">// Return number of polled events</span>
-        <span class="prelude-val">Ok</span>(<span class="ident">events</span>.<span class="ident">len</span>())
+        <span class="prelude-val">Ok</span>(<span class="ident">events</span>.<span class="ident">inner</span>.<span class="ident">len</span>())
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">unix</span>, <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)))]</span>
-<span class="kw">fn</span> <span class="ident">registerable</span>(<span class="ident">interest</span>: <span class="ident">Ready</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">let</span> <span class="ident">unixinterest</span> <span class="op">=</span> <span class="ident">UnixReady</span>::<span class="ident">from</span>(<span class="ident">interest</span>);
-    <span class="ident">unixinterest</span>.<span class="ident">is_readable</span>() <span class="op">||</span> <span class="ident">unixinterest</span>.<span class="ident">is_writable</span>() <span class="op">||</span> <span class="ident">unixinterest</span>.<span class="ident">is_aio</span>()
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">unix</span>, <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>))))]</span>
-<span class="kw">fn</span> <span class="ident">registerable</span>(<span class="ident">interest</span>: <span class="ident">Ready</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    <span class="ident">interest</span>.<span class="ident">is_readable</span>() <span class="op">||</span> <span class="ident">interest</span>.<span class="ident">is_writable</span>()
-}
-
-<span class="kw">fn</span> <span class="ident">validate_args</span>(<span class="ident">token</span>: <span class="ident">Token</span>, <span class="ident">interest</span>: <span class="ident">Ready</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">validate_args</span>(<span class="ident">token</span>: <span class="ident">Token</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">token</span> <span class="op">==</span> <span class="ident">AWAKEN</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="string">&quot;invalid token&quot;</span>));
-    }
-
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">registerable</span>(<span class="ident">interest</span>) {
-        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="string">&quot;interest must include readable or writable or aio&quot;</span>));
     }
 
     <span class="prelude-val">Ok</span>(())
@@ -3706,7 +3966,8 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Poll</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Poll&quot;</span>)
+        <span class="ident">fmt</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Poll&quot;</span>)
+            .<span class="ident">finish</span>()
     }
 }
 
@@ -3720,34 +3981,41 @@
 <span class="doccomment">/// A collection of readiness events.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// `Events` is passed as an argument to [`Poll::poll`] and will be used to</span>
-<span class="doccomment">/// receive any new readiness events received since the last call to [`poll`].</span>
-<span class="doccomment">/// Usually, a single `Events` instance is created at the same time as the</span>
-<span class="doccomment">/// [`Poll`] and the single instance is reused for each call to [`poll`].</span>
+<span class="doccomment">/// receive any new readiness events received since the last poll. Usually, a</span>
+<span class="doccomment">/// single `Events` instance is created at the same time as a [`Poll`] and</span>
+<span class="doccomment">/// reused on each call to [`Poll::poll`].</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`Poll`] for more documentation on polling.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::error::Error;</span>
+<span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
 <span class="doccomment">/// use mio::{Events, Poll};</span>
 <span class="doccomment">/// use std::time::Duration;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
-<span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+<span class="doccomment">/// let poll = Poll::new()?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// assert_eq!(0, events.len());</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Register `Evented` handles with `poll`</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100))).unwrap();</span>
+<span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100)))?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// for event in &amp;events {</span>
 <span class="doccomment">///     println!(&quot;event={:?}&quot;, event);</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">/// #     Ok(())</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`Poll::poll`]: struct.Poll.html#method.poll</span>
-<span class="doccomment">/// [`poll`]: struct.Poll.html#method.poll</span>
 <span class="doccomment">/// [`Poll`]: struct.Poll.html</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Events</span> {
     <span class="ident">inner</span>: <span class="ident">sys</span>::<span class="ident">Events</span>,
@@ -3760,26 +4028,70 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::error::Error;</span>
+<span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
 <span class="doccomment">/// use mio::{Events, Poll};</span>
 <span class="doccomment">/// use std::time::Duration;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
-<span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+<span class="doccomment">/// let poll = Poll::new()?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Register handles with `poll`</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100))).unwrap();</span>
+<span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100)))?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// for event in events.iter() {</span>
 <span class="doccomment">///     println!(&quot;event={:?}&quot;, event);</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">/// #     Ok(())</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`Events`]: struct.Events.html</span>
 <span class="doccomment">/// [`iter`]: struct.Events.html#method.iter</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="ident">inner</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Events</span>,
+    <span class="ident">pos</span>: <span class="ident">usize</span>,
+}
+
+<span class="doccomment">/// Owned [`Events`] iterator.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This struct is created by the `into_iter` method on [`Events`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::error::Error;</span>
+<span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+<span class="doccomment">/// use mio::{Events, Poll};</span>
+<span class="doccomment">/// use std::time::Duration;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
+<span class="doccomment">/// let poll = Poll::new()?;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Register handles with `poll`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100)))?;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// for event in events {</span>
+<span class="doccomment">///     println!(&quot;event={:?}&quot;, event);</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// #     Ok(())</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// [`Events`]: struct.Events.html</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">IntoIter</span> {
+    <span class="ident">inner</span>: <span class="ident">Events</span>,
     <span class="ident">pos</span>: <span class="ident">usize</span>,
 }
 
@@ -3801,41 +4113,14 @@
         }
     }
 
-    <span class="doccomment">/// Returns the `Event` at the given index, or `None` if the index is out of</span>
-    <span class="doccomment">/// bounds.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use mio::{Events, Poll};</span>
-    <span class="doccomment">/// use std::time::Duration;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // Register handles with `poll`</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let n = poll.poll(&amp;mut events, Some(Duration::from_millis(100))).unwrap();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// for i in 0..n {</span>
-    <span class="doccomment">///     println!(&quot;event={:?}&quot;, events.get(i).unwrap());</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.6.10&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Index access removed in favor of iterator only API.&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">idx</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">get</span>(<span class="ident">idx</span>)
     }
 
-    <span class="doccomment">/// Returns the number of `Event` values currently in `self`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use mio::Events;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let events = Events::with_capacity(1024);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(0, events.len());</span>
-    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.6.10&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;Index access removed in favor of iterator only API.&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">len</span>()
     }
@@ -3873,25 +4158,66 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Events, Poll};</span>
     <span class="doccomment">/// use std::time::Duration;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Register handles with `poll`</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100))).unwrap();</span>
+    <span class="doccomment">/// poll.poll(&amp;mut events, Some(Duration::from_millis(100)))?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// for event in events.iter() {</span>
     <span class="doccomment">///     println!(&quot;event={:?}&quot;, event);</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Iter</span> {
         <span class="ident">Iter</span> {
             <span class="ident">inner</span>: <span class="self">self</span>,
             <span class="ident">pos</span>: <span class="number">0</span>
         }
+    }
+
+    <span class="doccomment">/// Clearing all `Event` values from container explicitly.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// use mio::{Events, Poll};</span>
+    <span class="doccomment">/// use std::time::Duration;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// // Register handles with `poll`</span>
+    <span class="doccomment">/// for _ in 0..2 {</span>
+    <span class="doccomment">///     events.clear();</span>
+    <span class="doccomment">///     poll.poll(&amp;mut events, Some(Duration::from_millis(100)))?;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///     for event in events.iter() {</span>
+    <span class="doccomment">///         println!(&quot;event={:?}&quot;, event);</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">clear</span>();
     }
 }
 
@@ -3908,7 +4234,29 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Event</span>;
 
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">pos</span>);
+        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">inner</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">pos</span>);
+        <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="ident">ret</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">IntoIterator</span> <span class="kw">for</span> <span class="ident">Events</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Event</span>;
+    <span class="kw">type</span> <span class="ident">IntoIter</span> <span class="op">=</span> <span class="ident">IntoIter</span>;
+
+    <span class="kw">fn</span> <span class="ident">into_iter</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">IntoIter</span> {
+        <span class="ident">IntoIter</span> {
+            <span class="ident">inner</span>: <span class="self">self</span>,
+            <span class="ident">pos</span>: <span class="number">0</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">IntoIter</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Event</span>;
+
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">inner</span>.<span class="ident">get</span>(<span class="self">self</span>.<span class="ident">pos</span>);
         <span class="self">self</span>.<span class="ident">pos</span> <span class="op">+=</span> <span class="number">1</span>;
         <span class="ident">ret</span>
     }
@@ -3917,7 +4265,6 @@
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Events</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Events&quot;</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;len&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">len</span>())
             .<span class="ident">field</span>(<span class="string">&quot;capacity&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">capacity</span>())
             .<span class="ident">finish</span>()
     }
@@ -3953,6 +4300,8 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Events, Ready, Registration, Poll, PollOpt, Token};</span>
     <span class="doccomment">/// use std::thread;</span>
     <span class="doccomment">///</span>
@@ -3965,8 +4314,8 @@
     <span class="doccomment">///     set_readiness.set_readiness(Ready::readable());</span>
     <span class="doccomment">/// });</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
-    <span class="doccomment">/// poll.register(&amp;registration, Token(0), Ready::all(), PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
+    <span class="doccomment">/// poll.register(&amp;registration, Token(0), Ready::readable() | Ready::writable(), PollOpt::edge())?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut events = Events::with_capacity(256);</span>
     <span class="doccomment">///</span>
@@ -3975,11 +4324,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">///     for event in &amp;events {</span>
     <span class="doccomment">///         if event.token() == Token(0) &amp;&amp; event.readiness().is_readable() {</span>
-    <span class="doccomment">///             return;</span>
+    <span class="doccomment">///             return Ok(());</span>
     <span class="doccomment">///         }</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// [struct]: #</span>
     <span class="doccomment">/// [`Poll`]: struct.Poll.html</span>
@@ -4108,14 +4462,22 @@
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Registration, Ready};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let (registration, set_readiness) = Registration::new2();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert!(set_readiness.readiness().is_empty());</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// set_readiness.set_readiness(Ready::readable()).unwrap();</span>
+    <span class="doccomment">/// set_readiness.set_readiness(Ready::readable())?;</span>
     <span class="doccomment">/// assert!(set_readiness.readiness().is_readable());</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">readiness</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Ready</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">readiness</span>()
@@ -4124,9 +4486,9 @@
     <span class="doccomment">/// Set the registration&#39;s readiness</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the associated `Registration` is registered with a [`Poll`] instance</span>
-    <span class="doccomment">/// and has requested readiness events that include `ready`, then a call</span>
-    <span class="doccomment">/// [`poll`] will receive a readiness event representing the readiness</span>
-    <span class="doccomment">/// state change.</span>
+    <span class="doccomment">/// and has requested readiness events that include `ready`, then a future</span>
+    <span class="doccomment">/// call to [`Poll::poll`] will receive a readiness event representing the</span>
+    <span class="doccomment">/// readiness state change.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Note</span>
     <span class="doccomment">///</span>
@@ -4140,28 +4502,36 @@
     <span class="doccomment">/// work:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Events, Registration, Ready, Poll, PollOpt, Token};</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+    <span class="doccomment">/// let poll = Poll::new()?;</span>
     <span class="doccomment">/// let (registration, set_readiness) = Registration::new2();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// poll.register(&amp;registration,</span>
     <span class="doccomment">///               Token(0),</span>
     <span class="doccomment">///               Ready::readable(),</span>
-    <span class="doccomment">///               PollOpt::edge()).unwrap();</span>
+    <span class="doccomment">///               PollOpt::edge())?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Set the readiness, then immediately poll to try to get the readiness</span>
     <span class="doccomment">/// // event</span>
-    <span class="doccomment">/// set_readiness.set_readiness(Ready::readable()).unwrap();</span>
+    <span class="doccomment">/// set_readiness.set_readiness(Ready::readable())?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut events = Events::with_capacity(1024);</span>
-    <span class="doccomment">/// poll.poll(&amp;mut events, None).unwrap();</span>
+    <span class="doccomment">/// poll.poll(&amp;mut events, None)?;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // There is NO guarantee that the following will work. It is possible</span>
     <span class="doccomment">/// // that the readiness event will be delivered at a later time.</span>
     <span class="doccomment">/// let event = events.get(0).unwrap();</span>
     <span class="doccomment">/// assert_eq!(event.token(), Token(0));</span>
     <span class="doccomment">/// assert!(event.readiness().is_readable());</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
@@ -4170,19 +4540,28 @@
     <span class="doccomment">/// documentation.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
     <span class="doccomment">/// use mio::{Registration, Ready};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let (registration, set_readiness) = Registration::new2();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert!(set_readiness.readiness().is_empty());</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// set_readiness.set_readiness(Ready::readable()).unwrap();</span>
+    <span class="doccomment">/// set_readiness.set_readiness(Ready::readable())?;</span>
     <span class="doccomment">/// assert!(set_readiness.readiness().is_readable());</span>
+    <span class="doccomment">/// #     Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Registration`]: struct.Registration.html</span>
+    <span class="doccomment">/// [`Evented`]: event/trait.Evented.html#examples</span>
     <span class="doccomment">/// [`Poll`]: struct.Poll.html</span>
-    <span class="doccomment">/// [`poll`]: struct.Poll.html#method.poll</span>
+    <span class="doccomment">/// [`Poll::poll`]: struct.Poll.html#method.poll</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_readiness</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ready</span>: <span class="ident">Ready</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_readiness</span>(<span class="ident">ready</span>)
     }
@@ -4190,7 +4569,8 @@
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">SetReadiness</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
-        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;SetReadiness&quot;</span>)
+        <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;SetReadiness&quot;</span>)
+            .<span class="ident">finish</span>()
     }
 }
 
@@ -4584,7 +4964,7 @@
 
     <span class="doccomment">/// Prepare the queue for the `Poll::poll` thread to block in the system</span>
     <span class="doccomment">/// selector. This involves changing `head_readiness` to `sleep_marker`.</span>
-    <span class="doccomment">/// Returns true if successfull and `poll` can block.</span>
+    <span class="doccomment">/// Returns true if successful and `poll` can block.</span>
     <span class="kw">fn</span> <span class="ident">prepare_for_sleep</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">end_marker</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">end_marker</span>();
         <span class="kw">let</span> <span class="ident">sleep_marker</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">sleep_marker</span>();
@@ -4605,6 +4985,16 @@
             <span class="kw">return</span> <span class="bool-val">false</span>;
         }
 
+        <span class="comment">// The sleep marker is *not* currently in the readiness queue.</span>
+        <span class="comment">//</span>
+        <span class="comment">// The sleep marker is only inserted in this function. It is also only</span>
+        <span class="comment">// inserted in the tail position. This is guaranteed by first checking</span>
+        <span class="comment">// that the end marker is in the tail position, pushing the sleep marker</span>
+        <span class="comment">// after the end marker, then removing the end marker.</span>
+        <span class="comment">//</span>
+        <span class="comment">// Before inserting a node into the queue, the next pointer has to be</span>
+        <span class="comment">// set to null. Again, this is only safe to do when the node is not</span>
+        <span class="comment">// currently in the queue, but we already have ensured this.</span>
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">sleep_marker</span>.<span class="ident">next_readiness</span>.<span class="ident">store</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">Relaxed</span>);
 
         <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">head_readiness</span>.<span class="ident">compare_and_swap</span>(
@@ -5114,13 +5504,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

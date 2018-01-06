@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Enum Diff</p><div class="block items"><ul><li><a href="#variants">Variants</a></li></ul></div><p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'Diff', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum Diff</p><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.FirstMismatch">FirstMismatch</a><a href="#variant.Shorter">Shorter</a><a href="#variant.Longer">Longer</a></div></div><p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'Diff', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -59,10 +59,10 @@
 iterator <code>J</code>.</p>
 </div><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
-<span id='variant.FirstMismatch' class='variant'><span id='FirstMismatch.v' class='invisible'><code>FirstMismatch(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;)</code></span></span><div class='docblock'><p>The index of the first non-matching element along with both iterator&#39;s remaining elements
+<span id="variant.FirstMismatch" class="variant small-section-header"><a href="#variant.FirstMismatch" class="anchor field"></a><span id='FirstMismatch.v' class='invisible'><code>FirstMismatch(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;)</code></span></span><div class='docblock'><p>The index of the first non-matching element along with both iterator&#39;s remaining elements
 starting with the first mis-match.</p>
-</div><span id='variant.Shorter' class='variant'><span id='Shorter.v' class='invisible'><code>Shorter(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;)</code></span></span><div class='docblock'><p>The total number of elements that were in <code>J</code> along with the remaining elements of <code>I</code>.</p>
-</div><span id='variant.Longer' class='variant'><span id='Longer.v' class='invisible'><code>Longer(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;)</code></span></span><div class='docblock'><p>The total number of elements that were in <code>I</code> along with the remaining elements of <code>J</code>.</p>
+</div><span id="variant.Shorter" class="variant small-section-header"><a href="#variant.Shorter" class="anchor field"></a><span id='Shorter.v' class='invisible'><code>Shorter(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;I&gt;)</code></span></span><div class='docblock'><p>The total number of elements that were in <code>J</code> along with the remaining elements of <code>I</code>.</p>
+</div><span id="variant.Longer" class="variant small-section-header"><a href="#variant.Longer" class="anchor field"></a><span id='Longer.v' class='invisible'><code>Longer(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;<a class="struct" href="../itertools/structs/struct.PutBack.html" title="struct itertools::structs::PutBack">PutBack</a>&lt;J&gt;)</code></span></span><div class='docblock'><p>The total number of elements that were in <code>I</code> along with the remaining elements of <code>J</code>.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -80,13 +80,15 @@ starting with the first mis-match.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

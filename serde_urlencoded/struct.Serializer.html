@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Serializer</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>serde_urlencoded</a></p><script>window.sidebarCurrent = {name: 'Serializer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Serializer</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Serializer">Serializer</a></div></div><p class='location'><a href='index.html'>serde_urlencoded</a></p><script>window.sidebarCurrent = {name: 'Serializer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -63,7 +63,7 @@ unit structs and unit variants.</p></li>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'output, Target:&nbsp;'output + <a class="trait" href="../url/form_urlencoded/trait.Target.html" title="trait url::form_urlencoded::Target">UrlEncodedTarget</a>&gt; <a class="struct" href="../serde_urlencoded/ser/struct.Serializer.html" title="struct serde_urlencoded::ser::Serializer">Serializer</a>&lt;'output, Target&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/serde_urlencoded/ser/mod.rs.html#49-54' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(urlencoder: &amp;'output mut <a class="struct" href="../url/form_urlencoded/struct.Serializer.html" title="struct url::form_urlencoded::Serializer">UrlEncodedSerializer</a>&lt;Target&gt;) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/serde_urlencoded/ser/mod.rs.html#51-53' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(urlencoder: &amp;'output mut <a class="struct" href="../url/form_urlencoded/struct.Serializer.html" title="struct url::form_urlencoded::Serializer">UrlEncodedSerializer</a>&lt;Target&gt;) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/serde_urlencoded/ser/mod.rs.html#51-53' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a new <code>Serializer</code>.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
@@ -150,6 +150,8 @@ unit structs and unit variants.</p></li>
 <div class='docblock'><p>Collect an iterator as a map. <a href="../serde/ser/trait.Serializer.html#method.collect_map">Read more</a></p>
 </div><h4 id='method.collect_str' class="method"><span id='collect_str.v' class='invisible'><code>fn <a href='../serde/ser/trait.Serializer.html#method.collect_str' class='fnname'>collect_str</a>&lt;T&gt;(self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/serde/ser/mod.rs.html#1326-1334' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Serialize a string produced by an implementation of <code>Display</code>. <a href="../serde/ser/trait.Serializer.html#method.collect_str">Read more</a></p>
+</div><h4 id='method.is_human_readable' class="method"><span id='is_human_readable.v' class='invisible'><code>fn <a href='../serde/ser/trait.Serializer.html#method.is_human_readable' class='fnname'>is_human_readable</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/serde/ser/mod.rs.html#1415-1417' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Determine whether <code>Serialize</code> implementations should serialize in human-readable form. <a href="../serde/ser/trait.Serializer.html#method.is_human_readable">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -167,13 +169,15 @@ unit structs and unit variants.</p></li>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

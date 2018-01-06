@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.10/src/token.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.12/src/token.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>token.rs.html -- source</title>
@@ -188,6 +188,14 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
 </pre><pre class="rust ">
 <span class="doccomment">/// Associates readiness notifications with [`Evented`] handles.</span>
 <span class="doccomment">///</span>
@@ -202,8 +210,10 @@
 <span class="doccomment">/// example, `HashMap` is used, but usually something like [`slab`] is better.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use std::error::Error;</span>
+<span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
 <span class="doccomment">/// use mio::{Events, Ready, Poll, PollOpt, Token};</span>
-<span class="doccomment">/// use mio::tcp::TcpListener;</span>
+<span class="doccomment">/// use mio::net::TcpListener;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use std::thread;</span>
 <span class="doccomment">/// use std::io::{self, Read};</span>
@@ -223,19 +233,19 @@
 <span class="doccomment">/// let mut next_socket_index = 0;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // The `Poll` instance</span>
-<span class="doccomment">/// let poll = Poll::new().unwrap();</span>
+<span class="doccomment">/// let poll = Poll::new()?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Tcp listener</span>
-<span class="doccomment">/// let listener = TcpListener::bind(&amp;&quot;127.0.0.1:0&quot;.parse().unwrap()).unwrap();</span>
+<span class="doccomment">/// let listener = TcpListener::bind(&amp;&quot;127.0.0.1:0&quot;.parse()?)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Register the listener</span>
 <span class="doccomment">/// poll.register(&amp;listener,</span>
 <span class="doccomment">///               LISTENER,</span>
 <span class="doccomment">///               Ready::readable(),</span>
-<span class="doccomment">///               PollOpt::edge()).unwrap();</span>
+<span class="doccomment">///               PollOpt::edge())?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Spawn a thread that will connect a bunch of sockets then close them</span>
-<span class="doccomment">/// let addr = listener.local_addr().unwrap();</span>
+<span class="doccomment">/// let addr = listener.local_addr()?;</span>
 <span class="doccomment">/// thread::spawn(move || {</span>
 <span class="doccomment">///     use std::net::TcpStream;</span>
 <span class="doccomment">///</span>
@@ -255,7 +265,7 @@
 <span class="doccomment">/// // The main event loop</span>
 <span class="doccomment">/// loop {</span>
 <span class="doccomment">///     // Wait for events</span>
-<span class="doccomment">///     poll.poll(&amp;mut events, None).unwrap();</span>
+<span class="doccomment">///     poll.poll(&amp;mut events, None)?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     for event in &amp;events {</span>
 <span class="doccomment">///         match event.token() {</span>
@@ -267,7 +277,7 @@
 <span class="doccomment">///                         Ok((socket, _)) =&gt; {</span>
 <span class="doccomment">///                             // Shutdown the server</span>
 <span class="doccomment">///                             if next_socket_index == MAX_SOCKETS {</span>
-<span class="doccomment">///                                 return;</span>
+<span class="doccomment">///                                 return Ok(());</span>
 <span class="doccomment">///                             }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///                             // Get the token for the socket</span>
@@ -278,7 +288,7 @@
 <span class="doccomment">///                             poll.register(&amp;socket,</span>
 <span class="doccomment">///                                          token,</span>
 <span class="doccomment">///                                          Ready::readable(),</span>
-<span class="doccomment">///                                          PollOpt::edge()).unwrap();</span>
+<span class="doccomment">///                                          PollOpt::edge())?;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///                             // Store the socket</span>
 <span class="doccomment">///                             sockets.insert(token, socket);</span>
@@ -304,7 +314,7 @@
 <span class="doccomment">///                         Ok(_) =&gt; unreachable!(),</span>
 <span class="doccomment">///                         Err(ref e) if e.kind() == io::ErrorKind::WouldBlock =&gt; {</span>
 <span class="doccomment">///                             // Socket is not ready anymore, stop reading</span>
-<span class="doccomment">///                             continue;</span>
+<span class="doccomment">///                             break;</span>
 <span class="doccomment">///                         }</span>
 <span class="doccomment">///                         e =&gt; panic!(&quot;err={:?}&quot;, e), // Unexpected error</span>
 <span class="doccomment">///                     }</span>
@@ -313,6 +323,12 @@
 <span class="doccomment">///         }</span>
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">/// #     Ok(())</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`Evented`]: event/trait.Evented.html</span>
@@ -352,13 +368,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

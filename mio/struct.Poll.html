@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Poll</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>mio</a></p><script>window.sidebarCurrent = {name: 'Poll', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Poll</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.register">register</a><a href="#method.reregister">reregister</a><a href="#method.deregister">deregister</a><a href="#method.poll">poll</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-AsRawFd">AsRawFd</a></div></div><p class='location'><a href='index.html'>mio</a></p><script>window.sidebarCurrent = {name: 'Poll', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/mio/poll.rs.html#313-329' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/mio/poll.rs.html#327-343' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Poll { /* fields omitted */ }</pre><div class='docblock'><p>Polls for readiness events on all registered values.</p>
 
 <p><code>Poll</code> allows a program to monitor a large number of <code>Evented</code> types,
@@ -70,34 +70,34 @@ event.</p>
 
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::{<span class="ident">Events</span>, <span class="ident">Poll</span>, <span class="ident">Ready</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">tcp</span>::<span class="ident">TcpStream</span>;
+<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">TcpListener</span>, <span class="ident">SocketAddr</span>};
 
 <span class="comment">// Bind a server socket to connect to.</span>
-<span class="kw">let</span> <span class="ident">addr</span>: <span class="ident">SocketAddr</span> <span class="op">=</span> <span class="string">&quot;127.0.0.1:0&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">TcpListener</span>::<span class="ident">bind</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">addr</span>: <span class="ident">SocketAddr</span> <span class="op">=</span> <span class="string">&quot;127.0.0.1:0&quot;</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">TcpListener</span>::<span class="ident">bind</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>)<span class="question-mark">?</span>;
 
 <span class="comment">// Construct a new `Poll` handle as well as the `Events` we&#39;ll store into</span>
-<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">Events</span>::<span class="ident">with_capacity</span>(<span class="number">1024</span>);
 
 <span class="comment">// Connect the stream</span>
-<span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="ident">server</span>.<span class="ident">local_addr</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="ident">server</span>.<span class="ident">local_addr</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
 <span class="comment">// Register the stream with `Poll`</span>
-<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">stream</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">all</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();
+<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">stream</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>() <span class="op">|</span> <span class="ident">Ready</span>::<span class="ident">writable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;
 
 <span class="comment">// Wait for the socket to become ready. This has to happens in a loop to</span>
 <span class="comment">// handle spurious wakeups.</span>
 <span class="kw">loop</span> {
-    <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+    <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
 
     <span class="kw">for</span> <span class="ident">event</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">events</span> {
         <span class="kw">if</span> <span class="ident">event</span>.<span class="ident">token</span>() <span class="op">==</span> <span class="ident">Token</span>(<span class="number">0</span>) <span class="op">&amp;&amp;</span> <span class="ident">event</span>.<span class="ident">readiness</span>().<span class="ident">is_writable</span>() {
             <span class="comment">// The socket connected (probably, it could still be a spurious</span>
             <span class="comment">// wakeup)</span>
-            <span class="kw">return</span>;
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
     }
 }</pre>
@@ -133,7 +133,7 @@ receiving an event indicating readiness for a certain operation, one should
 assume that <a href="struct.Poll.html#method.poll"><code>Poll::poll</code></a> may never return another event for the same token
 and readiness until the operation returns <a href="https://doc.rust-lang.org/std/io/enum.ErrorKind.html#variant.WouldBlock"><code>WouldBlock</code></a>.</p>
 
-<p>By contrast, when level-triggered notfications was requested, each call to
+<p>By contrast, when level-triggered notifications was requested, each call to
 <a href="struct.Poll.html#method.poll"><code>Poll::poll</code></a> will return an event for the socket as long as data remains
 in the socket buffer. Generally, level-triggered events should be avoided if
 high performance is a concern.</p>
@@ -200,39 +200,39 @@ event will be delivered.</p>
 supported platforms are <a href="struct.Ready.html#method.readable"><code>readable</code></a> and <a href="struct.Ready.html#method.writable"><code>writable</code></a>. All other readiness
 operations may have false negatives and as such should be considered
 <strong>hints</strong>. This means that if a socket is registered with <a href="struct.Ready.html#method.readable"><code>readable</code></a>,
-<a href="struct.Ready.html#method.error"><code>error</code></a>, and <a href="struct.Ready.html#method.hup"><code>hup</code></a> interest, and either an error or hup is received, a
+<a href="unix/struct.UnixReady.html#method.error"><code>error</code></a>, and <a href="unix/struct.UnixReady.html#method.hup"><code>hup</code></a> interest, and either an error or hup is received, a
 readiness event will be generated for the socket, but it <strong>may</strong> only
 include <code>readable</code> readiness. Also note that, given the potential for
 spurious events, receiving a readiness event with <code>hup</code> or <code>error</code> doesn&#39;t
 actually mean that a <code>read</code> on the socket will return a result matching the
 readiness event.</p>
 
-<p>In other words, portable programs that explicitly check for <a href="struct.Ready.html#method.hup"><code>hup</code></a> or
-<a href="struct.Ready.html#method.error"><code>error</code></a> readiness should be doing so as an <strong>optimization</strong> and always be
+<p>In other words, portable programs that explicitly check for <a href="unix/struct.UnixReady.html#method.hup"><code>hup</code></a> or
+<a href="unix/struct.UnixReady.html#method.error"><code>error</code></a> readiness should be doing so as an <strong>optimization</strong> and always be
 able to handle an error or HUP situation when performing the actual read
 operation.</p>
 
 <h3 id='registering-handles' class='section-header'><a href='#registering-handles'>Registering handles</a></h3>
 <p>Unless otherwise noted, it should be assumed that types implementing
-<a href="event/trait.Evented.html"><code>Evented</code></a> will never be become ready unless they are registered with <code>Poll</code>.</p>
+<a href="event/trait.Evented.html"><code>Evented</code></a> will never become ready unless they are registered with <code>Poll</code>.</p>
 
 <p>For example:</p>
 
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::{<span class="ident">Poll</span>, <span class="ident">Ready</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">tcp</span>::<span class="ident">TcpStream</span>;
+<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
 
-<span class="kw">let</span> <span class="ident">sock</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">sock</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
 <span class="ident">thread</span>::<span class="ident">sleep</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>));
 
-<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
 
 <span class="comment">// The connect is not guaranteed to have started until it is registered at</span>
 <span class="comment">// this point</span>
-<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">sock</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">all</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();</pre>
+<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">sock</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>() <span class="op">|</span> <span class="ident">Ready</span>::<span class="ident">writable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;</pre>
 
 <h1 id='implementation-notes' class='section-header'><a href='#implementation-notes'>Implementation notes</a></h1>
 <p><code>Poll</code> is backed by the selector provided by the operating system.</p>
@@ -290,8 +290,8 @@ both from the system selector and the internal readiness queue.</p>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#592-1110' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#622-638' title='goto source code'>[src]</a></span></h4>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#612-1190' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#650-666' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return a new <code>Poll</code> handle.</p>
 
 <p>This function will make a syscall to the operating system to create the
@@ -315,12 +315,12 @@ error.</p>
 
 <span class="comment">// Wait for events, but none will be received because no `Evented`</span>
 <span class="comment">// handles have been registered with this `Poll` instance.</span>
-<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">500</span>))).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">500</span>)))<span class="question-mark">?</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">n</span>, <span class="number">0</span>);</pre>
-</div><h4 id='method.register' class="method"><span id='register.v' class='invisible'><code>fn <a href='#method.register' class='fnname'>register</a>&lt;E:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E, <br>&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../mio/event/trait.Evented.html" title="trait mio::event::Evented">Evented</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#739-755' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.register' class="method"><span id='register.v' class='invisible'><code>pub fn <a href='#method.register' class='fnname'>register</a>&lt;E:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E, <br>&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../mio/event/trait.Evented.html" title="trait mio::event::Evented">Evented</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#775-791' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Register an <code>Evented</code> handle with the <code>Poll</code> instance.</p>
 
-<p>Once registerd, the <code>Poll</code> instance will monitor the <code>Evented</code> handle
+<p>Once registered, the <code>Poll</code> instance will monitor the <code>Evented</code> handle
 for readiness state changes. When it notices a state change, it will
 return a readiness event for the handle the next time <a href="#method.poll"><code>poll</code></a> is
 called.</p>
@@ -373,14 +373,14 @@ multiple threads.</p>
 <h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::{<span class="ident">Events</span>, <span class="ident">Poll</span>, <span class="ident">Ready</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">tcp</span>::<span class="ident">TcpStream</span>;
+<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">Instant</span>};
 
-<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
 <span class="comment">// Register the socket with `poll`</span>
-<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">all</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();
+<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>() <span class="op">|</span> <span class="ident">Ready</span>::<span class="ident">writable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;
 
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">Events</span>::<span class="ident">with_capacity</span>(<span class="number">1024</span>);
 <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">Instant</span>::<span class="ident">now</span>();
@@ -391,20 +391,20 @@ multiple threads.</p>
 
     <span class="kw">if</span> <span class="ident">elapsed</span> <span class="op">&gt;=</span> <span class="ident">timeout</span> {
         <span class="comment">// Connection timed out</span>
-        <span class="kw">return</span>;
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
     }
 
     <span class="kw">let</span> <span class="ident">remaining</span> <span class="op">=</span> <span class="ident">timeout</span> <span class="op">-</span> <span class="ident">elapsed</span>;
-    <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">Some</span>(<span class="ident">remaining</span>)).<span class="ident">unwrap</span>();
+    <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">Some</span>(<span class="ident">remaining</span>))<span class="question-mark">?</span>;
 
     <span class="kw">for</span> <span class="ident">event</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">events</span> {
         <span class="kw">if</span> <span class="ident">event</span>.<span class="ident">token</span>() <span class="op">==</span> <span class="ident">Token</span>(<span class="number">0</span>) {
             <span class="comment">// Something (probably) happened on the socket.</span>
-            <span class="kw">return</span>;
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
     }
 }</pre>
-</div><h4 id='method.reregister' class="method"><span id='reregister.v' class='invisible'><code>fn <a href='#method.reregister' class='fnname'>reregister</a>&lt;E:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E, <br>&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../mio/event/trait.Evented.html" title="trait mio::event::Evented">Evented</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#802-813' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.reregister' class="method"><span id='reregister.v' class='invisible'><code>pub fn <a href='#method.reregister' class='fnname'>reregister</a>&lt;E:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E, <br>&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../mio/event/trait.Evented.html" title="trait mio::event::Evented">Evented</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#846-857' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Re-register an <code>Evented</code> handle with the <code>Poll</code> instance.</p>
 
 <p>Re-registering an <code>Evented</code> handle allows changing the details of the
@@ -431,19 +431,19 @@ polling.</p>
 <h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::{<span class="ident">Poll</span>, <span class="ident">Ready</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">tcp</span>::<span class="ident">TcpStream</span>;
+<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 
-<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
 <span class="comment">// Register the socket with `poll`, requesting readable</span>
-<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();
+<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;
 
 <span class="comment">// Reregister the socket specifying a different token and write interest</span>
 <span class="comment">// instead. `PollOpt::edge()` must be specified even though that value</span>
 <span class="comment">// is not being changed.</span>
-<span class="ident">poll</span>.<span class="ident">reregister</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">2</span>), <span class="ident">Ready</span>::<span class="ident">writable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();</pre>
-</div><h4 id='method.deregister' class="method"><span id='deregister.v' class='invisible'><code>fn <a href='#method.deregister' class='fnname'>deregister</a>&lt;E:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(&amp;self, handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../mio/event/trait.Evented.html" title="trait mio::event::Evented">Evented</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#850-859' title='goto source code'>[src]</a></span></h4>
+<span class="ident">poll</span>.<span class="ident">reregister</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">2</span>), <span class="ident">Ready</span>::<span class="ident">writable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;</pre>
+</div><h4 id='method.deregister' class="method"><span id='deregister.v' class='invisible'><code>pub fn <a href='#method.deregister' class='fnname'>deregister</a>&lt;E:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(&amp;self, handle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../mio/event/trait.Evented.html" title="trait mio::event::Evented">Evented</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#902-911' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Deregister an <code>Evented</code> handle with the <code>Poll</code> instance.</p>
 
 <p>When an <code>Evented</code> handle is deregistered, the <code>Poll</code> instance will
@@ -461,23 +461,23 @@ It is common to never need to explicitly call <code>deregister</code>.</p>
 <h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::{<span class="ident">Events</span>, <span class="ident">Poll</span>, <span class="ident">Ready</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">tcp</span>::<span class="ident">TcpStream</span>;
+<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 
-<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">socket</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="string">&quot;216.58.193.100:80&quot;</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>)<span class="question-mark">?</span>;
 
 <span class="comment">// Register the socket with `poll`</span>
-<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();
+<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;
 
-<span class="ident">poll</span>.<span class="ident">deregister</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>).<span class="ident">unwrap</span>();
+<span class="ident">poll</span>.<span class="ident">deregister</span>(<span class="kw-2">&amp;</span><span class="ident">socket</span>)<span class="question-mark">?</span>;
 
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">Events</span>::<span class="ident">with_capacity</span>(<span class="number">1024</span>);
 
 <span class="comment">// Set a timeout because this poll should never receive any events.</span>
-<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>))).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">Some</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">1</span>)))<span class="question-mark">?</span>;
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">0</span>, <span class="ident">n</span>);</pre>
-</div><h4 id='method.poll' class="method"><span id='poll.v' class='invisible'><code>fn <a href='#method.poll' class='fnname'>poll</a>(&amp;self, events: &amp;mut <a class="struct" href="../mio/struct.Events.html" title="struct mio::Events">Events</a>, timeout: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#943-1073' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.poll' class="method"><span id='poll.v' class='invisible'><code>pub fn <a href='#method.poll' class='fnname'>poll</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;events: &amp;mut <a class="struct" href="../mio/struct.Events.html" title="struct mio::Events">Events</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;timeout: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;<br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1007-1137' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Wait for readiness events</p>
 
 <p>Blocks the current thread and waits for readiness events for any of the
@@ -486,7 +486,7 @@ The function will block until either at least one readiness event has
 been received or <code>timeout</code> has elapsed. A <code>timeout</code> of <code>None</code> means that
 <code>poll</code> will block until a readiness event has been received.</p>
 
-<p>The supplied <code>events</code> will be cleared and newly received readinss events
+<p>The supplied <code>events</code> will be cleared and newly received readiness events
 will be pushed onto the end. At most <code>events.capacity()</code> events will be
 returned. If there are further pending readiness events, they will be
 returned on the next call to <code>poll</code>.</p>
@@ -504,7 +504,10 @@ the blocking interval may be overrun by a small amount.</p>
 
 <p><code>poll</code> returns the number of readiness events that have been pushed into
 <code>events</code> or <code>Err</code> when an error has been encountered with the system
-selector.</p>
+selector.  The value returned is deprecated and will be removed in 0.7.0.
+Accessing the events by index is also deprecated.  Events can be
+inserted by other events triggering, thus making sequential access
+problematic.  Use the iterator API instead.  See <a href="struct.Events.html#method.iter"><code>iter</code></a>.</p>
 
 <p>See the <a href="#">struct</a> level documentation for a higher level discussion of
 polling.</p>
@@ -514,15 +517,15 @@ polling.</p>
 
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::{<span class="ident">Events</span>, <span class="ident">Poll</span>, <span class="ident">Ready</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
-<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">tcp</span>::<span class="ident">TcpStream</span>;
+<span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>;
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">TcpListener</span>, <span class="ident">SocketAddr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
 
 <span class="comment">// Bind a server socket to connect to.</span>
-<span class="kw">let</span> <span class="ident">addr</span>: <span class="ident">SocketAddr</span> <span class="op">=</span> <span class="string">&quot;127.0.0.1:0&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">TcpListener</span>::<span class="ident">bind</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>).<span class="ident">unwrap</span>();
-<span class="kw">let</span> <span class="ident">addr</span> <span class="op">=</span> <span class="ident">server</span>.<span class="ident">local_addr</span>().<span class="ident">unwrap</span>().<span class="ident">clone</span>();
+<span class="kw">let</span> <span class="ident">addr</span>: <span class="ident">SocketAddr</span> <span class="op">=</span> <span class="string">&quot;127.0.0.1:0&quot;</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">TcpListener</span>::<span class="ident">bind</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>)<span class="question-mark">?</span>;
+<span class="kw">let</span> <span class="ident">addr</span> <span class="op">=</span> <span class="ident">server</span>.<span class="ident">local_addr</span>()<span class="question-mark">?</span>.<span class="ident">clone</span>();
 
 <span class="comment">// Spawn a thread to accept the socket</span>
 <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
@@ -530,25 +533,25 @@ polling.</p>
 });
 
 <span class="comment">// Construct a new `Poll` handle as well as the `Events` we&#39;ll store into</span>
-<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">poll</span> <span class="op">=</span> <span class="ident">Poll</span>::<span class="ident">new</span>()<span class="question-mark">?</span>;
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">Events</span>::<span class="ident">with_capacity</span>(<span class="number">1024</span>);
 
 <span class="comment">// Connect the stream</span>
-<span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>)<span class="question-mark">?</span>;
 
 <span class="comment">// Register the stream with `Poll`</span>
-<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">stream</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">all</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>()).<span class="ident">unwrap</span>();
+<span class="ident">poll</span>.<span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="ident">stream</span>, <span class="ident">Token</span>(<span class="number">0</span>), <span class="ident">Ready</span>::<span class="ident">readable</span>() <span class="op">|</span> <span class="ident">Ready</span>::<span class="ident">writable</span>(), <span class="ident">PollOpt</span>::<span class="ident">edge</span>())<span class="question-mark">?</span>;
 
 <span class="comment">// Wait for the socket to become ready. This has to happens in a loop to</span>
 <span class="comment">// handle spurious wakeups.</span>
 <span class="kw">loop</span> {
-    <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+    <span class="ident">poll</span>.<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
 
     <span class="kw">for</span> <span class="ident">event</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">events</span> {
         <span class="kw">if</span> <span class="ident">event</span>.<span class="ident">token</span>() <span class="op">==</span> <span class="ident">Token</span>(<span class="number">0</span>) <span class="op">&amp;&amp;</span> <span class="ident">event</span>.<span class="ident">readiness</span>().<span class="ident">is_writable</span>() {
             <span class="comment">// The socket connected (probably, it could still be a spurious</span>
             <span class="comment">// wakeup)</span>
-            <span class="kw">return</span>;
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
     }
 }</pre>
@@ -556,11 +559,11 @@ polling.</p>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>
-        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1135-1139' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1136-1138' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 id='impl-AsRawFd' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.AsRawFd.html" title="trait std::sys::imp::ext::io::AsRawFd">AsRawFd</a> for <a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a></code><a href='#impl-AsRawFd' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1142-1146' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.as_raw_fd' class="method"><span id='as_raw_fd.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.AsRawFd.html#tymethod.as_raw_fd' class='fnname'>as_raw_fd</a>(&amp;self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/type.RawFd.html" title="type std::sys::imp::ext::io::RawFd">RawFd</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1143-1145' title='goto source code'>[src]</a></span></h4>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1200-1205' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1201-1204' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-AsRawFd' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.AsRawFd.html" title="trait std::sys::imp::ext::io::AsRawFd">AsRawFd</a> for <a class="struct" href="../mio/struct.Poll.html" title="struct mio::Poll">Poll</a></code><a href='#impl-AsRawFd' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1208-1212' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.as_raw_fd' class="method"><span id='as_raw_fd.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.AsRawFd.html#tymethod.as_raw_fd' class='fnname'>as_raw_fd</a>(&amp;self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/type.RawFd.html" title="type std::sys::imp::ext::io::RawFd">RawFd</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/poll.rs.html#1209-1211' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Extracts the raw file descriptor. <a href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.AsRawFd.html#tymethod.as_raw_fd">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -579,13 +582,15 @@ polling.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

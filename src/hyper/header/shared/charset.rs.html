@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/shared/charset.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/shared/charset.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>charset.rs.html -- source</title>
@@ -194,9 +194,13 @@
 <span id="149">149</span>
 <span id="150">150</span>
 <span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
 
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Charset</span>::<span class="kw-2">*</span>;
@@ -205,7 +209,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The string representation is normalised to upper case.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// See http://www.iana.org/assignments/character-sets/character-sets.xhtml</span>
+<span class="doccomment">/// See [http://www.iana.org/assignments/character-sets/character-sets.xhtml][url].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [url]: http://www.iana.org/assignments/character-sets/character-sets.xhtml</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Debug</span>,<span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Charset</span>{
@@ -364,13 +370,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

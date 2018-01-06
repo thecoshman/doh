@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.11/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -160,6 +160,8 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! `Future`-powered I/O at the core of Tokio</span>
 <span class="doccomment">//!</span>
@@ -252,8 +254,10 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/tokio-core/0.1&quot;</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/tokio-core/0.1&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">allow</span>(<span class="ident">deprecated</span>))]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bytes</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
@@ -296,13 +300,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

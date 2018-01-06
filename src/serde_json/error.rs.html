@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-1.0.3/src/error.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-1.0.9/src/error.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>error.rs.html -- source</title>
@@ -457,6 +457,12 @@
 <span id="412">412</span>
 <span id="413">413</span>
 <span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -535,6 +541,7 @@
             <span class="ident">ErrorCode</span>::<span class="ident">InvalidUnicodeCodePoint</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">KeyMustBeAString</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">LoneLeadingSurrogateInHexEscape</span> <span class="op">|</span>
+            <span class="ident">ErrorCode</span>::<span class="ident">TrailingComma</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">TrailingCharacters</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">UnexpectedEndOfHexEscape</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">RecursionLimitExceeded</span> <span class="op">=&gt;</span> <span class="ident">Category</span>::<span class="ident">Syntax</span>,
@@ -595,6 +602,7 @@
     <span class="ident">Eof</span>,
 }
 
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">fallible_impl_from</span>))]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">io</span>::<span class="ident">Error</span> {
     <span class="doccomment">/// Convert a `serde_json::Error` into an `io::Error`.</span>
     <span class="doccomment">///</span>
@@ -648,7 +656,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ErrorCode</span> {
     <span class="doccomment">/// Catchall for syntax error messages</span>
-    <span class="ident">Message</span>(<span class="ident">String</span>),
+    <span class="ident">Message</span>(<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>),
 
     <span class="doccomment">/// Some IO error occurred while serializing or deserializing.</span>
     <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
@@ -703,6 +711,9 @@
 
     <span class="doccomment">/// Lone leading surrogate in hex escape.</span>
     <span class="ident">LoneLeadingSurrogateInHexEscape</span>,
+
+    <span class="doccomment">/// JSON has a comma after the last value in an array or map.</span>
+    <span class="ident">TrailingComma</span>,
 
     <span class="doccomment">/// JSON has non-whitespace trailing characters after the value.</span>
     <span class="ident">TrailingCharacters</span>,
@@ -781,6 +792,7 @@
             <span class="ident">ErrorCode</span>::<span class="ident">LoneLeadingSurrogateInHexEscape</span> <span class="op">=&gt;</span> {
                 <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;lone leading surrogate in hex escape&quot;</span>)
             }
+            <span class="ident">ErrorCode</span>::<span class="ident">TrailingComma</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;trailing comma&quot;</span>),
             <span class="ident">ErrorCode</span>::<span class="ident">TrailingCharacters</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;trailing characters&quot;</span>),
             <span class="ident">ErrorCode</span>::<span class="ident">UnexpectedEndOfHexEscape</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;unexpected end of hex escape&quot;</span>),
             <span class="ident">ErrorCode</span>::<span class="ident">RecursionLimitExceeded</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;recursion limit exceeded&quot;</span>),
@@ -842,7 +854,7 @@
         <span class="ident">Error</span> {
             <span class="ident">err</span>: <span class="ident">Box</span>::<span class="ident">new</span>(
                 <span class="ident">ErrorImpl</span> {
-                    <span class="ident">code</span>: <span class="ident">ErrorCode</span>::<span class="ident">Message</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">code</span>: <span class="ident">ErrorCode</span>::<span class="ident">Message</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>().<span class="ident">into_boxed_str</span>()),
                     <span class="ident">line</span>: <span class="number">0</span>,
                     <span class="ident">column</span>: <span class="number">0</span>,
                 },
@@ -864,7 +876,7 @@
         <span class="ident">Error</span> {
             <span class="ident">err</span>: <span class="ident">Box</span>::<span class="ident">new</span>(
                 <span class="ident">ErrorImpl</span> {
-                    <span class="ident">code</span>: <span class="ident">ErrorCode</span>::<span class="ident">Message</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">code</span>: <span class="ident">ErrorCode</span>::<span class="ident">Message</span>(<span class="ident">msg</span>.<span class="ident">to_string</span>().<span class="ident">into_boxed_str</span>()),
                     <span class="ident">line</span>: <span class="number">0</span>,
                     <span class="ident">column</span>: <span class="number">0</span>,
                 },
@@ -890,13 +902,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

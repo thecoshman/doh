@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.10/src/timer.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.12/src/timer.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>timer.rs.html -- source</title>
@@ -568,12 +568,18 @@
 <span id="523">523</span>
 <span id="524">524</span>
 <span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Timer optimized for I/O related operations</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">deprecated</span>, <span class="ident">missing_debug_implementations</span>)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">deprecated</span>, <span class="ident">missing_debug_implementations</span>)]</span>
 
-<span class="kw">use</span> {<span class="ident">convert</span>, <span class="ident">io</span>, <span class="ident">Evented</span>, <span class="ident">Ready</span>, <span class="ident">Poll</span>, <span class="ident">PollOpt</span>, <span class="ident">Registration</span>, <span class="ident">SetReadiness</span>, <span class="ident">Token</span>};
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">slab</span>;
+
+<span class="kw">use</span> {<span class="ident">convert</span>, <span class="ident">io</span>, <span class="ident">Ready</span>, <span class="ident">Poll</span>, <span class="ident">PollOpt</span>, <span class="ident">Registration</span>, <span class="ident">SetReadiness</span>, <span class="ident">Token</span>};
+<span class="kw">use</span> <span class="ident">event</span>::<span class="ident">Evented</span>;
 <span class="kw">use</span> <span class="ident">lazycell</span>::<span class="ident">LazyCell</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">cmp</span>, <span class="ident">error</span>, <span class="ident">fmt</span>, <span class="ident">u64</span>, <span class="ident">usize</span>, <span class="ident">iter</span>, <span class="ident">thread</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
@@ -662,7 +668,7 @@
 <span class="comment">// Manages communication with wakeup thread</span>
 <span class="kw">type</span> <span class="ident">WakeupState</span> <span class="op">=</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">AtomicUsize</span><span class="op">&gt;</span>;
 
-<span class="kw">type</span> <span class="ident">Slab</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">slab</span>::<span class="ident">Slab</span><span class="op">&lt;</span><span class="ident">T</span>, ::<span class="ident">Token</span><span class="op">&gt;</span>;
+<span class="kw">type</span> <span class="ident">Slab</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">slab</span>::<span class="ident">Slab</span><span class="op">&lt;</span><span class="ident">T</span>, ::<span class="ident">Token</span><span class="op">&gt;</span>;
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">TimerError</span><span class="op">&gt;</span>;
 <span class="comment">// TODO: remove</span>
@@ -777,7 +783,7 @@
 
         <span class="self">self</span>.<span class="ident">schedule_readiness</span>(<span class="ident">tick</span>);
 
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;inserted timout; slot={}; token={:?}&quot;</span>, <span class="ident">slot</span>, <span class="ident">token</span>);
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;inserted timeout; slot={}; token={:?}&quot;</span>, <span class="ident">slot</span>, <span class="ident">token</span>);
 
         <span class="comment">// Return the new timeout</span>
         <span class="prelude-val">Ok</span>(<span class="ident">Timeout</span> {
@@ -1112,13 +1118,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

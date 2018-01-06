@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/ocsp.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.23/src/ocsp.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ocsp.rs.html -- source</title>
@@ -496,7 +496,7 @@
     }
 }
 
-<span class="macro">foreign_type</span><span class="macro">!</span> {
+<span class="macro">foreign_type_and_impl_send_sync</span><span class="macro">!</span> {
     <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_BASICRESP</span>;
     <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_BASICRESP_free</span>;
 
@@ -563,7 +563,7 @@
     }
 }
 
-<span class="macro">foreign_type</span><span class="macro">!</span> {
+<span class="macro">foreign_type_and_impl_send_sync</span><span class="macro">!</span> {
     <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_CERTID</span>;
     <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_CERTID_free</span>;
 
@@ -588,7 +588,7 @@
     }
 }
 
-<span class="macro">foreign_type</span><span class="macro">!</span> {
+<span class="macro">foreign_type_and_impl_send_sync</span><span class="macro">!</span> {
     <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_RESPONSE</span>;
     <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_RESPONSE_free</span>;
 
@@ -633,7 +633,7 @@
     }
 }
 
-<span class="macro">foreign_type</span><span class="macro">!</span> {
+<span class="macro">foreign_type_and_impl_send_sync</span><span class="macro">!</span> {
     <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_REQUEST</span>;
     <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_REQUEST_free</span>;
 
@@ -665,7 +665,7 @@
     }
 }
 
-<span class="macro">foreign_type</span><span class="macro">!</span> {
+<span class="macro">foreign_type_and_impl_send_sync</span><span class="macro">!</span> {
     <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_ONEREQ</span>;
     <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">OCSP_ONEREQ_free</span>;
 
@@ -690,13 +690,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

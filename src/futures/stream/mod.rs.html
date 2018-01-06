@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.1.16/src/stream/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.1.17/src/stream/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -1139,6 +1139,14 @@
 <span id="1094">1094</span>
 <span id="1095">1095</span>
 <span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Asynchronous streams</span>
 <span class="doccomment">//!</span>
@@ -1167,6 +1175,8 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Iter</span> <span class="kw">as</span> <span class="ident">IterStream</span>;
 <span class="kw">mod</span> <span class="ident">iter_ok</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">iter_ok</span>::{<span class="ident">iter_ok</span>, <span class="ident">IterOk</span>};
+<span class="kw">mod</span> <span class="ident">iter_result</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">iter_result</span>::{<span class="ident">iter_result</span>, <span class="ident">IterResult</span>};
 
 <span class="kw">mod</span> <span class="ident">repeat</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">repeat</span>::{<span class="ident">repeat</span>, <span class="ident">Repeat</span>};
@@ -1264,7 +1274,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;removed without replacement, recommended to use a \
                          local extension trait or function if needed, more \
-                         details in #228&quot;</span>)]</span>
+                         details in https://github.com/alexcrichton/futures-rs/issues/228&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BoxStream</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">boxed</span>::<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">E</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span><span class="op">&gt;</span>;
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Stream</span><span class="op">&gt;</span> <span class="ident">Stream</span> <span class="kw">for</span> ::<span class="ident">std</span>::<span class="ident">boxed</span>::<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
@@ -1407,7 +1417,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;removed without replacement, recommended to use a \
                          local extension trait or function if needed, more \
-                         details in #228&quot;</span>)]</span>
+                         details in https://github.com/alexcrichton/futures-rs/issues/228&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">fn</span> <span class="ident">boxed</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BoxStream</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
@@ -1503,7 +1513,7 @@
     <span class="doccomment">/// use futures::sync::mpsc;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let (_tx, rx) = mpsc::channel::&lt;i32&gt;(1);</span>
-    <span class="doccomment">/// let evens = rx.filter(|x| x % 0 == 2);</span>
+    <span class="doccomment">/// let evens = rx.filter(|x| x % 2 == 0);</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">filter</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">Filter</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>,
@@ -1607,6 +1617,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this function consumes the receiving stream and returns a</span>
     <span class="doccomment">/// wrapped version of it.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// To process the entire stream and return a single future representing</span>
+    <span class="doccomment">/// success or error, use `for_each` instead.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -1887,6 +1900,9 @@
     <span class="doccomment">/// errors are otherwise threaded through. Any error on the stream or in the</span>
     <span class="doccomment">/// closure will cause iteration to be halted immediately and the future</span>
     <span class="doccomment">/// will resolve to that error.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// To process each item in the stream and produce another stream instead</span>
+    <span class="doccomment">/// of a single future, use `and_then` instead.</span>
     <span class="kw">fn</span> <span class="ident">for_each</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">ForEach</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span>, <span class="ident">U</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">U</span>,
               <span class="ident">U</span>: <span class="ident">IntoFuture</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(), <span class="ident">Error</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>,
@@ -2254,13 +2270,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

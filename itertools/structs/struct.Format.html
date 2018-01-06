@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Format</p><div class="block items"><ul><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>itertools</a>::<wbr><a href='index.html'>structs</a></p><script>window.sidebarCurrent = {name: 'Format', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Format</p><div class="block items"><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Display">Display</a><a href="#impl-Debug">Debug</a><a href="#impl-UpperExp">UpperExp</a><a href="#impl-LowerExp">LowerExp</a><a href="#impl-UpperHex">UpperHex</a><a href="#impl-LowerHex">LowerHex</a><a href="#impl-Octal">Octal</a><a href="#impl-Binary">Binary</a><a href="#impl-Pointer">Pointer</a></div></div><p class='location'><a href='../index.html'>itertools</a>::<wbr><a href='index.html'>structs</a></p><script>window.sidebarCurrent = {name: 'Format', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -70,7 +70,7 @@ for more information.</p>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;'a, I&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../itertools/structs/struct.Format.html" title="struct itertools::structs::Format">Format</a>&lt;'a, I&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>,&nbsp;</span></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/itertools/format.rs.html#100-107' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/itertools/format.rs.html#104-106' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-UpperExp' class='impl'><span class='in-band'><code>impl&lt;'a, I&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.UpperExp.html" title="trait core::fmt::UpperExp">UpperExp</a> for <a class="struct" href="../../itertools/structs/struct.Format.html" title="struct itertools::structs::Format">Format</a>&lt;'a, I&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html#associatedtype.Item" title="type core::iter::iterator::Iterator::Item">Item</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.UpperExp.html" title="trait core::fmt::UpperExp">UpperExp</a>,&nbsp;</span></code><a href='#impl-UpperExp' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/itertools/format.rs.html#100-107' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt-2' class="method"><span id='fmt.v-2' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.UpperExp.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/itertools/format.rs.html#104-106' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
@@ -109,13 +109,15 @@ for more information.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

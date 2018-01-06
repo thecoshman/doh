@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Enum Expect</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'Expect', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum Expect</p><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.Continue">Continue</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Copy">Copy</a><a href="#impl-Clone">Clone</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Debug">Debug</a><a href="#impl-Header">Header</a><a href="#impl-Display">Display</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'Expect', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -69,7 +69,7 @@ defined by this specification is 100-continue.</p>
 <span class="ident">headers</span>.<span class="ident">set</span>(<span class="ident">Expect</span>::<span class="ident">Continue</span>);</pre>
 </div><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
-<span id='variant.Continue' class='variant'><span id='Continue.v' class='invisible'><code>Continue</code></span></span><div class='docblock'><p>The value <code>100-continue</code>.</p>
+<span id="variant.Continue" class="variant small-section-header"><a href="#variant.Continue" class="anchor field"></a><span id='Continue.v' class='invisible'><code>Continue</code></span></span><div class='docblock'><p>The value <code>100-continue</code>.</p>
 </div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
@@ -87,7 +87,7 @@ defined by this specification is 100-continue.</p>
 <div class='docblock'><p>This method tests for <code>!=</code>.</p>
 </div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../../hyper/header/enum.Expect.html" title="enum hyper::header::Expect">Expect</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/common/expect.rs.html#23' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/common/expect.rs.html#23' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-Header' class='impl'><span class='in-band'><code>impl <a class="trait" href="../../hyper/header/trait.Header.html" title="trait hyper::header::Header">Header</a> for <a class="enum" href="../../hyper/header/enum.Expect.html" title="enum hyper::header::Expect">Expect</a></code><a href='#impl-Header' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/common/expect.rs.html#29-58' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.header_name' class="method"><span id='header_name.v' class='invisible'><code>fn <a href='../../hyper/header/trait.Header.html#tymethod.header_name' class='fnname'>header_name</a>() -&gt; &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/common/expect.rs.html#30-33' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the name of the header field this belongs to. <a href="../../hyper/header/trait.Header.html#tymethod.header_name">Read more</a></p>
@@ -115,13 +115,15 @@ defined by this specification is 100-continue.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

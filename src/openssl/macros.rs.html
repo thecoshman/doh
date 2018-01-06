@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.20/src/macros.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-0.9.23/src/macros.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>macros.rs.html -- source</title>
@@ -259,6 +259,38 @@
 <span id="214">214</span>
 <span id="215">215</span>
 <span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
 </pre><pre class="rust ">
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">private_key_from_pem</span> {
@@ -476,6 +508,38 @@
             <span class="ident">from_pem</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>);
     }
 }
+
+
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">foreign_type_and_impl_send_sync</span> {
+    (
+        $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">impl_attr</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
+        <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctype</span>:<span class="ident">ty</span>;
+        <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">drop</span>:<span class="ident">expr</span>;
+        $(<span class="kw">fn</span> <span class="ident">clone</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">clone</span>:<span class="ident">expr</span>;)<span class="op">*</span>
+
+        $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned_attr</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned</span>:<span class="ident">ident</span>;
+        $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed_attr</span>:<span class="ident">meta</span>]</span>)<span class="op">*</span>
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed</span>:<span class="ident">ident</span>;
+    )
+        <span class="op">=&gt;</span> {
+            <span class="macro">foreign_type</span><span class="macro">!</span> {
+                $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">impl_attr</span>]</span>)<span class="op">*</span>
+                <span class="kw">type</span> <span class="ident">CType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctype</span>;
+                <span class="kw">fn</span> <span class="ident">drop</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">drop</span>;
+                $(<span class="kw">fn</span> <span class="ident">clone</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">clone</span>;)<span class="op">*</span>
+                $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned_attr</span>]</span>)<span class="op">*</span>
+                <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned</span>;
+                $(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed_attr</span>]</span>)<span class="op">*</span>
+                <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed</span>;
+            }
+
+            <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned</span>{}
+            <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed</span>{}
+            <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">owned</span>{}
+            <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">borrowed</span>{}
+        };
+}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -494,13 +558,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

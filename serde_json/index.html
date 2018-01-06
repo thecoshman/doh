@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/serde_json/lib.rs.html#9-352' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/serde_json/lib.rs.html#9-385' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h1 id='serde-json' class='section-header'><a href='#serde-json'>Serde JSON</a></h1>
 <p>JSON is a ubiquitous open-standard format that uses human-readable text to
@@ -131,6 +131,20 @@ a TCP stream.</p>
 
     <span class="prelude-val">Ok</span>(())
 }</pre>
+
+<p>The result of square bracket indexing like <code>v[&quot;name&quot;]</code> is a borrow of the
+data at that index, so the type is <code>&amp;Value</code>. A JSON map can be indexed with
+string keys, while a JSON array can be indexed with integer keys. If the
+type of the data is not right for the type with which it is being indexed,
+or if a map does not contain the key being indexed, or if the index into a
+vector is out of bounds, the returned element is <code>Value::Null</code>.</p>
+
+<p>When a <code>Value</code> is printed, it is printed as a JSON string. So in the code
+above, the output looks like <code>Please call &quot;John Doe&quot; at the number &quot;+44 1234567&quot;</code>. The quotation marks appear because <code>v[&quot;name&quot;]</code> is a <code>&amp;Value</code>
+containing a JSON string and its JSON representation is <code>&quot;John Doe&quot;</code>.
+Printing as a plain string without quotation marks involves converting from
+a JSON string to a Rust string with <a href="https://docs.serde.rs/serde_json/enum.Value.html#method.as_str"><code>as_str()</code></a> or avoiding the use of
+<code>Value</code> as described in the following section.</p>
 
 <p>The <code>Value</code> representation is sufficient for very basic tasks but can be
 tedious to work with for anything more significant. Error handling is
@@ -494,13 +508,15 @@ stream.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

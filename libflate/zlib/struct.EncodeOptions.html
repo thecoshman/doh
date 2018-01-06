@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct EncodeOptions</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>zlib</a></p><script>window.sidebarCurrent = {name: 'EncodeOptions', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct EncodeOptions</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.with_lz77">with_lz77</a><a href="#method.no_compression">no_compression</a><a href="#method.block_size">block_size</a><a href="#method.fixed_huffman_codes">fixed_huffman_codes</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Default">Default</a></div></div><p class='location'><a href='../index.html'>libflate</a>::<wbr><a href='index.html'>zlib</a></p><script>window.sidebarCurrent = {name: 'EncodeOptions', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -55,7 +55,7 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../libflate/zlib/struct.EncodeOptions.html" title="struct libflate::zlib::EncodeOptions">EncodeOptions</a>&lt;<a class="struct" href="../../libflate/lz77/struct.DefaultLz77Encoder.html" title="struct libflate::lz77::DefaultLz77Encoder">DefaultLz77Encoder</a>&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#382-395' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#392-394' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#392-394' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Makes a default instance.</p>
 
 <h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
@@ -65,7 +65,7 @@
 <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">EncodeOptions</span>::<span class="ident">new</span>();
 <span class="kw">let</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">options</span>).<span class="ident">unwrap</span>();</pre>
 </div></div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;E&gt; <a class="struct" href="../../libflate/zlib/struct.EncodeOptions.html" title="struct libflate::zlib::EncodeOptions">EncodeOptions</a>&lt;E&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../../libflate/lz77/trait.Lz77Encode.html" title="trait libflate::lz77::Lz77Encode">Lz77Encode</a>,&nbsp;</span></code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#396-462' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.with_lz77' class="method"><span id='with_lz77.v' class='invisible'><code>fn <a href='#method.with_lz77' class='fnname'>with_lz77</a>(lz77: E) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#410-415' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.with_lz77' class="method"><span id='with_lz77.v' class='invisible'><code>pub fn <a href='#method.with_lz77' class='fnname'>with_lz77</a>(lz77: E) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#410-415' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Specifies the LZ77 encoder used to compress input data.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
@@ -75,7 +75,7 @@
 
 <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">EncodeOptions</span>::<span class="ident">with_lz77</span>(<span class="ident">DefaultLz77Encoder</span>::<span class="ident">new</span>());
 <span class="kw">let</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">options</span>).<span class="ident">unwrap</span>();</pre>
-</div><h4 id='method.no_compression' class="method"><span id='no_compression.v' class='invisible'><code>fn <a href='#method.no_compression' class='fnname'>no_compression</a>(self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#427-431' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.no_compression' class="method"><span id='no_compression.v' class='invisible'><code>pub fn <a href='#method.no_compression' class='fnname'>no_compression</a>(self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#427-431' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Disables LZ77 compression.</p>
 
 <h1 id='example-1' class='section-header'><a href='#example-1'>Example</a></h1>
@@ -85,7 +85,7 @@
 
 <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">EncodeOptions</span>::<span class="ident">new</span>().<span class="ident">no_compression</span>();
 <span class="kw">let</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">options</span>).<span class="ident">unwrap</span>();</pre>
-</div><h4 id='method.block_size' class="method"><span id='block_size.v' class='invisible'><code>fn <a href='#method.block_size' class='fnname'>block_size</a>(self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#444-447' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.block_size' class="method"><span id='block_size.v' class='invisible'><code>pub fn <a href='#method.block_size' class='fnname'>block_size</a>(self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#444-447' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Specifies the hint of the size of a DEFLATE block.</p>
 
 <p>The default value is <code>deflate::DEFAULT_BLOCK_SIZE</code>.</p>
@@ -96,7 +96,7 @@
 
 <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">EncodeOptions</span>::<span class="ident">new</span>().<span class="ident">block_size</span>(<span class="number">512</span> <span class="op">*</span> <span class="number">1024</span>);
 <span class="kw">let</span> <span class="ident">encoder</span> <span class="op">=</span> <span class="ident">Encoder</span>::<span class="ident">with_options</span>(<span class="ident">Vec</span>::<span class="ident">new</span>(), <span class="ident">options</span>).<span class="ident">unwrap</span>();</pre>
-</div><h4 id='method.fixed_huffman_codes' class="method"><span id='fixed_huffman_codes.v' class='invisible'><code>fn <a href='#method.fixed_huffman_codes' class='fnname'>fixed_huffman_codes</a>(self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#458-461' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.fixed_huffman_codes' class="method"><span id='fixed_huffman_codes.v' class='invisible'><code>pub fn <a href='#method.fixed_huffman_codes' class='fnname'>fixed_huffman_codes</a>(self) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#458-461' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Specifies to compress with fixed huffman codes.</p>
 
 <h1 id='example-3' class='section-header'><a href='#example-3'>Example</a></h1>
@@ -111,7 +111,7 @@
             </h2>
         <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../libflate/zlib/struct.EncodeOptions.html" title="struct libflate::zlib::EncodeOptions">EncodeOptions</a>&lt;E&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../../libflate/lz77/trait.Lz77Encode.html" title="trait libflate::lz77::Lz77Encode">Lz77Encode</a>,&nbsp;</span></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#366' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#366' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-Default' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="../../libflate/zlib/struct.EncodeOptions.html" title="struct libflate::zlib::EncodeOptions">EncodeOptions</a>&lt;<a class="struct" href="../../libflate/lz77/struct.DefaultLz77Encoder.html" title="struct libflate::lz77::DefaultLz77Encoder">DefaultLz77Encoder</a>&gt;</code><a href='#impl-Default' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#374-381' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.default' class="method"><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/libflate/zlib.rs.html#375-380' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
@@ -132,13 +132,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

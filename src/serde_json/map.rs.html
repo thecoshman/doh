@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-1.0.3/src/map.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-1.0.9/src/map.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>map.rs.html -- source</title>
@@ -1286,7 +1286,7 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">or_insert</span>(<span class="self">self</span>, <span class="ident">default</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Entry</span>::<span class="ident">Vacant</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">default</span>.<span class="ident">into</span>()),
+            <span class="ident">Entry</span>::<span class="ident">Vacant</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">default</span>),
             <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="ident">entry</span>.<span class="ident">into_mut</span>(),
         }
     }
@@ -1366,7 +1366,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Value</span> {
-        <span class="self">self</span>.<span class="ident">vacant</span>.<span class="ident">insert</span>(<span class="ident">value</span>.<span class="ident">into</span>())
+        <span class="self">self</span>.<span class="ident">vacant</span>.<span class="ident">insert</span>(<span class="ident">value</span>)
     }
 }
 
@@ -1509,7 +1509,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">value</span>: <span class="ident">Value</span>) <span class="op">-&gt;</span> <span class="ident">Value</span> {
-        <span class="self">self</span>.<span class="ident">occupied</span>.<span class="ident">insert</span>(<span class="ident">value</span>.<span class="ident">into</span>())
+        <span class="self">self</span>.<span class="ident">occupied</span>.<span class="ident">insert</span>(<span class="ident">value</span>)
     }
 
     <span class="doccomment">/// Takes the value of the entry out of the map, and returns it.</span>
@@ -1654,13 +1654,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

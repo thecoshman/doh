@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-io-0.1.3/src/framed_read.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-io-0.1.4/src/framed_read.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>framed_read.rs.html -- source</title>
@@ -412,7 +412,7 @@
     <span class="doccomment">/// protocol differs near the end of the stream.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that the `buf` argument may be empty. If a previous call to</span>
-    <span class="doccomment">/// `decode_eof` consumed all the bytes in the bufer, `decode_eof` will be</span>
+    <span class="doccomment">/// `decode_eof` consumed all the bytes in the buffer, `decode_eof` will be</span>
     <span class="doccomment">/// called again until it returns `None`, indicating that there are no more</span>
     <span class="doccomment">/// frames to yield. This behavior enables returning finalization frames</span>
     <span class="doccomment">/// that may not be based on inbound data.</span>
@@ -652,13 +652,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

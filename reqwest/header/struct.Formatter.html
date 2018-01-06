@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Formatter</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>reqwest</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'Formatter', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Formatter</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.fmt_line">fmt_line</a></div></div><p class='location'><a href='../index.html'>reqwest</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'Formatter', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -55,7 +55,7 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class="struct" href="../../reqwest/header/struct.Formatter.html" title="struct reqwest::header::Formatter">Formatter</a>&lt;'a, 'b&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#166-230' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt_line' class="method"><span id='fmt_line.v' class='invisible'><code>fn <a href='#method.fmt_line' class='fnname'>fmt_line</a>(&amp;mut self, line: &amp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#179-203' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.fmt_line' class="method"><span id='fmt_line.v' class='invisible'><code>fn <a href='#method.fmt_line' class='fnname'>fmt_line</a>(&amp;mut self, line: &amp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html" title="struct core::fmt::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#179-203' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Format one &#39;line&#39; of a header.</p>
 
 <p>This writes the header name plus the <code>Display</code> value as a single line.</p>
@@ -83,13 +83,15 @@ case should only format as 1 single line.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

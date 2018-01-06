@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.20/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.9.23/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -2723,9 +2723,9 @@
 <span id="2678">2678</span>
 <span id="2679">2679</span>
 </pre><pre class="rust ">
-<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>, <span class="ident">non_upper_case_globals</span>, <span class="ident">non_snake_case</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">overflowing_literals</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span><span class="op">=</span><span class="string">&quot;https://docs.rs/openssl-sys/0.9&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>, <span class="ident">non_upper_case_globals</span>, <span class="ident">non_snake_case</span>)]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">overflowing_literals</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span><span class="op">=</span><span class="string">&quot;https://docs.rs/openssl-sys/0.9&quot;</span>)]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libc</span>;
 
@@ -3975,14 +3975,14 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_VERIFY_PEER</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_VERIFY_FAIL_IF_NO_PEER_CERT</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>, <span class="ident">ossl101</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>, <span class="ident">libressl26x</span>, <span class="ident">ossl101</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_OP_TLSEXT_PADDING</span>: <span class="ident">c_ulong</span> <span class="op">=</span> <span class="number">0x00000010</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>, <span class="ident">libressl26x</span>))]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_OP_TLSEXT_PADDING</span>: <span class="ident">c_ulong</span> <span class="op">=</span> <span class="number">0x0</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS</span>: <span class="ident">c_ulong</span> <span class="op">=</span> <span class="number">0x00000800</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>, <span class="ident">libressl26x</span>)))]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_OP_CRYPTOPRO_TLSEXT_BUG</span>: <span class="ident">c_ulong</span> <span class="op">=</span> <span class="number">0x80000000</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">libressl261</span>, <span class="ident">libressl262</span>, <span class="ident">libressl26x</span>))]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_OP_CRYPTOPRO_TLSEXT_BUG</span>: <span class="ident">c_ulong</span> <span class="op">=</span> <span class="number">0x0</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSL_OP_LEGACY_SERVER_CONNECT</span>: <span class="ident">c_ulong</span> <span class="op">=</span> <span class="number">0x00000004</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">libressl</span>))]</span>
@@ -5420,13 +5420,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

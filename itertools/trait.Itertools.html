@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Trait Itertools</p><div class="block items"><ul><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'Itertools', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Itertools</p><div class="block items"><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.interleave">interleave</a><a href="#method.interleave_shortest">interleave_shortest</a><a href="#method.intersperse">intersperse</a><a href="#method.zip_longest">zip_longest</a><a href="#method.zip_eq">zip_eq</a><a href="#method.batching">batching</a><a href="#method.group_by">group_by</a><a href="#method.chunks">chunks</a><a href="#method.tuple_windows">tuple_windows</a><a href="#method.tuples">tuples</a><a href="#method.tee">tee</a><a href="#method.step">step</a><a href="#method.map_results">map_results</a><a href="#method.merge">merge</a><a href="#method.merge_by">merge_by</a><a href="#method.kmerge">kmerge</a><a href="#method.kmerge_by">kmerge_by</a><a href="#method.cartesian_product">cartesian_product</a><a href="#method.coalesce">coalesce</a><a href="#method.dedup">dedup</a><a href="#method.unique">unique</a><a href="#method.unique_by">unique_by</a><a href="#method.peeking_take_while">peeking_take_while</a><a href="#method.take_while_ref">take_while_ref</a><a href="#method.while_some">while_some</a><a href="#method.tuple_combinations">tuple_combinations</a><a href="#method.combinations">combinations</a><a href="#method.pad_using">pad_using</a><a href="#method.flatten">flatten</a><a href="#method.with_position">with_position</a><a href="#method.positions">positions</a><a href="#method.next_tuple">next_tuple</a><a href="#method.find_position">find_position</a><a href="#method.all_equal">all_equal</a><a href="#method.dropping">dropping</a><a href="#method.dropping_back">dropping_back</a><a href="#method.foreach">foreach</a><a href="#method.concat">concat</a><a href="#method.collect_vec">collect_vec</a><a href="#method.set_from">set_from</a><a href="#method.join">join</a><a href="#method.format">format</a><a href="#method.format_with">format_with</a><a href="#method.fold_results">fold_results</a><a href="#method.fold_options">fold_options</a><a href="#method.fold1">fold1</a><a href="#method.fold_while">fold_while</a><a href="#method.sorted">sorted</a><a href="#method.sorted_by">sorted_by</a><a href="#method.partition_map">partition_map</a><a href="#method.minmax">minmax</a><a href="#method.minmax_by_key">minmax_by_key</a><a href="#method.minmax_by">minmax_by</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'Itertools', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -867,7 +867,7 @@ to the fold function <code>f</code> and its return value becomes the new accumul
 <p>For example the sequence <em>Ok(1), Ok(2), Ok(3)</em> will result in a
 computation like this:</p>
 
-<pre class="rust rust-example-rendered">
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><pre class="rust rust-example-rendered ignore">
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">accum</span> <span class="op">=</span> <span class="ident">start</span>;
 <span class="ident">accum</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">accum</span>, <span class="number">1</span>);
 <span class="ident">accum</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">accum</span>, <span class="number">2</span>);
@@ -1090,13 +1090,15 @@ the last maximal element wins.  This matches the behavior of the standard
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

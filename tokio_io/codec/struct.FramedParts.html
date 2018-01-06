@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct FramedParts</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>tokio_io</a>::<wbr><a href='index.html'>codec</a></p><script>window.sidebarCurrent = {name: 'FramedParts', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct FramedParts</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.inner">inner</a><a href="#structfield.readbuf">readbuf</a><a href="#structfield.writebuf">writebuf</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='../index.html'>tokio_io</a>::<wbr><a href='index.html'>codec</a></p><script>window.sidebarCurrent = {name: 'FramedParts', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -57,16 +57,19 @@
 It can be used to construct a new <code>Framed</code> with a different codec.
 It contains all current buffers and the inner transport.</p>
 </div><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.inner' class="structfield">
-                           <span id='inner.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.inner" class="structfield small-section-header">
+                           <a href="#structfield.inner" class="anchor field"></a>
+                           <span id="inner.v" class='invisible'>
                            <code>inner: T</code>
                            </span></span><div class='docblock'><p>The inner transport used to read bytes to and write bytes to</p>
-</div><span id='structfield.readbuf' class="structfield">
-                           <span id='readbuf.v' class='invisible'>
+</div><span id="structfield.readbuf" class="structfield small-section-header">
+                           <a href="#structfield.readbuf" class="anchor field"></a>
+                           <span id="readbuf.v" class='invisible'>
                            <code>readbuf: <a class="struct" href="../../bytes/bytes/struct.BytesMut.html" title="struct bytes::bytes::BytesMut">BytesMut</a></code>
                            </span></span><div class='docblock'><p>The buffer with read but unprocessed data.</p>
-</div><span id='structfield.writebuf' class="structfield">
-                           <span id='writebuf.v' class='invisible'>
+</div><span id="structfield.writebuf" class="structfield small-section-header">
+                           <a href="#structfield.writebuf" class="anchor field"></a>
+                           <span id="writebuf.v" class='invisible'>
                            <code>writebuf: <a class="struct" href="../../bytes/bytes/struct.BytesMut.html" title="struct bytes::bytes::BytesMut">BytesMut</a></code>
                            </span></span><div class='docblock'><p>A buffer with unprocessed data which are not written yet.</p>
 </div>
@@ -75,7 +78,7 @@ It contains all current buffers and the inner transport.</p>
             </h2>
         <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../tokio_io/codec/struct.FramedParts.html" title="struct tokio_io::codec::FramedParts">FramedParts</a>&lt;T&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_io/framed.rs.html#219' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/tokio_io/framed.rs.html#219' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -93,13 +96,15 @@ It contains all current buffers and the inner transport.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

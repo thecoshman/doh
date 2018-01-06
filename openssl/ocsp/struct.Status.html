@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Status</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>ocsp</a></p><script>window.sidebarCurrent = {name: 'Status', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Status</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.status">status</a><a href="#structfield.reason">reason</a><a href="#structfield.revocation_time">revocation_time</a><a href="#structfield.this_update">this_update</a><a href="#structfield.next_update">next_update</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.check_validity">check_validity</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>ocsp</a></p><script>window.sidebarCurrent = {name: 'Status', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -56,24 +56,29 @@
     pub this_update: &amp;'a <a class="struct" href="../../openssl/asn1/struct.Asn1GeneralizedTimeRef.html" title="struct openssl::asn1::Asn1GeneralizedTimeRef">Asn1GeneralizedTimeRef</a>,
     pub next_update: &amp;'a <a class="struct" href="../../openssl/asn1/struct.Asn1GeneralizedTimeRef.html" title="struct openssl::asn1::Asn1GeneralizedTimeRef">Asn1GeneralizedTimeRef</a>,
 }</pre><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.status' class="structfield">
-                           <span id='status.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.status" class="structfield small-section-header">
+                           <a href="#structfield.status" class="anchor field"></a>
+                           <span id="status.v" class='invisible'>
                            <code>status: <a class="struct" href="../../openssl/ocsp/struct.OcspCertStatus.html" title="struct openssl::ocsp::OcspCertStatus">OcspCertStatus</a></code>
                            </span></span><div class='docblock'><p>The overall status of the response.</p>
-</div><span id='structfield.reason' class="structfield">
-                           <span id='reason.v' class='invisible'>
+</div><span id="structfield.reason" class="structfield small-section-header">
+                           <a href="#structfield.reason" class="anchor field"></a>
+                           <span id="reason.v" class='invisible'>
                            <code>reason: <a class="struct" href="../../openssl/ocsp/struct.OcspRevokedStatus.html" title="struct openssl::ocsp::OcspRevokedStatus">OcspRevokedStatus</a></code>
                            </span></span><div class='docblock'><p>If <code>status</code> is <code>CERT_STATUS_REVOKED</code>, the reason for the revocation.</p>
-</div><span id='structfield.revocation_time' class="structfield">
-                           <span id='revocation_time.v' class='invisible'>
+</div><span id="structfield.revocation_time" class="structfield small-section-header">
+                           <a href="#structfield.revocation_time" class="anchor field"></a>
+                           <span id="revocation_time.v" class='invisible'>
                            <code>revocation_time: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="struct" href="../../openssl/asn1/struct.Asn1GeneralizedTimeRef.html" title="struct openssl::asn1::Asn1GeneralizedTimeRef">Asn1GeneralizedTimeRef</a>&gt;</code>
                            </span></span><div class='docblock'><p>If <code>status</code> is <code>CERT_STATUS_REVOKED</code>, the time at which the certificate was revoked.</p>
-</div><span id='structfield.this_update' class="structfield">
-                           <span id='this_update.v' class='invisible'>
+</div><span id="structfield.this_update" class="structfield small-section-header">
+                           <a href="#structfield.this_update" class="anchor field"></a>
+                           <span id="this_update.v" class='invisible'>
                            <code>this_update: &amp;'a <a class="struct" href="../../openssl/asn1/struct.Asn1GeneralizedTimeRef.html" title="struct openssl::asn1::Asn1GeneralizedTimeRef">Asn1GeneralizedTimeRef</a></code>
                            </span></span><div class='docblock'><p>The time that this revocation check was performed.</p>
-</div><span id='structfield.next_update' class="structfield">
-                           <span id='next_update.v' class='invisible'>
+</div><span id="structfield.next_update" class="structfield small-section-header">
+                           <a href="#structfield.next_update" class="anchor field"></a>
+                           <span id="next_update.v" class='invisible'>
                            <code>next_update: &amp;'a <a class="struct" href="../../openssl/asn1/struct.Asn1GeneralizedTimeRef.html" title="struct openssl::asn1::Asn1GeneralizedTimeRef">Asn1GeneralizedTimeRef</a></code>
                            </span></span><div class='docblock'><p>The time at which this revocation check expires.</p>
 </div>
@@ -81,7 +86,7 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../../openssl/ocsp/struct.Status.html" title="struct openssl::ocsp::Status">Status</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ocsp.rs.html#119-137' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.check_validity' class="method"><span id='check_validity.v' class='invisible'><code>fn <a href='#method.check_validity' class='fnname'>check_validity</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;nsec: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;maxsec: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ocsp.rs.html#127-136' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.check_validity' class="method"><span id='check_validity.v' class='invisible'><code>pub fn <a href='#method.check_validity' class='fnname'>check_validity</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;nsec: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;maxsec: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/ocsp.rs.html#127-136' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Checks validity of the <code>this_update</code> and <code>next_update</code> fields.</p>
 
 <p>The <code>nsec</code> parameter specifies an amount of slack time that will be used when comparing
@@ -106,13 +111,15 @@ very old responses.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

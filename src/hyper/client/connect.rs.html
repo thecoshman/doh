@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/client/connect.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/client/connect.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>connect.rs.html -- source</title>
@@ -322,14 +322,75 @@
 <span id="277">277</span>
 <span id="278">278</span>
 <span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 <span class="comment">//use std::net::SocketAddr;</span>
 
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Future</span>, <span class="ident">Poll</span>, <span class="ident">Async</span>};
+<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">future</span>::{<span class="ident">Executor</span>, <span class="ident">ExecuteError</span>};
+<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">sync</span>::<span class="ident">oneshot</span>;
+<span class="kw">use</span> <span class="ident">futures_cpupool</span>::{<span class="ident">Builder</span> <span class="kw">as</span> <span class="ident">CpuPoolBuilder</span>};
 <span class="kw">use</span> <span class="ident">tokio_io</span>::{<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>};
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">reactor</span>::<span class="ident">Handle</span>;
 <span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">net</span>::{<span class="ident">TcpStream</span>, <span class="ident">TcpStreamNew</span>};
@@ -368,22 +429,35 @@
 <span class="doccomment">/// A connector for the `http` scheme.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HttpConnector</span> {
-    <span class="ident">dns</span>: <span class="ident">dns</span>::<span class="ident">Dns</span>,
+    <span class="ident">executor</span>: <span class="ident">HttpConnectExecutor</span>,
     <span class="ident">enforce_http</span>: <span class="ident">bool</span>,
     <span class="ident">handle</span>: <span class="ident">Handle</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">HttpConnector</span> {
-
     <span class="doccomment">/// Construct a new HttpConnector.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Takes number of DNS worker threads.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">threads</span>: <span class="ident">usize</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>) <span class="op">-&gt;</span> <span class="ident">HttpConnector</span> {
+        <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">CpuPoolBuilder</span>::<span class="ident">new</span>()
+            .<span class="ident">name_prefix</span>(<span class="string">&quot;hyper-dns&quot;</span>)
+            .<span class="ident">pool_size</span>(<span class="ident">threads</span>)
+            .<span class="ident">create</span>();
+        <span class="ident">HttpConnector</span>::<span class="ident">new_with_executor</span>(<span class="ident">pool</span>, <span class="ident">handle</span>)
+    }
+
+    <span class="doccomment">/// Construct a new HttpConnector.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Takes an executor to run blocking tasks on.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_with_executor</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">executor</span>: <span class="ident">E</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>) <span class="op">-&gt;</span> <span class="ident">HttpConnector</span>
+        <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">Executor</span><span class="op">&lt;</span><span class="ident">HttpConnectorBlockingTask</span><span class="op">&gt;</span>
+    {
         <span class="ident">HttpConnector</span> {
-            <span class="ident">dns</span>: <span class="ident">dns</span>::<span class="ident">Dns</span>::<span class="ident">new</span>(<span class="ident">threads</span>),
+            <span class="ident">executor</span>: <span class="ident">HttpConnectExecutor</span>(<span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">executor</span>)),
             <span class="ident">enforce_http</span>: <span class="bool-val">true</span>,
-            <span class="ident">handle</span>: <span class="ident">handle</span>.<span class="ident">clone</span>(),
+            <span class="ident">handle</span>: <span class="ident">handle</span>.<span class="ident">clone</span>()
         }
     }
 
@@ -411,7 +485,7 @@
     <span class="kw">type</span> <span class="ident">Future</span> <span class="op">=</span> <span class="ident">HttpConnecting</span>;
 
     <span class="kw">fn</span> <span class="ident">call</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">uri</span>: <span class="ident">Uri</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Future</span> {
-        <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Http::connect({:?})&quot;</span>, <span class="ident">uri</span>);
+        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Http::connect({:?})&quot;</span>, <span class="ident">uri</span>);
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">enforce_http</span> {
             <span class="kw">if</span> <span class="ident">uri</span>.<span class="ident">scheme</span>() <span class="op">!=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;http&quot;</span>) {
@@ -434,7 +508,7 @@
         };
 
         <span class="ident">HttpConnecting</span> {
-            <span class="ident">state</span>: <span class="ident">State</span>::<span class="ident">Lazy</span>(<span class="self">self</span>.<span class="ident">dns</span>.<span class="ident">clone</span>(), <span class="ident">host</span>.<span class="ident">into</span>(), <span class="ident">port</span>),
+            <span class="ident">state</span>: <span class="ident">State</span>::<span class="ident">Lazy</span>(<span class="self">self</span>.<span class="ident">executor</span>.<span class="ident">clone</span>(), <span class="ident">host</span>.<span class="ident">into</span>(), <span class="ident">port</span>),
             <span class="ident">handle</span>: <span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">clone</span>(),
         }
     }
@@ -479,8 +553,8 @@
 }
 
 <span class="kw">enum</span> <span class="ident">State</span> {
-    <span class="ident">Lazy</span>(<span class="ident">dns</span>::<span class="ident">Dns</span>, <span class="ident">String</span>, <span class="ident">u16</span>),
-    <span class="ident">Resolving</span>(<span class="ident">dns</span>::<span class="ident">Query</span>),
+    <span class="ident">Lazy</span>(<span class="ident">HttpConnectExecutor</span>, <span class="ident">String</span>, <span class="ident">u16</span>),
+    <span class="ident">Resolving</span>(<span class="ident">oneshot</span>::<span class="ident">SpawnHandle</span><span class="op">&lt;</span><span class="ident">dns</span>::<span class="ident">IpAddrs</span>, <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span>),
     <span class="ident">Connecting</span>(<span class="ident">ConnectingTcp</span>),
     <span class="ident">Error</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span>),
 }
@@ -493,12 +567,22 @@
         <span class="kw">loop</span> {
             <span class="kw">let</span> <span class="ident">state</span>;
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
-                <span class="ident">State</span>::<span class="ident">Lazy</span>(<span class="kw-2">ref</span> <span class="ident">dns</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">host</span>, <span class="ident">port</span>) <span class="op">=&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="ident">host</span>, <span class="ident">String</span>::<span class="ident">new</span>());
-                    <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Resolving</span>(<span class="ident">dns</span>.<span class="ident">resolve</span>(<span class="ident">host</span>, <span class="ident">port</span>));
+                <span class="ident">State</span>::<span class="ident">Lazy</span>(<span class="kw-2">ref</span> <span class="ident">executor</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">host</span>, <span class="ident">port</span>) <span class="op">=&gt;</span> {
+                    <span class="comment">// If the host is already an IP addr (v4 or v6),</span>
+                    <span class="comment">// skip resolving the dns and start connecting right away.</span>
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">addrs</span>) <span class="op">=</span> <span class="ident">dns</span>::<span class="ident">IpAddrs</span>::<span class="ident">try_parse</span>(<span class="ident">host</span>, <span class="ident">port</span>) {
+                        <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Connecting</span>(<span class="ident">ConnectingTcp</span> {
+                            <span class="ident">addrs</span>: <span class="ident">addrs</span>,
+                            <span class="ident">current</span>: <span class="prelude-val">None</span>
+                        })
+                    } <span class="kw">else</span> {
+                        <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="ident">host</span>, <span class="ident">String</span>::<span class="ident">new</span>());
+                        <span class="kw">let</span> <span class="ident">work</span> <span class="op">=</span> <span class="ident">dns</span>::<span class="ident">Work</span>::<span class="ident">new</span>(<span class="ident">host</span>, <span class="ident">port</span>);
+                        <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Resolving</span>(<span class="ident">oneshot</span>::<span class="ident">spawn</span>(<span class="ident">work</span>, <span class="ident">executor</span>));
+                    }
                 },
-                <span class="ident">State</span>::<span class="ident">Resolving</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">query</span>) <span class="op">=&gt;</span> {
-                    <span class="kw">match</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">poll</span>()) {
+                <span class="ident">State</span>::<span class="ident">Resolving</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">future</span>) <span class="op">=&gt;</span> {
+                    <span class="kw">match</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">future</span>.<span class="ident">poll</span>()) {
                         <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>),
                         <span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">addrs</span>) <span class="op">=&gt;</span> {
                             <span class="ident">state</span> <span class="op">=</span> <span class="ident">State</span>::<span class="ident">Connecting</span>(<span class="ident">ConnectingTcp</span> {
@@ -539,20 +623,50 @@
                         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;connect error {:?}&quot;</span>, <span class="ident">e</span>);
                         <span class="ident">err</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>);
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">addr</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">addrs</span>.<span class="ident">next</span>() {
-                            <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;connecting to {:?}&quot;</span>, <span class="ident">addr</span>);
+                            <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;connecting to {}&quot;</span>, <span class="ident">addr</span>);
                             <span class="kw-2">*</span><span class="ident">current</span> <span class="op">=</span> <span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>, <span class="ident">handle</span>);
                             <span class="kw">continue</span>;
                         }
                     }
                 }
             } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">addr</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">addrs</span>.<span class="ident">next</span>() {
-                <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;connecting to {:?}&quot;</span>, <span class="ident">addr</span>);
+                <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;connecting to {}&quot;</span>, <span class="ident">addr</span>);
                 <span class="self">self</span>.<span class="ident">current</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>, <span class="ident">handle</span>));
                 <span class="kw">continue</span>;
             }
 
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>.<span class="ident">take</span>().<span class="ident">expect</span>(<span class="string">&quot;missing connect error&quot;</span>));
         }
+    }
+}
+
+<span class="doccomment">/// Blocking task to be executed on a thread pool.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HttpConnectorBlockingTask</span> {
+    <span class="ident">work</span>: <span class="ident">oneshot</span>::<span class="ident">Execute</span><span class="op">&lt;</span><span class="ident">dns</span>::<span class="ident">Work</span><span class="op">&gt;</span>
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">HttpConnectorBlockingTask</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">f</span>.<span class="ident">pad</span>(<span class="string">&quot;HttpConnectorBlockingTask&quot;</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Future</span> <span class="kw">for</span> <span class="ident">HttpConnectorBlockingTask</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> ();
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> ();
+
+    <span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">work</span>.<span class="ident">poll</span>()
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">struct</span> <span class="ident">HttpConnectExecutor</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Executor</span><span class="op">&lt;</span><span class="ident">HttpConnectorBlockingTask</span><span class="op">&gt;&gt;</span>);
+
+<span class="kw">impl</span> <span class="ident">Executor</span><span class="op">&lt;</span><span class="ident">oneshot</span>::<span class="ident">Execute</span><span class="op">&lt;</span><span class="ident">dns</span>::<span class="ident">Work</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">HttpConnectExecutor</span> {
+    <span class="kw">fn</span> <span class="ident">execute</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">future</span>: <span class="ident">oneshot</span>::<span class="ident">Execute</span><span class="op">&lt;</span><span class="ident">dns</span>::<span class="ident">Work</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExecuteError</span><span class="op">&lt;</span><span class="ident">oneshot</span>::<span class="ident">Execute</span><span class="op">&lt;</span><span class="ident">dns</span>::<span class="ident">Work</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="number">0</span>.<span class="ident">execute</span>(<span class="ident">HttpConnectorBlockingTask</span> { <span class="ident">work</span>: <span class="ident">future</span> })
+            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">ExecuteError</span>::<span class="ident">new</span>(<span class="ident">err</span>.<span class="ident">kind</span>(), <span class="ident">err</span>.<span class="ident">into_future</span>().<span class="ident">work</span>))
     }
 }
 
@@ -620,13 +734,15 @@ impl&lt;S: SslClient&gt; HttpsConnector&lt;S&gt; {
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -53,7 +53,7 @@
 
 <p>To use the iterator methods in this crate, import the <a href="./trait.Itertools.html"><code>Itertools</code> trait</a>:</p>
 
-<pre class="rust rust-example-rendered">
+<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><pre class="rust rust-example-rendered ignore">
 <span class="kw">use</span> <span class="ident">itertools</span>::<span class="ident">Itertools</span>;</pre>
 
 <h2 id='rust-version' class='section-header'><a href='#rust-version'>Rust Version</a></h2>
@@ -95,8 +95,8 @@
                            <td><a class="enum" href="enum.Either.html"
                                   title='enum itertools::Either'>Either</a></td>
                            <td class='docblock-short'>
-                                <p><code>Either</code> represents an alternative holding one value out of
-either of the two possible values.</p>
+                                <p>The enum <code>Either</code> with variants <code>Left</code> and <code>Right</code> is a general purpose
+sum type with two cases.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -405,13 +405,15 @@ function&quot; and an initial state to eventually pass to the closure</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

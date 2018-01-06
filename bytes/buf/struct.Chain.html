@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct Chain</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>bytes</a>::<wbr><a href='index.html'>buf</a></p><script>window.sidebarCurrent = {name: 'Chain', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Chain</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.first_ref">first_ref</a><a href="#method.first_mut">first_mut</a><a href="#method.last_ref">last_ref</a><a href="#method.last_mut">last_mut</a><a href="#method.into_inner">into_inner</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Buf">Buf</a><a href="#impl-BufMut">BufMut</a></div></div><p class='location'><a href='../index.html'>bytes</a>::<wbr><a href='index.html'>buf</a></p><script>window.sidebarCurrent = {name: 'Chain', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -73,7 +73,7 @@ function&#39;s documentation for more detail.</p>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;T, U&gt; <a class="struct" href="../../bytes/buf/struct.Chain.html" title="struct bytes::buf::Chain">Chain</a>&lt;T, U&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#35-144' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(a: T, b: U) -&gt; <a class="struct" href="../../bytes/buf/struct.Chain.html" title="struct bytes::buf::Chain">Chain</a>&lt;T, U&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#50-55' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(a: T, b: U) -&gt; <a class="struct" href="../../bytes/buf/struct.Chain.html" title="struct bytes::buf::Chain">Chain</a>&lt;T, U&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#50-55' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new <code>Chain</code> sequencing the provided values.</p>
 
 <h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
@@ -86,7 +86,7 @@ function&#39;s documentation for more detail.</p>
     <span class="ident">BytesMut</span>::<span class="ident">with_capacity</span>(<span class="number">1024</span>));
 
 <span class="comment">// Use the chained buffer</span></pre>
-</div><h4 id='method.first_ref' class="method"><span id='first_ref.v' class='invisible'><code>fn <a href='#method.first_ref' class='fnname'>first_ref</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#69-71' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.first_ref' class="method"><span id='first_ref.v' class='invisible'><code>pub fn <a href='#method.first_ref' class='fnname'>first_ref</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#69-71' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Gets a reference to the first underlying <code>Buf</code>.</p>
 
 <h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
@@ -97,7 +97,7 @@ function&#39;s documentation for more detail.</p>
             .<span class="ident">chain</span>(<span class="ident">Bytes</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;world&quot;</span>[..]));
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">buf</span>.<span class="ident">first_ref</span>().<span class="ident">get_ref</span>()[..], <span class="string">b&quot;hello&quot;</span>[..]);</pre>
-</div><h4 id='method.first_mut' class="method"><span id='first_mut.v' class='invisible'><code>fn <a href='#method.first_mut' class='fnname'>first_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#88-90' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.first_mut' class="method"><span id='first_mut.v' class='invisible'><code>pub fn <a href='#method.first_mut' class='fnname'>first_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>T</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#88-90' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Gets a mutable reference to the first underlying <code>Buf</code>.</p>
 
 <h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
@@ -111,7 +111,7 @@ function&#39;s documentation for more detail.</p>
 
 <span class="kw">let</span> <span class="ident">full</span>: <span class="ident">Bytes</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">collect</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">full</span>[..], <span class="string">b&quot;ello world&quot;</span>[..]);</pre>
-</div><h4 id='method.last_ref' class="method"><span id='last_ref.v' class='invisible'><code>fn <a href='#method.last_ref' class='fnname'>last_ref</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>U</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#104-106' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.last_ref' class="method"><span id='last_ref.v' class='invisible'><code>pub fn <a href='#method.last_ref' class='fnname'>last_ref</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>U</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#104-106' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Gets a reference to the last underlying <code>Buf</code>.</p>
 
 <h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
@@ -122,7 +122,7 @@ function&#39;s documentation for more detail.</p>
             .<span class="ident">chain</span>(<span class="ident">Bytes</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;world&quot;</span>[..]));
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">buf</span>.<span class="ident">last_ref</span>().<span class="ident">get_ref</span>()[..], <span class="string">b&quot;world&quot;</span>[..]);</pre>
-</div><h4 id='method.last_mut' class="method"><span id='last_mut.v' class='invisible'><code>fn <a href='#method.last_mut' class='fnname'>last_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>U</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#123-125' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.last_mut' class="method"><span id='last_mut.v' class='invisible'><code>pub fn <a href='#method.last_mut' class='fnname'>last_mut</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>U</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#123-125' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Gets a mutable reference to the last underlying <code>Buf</code>.</p>
 
 <h1 id='examples-5' class='section-header'><a href='#examples-5'>Examples</a></h1>
@@ -136,7 +136,7 @@ function&#39;s documentation for more detail.</p>
 
 <span class="kw">let</span> <span class="ident">full</span>: <span class="ident">Bytes</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">collect</span>();
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">full</span>[..], <span class="string">b&quot;hello orld&quot;</span>[..]);</pre>
-</div><h4 id='method.into_inner' class="method"><span id='into_inner.v' class='invisible'><code>fn <a href='#method.into_inner' class='fnname'>into_inner</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a>T, U<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#141-143' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.into_inner' class="method"><span id='into_inner.v' class='invisible'><code>pub fn <a href='#method.into_inner' class='fnname'>into_inner</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a>T, U<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#141-143' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Consumes this <code>Chain</code>, returning the underlying values.</p>
 
 <h1 id='examples-6' class='section-header'><a href='#examples-6'>Examples</a></h1>
@@ -155,7 +155,7 @@ function&#39;s documentation for more detail.</p>
             </h2>
         <h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>, U:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../bytes/buf/struct.Chain.html" title="struct bytes::buf::Chain">Chain</a>&lt;T, U&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#29' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#29' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
 </div></div><h3 id='impl-Buf' class='impl'><span class='in-band'><code>impl&lt;T, U&gt; <a class="trait" href="../../bytes/buf/trait.Buf.html" title="trait bytes::buf::Buf">Buf</a> for <a class="struct" href="../../bytes/buf/struct.Chain.html" title="struct bytes::buf::Chain">Chain</a>&lt;T, U&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../bytes/buf/trait.Buf.html" title="trait bytes::buf::Buf">Buf</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;U: <a class="trait" href="../../bytes/buf/trait.Buf.html" title="trait bytes::buf::Buf">Buf</a>,&nbsp;</span></code><a href='#impl-Buf' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#146-185' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.remaining' class="method"><span id='remaining.v' class='invisible'><code>fn <a href='../../bytes/buf/trait.Buf.html#tymethod.remaining' class='fnname'>remaining</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bytes/buf/chain.rs.html#150-152' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the number of bytes between the current position and the end of the buffer. <a href="../../bytes/buf/trait.Buf.html#tymethod.remaining">Read more</a></p>
@@ -265,13 +265,15 @@ function&#39;s documentation for more detail.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

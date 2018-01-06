@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.10/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.12/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -320,6 +320,11 @@
 <span id="275">275</span>
 <span id="276">276</span>
 <span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! A fast, low-level IO library for Rust focusing on non-blocking APIs, event</span>
 <span class="doccomment">//! notification, and other useful utilities for building high performance IO</span>
@@ -347,7 +352,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! use mio::*;</span>
-<span class="doccomment">//! use mio::tcp::{TcpListener, TcpStream};</span>
+<span class="doccomment">//! use mio::net::{TcpListener, TcpStream};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! // Setup some tokens to allow us to identify which event is</span>
 <span class="doccomment">//! // for which socket.</span>
@@ -398,20 +403,19 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/mio/0.6.1&quot;</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;mio&quot;</span>]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/mio/0.6.12&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;mio&quot;</span>]</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">warnings</span>, <span class="ident">missing_docs</span>, <span class="ident">missing_debug_implementations</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>, <span class="ident">missing_docs</span>, <span class="ident">missing_debug_implementations</span>)]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazycell</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">net2</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">slab</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">iovec</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">magenta</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">fuchsia_zircon</span> <span class="kw">as</span> <span class="ident">zircon</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">magenta_sys</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">fuchsia_zircon_sys</span> <span class="kw">as</span> <span class="ident">zircon_sys</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libc</span>;
@@ -428,9 +432,6 @@
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">log</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">env_logger</span>;
-
 <span class="kw">mod</span> <span class="ident">event_imp</span>;
 <span class="kw">mod</span> <span class="ident">io</span>;
 <span class="kw">mod</span> <span class="ident">poll</span>;
@@ -439,12 +440,12 @@
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">net</span>;
 
-<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.5&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use mio-more instead&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.5&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use mio-extras instead&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-deprecated&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">channel</span>;
 
-<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.5&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use mio-more instead&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.5&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use mio-extras instead&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-deprecated&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">timer</span>;
@@ -521,7 +522,16 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;fuchsia&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">fuchsia</span> {
     <span class="doccomment">//! Fuchsia-only extensions</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">EventedHandle</span>;
+    <span class="doccomment">//!</span>
+    <span class="doccomment">//! # Stability</span>
+    <span class="doccomment">//!</span>
+    <span class="doccomment">//! This module depends on the [magenta-sys crate](https://crates.io/crates/magenta-sys)</span>
+    <span class="doccomment">//! and so might introduce breaking changes, even on minor releases,</span>
+    <span class="doccomment">//! so long as that crate remains unstable.</span>
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sys</span>::{
+        <span class="ident">EventedHandle</span>,
+    };
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">fuchsia</span>::{<span class="ident">FuchsiaReady</span>, <span class="ident">zx_signals_t</span>};
 }
 
 <span class="doccomment">/// Windows-only extensions to the mio crate.</span>
@@ -555,7 +565,7 @@
 <span class="doccomment">///   buffering to ensure that a readiness interface can be provided. For a</span>
 <span class="doccomment">///   sample implementation see the TCP/UDP modules in mio itself.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// * `Overlapped` - this type is intended to be used as the concreate instances</span>
+<span class="doccomment">/// * `Overlapped` - this type is intended to be used as the concrete instances</span>
 <span class="doccomment">///   of the `OVERLAPPED` type that most win32 methods expect. It&#39;s crucial, for</span>
 <span class="doccomment">///   safety, that all asynchronous operations are initiated with an instance of</span>
 <span class="doccomment">///   `Overlapped` and not another instantiation of `OVERLAPPED`.</span>
@@ -616,13 +626,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

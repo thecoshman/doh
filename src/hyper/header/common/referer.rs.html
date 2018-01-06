@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.6/src/header/common/referer.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/header/common/referer.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>referer.rs.html -- source</title>
@@ -84,6 +84,10 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
 </pre><pre class="rust ">
 <span class="macro">header</span><span class="macro">!</span> {
     <span class="doccomment">/// `Referer` header, defined in</span>
@@ -96,20 +100,24 @@
     <span class="doccomment">/// URI reference, if any, when generating the Referer field value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # ABNF</span>
-    <span class="doccomment">/// ```plain</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```text</span>
     <span class="doccomment">/// Referer = absolute-URI / partial-URI</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example values</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// * `http://www.example.org/hypertext/Overview.html`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Referer};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut headers = Headers::new();</span>
     <span class="doccomment">/// headers.set(Referer::new(&quot;/People.html#tim&quot;));</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use hyper::header::{Headers, Referer};</span>
     <span class="doccomment">///</span>
@@ -144,13 +152,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

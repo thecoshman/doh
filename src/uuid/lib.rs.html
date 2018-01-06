@@ -1529,12 +1529,12 @@
 <span class="doccomment">//! * [RFC4122: A Universally Unique IDentifier (UUID) URN Namespace](</span>
 <span class="doccomment">//!     http://tools.ietf.org/html/rfc4122)</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;</span>,
        <span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://www.rust-lang.org/favicon.ico&quot;</span>,
        <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://doc.rust-lang.org/uuid/&quot;</span>)]</span>
 
-<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">no_std</span>]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>)]</span>
+<span class="attribute">#![<span class="ident">no_std</span>]</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;v3&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">md5</span>;
@@ -2828,13 +2828,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.10/src/net/tcp.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.11/src/net/tcp.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tcp.rs.html -- source</title>
@@ -822,6 +822,29 @@
 <span id="777">777</span>
 <span id="778">778</span>
 <span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>, <span class="ident">Write</span>};
@@ -850,6 +873,7 @@
 
 <span class="doccomment">/// Stream returned by the `TcpListener::incoming` function representing the</span>
 <span class="doccomment">/// stream of sockets received from a listener.</span>
+<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;streams do nothing unless polled&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Incoming</span> {
     <span class="ident">inner</span>: <span class="ident">TcpListener</span>,
 }
@@ -929,6 +953,26 @@
                     <span class="comment">// continue to polling the `rx` at the beginning of the loop</span>
                 }
             }
+        }
+    }
+
+    <span class="doccomment">/// Like `accept`, except that it returns a raw `std::net::TcpStream`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The stream is *in blocking mode*, and is not associated with the Tokio</span>
+    <span class="doccomment">/// event loop.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_std</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">net</span>::<span class="ident">TcpStream</span>, <span class="ident">SocketAddr</span>)<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>, <span class="string">&quot;not ready&quot;</span>))
+        }
+
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">accept_std</span>() {
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> {
+                    <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_read</span>();
+                }
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>)
+            },
+            <span class="prelude-val">Ok</span>((<span class="ident">sock</span>, <span class="ident">addr</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">sock</span>, <span class="ident">addr</span>)),
         }
     }
 
@@ -1060,10 +1104,12 @@
 
 <span class="doccomment">/// Future returned by `TcpStream::connect` which will resolve to a `TcpStream`</span>
 <span class="doccomment">/// when the stream is connected.</span>
+<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;futures do nothing unless polled&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpStreamNew</span> {
     <span class="ident">inner</span>: <span class="ident">TcpStreamNewState</span>,
 }
 
+<span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;futures do nothing unless polled&quot;</span>]</span>
 <span class="kw">enum</span> <span class="ident">TcpStreamNewState</span> {
     <span class="ident">Waiting</span>(<span class="ident">TcpStream</span>),
     <span class="ident">Error</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
@@ -1423,22 +1469,22 @@
             <span class="comment">// The `IoVec` type can&#39;t have a 0-length size, so we create a bunch</span>
             <span class="comment">// of dummy versions on the stack with 1 length which we&#39;ll quickly</span>
             <span class="comment">// overwrite.</span>
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b1</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b2</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b3</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b4</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b5</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b6</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b7</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b8</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b9</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b10</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b11</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b12</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b13</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b14</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b15</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">b16</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b1</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b2</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b3</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b4</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b5</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b6</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b7</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b8</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b9</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b10</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b11</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b12</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b13</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b14</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b15</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
+            <span class="kw">let</span> <span class="ident">b16</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>];
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bufs</span>: [<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">IoVec</span>; <span class="number">16</span>] <span class="op">=</span> [
                 <span class="ident">b1</span>.<span class="ident">into</span>(), <span class="ident">b2</span>.<span class="ident">into</span>(), <span class="ident">b3</span>.<span class="ident">into</span>(), <span class="ident">b4</span>.<span class="ident">into</span>(),
                 <span class="ident">b5</span>.<span class="ident">into</span>(), <span class="ident">b6</span>.<span class="ident">into</span>(), <span class="ident">b7</span>.<span class="ident">into</span>(), <span class="ident">b8</span>.<span class="ident">into</span>(),
@@ -1620,13 +1666,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
