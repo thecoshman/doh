@@ -9,6 +9,7 @@ use reqwest::header::{ContentLength, UserAgent};
 use std::path::{PathBuf, Path};
 use itertools::Itertools;
 use tabwriter::TabWriter;
+use std::time::Duration;
 use std::fs::File;
 use getch::Getch;
 use std::fmt;
@@ -428,6 +429,7 @@ impl ListContext {
                 let mut pb = ProgressBar::on(&mut out, size);
                 pb.set_units(ProgressBarUnits::Bytes);
                 pb.set_width(Some(tx));
+                pb.set_max_refresh_rate(Some(Duration::from_secs(1)));
 
                 let mut buf = vec![0; 4096];
                 loop {
