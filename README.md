@@ -1,4 +1,4 @@
-# D'Oh [![Travis build status](https://travis-ci.org/thecoshman/doh.svg)](https://travis-ci.org/thecoshman/doh) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/026kpokdphbsjyxc?svg=true)](https://ci.appveyor.com/project/thecoshman/doh) [![Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Crates.io version](http://meritbadge.herokuapp.com/doh)](https://crates.io/crates/doh)
+# D'Oh [![Travis build status](https://travis-ci.org/thecoshman/doh.svg)](https://travis-ci.org/thecoshman/doh) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/026kpokdphbsjyxc?svg=true)](https://ci.appveyor.com/project/thecoshman/doh) [![Licence](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) [![Crates.io version](https://meritbadge.herokuapp.com/doh)](https://crates.io/crates/doh)
 D'Oh - Directories Over HTTP
 
 ## [Docs](https://cdn.rawgit.com/thecoshman/doh/doc/doh/index.html)
