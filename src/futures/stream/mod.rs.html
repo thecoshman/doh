@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.1.17/src/stream/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-0.1.21/src/stream/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -1147,6 +1158,47 @@
 <span id="1102">1102</span>
 <span id="1103">1103</span>
 <span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
+<span id="1140">1140</span>
+<span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Asynchronous streams</span>
 <span class="doccomment">//!</span>
@@ -1194,6 +1246,7 @@
 <span class="kw">mod</span> <span class="ident">fuse</span>;
 <span class="kw">mod</span> <span class="ident">future</span>;
 <span class="kw">mod</span> <span class="ident">inspect</span>;
+<span class="kw">mod</span> <span class="ident">inspect_err</span>;
 <span class="kw">mod</span> <span class="ident">map</span>;
 <span class="kw">mod</span> <span class="ident">map_err</span>;
 <span class="kw">mod</span> <span class="ident">merge</span>;
@@ -1212,7 +1265,9 @@
 <span class="kw">mod</span> <span class="ident">forward</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">and_then</span>::<span class="ident">AndThen</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">chain</span>::<span class="ident">Chain</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">concat</span>::{<span class="ident">Concat</span>, <span class="ident">Concat2</span>};
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">concat</span>::<span class="ident">Concat</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">concat</span>::<span class="ident">Concat2</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">empty</span>::{<span class="ident">Empty</span>, <span class="ident">empty</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">filter</span>::<span class="ident">Filter</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">filter_map</span>::<span class="ident">FilterMap</span>;
@@ -1223,6 +1278,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">fuse</span>::<span class="ident">Fuse</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">future</span>::<span class="ident">StreamFuture</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">inspect</span>::<span class="ident">Inspect</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">inspect_err</span>::<span class="ident">InspectErr</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">map</span>::<span class="ident">Map</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">map_err</span>::<span class="ident">MapErr</span>;
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
@@ -1253,7 +1309,7 @@
     <span class="kw">mod</span> <span class="ident">wait</span>;
     <span class="kw">mod</span> <span class="ident">channel</span>;
     <span class="kw">mod</span> <span class="ident">split</span>;
-    <span class="kw">mod</span> <span class="ident">futures_unordered</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">futures_unordered</span>;
     <span class="kw">mod</span> <span class="ident">futures_ordered</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">buffered</span>::<span class="ident">Buffered</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">buffer_unordered</span>::<span class="ident">BufferUnordered</span>;
@@ -1261,8 +1317,8 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">chunks</span>::<span class="ident">Chunks</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">collect</span>::<span class="ident">Collect</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">wait</span>::<span class="ident">Wait</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">split</span>::{<span class="ident">SplitStream</span>, <span class="ident">SplitSink</span>};
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">futures_unordered</span>::{<span class="ident">futures_unordered</span>, <span class="ident">FuturesUnordered</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">split</span>::{<span class="ident">SplitStream</span>, <span class="ident">SplitSink</span>, <span class="ident">ReuniteError</span>};
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">futures_unordered</span>::<span class="ident">FuturesUnordered</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">futures_ordered</span>::{<span class="ident">futures_ordered</span>, <span class="ident">FuturesOrdered</span>};
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
@@ -1274,7 +1330,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;removed without replacement, recommended to use a \
                          local extension trait or function if needed, more \
-                         details in https://github.com/alexcrichton/futures-rs/issues/228&quot;</span>)]</span>
+                         details in https://github.com/rust-lang-nursery/futures-rs/issues/228&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BoxStream</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">boxed</span>::<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">E</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span><span class="op">&gt;</span>;
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Stream</span><span class="op">&gt;</span> <span class="ident">Stream</span> <span class="kw">for</span> ::<span class="ident">std</span>::<span class="ident">boxed</span>::<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
@@ -1325,7 +1381,7 @@
 <span class="doccomment">/// entirely. If one of these use cases suits you perfectly and not the other,</span>
 <span class="doccomment">/// please feel welcome to comment on [the issue][being considered]!</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [being considered]: https://github.com/alexcrichton/futures-rs/issues/206</span>
+<span class="doccomment">/// [being considered]: https://github.com/rust-lang-nursery/futures-rs/issues/206</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Stream</span> {
     <span class="doccomment">/// The type of item this stream will yield on success.</span>
     <span class="kw">type</span> <span class="ident">Item</span>;
@@ -1417,7 +1473,7 @@
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;removed without replacement, recommended to use a \
                          local extension trait or function if needed, more \
-                         details in https://github.com/alexcrichton/futures-rs/issues/228&quot;</span>)]</span>
+                         details in https://github.com/rust-lang-nursery/futures-rs/issues/228&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">fn</span> <span class="ident">boxed</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">BoxStream</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
@@ -1780,6 +1836,7 @@
     <span class="doccomment">/// It&#39;s important to note that this function will panic if the stream</span>
     <span class="doccomment">/// is empty, which is the reason for its deprecation.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.1.14&quot;</span>, <span class="ident">note</span><span class="op">=</span><span class="string">&quot;please use `Stream::concat2` instead&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">fn</span> <span class="ident">concat</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Concat</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
               <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Extend</span><span class="op">&lt;&lt;</span><span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Stream</span><span class="op">&gt;</span>::<span class="ident">Item</span> <span class="kw">as</span> <span class="ident">IntoIterator</span><span class="op">&gt;</span>::<span class="ident">Item</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">IntoIterator</span>,
@@ -1806,7 +1863,7 @@
     <span class="doccomment">/// use futures::stream;</span>
     <span class="doccomment">/// use futures::future;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let number_stream = stream::iter::&lt;_, _, ()&gt;((0..6).map(Ok));</span>
+    <span class="doccomment">/// let number_stream = stream::iter_ok::&lt;_, ()&gt;(0..6);</span>
     <span class="doccomment">/// let sum = number_stream.fold(0, |acc, x| future::ok(acc + x));</span>
     <span class="doccomment">/// assert_eq!(sum.wait(), Ok(15));</span>
     <span class="doccomment">/// ```</span>
@@ -2122,8 +2179,8 @@
     <span class="doccomment">/// use futures::prelude::*;</span>
     <span class="doccomment">/// use futures::stream;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let stream1 = stream::iter(vec![Ok(10), Err(false)]);</span>
-    <span class="doccomment">/// let stream2 = stream::iter(vec![Err(true), Ok(20)]);</span>
+    <span class="doccomment">/// let stream1 = stream::iter_result(vec![Ok(10), Err(false)]);</span>
+    <span class="doccomment">/// let stream2 = stream::iter_result(vec![Err(true), Ok(20)]);</span>
     <span class="doccomment">/// let mut chain = stream1.chain(stream2).wait();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(Some(Ok(10)), chain.next());</span>
@@ -2235,12 +2292,24 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is similar to the `Iterator::inspect` method in the standard</span>
     <span class="doccomment">/// library where it allows easily inspecting each value as it passes</span>
-    <span class="doccomment">/// through the stream, for example to debug what&#39;s going.</span>
+    <span class="doccomment">/// through the stream, for example to debug what&#39;s going on.</span>
     <span class="kw">fn</span> <span class="ident">inspect</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">Inspect</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>),
               <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
         <span class="ident">inspect</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">f</span>)
+    }
+
+    <span class="doccomment">/// Do something with the error of this stream, afterwards passing it on.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is similar to the `Stream::inspect` method where it allows</span>
+    <span class="doccomment">/// easily inspecting the error as it passes through the stream, for</span>
+    <span class="doccomment">/// example to debug what&#39;s going on.</span>
+    <span class="kw">fn</span> <span class="ident">inspect_err</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">InspectErr</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Error</span>),
+              <span class="self">Self</span>: <span class="ident">Sized</span>,
+    {
+        <span class="ident">inspect_err</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">f</span>)
     }
 }
 
@@ -2251,6 +2320,30 @@
     <span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">poll</span>()
     }
+}
+
+<span class="doccomment">/// Converts a list of futures into a `Stream` of results from the futures.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This function will take an list of futures (e.g. a vector, an iterator,</span>
+<span class="doccomment">/// etc), and return a stream. The stream will yield items as they become</span>
+<span class="doccomment">/// available on the futures internally, in the order that they become</span>
+<span class="doccomment">/// available. This function is similar to `buffer_unordered` in that it may</span>
+<span class="doccomment">/// return items in a different order than in the list specified.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note that the returned set can also be used to dynamically push more</span>
+<span class="doccomment">/// futures into the set as they become available.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">futures_unordered</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">futures</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">FuturesUnordered</span><span class="op">&lt;&lt;</span><span class="ident">I</span>::<span class="ident">Item</span> <span class="kw">as</span> <span class="ident">IntoFuture</span><span class="op">&gt;</span>::<span class="ident">Future</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span>,
+        <span class="ident">I</span>::<span class="ident">Item</span>: <span class="ident">IntoFuture</span>
+{
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">set</span> <span class="op">=</span> <span class="ident">FuturesUnordered</span>::<span class="ident">new</span>();
+
+    <span class="kw">for</span> <span class="ident">future</span> <span class="kw">in</span> <span class="ident">futures</span> {
+        <span class="ident">set</span>.<span class="ident">push</span>(<span class="ident">future</span>.<span class="ident">into_future</span>());
+    }
+
+    <span class="kw">return</span> <span class="ident">set</span>
 }
 </pre>
 </section>
@@ -2266,20 +2359,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

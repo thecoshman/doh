@@ -10,8 +10,11 @@
     <title>serde_urlencoded::ser::Serializer - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct Serializer</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Serializer">Serializer</a></div></div><p class='location'><a href='../index.html'>serde_urlencoded</a>::<wbr><a href='index.html'>ser</a></p><script>window.sidebarCurrent = {name: 'Serializer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Serializer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Serializer">Serializer</a></div></div><p class='location'><a href='../index.html'>serde_urlencoded</a>::<wbr><a href='index.html'>ser</a></p><script>window.sidebarCurrent = {name: 'Serializer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,13 +61,18 @@
                    </a>
                </span><a class='srclink' href='../../src/serde_urlencoded/ser/mod.rs.html#45-47' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Serializer&lt;'output, Target:&nbsp;'output + <a class="trait" href="../../url/form_urlencoded/trait.Target.html" title="trait url::form_urlencoded::Target">UrlEncodedTarget</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A serializer for the <code>application/x-www-form-urlencoded</code> format.</p>
-
 <ul>
-<li><p>Supported top-level inputs are structs, maps and sequences of pairs,
-with or without a given length.</p></li>
-<li><p>Supported keys and values are integers, bytes (if convertible to strings),
-unit structs and unit variants.</p></li>
-<li><p>Newtype structs defer to their inner values.</p></li>
+<li>
+<p>Supported top-level inputs are structs, maps and sequences of pairs,
+with or without a given length.</p>
+</li>
+<li>
+<p>Supported keys and values are integers, bytes (if convertible to strings),
+unit structs and unit variants.</p>
+</li>
+<li>
+<p>Newtype structs defer to their inner values.</p>
+</li>
 </ul>
 </div>
                     <h2 id='methods' class='small-section-header'>
@@ -144,13 +160,13 @@ unit structs and unit variants.</p></li>
 <div class='docblock'><p>Serializes a struct, given length is ignored.</p>
 </div><h4 id='method.serialize_struct_variant' class="method"><span id='serialize_struct_variant.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#tymethod.serialize_struct_variant' class='fnname'>serialize_struct_variant</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;_name: &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;_variant_index: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;_variant: &amp;'static <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.SerializeStructVariant" title="type serde::ser::Serializer::SerializeStructVariant">SerializeStructVariant</a>, <a class="enum" href="../../serde_urlencoded/ser/enum.Error.html" title="enum serde_urlencoded::ser::Error">Error</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde_urlencoded/ser/mod.rs.html#328-336' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns an error.</p>
-</div><h4 id='method.collect_seq' class="method"><span id='collect_seq.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.collect_seq' class='fnname'>collect_seq</a>&lt;I&gt;(self, iter: I) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;I as <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.Item" title="type core::iter::traits::IntoIterator::Item">Item</a>: <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1244-1255' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.collect_seq' class="method"><span id='collect_seq.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.collect_seq' class='fnname'>collect_seq</a>&lt;I&gt;(self, iter: I) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;I as <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&gt;::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.Item" title="type core::iter::traits::IntoIterator::Item">Item</a>: <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1245-1256' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Collect an iterator as a sequence. <a href="../../serde/ser/trait.Serializer.html#method.collect_seq">Read more</a></p>
-</div><h4 id='method.collect_map' class="method"><span id='collect_map.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.collect_map' class='fnname'>collect_map</a>&lt;K, V, I&gt;(self, iter: I) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a>K, V<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;K: <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1282-1294' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.collect_map' class="method"><span id='collect_map.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.collect_map' class='fnname'>collect_map</a>&lt;K, V, I&gt;(self, iter: I) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a>K, V<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;K: <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../serde/ser/trait.Serialize.html" title="trait serde::ser::Serialize">Serialize</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1283-1295' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Collect an iterator as a map. <a href="../../serde/ser/trait.Serializer.html#method.collect_map">Read more</a></p>
-</div><h4 id='method.collect_str' class="method"><span id='collect_str.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.collect_str' class='fnname'>collect_str</a>&lt;T&gt;(self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1326-1334' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.collect_str' class="method"><span id='collect_str.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.collect_str' class='fnname'>collect_str</a>&lt;T&gt;(self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Ok" title="type serde::ser::Serializer::Ok">Ok</a>, Self::<a class="type" href="../../serde/ser/trait.Serializer.html#associatedtype.Error" title="type serde::ser::Serializer::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> + ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1327-1335' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Serialize a string produced by an implementation of <code>Display</code>. <a href="../../serde/ser/trait.Serializer.html#method.collect_str">Read more</a></p>
-</div><h4 id='method.is_human_readable' class="method"><span id='is_human_readable.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.is_human_readable' class='fnname'>is_human_readable</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1415-1417' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.is_human_readable' class="method"><span id='is_human_readable.v' class='invisible'><code>fn <a href='../../serde/ser/trait.Serializer.html#method.is_human_readable' class='fnname'>is_human_readable</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/serde/ser/mod.rs.html#1416-1418' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Determine whether <code>Serialize</code> implementations should serialize in human-readable form. <a href="../../serde/ser/trait.Serializer.html#method.is_human_readable">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -165,20 +181,22 @@ unit structs and unit variants.</p></li>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -10,8 +10,11 @@
     <title>tokio_io::io - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module io</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>tokio_io</a></p><script>window.sidebarCurrent = {name: 'io', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module io</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>tokio_io</a></p><script>window.sidebarCurrent = {name: 'io', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,12 +59,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/tokio_io/io.rs.html#1-23' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/tokio_io/io/mod.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>I/O conveniences when working with primitives in <code>tokio-core</code></p>
-
 <p>Contains various combinators to work with I/O objects and type definitions
 as well.</p>
-
 <p>A description of the high-level I/O combinators can be <a href="https://tokio.rs/docs/getting-started/core/">found online</a> in
 addition to a description of the <a href="https://tokio.rs/docs/going-deeper-tokio/core-low-level/">low level details</a>.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -62,9 +71,10 @@ addition to a description of the <a href="https://tokio.rs/docs/going-deeper-tok
                            <td><a class="struct" href="struct.AllowStdIo.html"
                                   title='struct tokio_io::io::AllowStdIo'>AllowStdIo</a></td>
                            <td class='docblock-short'>
-                                <p>A simple wrapper type which allows types which implement only
-implement <code>std::io::Read</code> or <code>std::io::Write</code>
-to be used in contexts which expect an <code>AsyncRead</code> or <code>AsyncWrite</code>.</p>
+                                <p>A simple wrapper type which allows types that only implement
+<code>std::io::Read</code> or <code>std::io::Write</code> to be used in contexts which expect
+an <code>AsyncRead</code> or <code>AsyncWrite</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -72,6 +82,7 @@ to be used in contexts which expect an <code>AsyncRead</code> or <code>AsyncWrit
                                   title='struct tokio_io::io::Copy'>Copy</a></td>
                            <td class='docblock-short'>
                                 <p>A future which will copy all data from a reader into a writer.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -79,6 +90,7 @@ to be used in contexts which expect an <code>AsyncRead</code> or <code>AsyncWrit
                                   title='struct tokio_io::io::Flush'>Flush</a></td>
                            <td class='docblock-short'>
                                 <p>A future used to fully flush an I/O object.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -87,6 +99,7 @@ to be used in contexts which expect an <code>AsyncRead</code> or <code>AsyncWrit
                            <td class='docblock-short'>
                                 <p>Combinator created by the top-level <code>lines</code> method which is a stream over
 the lines of text on an I/O object.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -95,6 +108,7 @@ the lines of text on an I/O object.</p>
                            <td class='docblock-short'>
                                 <p>A future which can be used to easily read available number of bytes to fill
 a buffer.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -103,6 +117,7 @@ a buffer.</p>
                            <td class='docblock-short'>
                                 <p>A future which can be used to easily read exactly enough bytes to fill
 a buffer.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -110,6 +125,7 @@ a buffer.</p>
                                   title='struct tokio_io::io::ReadHalf'>ReadHalf</a></td>
                            <td class='docblock-short'>
                                 <p>The readable half of an object returned from <code>AsyncRead::split</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -118,6 +134,7 @@ a buffer.</p>
                            <td class='docblock-short'>
                                 <p>A future which can be used to easily read the entire contents of a stream
 into a vector.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -126,6 +143,7 @@ into a vector.</p>
                            <td class='docblock-short'>
                                 <p>A future which can be used to easily read the contents of a stream into a
 vector until the delimiter is reached.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -133,6 +151,7 @@ vector until the delimiter is reached.</p>
                                   title='struct tokio_io::io::Shutdown'>Shutdown</a></td>
                            <td class='docblock-short'>
                                 <p>A future used to fully shutdown an I/O object.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -140,6 +159,7 @@ vector until the delimiter is reached.</p>
                                   title='struct tokio_io::io::Window'>Window</a></td>
                            <td class='docblock-short'>
                                 <p>A owned window around an underlying buffer.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -147,6 +167,7 @@ vector until the delimiter is reached.</p>
                                   title='struct tokio_io::io::WriteAll'>WriteAll</a></td>
                            <td class='docblock-short'>
                                 <p>A future used to write the entire contents of some data to a stream.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -154,6 +175,7 @@ vector until the delimiter is reached.</p>
                                   title='struct tokio_io::io::WriteHalf'>WriteHalf</a></td>
                            <td class='docblock-short'>
                                 <p>The writable half of an object returned from <code>AsyncRead::split</code>.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -163,6 +185,7 @@ vector until the delimiter is reached.</p>
                            <td class='docblock-short'>
                                 <p>Creates a future which represents copying all the bytes from one object to
 another.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -171,6 +194,7 @@ another.</p>
                            <td class='docblock-short'>
                                 <p>Creates a future which will entirely flush an I/O object and then yield the
 object itself.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -179,6 +203,7 @@ object itself.</p>
                            <td class='docblock-short'>
                                 <p>Creates a new stream from the I/O object given representing the lines of
 input that are found on <code>A</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -187,6 +212,7 @@ input that are found on <code>A</code>.</p>
                            <td class='docblock-short'>
                                 <p>Tries to read some bytes directly into the given <code>buf</code> in asynchronous
 manner, returning a future type.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -195,6 +221,7 @@ manner, returning a future type.</p>
                            <td class='docblock-short'>
                                 <p>Creates a future which will read exactly enough bytes to fill <code>buf</code>,
 returning an error if EOF is hit sooner.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -203,6 +230,7 @@ returning an error if EOF is hit sooner.</p>
                            <td class='docblock-short'>
                                 <p>Creates a future which will read all the bytes associated with the I/O
 object <code>A</code> into the buffer provided.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -212,6 +240,7 @@ object <code>A</code> into the buffer provided.</p>
                                 <p>Creates a future which will read all the bytes associated with the I/O
 object <code>A</code> into the buffer provided until the delimiter <code>byte</code> is reached.
 This method is the async equivalent to <a href="https://doc.rust-lang.org/std/io/trait.BufRead.html#method.read_until"><code>BufRead::read_until</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -220,6 +249,7 @@ This method is the async equivalent to <a href="https://doc.rust-lang.org/std/io
                            <td class='docblock-short'>
                                 <p>Creates a future which will entirely shutdown an I/O object and then yield
 the object itself.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -228,6 +258,7 @@ the object itself.</p>
                            <td class='docblock-short'>
                                 <p>Creates a future that will write the entire contents of the buffer <code>buf</code> to
 the stream <code>a</code> provided.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -242,20 +273,22 @@ the stream <code>a</code> provided.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

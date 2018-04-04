@@ -10,8 +10,11 @@
     <title>mio::event::Evented - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait Evented</p><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.register">register</a><a href="#tymethod.reregister">reregister</a><a href="#tymethod.deregister">deregister</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>event</a></p><script>window.sidebarCurrent = {name: 'Evented', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Evented</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.register">register</a><a href="#tymethod.reregister">reregister</a><a href="#tymethod.deregister">deregister</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>mio</a>::<wbr><a href='index.html'>event</a></p><script>window.sidebarCurrent = {name: 'Evented', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -54,26 +65,25 @@
 <div class='item-spacer'></div>    fn <a href='#tymethod.reregister' class='fnname'>reregister</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;poll: &amp;<a class="struct" href="../../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
 <div class='item-spacer'></div>    fn <a href='#tymethod.deregister' class='fnname'>deregister</a>(&amp;self, poll: &amp;<a class="struct" href="../../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;;
 }</pre><div class='docblock'><p>A value that may be registered with <code>Poll</code></p>
-
 <p>Values that implement <code>Evented</code> can be registered with <code>Poll</code>. Users of Mio
 should not use the <code>Evented</code> trait functions directly. Instead, the
 equivalent functions on <code>Poll</code> should be used.</p>
-
 <p>See <a href="../struct.Poll.html"><code>Poll</code></a> for more details.</p>
-
-<h1 id='implementing-evented' class='section-header'><a href='#implementing-evented'>Implementing <code>Evented</code></a></h1>
+<h1 id="implementing-evented" class="section-header"><a href="#implementing-evented">Implementing <code>Evented</code></a></h1>
 <p>There are two types of <code>Evented</code> values.</p>
-
 <ul>
-<li><p><strong>System</strong> handles, which are backed by sockets or other system handles.
+<li>
+<p><strong>System</strong> handles, which are backed by sockets or other system handles.
 These <code>Evented</code> handles will be monitored by the system selector. In this
-case, an implementation of <code>Evented</code> delegates to a lower level handle.</p></li>
-<li><p><strong>User</strong> handles, which are driven entirely in user space using
+case, an implementation of <code>Evented</code> delegates to a lower level handle.</p>
+</li>
+<li>
+<p><strong>User</strong> handles, which are driven entirely in user space using
 <a href="../struct.Registration.html"><code>Registration</code></a> and <a href="../struct.SetReadiness.html"><code>SetReadiness</code></a>. In this case, the implementer takes
-responsibility for driving the readiness state changes.</p></li>
+responsibility for driving the readiness state changes.</p>
+</li>
 </ul>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>Implementing <code>Evented</code> on a struct containing a socket:</p>
 
 <pre class="rust rust-example-rendered">
@@ -107,7 +117,6 @@ responsibility for driving the readiness state changes.</p></li>
         <span class="self">self</span>.<span class="ident">socket</span>.<span class="ident">deregister</span>(<span class="ident">poll</span>)
     }
 }</pre>
-
 <p>Implement <code>Evented</code> using <a href="../struct.Registration.html"><code>Registration</code></a> and <a href="../struct.SetReadiness.html"><code>SetReadiness</code></a>.</p>
 
 <pre class="rust rust-example-rendered">
@@ -171,18 +180,15 @@ responsibility for driving the readiness state changes.</p></li>
             </h2>
             <div class='methods'>
         <h3 id='tymethod.register' class='method'><span id='register.v' class='invisible'><code>fn <a href='#tymethod.register' class='fnname'>register</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;poll: &amp;<a class="struct" href="../../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Register <code>self</code> with the given <code>Poll</code> instance.</p>
-
 <p>This function should not be called directly. Use <a href="../struct.Poll.html#method.register"><code>Poll::register</code></a>
 instead. Implementors should handle registration by either delegating
 the call to another <code>Evented</code> type or creating a <a href="../struct.Registration.html"><code>Registration</code></a>.</p>
 </div><h3 id='tymethod.reregister' class='method'><span id='reregister.v' class='invisible'><code>fn <a href='#tymethod.reregister' class='fnname'>reregister</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;poll: &amp;<a class="struct" href="../../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;token: <a class="struct" href="../../mio/struct.Token.html" title="struct mio::Token">Token</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;interest: <a class="struct" href="../../mio/struct.Ready.html" title="struct mio::Ready">Ready</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;opts: <a class="struct" href="../../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Re-register <code>self</code> with the given <code>Poll</code> instance.</p>
-
 <p>This function should not be called directly. Use <a href="../struct.Poll.html#method.reregister"><code>Poll::reregister</code></a>
 instead. Implementors should handle re-registration by either delegating
 the call to another <code>Evented</code> type or calling
 <a href="../struct.SetReadiness.html#method.set_readiness"><code>SetReadiness::set_readiness</code></a>.</p>
 </div><h3 id='tymethod.deregister' class='method'><span id='deregister.v' class='invisible'><code>fn <a href='#tymethod.deregister' class='fnname'>deregister</a>(&amp;self, poll: &amp;<a class="struct" href="../../mio/struct.Poll.html" title="struct mio::Poll">Poll</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span></h3><div class='docblock'><p>Deregister <code>self</code> from the given <code>Poll</code> instance</p>
-
 <p>This function should not be called directly. Use <a href="../struct.Poll.html#method.deregister"><code>Poll::deregister</code></a>
 instead. Implementors should handle deregistration by either delegating
 the call to another <code>Evented</code> type or by dropping the <a href="../struct.Registration.html"><code>Registration</code></a>
@@ -192,11 +198,11 @@ associated with <code>self</code>.</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../../src/mio/poll.rs.html#1653-1665' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/struct.Registration.html" title="struct mio::Registration">Registration</a></code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/mio/poll.rs.html#1665-1677' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/struct.Registration.html" title="struct mio::Registration">Registration</a></code></li>
 <li><div class='out-of-band'><a class='srclink' href='../../src/mio/sys/unix/eventedfd.rs.html#94-106' title='goto source code'>[src]</a></div><code>impl&lt;'a&gt; Evented for <a class="struct" href="../../mio/unix/struct.EventedFd.html" title="struct mio::unix::EventedFd">EventedFd</a>&lt;'a&gt;</code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/mio/net/tcp.rs.html#440-455' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/net/struct.TcpStream.html" title="struct mio::net::TcpStream">TcpStream</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/mio/net/tcp.rs.html#646-661' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/net/struct.TcpListener.html" title="struct mio::net::TcpListener">TcpListener</a></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../../src/mio/net/udp.rs.html#478-491' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/net/struct.UdpSocket.html" title="struct mio::net::UdpSocket">UdpSocket</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/mio/net/tcp.rs.html#439-454' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/net/struct.TcpStream.html" title="struct mio::net::TcpStream">TcpStream</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/mio/net/tcp.rs.html#657-672' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/net/struct.TcpListener.html" title="struct mio::net::TcpListener">TcpListener</a></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../../src/mio/net/udp.rs.html#549-562' title='goto source code'>[src]</a></div><code>impl Evented for <a class="struct" href="../../mio/net/struct.UdpSocket.html" title="struct mio::net::UdpSocket">UdpSocket</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/mio/event/trait.Evented.js">
                  </script></section>
@@ -212,20 +218,22 @@ associated with <code>self</code>.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

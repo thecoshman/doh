@@ -10,8 +10,11 @@
     <title>hyper::header::EntityTag - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct EntityTag</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.weak">weak</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.weak">weak</a><a href="#method.strong">strong</a><a href="#method.tag">tag</a><a href="#method.set_tag">set_tag</a><a href="#method.strong_eq">strong_eq</a><a href="#method.weak_eq">weak_eq</a><a href="#method.strong_ne">strong_ne</a><a href="#method.weak_ne">weak_ne</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Display">Display</a><a href="#impl-FromStr">FromStr</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'EntityTag', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct EntityTag</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.weak">weak</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.weak">weak</a><a href="#method.strong">strong</a><a href="#method.tag">tag</a><a href="#method.set_tag">set_tag</a><a href="#method.strong_eq">strong_eq</a><a href="#method.weak_eq">weak_eq</a><a href="#method.strong_ne">strong_ne</a><a href="#method.weak_ne">weak_ne</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Display">Display</a><a href="#impl-FromStr">FromStr</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'EntityTag', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -53,64 +64,28 @@
     pub weak: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
     // some fields omitted
 }</pre><div class='docblock'><p>An entity tag, defined in <a href="https://tools.ietf.org/html/rfc7232#section-2.3">RFC7232</a></p>
-
 <p>An entity tag consists of a string enclosed by two literal double quotes.
 Preceding the first double quote is an optional weakness indicator,
 which always looks like <code>W/</code>. Examples for valid tags are <code>&quot;xyzzy&quot;</code> and <code>W/&quot;xyzzy&quot;</code>.</p>
-
-<h1 id='abnf' class='section-header'><a href='#abnf'>ABNF</a></h1>
+<h1 id="abnf" class="section-header"><a href="#abnf">ABNF</a></h1>
 <pre><code class="language-text">entity-tag = [ weak ] opaque-tag
 weak       = %x57.2F ; &quot;W/&quot;, case-sensitive
 opaque-tag = DQUOTE *etagc DQUOTE
 etagc      = %x21 / %x23-7E / obs-text
            ; VCHAR except double quotes, plus obs-text
 </code></pre>
-
-<h1 id='comparison' class='section-header'><a href='#comparison'>Comparison</a></h1>
+<h1 id="comparison" class="section-header"><a href="#comparison">Comparison</a></h1>
 <p>To check if two entity tags are equivalent in an application always use the <code>strong_eq</code> or
 <code>weak_eq</code> methods based on the context of the Tag. Only use <code>==</code> to check if two tags are
 identical.</p>
-
 <p>The example below shows the results for a set of entity-tag pairs and
 both the weak and strong comparison function results:</p>
-
-<table>
-<thead>
-<tr>
-<th>ETag 1</th>
-<th>ETag 2</th>
-<th>Strong Comparison</th>
-<th>Weak Comparison</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td><code>W/&quot;1&quot;</code></td>
-<td><code>W/&quot;1&quot;</code></td>
-<td>no match</td>
-<td>match</td>
-</tr>
-<tr>
-<td><code>W/&quot;1&quot;</code></td>
-<td><code>W/&quot;2&quot;</code></td>
-<td>no match</td>
-<td>no match</td>
-</tr>
-<tr>
-<td><code>W/&quot;1&quot;</code></td>
-<td><code>&quot;1&quot;</code></td>
-<td>no match</td>
-<td>match</td>
-</tr>
-<tr>
-<td><code>&quot;1&quot;</code></td>
-<td><code>&quot;1&quot;</code></td>
-<td>match</td>
-<td>match</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th> ETag 1  </th><th> ETag 2  </th><th> Strong Comparison </th><th> Weak Comparison </th></tr></thead><tbody>
+<tr><td> <code>W/&quot;1&quot;</code> </td><td> <code>W/&quot;1&quot;</code> </td><td> no match          </td><td> match           </td></tr>
+<tr><td> <code>W/&quot;1&quot;</code> </td><td> <code>W/&quot;2&quot;</code> </td><td> no match          </td><td> no match        </td></tr>
+<tr><td> <code>W/&quot;1&quot;</code> </td><td> <code>&quot;1&quot;</code>   </td><td> no match          </td><td> match           </td></tr>
+<tr><td> <code>&quot;1&quot;</code>   </td><td> <code>&quot;1&quot;</code>   </td><td> match             </td><td> match           </td></tr>
+</tbody></table>
 </div><h2 id='fields' class='fields small-section-header'>
                        Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.weak" class="structfield small-section-header">
                            <a href="#structfield.weak" class="anchor field"></a>
@@ -124,25 +99,21 @@ both the weak and strong comparison function results:</p>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../hyper/header/struct.EntityTag.html" title="struct hyper::header::EntityTag">EntityTag</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#51-109' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(weak: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, tag: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) -&gt; <a class="struct" href="../../hyper/header/struct.EntityTag.html" title="struct hyper::header::EntityTag">EntityTag</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#55-58' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Constructs a new EntityTag.</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>If the tag contains invalid characters.</p>
 </div><h4 id='method.weak' class="method"><span id='weak.v-1' class='invisible'><code>pub fn <a href='#method.weak' class='fnname'>weak</a>(tag: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) -&gt; <a class="struct" href="../../hyper/header/struct.EntityTag.html" title="struct hyper::header::EntityTag">EntityTag</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#63-65' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Constructs a new weak EntityTag.</p>
-
-<h1 id='panics-1' class='section-header'><a href='#panics-1'>Panics</a></h1>
+<h1 id="panics-1" class="section-header"><a href="#panics-1">Panics</a></h1>
 <p>If the tag contains invalid characters.</p>
 </div><h4 id='method.strong' class="method"><span id='strong.v' class='invisible'><code>pub fn <a href='#method.strong' class='fnname'>strong</a>(tag: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) -&gt; <a class="struct" href="../../hyper/header/struct.EntityTag.html" title="struct hyper::header::EntityTag">EntityTag</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#70-72' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Constructs a new strong EntityTag.</p>
-
-<h1 id='panics-2' class='section-header'><a href='#panics-2'>Panics</a></h1>
+<h1 id="panics-2" class="section-header"><a href="#panics-2">Panics</a></h1>
 <p>If the tag contains invalid characters.</p>
 </div><h4 id='method.tag' class="method"><span id='tag.v' class='invisible'><code>pub fn <a href='#method.tag' class='fnname'>tag</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#75-77' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get the tag.</p>
 </div><h4 id='method.set_tag' class="method"><span id='set_tag.v' class='invisible'><code>pub fn <a href='#method.set_tag' class='fnname'>set_tag</a>(&amp;mut self, tag: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#82-85' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Set the tag.</p>
-
-<h1 id='panics-3' class='section-header'><a href='#panics-3'>Panics</a></h1>
+<h1 id="panics-3" class="section-header"><a href="#panics-3">Panics</a></h1>
 <p>If the tag contains invalid characters.</p>
 </div><h4 id='method.strong_eq' class="method"><span id='strong_eq.v' class='invisible'><code>pub fn <a href='#method.strong_eq' class='fnname'>strong_eq</a>(&amp;self, other: &amp;<a class="struct" href="../../hyper/header/struct.EntityTag.html" title="struct hyper::header::EntityTag">EntityTag</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/shared/entity.rs.html#89-91' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>For strong comparison two entity-tags are equivalent if both are not weak and their
@@ -194,20 +165,22 @@ both being tagged as &quot;weak&quot;.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

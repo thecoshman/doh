@@ -10,8 +10,11 @@
     <title>futures_cpupool::CpuPool - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct CpuPool</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.new_num_cpus">new_num_cpus</a><a href="#method.spawn">spawn</a><a href="#method.spawn_fn">spawn_fn</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Executor%3CF%3E">Executor&lt;F&gt;</a><a href="#impl-Clone">Clone</a><a href="#impl-Drop">Drop</a></div></div><p class='location'><a href='index.html'>futures_cpupool</a></p><script>window.sidebarCurrent = {name: 'CpuPool', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct CpuPool</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.new_num_cpus">new_num_cpus</a><a href="#method.spawn">spawn</a><a href="#method.spawn_fn">spawn_fn</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Executor%3CF%3E">Executor&lt;F&gt;</a><a href="#impl-Clone">Clone</a><a href="#impl-Drop">Drop</a></div></div><p class='location'><a href='index.html'>futures_cpupool</a></p><script>window.sidebarCurrent = {name: 'CpuPool', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,20 +61,16 @@
                    </a>
                </span><a class='srclink' href='../src/futures_cpupool/lib.rs.html#73-75' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct CpuPool { /* fields omitted */ }</pre><div class='docblock'><p>A thread pool intended to run CPU intensive work.</p>
-
 <p>This thread pool will hand out futures representing the completed work
 that happens on the thread pool itself, and the futures can then be later
 composed with other work as part of an overall computation.</p>
-
 <p>The worker threads associated with a thread pool are kept alive so long as
 there is an open handle to the <code>CpuPool</code> or there is work running on them. Once
 all work has been drained and all references have gone away the worker
 threads will be shut down.</p>
-
 <p>Currently <code>CpuPool</code> implements <code>Clone</code> which just clones a new reference to
 the underlying thread pool.</p>
-
-<p><strong>Note:</strong> if you use CpuPool inside a library it&#39;s better accept a
+<p><strong>Note:</strong> if you use CpuPool inside a library it's better accept a
 <code>Builder</code> object for thread configuration rather than configuring just
 pool size.  This not only future proof for other settings but also allows
 user to attach monitoring tools to lifecycle hooks.</p>
@@ -74,22 +81,18 @@ user to attach monitoring tools to lifecycle hooks.</p>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../futures_cpupool/struct.CpuPool.html" title="struct futures_cpupool::CpuPool">CpuPool</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/futures_cpupool/lib.rs.html#139-236' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../futures_cpupool/struct.CpuPool.html" title="struct futures_cpupool::CpuPool">CpuPool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/futures_cpupool/lib.rs.html#159-161' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new thread pool with <code>size</code> worker threads associated with it.</p>
-
 <p>The returned handle can use <code>execute</code> to run work on this thread pool,
 and clones can be made of it to get multiple references to the same
 thread pool.</p>
-
 <p>This is a shortcut for:</p>
 
 <pre class="rust rust-example-rendered">
 <span class="ident">Builder</span>::<span class="ident">new</span>().<span class="ident">pool_size</span>(<span class="ident">size</span>).<span class="ident">create</span>()</pre>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>Panics if <code>size == 0</code>.</p>
 </div><h4 id='method.new_num_cpus' class="method"><span id='new_num_cpus.v' class='invisible'><code>pub fn <a href='#method.new_num_cpus' class='fnname'>new_num_cpus</a>() -&gt; <a class="struct" href="../futures_cpupool/struct.CpuPool.html" title="struct futures_cpupool::CpuPool">CpuPool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/futures_cpupool/lib.rs.html#175-177' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new thread pool with a number of workers equal to the number
 of CPUs on the host.</p>
-
 <p>This is a shortcut for:</p>
 
 <pre class="rust rust-example-rendered">
@@ -97,32 +100,26 @@ of CPUs on the host.</p>
 </div><h4 id='method.spawn' class="method"><span id='spawn.v' class='invisible'><code>pub fn <a href='#method.spawn' class='fnname'>spawn</a>&lt;F&gt;(&amp;self, f: F) -&gt; <a class="struct" href="../futures_cpupool/struct.CpuFuture.html" title="struct futures_cpupool::CpuFuture">CpuFuture</a>&lt;F::<a class="type" href="../futures/future/trait.Future.html#associatedtype.Item" title="type futures::future::Future::Item">Item</a>, F::<a class="type" href="../futures/future/trait.Future.html#associatedtype.Error" title="type futures::future::Future::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;F::<a class="type" href="../futures/future/trait.Future.html#associatedtype.Item" title="type futures::future::Future::Item">Item</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;F::<a class="type" href="../futures/future/trait.Future.html#associatedtype.Error" title="type futures::future::Future::Error">Error</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/futures_cpupool/lib.rs.html#199-216' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Spawns a future to run on this thread pool, returning a future
 representing the produced value.</p>
-
 <p>This function will execute the future <code>f</code> on the associated thread
 pool, and return a future representing the finished computation. The
 returned future serves as a proxy to the computation that <code>F</code> is
 running.</p>
-
 <p>To simply run an arbitrary closure on a thread pool and extract the
 result, you can use the <code>future::lazy</code> combinator to defer work to
 executing on the thread pool itself.</p>
-
 <p>Note that if the future <code>f</code> panics it will be caught by default and the
 returned future will propagate the panic. That is, panics will not tear
-down the thread pool and will be propagated to the returned future&#39;s
+down the thread pool and will be propagated to the returned future's
 <code>poll</code> method if queried.</p>
-
 <p>If the returned future is dropped then this <code>CpuPool</code> will attempt to
 cancel the computation, if possible. That is, if the computation is in
 the middle of working, it will be interrupted when possible.</p>
 </div><h4 id='method.spawn_fn' class="method"><span id='spawn_fn.v' class='invisible'><code>pub fn <a href='#method.spawn_fn' class='fnname'>spawn_fn</a>&lt;F, R&gt;(&amp;self, f: F) -&gt; <a class="struct" href="../futures_cpupool/struct.CpuFuture.html" title="struct futures_cpupool::CpuFuture">CpuFuture</a>&lt;R::<a class="type" href="../futures/future/trait.IntoFuture.html#associatedtype.Item" title="type futures::future::IntoFuture::Item">Item</a>, R::<a class="type" href="../futures/future/trait.IntoFuture.html#associatedtype.Error" title="type futures::future::IntoFuture::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>() -&gt; R + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="../futures/future/trait.IntoFuture.html" title="trait futures::future::IntoFuture">IntoFuture</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;R::<a class="type" href="../futures/future/trait.IntoFuture.html#associatedtype.Future" title="type futures::future::IntoFuture::Future">Future</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;R::<a class="type" href="../futures/future/trait.IntoFuture.html#associatedtype.Item" title="type futures::future::IntoFuture::Item">Item</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;R::<a class="type" href="../futures/future/trait.IntoFuture.html#associatedtype.Error" title="type futures::future::IntoFuture::Error">Error</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/futures_cpupool/lib.rs.html#227-235' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Spawns a closure on this thread pool.</p>
-
 <p>This function is a convenience wrapper around the <code>spawn</code> function above
 for running a closure wrapped in <code>future::lazy</code>. It will spawn the
 function <code>f</code> provided onto the thread pool, and continue to run the
 future returned by <code>f</code> on the thread pool as well.</p>
-
 <p>The returned future will be a handle to the result produced by the
 future that <code>f</code> returns.</p>
 </div></div>
@@ -156,20 +153,22 @@ future that <code>f</code> returns.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

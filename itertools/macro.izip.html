@@ -10,8 +10,11 @@
     <title>itertools::izip - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='index.html'>itertools</a></p><script>window.sidebarCurrent = {name: 'izip', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -55,10 +66,8 @@
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">I</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>Create an iterator running multiple iterators in lockstep.</p>
-
 <p>The izip! iterator yields elements until any subiterator
 returns <code>None</code>.</p>
-
 <p>Iterator element type is like <code>(A, B, ..., E)</code> if formed
 from iterators <code>(I, J, ..., M)</code> implementing <code>I: Iterator&lt;A&gt;</code>,
 <code>J: Iterator&lt;B&gt;</code>, ..., <code>M: Iterator&lt;E&gt;</code></p>
@@ -75,7 +84,6 @@ from iterators <code>(I, J, ..., M)</code> implementing <code>I: Iterator&lt;A&g
 }
 
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">xs</span>, [<span class="number">69</span>, <span class="number">106</span>, <span class="number">103</span>]);</pre>
-
 <p>Note: To enable the macros in this crate, use the <code>#[macro_use]</code> attribute
 when importing the crate.</p>
 
@@ -94,20 +102,22 @@ when importing the crate.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

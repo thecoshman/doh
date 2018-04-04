@@ -10,8 +10,11 @@
     <title>doh::ops::RemoteFile - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct RemoteFile</p><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.full_name">full_name</a><a href="#structfield.size">size</a><a href="#structfield.human_size">human_size</a><a href="#structfield.last_modified">last_modified</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_response">from_response</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Ord">Ord</a><a href="#impl-PartialOrd">PartialOrd</a><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a><a href="#impl-Hash">Hash</a><a href="#impl-From%3CRawFileData%3E">From&lt;RawFileData&gt;</a><a href="#impl-Display">Display</a></div></div><p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>ops</a></p><script>window.sidebarCurrent = {name: 'RemoteFile', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct RemoteFile</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.full_name">full_name</a><a href="#structfield.size">size</a><a href="#structfield.human_size">human_size</a><a href="#structfield.last_modified">last_modified</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_response">from_response</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Eq">Eq</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Ord">Ord</a><a href="#impl-PartialOrd">PartialOrd</a><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a><a href="#impl-Hash">Hash</a><a href="#impl-From%3CRawFileData%3E">From&lt;RawFileData&gt;</a><a href="#impl-Display">Display</a></div></div><p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>ops</a></p><script>window.sidebarCurrent = {name: 'RemoteFile', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -60,7 +71,7 @@
                            <a href="#structfield.full_name" class="anchor field"></a>
                            <span id="full_name.v" class='invisible'>
                            <code>full_name: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code>
-                           </span></span><div class='docblock'><p>Resource&#39;s name, ends with <code>&#39;/&#39;</code> if it&#39;s a directory.</p>
+                           </span></span><div class='docblock'><p>Resource's name, ends with <code>'/'</code> if it's a directory.</p>
 </div><span id="structfield.size" class="structfield small-section-header">
                            <a href="#structfield.size" class="anchor field"></a>
                            <span id="size.v" class='invisible'>
@@ -71,7 +82,6 @@
                            <span id="human_size.v" class='invisible'>
                            <code>human_size: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
                            </span></span><div class='docblock'><p>Human-readable file size, <code>None</code> for directories.</p>
-
 <p>See <a href="../util/fn.human_readable_size.html"><code>util::human_readable_size()</code></a>.</p>
 </div><span id="structfield.last_modified" class="structfield small-section-header">
                            <a href="#structfield.last_modified" class="anchor field"></a>
@@ -83,16 +93,12 @@
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../doh/ops/struct.RemoteFile.html" title="struct doh::ops::RemoteFile">RemoteFile</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/doh/ops/mod.rs.html#499-580' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from_response' class="method"><span id='from_response.v' class='invisible'><code>pub fn <a href='#method.from_response' class='fnname'>from_response</a>(resp: <a class="struct" href="../../rfsapi/struct.FilesetData.html" title="struct rfsapi::FilesetData">FilesetData</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../doh/ops/struct.RemoteFile.html" title="struct doh::ops::RemoteFile">RemoteFile</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/doh/ops/mod.rs.html#559-579' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.from_response' class="method"><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</h3><code class="content"><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</span></code></div></div><span id='from_response.v' class='invisible'><code>pub fn <a href='#method.from_response' class='fnname'>from_response</a>(resp: <a class="struct" href="../../rfsapi/struct.FilesetData.html" title="struct rfsapi::FilesetData">FilesetData</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../doh/ops/struct.RemoteFile.html" title="struct doh::ops::RemoteFile">RemoteFile</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/doh/ops/mod.rs.html#559-579' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Parse a server-returned fileset into a set of user-viewable files.</p>
-
 <p>The returned vector is empty if the specified fileset describes a file.</p>
-
-<p>The returned vector contains an additional entry at the front with name <code>&quot;../&quot;</code> if the fileset isn&#39;t a root directory.</p>
-
+<p>The returned vector contains an additional entry at the front with name <code>&quot;../&quot;</code> if the fileset isn't a root directory.</p>
 <p>The returned vector is partitioned according depending on directoriness status of the entry, directories first.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">RemoteFile</span>::<span class="ident">from_response</span>(<span class="ident">FilesetData</span> {
     <span class="ident">writes_supported</span>: <span class="bool-val">false</span>,
@@ -195,20 +201,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

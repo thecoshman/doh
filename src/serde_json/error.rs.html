@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-1.0.9/src/error.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_json-1.0.13/src/error.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>error.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -463,6 +474,15 @@
 <span id="418">418</span>
 <span id="419">419</span>
 <span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -539,6 +559,7 @@
             <span class="ident">ErrorCode</span>::<span class="ident">InvalidNumber</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">NumberOutOfRange</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">InvalidUnicodeCodePoint</span> <span class="op">|</span>
+            <span class="ident">ErrorCode</span>::<span class="ident">ControlCharacterWhileParsingString</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">KeyMustBeAString</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">LoneLeadingSurrogateInHexEscape</span> <span class="op">|</span>
             <span class="ident">ErrorCode</span>::<span class="ident">TrailingComma</span> <span class="op">|</span>
@@ -706,6 +727,9 @@
     <span class="doccomment">/// Invalid unicode code point.</span>
     <span class="ident">InvalidUnicodeCodePoint</span>,
 
+    <span class="doccomment">/// Control character found while parsing a string.</span>
+    <span class="ident">ControlCharacterWhileParsingString</span>,
+
     <span class="doccomment">/// Object key is not a string.</span>
     <span class="ident">KeyMustBeAString</span>,
 
@@ -741,6 +765,8 @@
     }
 
     <span class="comment">// Not public API. Should be pub(crate).</span>
+    <span class="comment">//</span>
+    <span class="comment">// Update `eager_json` crate when this function changes.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">io</span>(<span class="ident">error</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Error</span> {
@@ -788,6 +814,9 @@
             <span class="ident">ErrorCode</span>::<span class="ident">InvalidNumber</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;invalid number&quot;</span>),
             <span class="ident">ErrorCode</span>::<span class="ident">NumberOutOfRange</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;number out of range&quot;</span>),
             <span class="ident">ErrorCode</span>::<span class="ident">InvalidUnicodeCodePoint</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;invalid unicode code point&quot;</span>),
+            <span class="ident">ErrorCode</span>::<span class="ident">ControlCharacterWhileParsingString</span> <span class="op">=&gt;</span> {
+                <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;control character (\\u0000-\\u001F) found while parsing a string&quot;</span>)
+            }
             <span class="ident">ErrorCode</span>::<span class="ident">KeyMustBeAString</span> <span class="op">=&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;key must be a string&quot;</span>),
             <span class="ident">ErrorCode</span>::<span class="ident">LoneLeadingSurrogateInHexEscape</span> <span class="op">=&gt;</span> {
                 <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;lone leading surrogate in hex escape&quot;</span>)
@@ -898,20 +927,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

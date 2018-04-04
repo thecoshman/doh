@@ -10,8 +10,11 @@
     <title>futures::future::select_ok - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='../index.html'>futures</a>::<wbr><a href='index.html'>future</a></p><script>window.sidebarCurrent = {name: 'select_ok', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,13 +61,11 @@
                    </a>
                </span><a class='srclink' href='../../src/futures/future/select_ok.rs.html#30-41' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn select_ok&lt;I&gt;(iter: I) -&gt; <a class="struct" href="../../futures/future/struct.SelectOk.html" title="struct futures::future::SelectOk">SelectOk</a>&lt;&lt;I::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.Item" title="type core::iter::traits::IntoIterator::Item">Item</a> as <a class="trait" href="../../futures/future/trait.IntoFuture.html" title="trait futures::future::IntoFuture">IntoFuture</a>&gt;::<a class="type" href="../../futures/future/trait.IntoFuture.html#associatedtype.Future" title="type futures::future::IntoFuture::Future">Future</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;I::<a class="type" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html#associatedtype.Item" title="type core::iter::traits::IntoIterator::Item">Item</a>: <a class="trait" href="../../futures/future/trait.IntoFuture.html" title="trait futures::future::IntoFuture">IntoFuture</a>,&nbsp;</span></pre><div class='docblock'><p>Creates a new future which will select the first successful future over a list of futures.</p>
-
 <p>The returned future will wait for any future within <code>iter</code> to be ready and Ok. Unlike
 <code>select_all</code>, this will only return the first successful completion, or the last
 failure. This is useful in contexts where any success is desired and failures
 are ignored, unless all the futures fail.</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>This function will panic if the iterator specified contains no items.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -71,20 +80,22 @@ are ignored, unless all the futures fail.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

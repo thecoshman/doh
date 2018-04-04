@@ -10,8 +10,11 @@
     <title>futures::executor::with_notify - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='../index.html'>futures</a>::<wbr><a href='index.html'>executor</a></p><script>window.sidebarCurrent = {name: 'with_notify', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,26 +59,23 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#466-481' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/futures/task_impl/mod.rs.html#467-482' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn with_notify&lt;F, T, R&gt;(notify: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>T, id: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, f: F) -&gt; R <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>() -&gt; R,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="../../futures/executor/struct.NotifyHandle.html" title="struct futures::executor::NotifyHandle">NotifyHandle</a>&gt;,&nbsp;</span></pre><div class='docblock'><p>Sets the <code>NotifyHandle</code> of the current task for the duration of the provided
 closure.</p>
-
 <p>This function takes a type that can be converted into a notify handle,
 <code>notify</code> and <code>id</code>, and a closure <code>f</code>. The closure <code>f</code> will be executed such
 that calls to <code>task::current()</code> will store a reference to the notify handle
 provided, not the one previously in the environment.</p>
-
 <p>Note that calls to <code>task::current()</code> in the closure provided <em>will not</em> be
 equivalent to <code>task::current()</code> before this method is called. The two tasks
 returned will notify different handles, and the task handles pulled out
-during the duration of this closure will not notify the previous task. It&#39;s
+during the duration of this closure will not notify the previous task. It's
 recommended that you call <code>task::current()</code> in some capacity before calling
 this function to ensure that calls to <code>task::current()</code> inside of this
 closure can transitively wake up the outer task.</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
-<p>This function will panic if it is called outside the context of a future&#39;s
-task. This is only valid to call once you&#39;ve already entered a future via
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
+<p>This function will panic if it is called outside the context of a future's
+task. This is only valid to call once you've already entered a future via
 <code>Spawn::poll_*</code> functions.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -82,20 +90,22 @@ task. This is only valid to call once you&#39;ve already entered a future via
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

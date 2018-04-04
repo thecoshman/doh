@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.11/src/net/tcp.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-core-0.1.16/src/net/tcp.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tcp.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -845,6 +856,34 @@
 <span id="800">800</span>
 <span id="801">801</span>
 <span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>, <span class="ident">Write</span>};
@@ -854,21 +893,19 @@
 
 <span class="kw">use</span> <span class="ident">bytes</span>::{<span class="ident">Buf</span>, <span class="ident">BufMut</span>};
 <span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">stream</span>::<span class="ident">Stream</span>;
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">sync</span>::<span class="ident">oneshot</span>;
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Future</span>, <span class="ident">Poll</span>, <span class="ident">Async</span>};
 <span class="kw">use</span> <span class="ident">iovec</span>::<span class="ident">IoVec</span>;
 <span class="kw">use</span> <span class="ident">mio</span>;
 <span class="kw">use</span> <span class="ident">tokio_io</span>::{<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>};
 
-<span class="kw">use</span> <span class="ident">reactor</span>::{<span class="ident">Handle</span>, <span class="ident">PollEvented</span>};
+<span class="kw">use</span> <span class="ident">reactor</span>::{<span class="ident">Handle</span>, <span class="ident">PollEvented2</span>};
 
 <span class="doccomment">/// An I/O object representing a TCP socket listening for incoming connections.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This object can be converted into a stream of incoming connections for</span>
 <span class="doccomment">/// various forms of processing.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpListener</span> {
-    <span class="ident">io</span>: <span class="ident">PollEvented</span><span class="op">&lt;</span><span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span><span class="op">&gt;</span>,
-    <span class="ident">pending_accept</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">oneshot</span>::<span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">TcpStream</span>, <span class="ident">SocketAddr</span>)<span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">io</span>: <span class="ident">PollEvented2</span><span class="op">&lt;</span><span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// Stream returned by the `TcpListener::incoming` function representing the</span>
@@ -886,6 +923,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bind</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span>::<span class="ident">bind</span>(<span class="ident">addr</span>));
         <span class="ident">TcpListener</span>::<span class="ident">new</span>(<span class="ident">l</span>, <span class="ident">handle</span>)
+    }
+
+    <span class="doccomment">/// Create a new TCP listener associated with this event loop.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the same as `bind` but uses the default reactor instead of an</span>
+    <span class="doccomment">/// explicit `&amp;Handle`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bind2</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span>::<span class="ident">bind</span>(<span class="ident">addr</span>));
+        <span class="ident">TcpListener</span>::<span class="ident">new2</span>(<span class="ident">l</span>)
     }
 
     <span class="doccomment">/// Attempt to accept a connection and create a new connected `TcpStream` if</span>
@@ -907,53 +953,13 @@
     <span class="doccomment">/// future&#39;s task. It&#39;s recommended to only call this from the</span>
     <span class="doccomment">/// implementation of a `Future::poll`, if necessary.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">TcpStream</span>, <span class="ident">SocketAddr</span>)<span class="op">&gt;</span> {
-        <span class="kw">loop</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">pending</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">pending_accept</span>.<span class="ident">take</span>() {
-                <span class="kw">match</span> <span class="ident">pending</span>.<span class="ident">poll</span>().<span class="ident">expect</span>(<span class="string">&quot;shouldn&#39;t be canceled&quot;</span>) {
-                    <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=&gt;</span> {
-                        <span class="self">self</span>.<span class="ident">pending_accept</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pending</span>);
-                        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
-                    },
-                    <span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">r</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">r</span>,
-                }
-            }
+        <span class="kw">let</span> (<span class="ident">io</span>, <span class="ident">addr</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">accept_std</span>()<span class="question-mark">?</span>;
 
-            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>() {
-                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>, <span class="string">&quot;not ready&quot;</span>))
-            }
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>::<span class="ident">from_stream</span>(<span class="ident">io</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">PollEvented2</span>::<span class="ident">new</span>(<span class="ident">io</span>);
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">TcpStream</span> { <span class="ident">io</span> };
 
-            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">accept</span>() {
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
-                    <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> {
-                        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_read</span>();
-                    }
-                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>)
-                },
-                <span class="prelude-val">Ok</span>((<span class="ident">sock</span>, <span class="ident">addr</span>)) <span class="op">=&gt;</span> {
-                    <span class="comment">// Fast path if we haven&#39;t left the event loop</span>
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">handle</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">remote</span>().<span class="ident">handle</span>() {
-                        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PollEvented</span>::<span class="ident">new</span>(<span class="ident">sock</span>, <span class="kw-2">&amp;</span><span class="ident">handle</span>));
-                        <span class="kw">return</span> <span class="prelude-val">Ok</span>((<span class="ident">TcpStream</span> { <span class="ident">io</span>: <span class="ident">io</span> }, <span class="ident">addr</span>))
-                    }
-
-                    <span class="comment">// If we&#39;re off the event loop then send the socket back</span>
-                    <span class="comment">// over there to get registered and then we&#39;ll get it back</span>
-                    <span class="comment">// eventually.</span>
-                    <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">oneshot</span>::<span class="ident">channel</span>();
-                    <span class="kw">let</span> <span class="ident">remote</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">remote</span>().<span class="ident">clone</span>();
-                    <span class="ident">remote</span>.<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">handle</span><span class="op">|</span> {
-                        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">PollEvented</span>::<span class="ident">new</span>(<span class="ident">sock</span>, <span class="ident">handle</span>)
-                            .<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">io</span><span class="op">|</span> {
-                                (<span class="ident">TcpStream</span> { <span class="ident">io</span>: <span class="ident">io</span> }, <span class="ident">addr</span>)
-                            });
-                        <span class="ident">drop</span>(<span class="ident">tx</span>.<span class="ident">send</span>(<span class="ident">res</span>));
-                        <span class="prelude-val">Ok</span>(())
-                    });
-                    <span class="self">self</span>.<span class="ident">pending_accept</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">rx</span>);
-                    <span class="comment">// continue to polling the `rx` at the beginning of the loop</span>
-                }
-            }
-        }
+        <span class="prelude-val">Ok</span>((<span class="ident">io</span>, <span class="ident">addr</span>))
     }
 
     <span class="doccomment">/// Like `accept`, except that it returns a raw `std::net::TcpStream`.</span>
@@ -961,14 +967,14 @@
     <span class="doccomment">/// The stream is *in blocking mode*, and is not associated with the Tokio</span>
     <span class="doccomment">/// event loop.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accept_std</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">net</span>::<span class="ident">TcpStream</span>, <span class="ident">SocketAddr</span>)<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())<span class="question-mark">?</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>, <span class="string">&quot;not ready&quot;</span>))
         }
 
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">accept_std</span>() {
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> {
-                    <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_read</span>();
+                    <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">clear_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())<span class="question-mark">?</span>;
                 }
                 <span class="prelude-val">Err</span>(<span class="ident">e</span>)
             },
@@ -1004,21 +1010,35 @@
     <span class="doccomment">///   `addr` is an IPv4 address then all sockets accepted will be IPv4 as</span>
     <span class="doccomment">///   well (same for IPv6).</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_listener</span>(<span class="ident">listener</span>: <span class="ident">net</span>::<span class="ident">TcpListener</span>,
-                         <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>,
+                         <span class="ident">_addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>,
                          <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span>::<span class="ident">from_listener</span>(<span class="ident">listener</span>, <span class="ident">addr</span>));
+        <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span>::<span class="ident">from_std</span>(<span class="ident">listener</span>));
         <span class="ident">TcpListener</span>::<span class="ident">new</span>(<span class="ident">l</span>, <span class="ident">handle</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">listener</span>: <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>)
            <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PollEvented</span>::<span class="ident">new</span>(<span class="ident">listener</span>, <span class="ident">handle</span>));
-        <span class="prelude-val">Ok</span>(<span class="ident">TcpListener</span> { <span class="ident">io</span>: <span class="ident">io</span>, <span class="ident">pending_accept</span>: <span class="prelude-val">None</span> })
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PollEvented2</span>::<span class="ident">new_with_handle</span>(<span class="ident">listener</span>, <span class="ident">handle</span>.<span class="ident">new_tokio_handle</span>()));
+        <span class="prelude-val">Ok</span>(<span class="ident">TcpListener</span> { <span class="ident">io</span>: <span class="ident">io</span> })
+    }
+
+    <span class="kw">fn</span> <span class="ident">new2</span>(<span class="ident">listener</span>: <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpListener</span>)
+           <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">PollEvented2</span>::<span class="ident">new</span>(<span class="ident">listener</span>);
+        <span class="prelude-val">Ok</span>(<span class="ident">TcpListener</span> { <span class="ident">io</span>: <span class="ident">io</span> })
     }
 
     <span class="doccomment">/// Test whether this socket is ready to be read or not.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Async</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>()
+        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> {
+                <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">is_ready</span>() {
+                    <span class="ident">Async</span>::<span class="ident">Ready</span>(())
+                } <span class="kw">else</span> {
+                    <span class="ident">Async</span>::<span class="ident">NotReady</span>
+                }
+            })
+            .<span class="ident">unwrap_or</span>(().<span class="ident">into</span>())
     }
 
     <span class="doccomment">/// Returns the local address that this listener is bound to.</span>
@@ -1099,7 +1119,7 @@
 <span class="doccomment">/// raw underlying I/O object as well as streams for the read/write</span>
 <span class="doccomment">/// notifications on the stream itself.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpStream</span> {
-    <span class="ident">io</span>: <span class="ident">PollEvented</span><span class="op">&lt;</span><span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span><span class="op">&gt;</span>,
+    <span class="ident">io</span>: <span class="ident">PollEvented2</span><span class="op">&lt;</span><span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// Future returned by `TcpStream::connect` which will resolve to a `TcpStream`</span>
@@ -1132,12 +1152,30 @@
         <span class="ident">TcpStreamNew</span> { <span class="ident">inner</span>: <span class="ident">inner</span> }
     }
 
+    <span class="doccomment">/// Create a new TCP stream connected to the specified address.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the same as `connect`, but uses the default reactor instead of</span>
+    <span class="doccomment">/// taking an explicit `&amp;Handle`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect2</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>) <span class="op">-&gt;</span> <span class="ident">TcpStreamNew</span> {
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>::<span class="ident">connect</span>(<span class="ident">addr</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">tcp</span>) <span class="op">=&gt;</span> <span class="ident">TcpStream</span>::<span class="ident">new2</span>(<span class="ident">tcp</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">TcpStreamNewState</span>::<span class="ident">Error</span>(<span class="ident">e</span>),
+        };
+        <span class="ident">TcpStreamNew</span> { <span class="ident">inner</span>: <span class="ident">inner</span> }
+    }
+
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">connected_stream</span>: <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>)
            <span class="op">-&gt;</span> <span class="ident">TcpStreamNewState</span> {
-        <span class="kw">match</span> <span class="ident">PollEvented</span>::<span class="ident">new</span>(<span class="ident">connected_stream</span>, <span class="ident">handle</span>) {
+        <span class="kw">match</span> <span class="ident">PollEvented2</span>::<span class="ident">new_with_handle</span>(<span class="ident">connected_stream</span>, <span class="ident">handle</span>.<span class="ident">new_tokio_handle</span>()) {
             <span class="prelude-val">Ok</span>(<span class="ident">io</span>) <span class="op">=&gt;</span> <span class="ident">TcpStreamNewState</span>::<span class="ident">Waiting</span>(<span class="ident">TcpStream</span> { <span class="ident">io</span>: <span class="ident">io</span> }),
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">TcpStreamNewState</span>::<span class="ident">Error</span>(<span class="ident">e</span>),
         }
+    }
+
+    <span class="kw">fn</span> <span class="ident">new2</span>(<span class="ident">connected_stream</span>: <span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>)
+           <span class="op">-&gt;</span> <span class="ident">TcpStreamNewState</span> {
+        <span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">PollEvented2</span>::<span class="ident">new</span>(<span class="ident">connected_stream</span>);
+        <span class="ident">TcpStreamNewState</span>::<span class="ident">Waiting</span>(<span class="ident">TcpStream</span> { <span class="ident">io</span>: <span class="ident">io</span> })
     }
 
     <span class="doccomment">/// Create a new `TcpStream` from a `net::TcpStream`.</span>
@@ -1149,7 +1187,7 @@
                        <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpStream</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">mio</span>::<span class="ident">net</span>::<span class="ident">TcpStream</span>::<span class="ident">from_stream</span>(<span class="ident">stream</span>));
         <span class="prelude-val">Ok</span>(<span class="ident">TcpStream</span> {
-            <span class="ident">io</span>: <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PollEvented</span>::<span class="ident">new</span>(<span class="ident">inner</span>, <span class="ident">handle</span>)),
+            <span class="ident">io</span>: <span class="macro">try</span><span class="macro">!</span>(<span class="ident">PollEvented2</span>::<span class="ident">new_with_handle</span>(<span class="ident">inner</span>, <span class="ident">handle</span>.<span class="ident">new_tokio_handle</span>())),
         })
     }
 
@@ -1189,7 +1227,15 @@
     <span class="doccomment">/// is only suitable for calling in a `Future::poll` method and will</span>
     <span class="doccomment">/// automatically handle ensuring a retry once the socket is readable again.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Async</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read</span>()
+        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> {
+                <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">is_ready</span>() {
+                    <span class="ident">Async</span>::<span class="ident">Ready</span>(())
+                } <span class="kw">else</span> {
+                    <span class="ident">Async</span>::<span class="ident">NotReady</span>
+                }
+            })
+            .<span class="ident">unwrap_or</span>(().<span class="ident">into</span>())
     }
 
     <span class="doccomment">/// Test whether this socket is ready to be written to or not.</span>
@@ -1199,7 +1245,15 @@
     <span class="doccomment">/// is only suitable for calling in a `Future::poll` method and will</span>
     <span class="doccomment">/// automatically handle ensuring a retry once the socket is writable again.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">poll_write</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Async</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_write</span>()
+        <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">poll_write_ready</span>()
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> {
+                <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">is_ready</span>() {
+                    <span class="ident">Async</span>::<span class="ident">Ready</span>(())
+                } <span class="kw">else</span> {
+                    <span class="ident">Async</span>::<span class="ident">NotReady</span>
+                }
+            })
+            .<span class="ident">unwrap_or</span>(().<span class="ident">into</span>())
     }
 
     <span class="doccomment">/// Returns the local address that this stream is bound to.</span>
@@ -1210,6 +1264,24 @@
     <span class="doccomment">/// Returns the remote address that this stream is connected to.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peer_addr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">peer_addr</span>()
+    }
+
+    <span class="doccomment">/// Receives data on the socket from the remote address to which it is</span>
+    <span class="doccomment">/// connected, without removing that data from the queue. On success,</span>
+    <span class="doccomment">/// returns the number of bytes peeked.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Successive calls return the same data. This is accomplished by passing</span>
+    <span class="doccomment">/// `MSG_PEEK` as a flag to the underlying recv system call.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peek</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">poll_read</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span>.<span class="ident">into</span>())
+        }
+        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">peek</span>(<span class="ident">buf</span>);
+        <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
+            <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">clear_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())<span class="question-mark">?</span>;
+        }
+        <span class="kw">return</span> <span class="ident">r</span>
+
     }
 
     <span class="doccomment">/// Shuts down the read, write, or both halves of this connection.</span>
@@ -1416,7 +1488,7 @@
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">read_bufs</span>(<span class="ident">bufs</span>);
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
-            <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_read</span>();
+            <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">clear_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())<span class="question-mark">?</span>;
         }
         <span class="kw">return</span> <span class="ident">r</span>
     }
@@ -1427,7 +1499,7 @@
         }
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">write_bufs</span>(<span class="ident">bufs</span>);
         <span class="kw">if</span> <span class="ident">is_wouldblock</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>) {
-            <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_write</span>();
+            <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">clear_write_ready</span>()<span class="question-mark">?</span>;
         }
         <span class="kw">return</span> <span class="ident">r</span>
     }
@@ -1501,7 +1573,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">n</span>))
             }
             <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> <span class="op">=&gt;</span> {
-                <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_read</span>();
+                <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">clear_read_ready</span>(<span class="ident">mio</span>::<span class="ident">Ready</span>::<span class="ident">readable</span>())<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>)
             }
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
@@ -1524,12 +1596,7 @@
             <span class="comment">// `bytes_vec` method.</span>
             <span class="kw">static</span> <span class="ident">DUMMY</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[<span class="number">0</span>];
             <span class="kw">let</span> <span class="ident">iovec</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">IoVec</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">DUMMY</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bufs</span> <span class="op">=</span> [
-                <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>,
-                <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>,
-                <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>,
-                <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>, <span class="ident">iovec</span>,
-            ];
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bufs</span> <span class="op">=</span> [<span class="ident">iovec</span>; <span class="number">64</span>];
             <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">bytes_vec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bufs</span>);
             <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">write_bufs</span>(<span class="kw-2">&amp;</span><span class="ident">bufs</span>[..<span class="ident">n</span>])
         };
@@ -1539,7 +1606,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">n</span>))
             }
             <span class="prelude-val">Err</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">WouldBlock</span> <span class="op">=&gt;</span> {
-                <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">need_write</span>();
+                <span class="self">self</span>.<span class="ident">io</span>.<span class="ident">clear_write_ready</span>()<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>)
             }
             <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
@@ -1597,7 +1664,7 @@
             <span class="comment">// actually hit an error or not.</span>
             <span class="comment">//</span>
             <span class="comment">// If all that succeeded then we ship everything on up.</span>
-            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">io</span>.<span class="ident">poll_write</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Async</span>::<span class="ident">NotReady</span> <span class="op">=</span> <span class="ident">stream</span>.<span class="ident">io</span>.<span class="ident">poll_write_ready</span>()<span class="question-mark">?</span> {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>)
             }
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">stream</span>.<span class="ident">io</span>.<span class="ident">get_ref</span>().<span class="ident">take_error</span>()) {
@@ -1662,20 +1729,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -10,8 +10,11 @@
     <title>hyper::client::Connect - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait Connect</p><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Output">Output</a><a href="#associatedtype.Future">Future</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.connect">connect</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>client</a></p><script>window.sidebarCurrent = {name: 'Connect', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Connect</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Output">Output</a><a href="#associatedtype.Future">Future</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.connect">connect</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>client</a></p><script>window.sidebarCurrent = {name: 'Connect', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,11 +61,10 @@
                    </a>
                </span><a class='srclink' href='../../src/hyper/client/connect.rs.html#25-32' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Connect: <a class="trait" href="../../hyper/server/trait.Service.html" title="trait hyper::server::Service">Service</a>&lt;Request = <a class="struct" href="../../hyper/struct.Uri.html" title="struct hyper::Uri">Uri</a>, Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; + 'static {
-    type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a> + <a class="trait" href="../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a> + 'static;
+    type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="../../tokio_io/async_read/trait.AsyncRead.html" title="trait tokio_io::async_read::AsyncRead">AsyncRead</a> + <a class="trait" href="../../tokio_io/async_write/trait.AsyncWrite.html" title="trait tokio_io::async_write::AsyncWrite">AsyncWrite</a> + 'static;
     type <a href='#associatedtype.Future' class="type">Future</a>: <a class="trait" href="../../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a>&lt;Item = Self::<a class="type" href="../../hyper/client/trait.Connect.html#associatedtype.Output" title="type hyper::client::Connect::Output">Output</a>, Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; + 'static;
     fn <a href='#tymethod.connect' class='fnname'>connect</a>(&amp;self, _: <a class="struct" href="../../hyper/struct.Uri.html" title="struct hyper::Uri">Uri</a>) -&gt; Self::<a class="type" href="../../hyper/client/trait.Connect.html#associatedtype.Future" title="type hyper::client::Connect::Future">Future</a>;
 }</pre><div class='docblock'><p>A connector creates an Io to a remote address..</p>
-
 <p>This trait is not implemented directly, and only exists to make
 the intent clearer. A connector should implement <code>Service</code> with
 <code>Request=Uri</code> and <code>Response: Io</code> instead.</p>
@@ -63,7 +73,7 @@ the intent clearer. A connector should implement <code>Service</code> with
               Associated Types<a href='#associated-types' class='anchor'></a>
             </h2>
             <div class='methods'>
-        <h3 id='associatedtype.Output' class='method'><span id='Output.t' class='invisible'><code>type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a> + <a class="trait" href="../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a> + 'static</code></span></h3><div class='docblock'><p>The connected Io Stream.</p>
+        <h3 id='associatedtype.Output' class='method'><span id='Output.t' class='invisible'><code>type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="../../tokio_io/async_read/trait.AsyncRead.html" title="trait tokio_io::async_read::AsyncRead">AsyncRead</a> + <a class="trait" href="../../tokio_io/async_write/trait.AsyncWrite.html" title="trait tokio_io::async_write::AsyncWrite">AsyncWrite</a> + 'static</code></span></h3><div class='docblock'><p>The connected Io Stream.</p>
 </div><h3 id='associatedtype.Future' class='method'><span id='Future.t' class='invisible'><code>type <a href='#associatedtype.Future' class="type">Future</a>: <a class="trait" href="../../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a>&lt;Item = Self::<a class="type" href="../../hyper/client/trait.Connect.html#associatedtype.Output" title="type hyper::client::Connect::Output">Output</a>, Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; + 'static</code></span></h3><div class='docblock'><p>A Future that will resolve to the connected Stream.</p>
 </div></div>
             <h2 id='required-methods' class='small-section-header'>
@@ -76,7 +86,7 @@ the intent clearer. A connector should implement <code>Service</code> with
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T&gt; Connect for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../hyper/server/trait.Service.html" title="trait hyper::server::Service">Service</a>&lt;Request = <a class="struct" href="../../hyper/struct.Uri.html" title="struct hyper::Uri">Uri</a>, Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Response" title="type hyper::server::Service::Response">Response</a>: <a class="trait" href="../../tokio_io/trait.AsyncRead.html" title="trait tokio_io::AsyncRead">AsyncRead</a> + <a class="trait" href="../../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Future" title="type hyper::server::Service::Future">Future</a>: <a class="trait" href="../../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a>&lt;Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;,&nbsp;</span><span class="where fmt-newline">  type <a href='#associatedtype.Output' class="type">Output</a> = T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Response" title="type hyper::server::Service::Response">Response</a>;</span><span class="where fmt-newline">  type <a href='#associatedtype.Future' class="type">Future</a> = T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Future" title="type hyper::server::Service::Future">Future</a>;</span></code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/hyper/client/connect.rs.html#34-45' title='goto source code'>[src]</a></div><code>impl&lt;T&gt; Connect for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../hyper/server/trait.Service.html" title="trait hyper::server::Service">Service</a>&lt;Request = <a class="struct" href="../../hyper/struct.Uri.html" title="struct hyper::Uri">Uri</a>, Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Response" title="type hyper::server::Service::Response">Response</a>: <a class="trait" href="../../tokio_io/async_read/trait.AsyncRead.html" title="trait tokio_io::async_read::AsyncRead">AsyncRead</a> + <a class="trait" href="../../tokio_io/async_write/trait.AsyncWrite.html" title="trait tokio_io::async_write::AsyncWrite">AsyncWrite</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Future" title="type hyper::server::Service::Future">Future</a>: <a class="trait" href="../../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a>&lt;Error = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;,&nbsp;</span><span class="where fmt-newline">  type <a href='#associatedtype.Output' class="type">Output</a> = T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Response" title="type hyper::server::Service::Response">Response</a>;</span><span class="where fmt-newline">  type <a href='#associatedtype.Future' class="type">Future</a> = T::<a class="type" href="../../hyper/server/trait.Service.html#associatedtype.Future" title="type hyper::server::Service::Future">Future</a>;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/hyper/client/trait.Connect.js">
                  </script></section>
@@ -92,20 +102,22 @@ the intent clearer. A connector should implement <code>Service</code> with
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -10,8 +10,11 @@
     <title>openssl::ssl - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module ssl</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a></p><script>window.sidebarCurrent = {name: 'ssl', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module ssl</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a></p><script>window.sidebarCurrent = {name: 'ssl', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,11 +61,9 @@
                    </a>
                </span><a class='srclink' href='../../src/openssl/ssl/mod.rs.html#1-2567' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>SSL/TLS support.</p>
-
 <p><code>SslConnector</code> and <code>SslAcceptor</code> should be used in most cases - they handle
 configuration of the OpenSSL primitives for you.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>To connect as a client to a remote server:</p>
 
 <pre class="rust rust-example-rendered">
@@ -71,7 +80,6 @@ configuration of the OpenSSL primitives for you.</p>
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
 <span class="ident">stream</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>).<span class="ident">unwrap</span>();
 <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>));</pre>
-
 <p>To accept connections as a server from remote clients:</p>
 
 <pre class="rust rust-example-rendered">
@@ -125,6 +133,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::CipherBits'>CipherBits</a></td>
                            <td class='docblock-short'>
                                 <p>Information about the state of a cipher.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -132,6 +141,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::ConnectConfiguration'>ConnectConfiguration</a></td>
                            <td class='docblock-short'>
                                 <p>A type which allows for configuration of a client-side TLS session before connection.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -139,6 +149,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::MidHandshakeSslStream'>MidHandshakeSslStream</a></td>
                            <td class='docblock-short'>
                                 <p>An SSL stream midway through the handshake process.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -146,6 +157,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::RetryError'>RetryError</a></td>
                            <td class='docblock-short'>
                                 <p>An error indicating that the operation can be immediately retried.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -153,6 +165,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::Ssl'>Ssl</a></td>
                            <td class='docblock-short'>
                                 <p>The state of an SSL/TLS session.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -160,6 +173,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslAcceptor'>SslAcceptor</a></td>
                            <td class='docblock-short'>
                                 <p>A type which wraps server-side streams in a TLS session.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -167,6 +181,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslAcceptorBuilder'>SslAcceptorBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for <code>SslAcceptor</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -174,6 +189,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslCipher'>SslCipher</a></td>
                            <td class='docblock-short'>
                                 <p>Information about a cipher.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -181,6 +197,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslCipherRef'>SslCipherRef</a></td>
                            <td class='docblock-short'>
                                 <p>Reference to an <a href="struct.SslCipher.html"><code>SslCipher</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -188,6 +205,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslConnector'>SslConnector</a></td>
                            <td class='docblock-short'>
                                 <p>A type which wraps client-side streams in a TLS session.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -195,6 +213,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslConnectorBuilder'>SslConnectorBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for <code>SslConnector</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -202,6 +221,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslContext'>SslContext</a></td>
                            <td class='docblock-short'>
                                 <p>A context object for TLS streams.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -209,6 +229,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslContextBuilder'>SslContextBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for <code>SslContext</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -216,6 +237,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslContextRef'>SslContextRef</a></td>
                            <td class='docblock-short'>
                                 <p>Reference to <a href="struct.SslContext.html"><code>SslContext</code></a></p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -223,6 +245,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslMethod'>SslMethod</a></td>
                            <td class='docblock-short'>
                                 <p>A type specifying the kind of protocol an <code>SslContext</code> will speak.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -230,6 +253,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslMode'>SslMode</a></td>
                            <td class='docblock-short'>
                                 <p>Options controlling the behavior of an <code>SslContext</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -237,6 +261,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslOption'>SslOption</a></td>
                            <td class='docblock-short'>
                                 <p>Options controlling the behavior of an <code>SslContext</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -244,6 +269,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslRef'>SslRef</a></td>
                            <td class='docblock-short'>
                                 <p>Reference to an <a href="struct.Ssl.html"><code>Ssl</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -251,6 +277,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslSession'>SslSession</a></td>
                            <td class='docblock-short'>
                                 <p>An encoded SSL session.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -258,6 +285,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslSessionRef'>SslSessionRef</a></td>
                            <td class='docblock-short'>
                                 <p>Reference to [<code>SslSession]</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -265,6 +293,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslStream'>SslStream</a></td>
                            <td class='docblock-short'>
                                 <p>A TLS session over a stream.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -272,6 +301,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::SslVerifyMode'>SslVerifyMode</a></td>
                            <td class='docblock-short'>
                                 <p>Options controling the behavior of certificate verification.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -279,6 +309,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='struct openssl::ssl::StatusType'>StatusType</a></td>
                            <td class='docblock-short'>
                                 <p>An identifier of a certificate status type.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -287,6 +318,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='enum openssl::ssl::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>An SSL error.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -294,6 +326,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='enum openssl::ssl::HandshakeError'>HandshakeError</a></td>
                            <td class='docblock-short'>
                                 <p>An error or intermediate state after a TLS handshake attempt.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -301,6 +334,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='enum openssl::ssl::ShutdownResult'>ShutdownResult</a></td>
                            <td class='docblock-short'>
                                 <p>The result of a shutdown request.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -308,6 +342,7 @@ configuration of the OpenSSL primitives for you.</p>
                                   title='enum openssl::ssl::SniError'>SniError</a></td>
                            <td class='docblock-short'>
                                 <p>An error returned from an SNI callback.</p>
+
                            </td>
                        </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
 <table>
@@ -317,6 +352,7 @@ configuration of the OpenSSL primitives for you.</p>
                            <td class='docblock-short'>
                                 <p>Disables a check that the data buffer has not moved between calls when operating in a
 nonblocking context.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -324,6 +360,7 @@ nonblocking context.</p>
                                   title='constant openssl::ssl::SSL_MODE_AUTO_RETRY'>SSL_MODE_AUTO_RETRY</a></td>
                            <td class='docblock-short'>
                                 <p>Enables automatic retries after TLS session events such as renegotiations or heartbeats.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -331,13 +368,15 @@ nonblocking context.</p>
                                   title='constant openssl::ssl::SSL_MODE_ENABLE_PARTIAL_WRITE'>SSL_MODE_ENABLE_PARTIAL_WRITE</a></td>
                            <td class='docblock-short'>
                                 <p>Enables &quot;short writes&quot;.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.SSL_MODE_NO_AUTO_CHAIN.html"
                                   title='constant openssl::ssl::SSL_MODE_NO_AUTO_CHAIN'>SSL_MODE_NO_AUTO_CHAIN</a></td>
                            <td class='docblock-short'>
-                                <p>Disables automatic chain building when verifying a peer&#39;s certificate.</p>
+                                <p>Disables automatic chain building when verifying a peer's certificate.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -345,6 +384,7 @@ nonblocking context.</p>
                                   title='constant openssl::ssl::SSL_MODE_RELEASE_BUFFERS'>SSL_MODE_RELEASE_BUFFERS</a></td>
                            <td class='docblock-short'>
                                 <p>Release memory buffers when the session does not need them.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -360,6 +400,7 @@ nonblocking context.</p>
                            <td class='docblock-short'>
                                 <p>Sends the fake <code>TLS_FALLBACK_SCSV</code> cipher suite in the ClientHello message of a
 handshake.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -374,6 +415,7 @@ handshake.</p>
                                   title='constant openssl::ssl::SSL_OP_ALL'>SSL_OP_ALL</a></td>
                            <td class='docblock-short'>
                                 <p>A &quot;reasonable default&quot; set of options which enables compatibility flags.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -382,13 +424,15 @@ handshake.</p>
                            <td class='docblock-short'>
                                 <p>Allow legacy insecure renegotiation with servers or clients that do not support secure
 renegotiation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.SSL_OP_CIPHER_SERVER_PREFERENCE.html"
                                   title='constant openssl::ssl::SSL_OP_CIPHER_SERVER_PREFERENCE'>SSL_OP_CIPHER_SERVER_PREFERENCE</a></td>
                            <td class='docblock-short'>
-                                <p>Use the server&#39;s preferences rather than the client&#39;s when selecting a cipher.</p>
+                                <p>Use the server's preferences rather than the client's when selecting a cipher.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -403,6 +447,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_COOKIE_EXCHANGE'>SSL_OP_COOKIE_EXCHANGE</a></td>
                            <td class='docblock-short'>
                                 <p>Enables Cookie Exchange as described in <a href="https://tools.ietf.org/html/rfc4347#section-4.2.1">RFC 4347 Section 4.2.1</a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -410,6 +455,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS'>SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS</a></td>
                            <td class='docblock-short'>
                                 <p>Disables a countermeasure against an SSLv3/TLSv1.0 vulnerability affecting CBC ciphers.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -445,6 +491,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_COMPRESSION'>SSL_OP_NO_COMPRESSION</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of TLS compression.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -452,6 +499,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_QUERY_MTU'>SSL_OP_NO_QUERY_MTU</a></td>
                            <td class='docblock-short'>
                                 <p>Do not query the MTU.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -459,6 +507,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION'>SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION</a></td>
                            <td class='docblock-short'>
                                 <p>Always start a new session when performing a renegotiation on the server side.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -466,6 +515,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_SSLV2'>SSL_OP_NO_SSLV2</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of SSLv2.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -473,6 +523,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_SSLV3'>SSL_OP_NO_SSLV3</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of SSLv3.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -480,6 +531,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_TICKET'>SSL_OP_NO_TICKET</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of session tickets for session resumption.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -487,6 +539,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_TLSV1'>SSL_OP_NO_TLSV1</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of TLSv1.0.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -494,6 +547,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_TLSV1_1'>SSL_OP_NO_TLSV1_1</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of TLSv1.1.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -501,6 +555,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_NO_TLSV1_2'>SSL_OP_NO_TLSV1_2</a></td>
                            <td class='docblock-short'>
                                 <p>Disables the use of TLSv1.2.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -508,6 +563,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_SINGLE_DH_USE'>SSL_OP_SINGLE_DH_USE</a></td>
                            <td class='docblock-short'>
                                 <p>Creates a new key for each session when using DHE.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -515,6 +571,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_SINGLE_ECDH_USE'>SSL_OP_SINGLE_ECDH_USE</a></td>
                            <td class='docblock-short'>
                                 <p>Creates a new key for each session when using ECDHE.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -543,6 +600,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_OP_TLS_ROLLBACK_BUG'>SSL_OP_TLS_ROLLBACK_BUG</a></td>
                            <td class='docblock-short'>
                                 <p>Disables version rollback attach detection.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -550,20 +608,23 @@ renegotiation.</p>
                                   title='constant openssl::ssl::SSL_VERIFY_FAIL_IF_NO_PEER_CERT'>SSL_VERIFY_FAIL_IF_NO_PEER_CERT</a></td>
                            <td class='docblock-short'>
                                 <p>On the server side, abort the handshake if the client did not send a certificate.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.SSL_VERIFY_NONE.html"
                                   title='constant openssl::ssl::SSL_VERIFY_NONE'>SSL_VERIFY_NONE</a></td>
                            <td class='docblock-short'>
-                                <p>Disables verification of the peer&#39;s certificate.</p>
+                                <p>Disables verification of the peer's certificate.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="constant" href="constant.SSL_VERIFY_PEER.html"
                                   title='constant openssl::ssl::SSL_VERIFY_PEER'>SSL_VERIFY_PEER</a></td>
                            <td class='docblock-short'>
-                                <p>Verifies that the peer&#39;s certificate is trusted.</p>
+                                <p>Verifies that the peer's certificate is trusted.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -571,6 +632,7 @@ renegotiation.</p>
                                   title='constant openssl::ssl::STATUS_TYPE_OCSP'>STATUS_TYPE_OCSP</a></td>
                            <td class='docblock-short'>
                                 <p>An OSCP status.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -585,20 +647,22 @@ renegotiation.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

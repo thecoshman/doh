@@ -10,8 +10,11 @@
     <title>doh::util - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module util</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#constants">Constants</a></li><li><a href="#statics">Statics</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>doh</a></p><script>window.sidebarCurrent = {name: 'util', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module util</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#constants">Constants</a></li><li><a href="#statics">Statics</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>doh</a></p><script>window.sidebarCurrent = {name: 'util', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -56,7 +67,8 @@
                            <td><a class="struct" href="struct.RaiiGuard.html"
                                   title='struct doh::util::RaiiGuard'>RaiiGuard</a></td>
                            <td class='docblock-short'>
-                                <p>A RAII guard object, calling a function when it&#39;s created and when it&#39;s destroyed.</p>
+                                <p>A RAII guard object, calling a function when it's created and when it's destroyed.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -64,6 +76,7 @@
                                   title='struct doh::util::TAB_SPACING'>TAB_SPACING</a></td>
                            <td class='docblock-short'>
                                 <p>Filler to replace tabs with of length <a href="constant.TAB_WIDTH.html"><code>TAB_WIDTH</code></a>.</p>
+
                            </td>
                        </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
 <table>
@@ -72,6 +85,7 @@
                                   title='constant doh::util::GETCH_ARROW_DOWN'>GETCH_ARROW_DOWN</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for down arrow key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -79,6 +93,7 @@
                                   title='constant doh::util::GETCH_ARROW_LEFT'>GETCH_ARROW_LEFT</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for left arrow key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -86,6 +101,7 @@
                                   title='constant doh::util::GETCH_ARROW_RIGHT'>GETCH_ARROW_RIGHT</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for right arrow key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -93,6 +109,7 @@
                                   title='constant doh::util::GETCH_ARROW_UP'>GETCH_ARROW_UP</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for up arrow key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -100,6 +117,7 @@
                                   title='constant doh::util::GETCH_DELETE'>GETCH_DELETE</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for Delete.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -107,6 +125,7 @@
                                   title='constant doh::util::GETCH_END'>GETCH_END</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for End key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -114,6 +133,7 @@
                                   title='constant doh::util::GETCH_ENTER'>GETCH_ENTER</a></td>
                            <td class='docblock-short'>
                                 <p>Byte returned by <code>getch()</code> for Enter.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -121,6 +141,7 @@
                                   title='constant doh::util::GETCH_ESC'>GETCH_ESC</a></td>
                            <td class='docblock-short'>
                                 <p>Byte returned by <code>getch()</code> for Escape.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -128,6 +149,7 @@
                                   title='constant doh::util::GETCH_HOME'>GETCH_HOME</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for Home key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -135,6 +157,7 @@
                                   title='constant doh::util::GETCH_PAGE_DOWN'>GETCH_PAGE_DOWN</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for Page Down key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -142,6 +165,7 @@
                                   title='constant doh::util::GETCH_PAGE_UP'>GETCH_PAGE_UP</a></td>
                            <td class='docblock-short'>
                                 <p>Second byte returned by <code>getch()</code> for Page Up key.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -149,6 +173,7 @@
                                   title='constant doh::util::GETCH_SPECIAL_PREFIX'>GETCH_SPECIAL_PREFIX</a></td>
                            <td class='docblock-short'>
                                 <p>First byte returned by <code>getch()</code> for special characters.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -156,6 +181,7 @@
                                   title='constant doh::util::TAB_WIDTH'>TAB_WIDTH</a></td>
                            <td class='docblock-short'>
                                 <p>Amount of spaces to expand tabs to.</p>
+
                            </td>
                        </tr></table><h2 id='statics' class='section-header'><a href="#statics">Statics</a></h2>
 <table>
@@ -164,6 +190,7 @@
                                   title='static doh::util::USER_AGENT'>USER_AGENT</a></td>
                            <td class='docblock-short'>
                                 <p>App name and version to use with User-Agent request header.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -172,6 +199,7 @@
                                   title='fn doh::util::human_readable_size'>human_readable_size</a></td>
                            <td class='docblock-short'>
                                 <p>Construct string representing a human-readable size.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -179,6 +207,7 @@
                                   title='fn doh::util::max_listing_lines'>max_listing_lines</a></td>
                            <td class='docblock-short'>
                                 <p>Get max amount of listed elements per page, based on term height</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -186,6 +215,7 @@
                                   title='fn doh::util::parent_url'>parent_url</a></td>
                            <td class='docblock-short'>
                                 <p>Get a URL that is canonically considered a &quot;parent&quot; to the specified one, or the specified URL if it is a root URL.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -193,6 +223,7 @@
                                   title='fn doh::util::parse_rfc3339'>parse_rfc3339</a></td>
                            <td class='docblock-short'>
                                 <p>Parse an RFC3339 string into a timespec.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -200,6 +231,7 @@
                                   title='fn doh::util::percent_decode'>percent_decode</a></td>
                            <td class='docblock-short'>
                                 <p>Decode a percent-encoded string (like a part of a URL).</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -214,20 +246,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

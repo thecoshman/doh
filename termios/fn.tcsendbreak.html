@@ -10,8 +10,11 @@
     <title>termios::tcsendbreak - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='index.html'>termios</a></p><script>window.sidebarCurrent = {name: 'tcsendbreak', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,12 +60,10 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/termios/lib.rs.html#487-489' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn tcsendbreak(fd: <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/type.RawFd.html" title="type std::sys::imp::ext::io::RawFd">RawFd</a>, duration: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</pre><div class='docblock'><p>Transmits data to generate a break condition.</p>
-
+<pre class='rust fn'>pub fn tcsendbreak(fd: <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/unix/ext/io/type.RawFd.html" title="type std::sys::unix::ext::io::RawFd">RawFd</a>, duration: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</pre><div class='docblock'><p>Transmits data to generate a break condition.</p>
 <p>If the terminal device is using asynchronous data transmission, <code>tcsendbreak()</code> transmits a
 continuous stream of zero bits for a specific duration.</p>
-
-<h1 id='parameters' class='section-header'><a href='#parameters'>Parameters</a></h1>
+<h1 id="parameters" class="section-header"><a href="#parameters">Parameters</a></h1>
 <ul>
 <li><code>fd</code> should be an open file descriptor associated with a terminal.</li>
 <li><code>duration</code> controls the duration of the transmitted zero bits. A value of 0 causes a
@@ -74,20 +83,22 @@ implementation-defined period of time.</li>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

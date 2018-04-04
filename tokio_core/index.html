@@ -10,8 +10,11 @@
     <title>tokio_core - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate tokio_core</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'tokio_core', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate tokio_core</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'tokio_core', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,49 +59,47 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/tokio_core/lib.rs.html#1-119' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/tokio_core/lib.rs.html#1-122' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p><code>Future</code>-powered I/O at the core of Tokio</p>
-
 <p>This crate uses the <code>futures</code> crate to provide an event loop (&quot;reactor
 core&quot;) which can be used to drive I/O like TCP and UDP, spawned future
 tasks, and other events like channels/timeouts. All asynchronous I/O is
 powered by the <code>mio</code> crate.</p>
-
 <p>The concrete types provided in this crate are relatively bare bones but are
 intended to be the essential foundation for further projects needing an
-event loop. In this crate you&#39;ll find:</p>
-
+event loop. In this crate you'll find:</p>
 <ul>
 <li>TCP, both streams and listeners</li>
 <li>UDP sockets</li>
 <li>Timeouts</li>
 <li>An event loop to run futures</li>
 </ul>
-
 <p>More functionality is likely to be added over time, but otherwise the crate
 is intended to be flexible, with the <code>PollEvented</code> type accepting any
 type that implements <code>mio::Evented</code>. For example, the <code>tokio-uds</code> crate
 uses <code>PollEvented</code> to provide support for Unix domain sockets.</p>
-
 <p>Some other important tasks covered by this crate are:</p>
-
 <ul>
-<li><p>The ability to spawn futures into an event loop. The <code>Handle</code> and <code>Remote</code>
+<li>
+<p>The ability to spawn futures into an event loop. The <code>Handle</code> and <code>Remote</code>
 types have a <code>spawn</code> method which allows executing a future on an event
 loop. The <code>Handle::spawn</code> method crucially does not require the future
-itself to be <code>Send</code>.</p></li>
-<li><p>The <code>Io</code> trait serves as an abstraction for future crates to build on top
+itself to be <code>Send</code>.</p>
+</li>
+<li>
+<p>The <code>Io</code> trait serves as an abstraction for future crates to build on top
 of. This packages up <code>Read</code> and <code>Write</code> functionality as well as the
-ability to poll for readiness on both ends.</p></li>
-<li><p>All I/O is futures-aware. If any action in this crate returns &quot;not ready&quot;
+ability to poll for readiness on both ends.</p>
+</li>
+<li>
+<p>All I/O is futures-aware. If any action in this crate returns &quot;not ready&quot;
 or &quot;would block&quot;, then the current future task is scheduled to receive a
-notification when it would otherwise make progress.</p></li>
+notification when it would otherwise make progress.</p>
+</li>
 </ul>
-
 <p>You can find more extensive documentation in terms of tutorials at
 <a href="https://tokio.rs">https://tokio.rs</a>.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>A simple TCP echo server:</p>
 
 <pre class="rust rust-example-rendered">
@@ -146,6 +155,7 @@ notification when it would otherwise make progress.</p></li>
                                   title='mod tokio_core::net'>net</a></td>
                            <td class='docblock-short'>
                                 <p>TCP/UDP bindings for <code>tokio-core</code></p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -153,6 +163,7 @@ notification when it would otherwise make progress.</p></li>
                                   title='mod tokio_core::reactor'>reactor</a></td>
                            <td class='docblock-short'>
                                 <p>The core reactor driving all I/O</p>
+
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
@@ -162,6 +173,7 @@ notification when it would otherwise make progress.</p></li>
                            <td class='docblock-short'>
                                 <p>A convenience macro for working with <code>io::Result&lt;T&gt;</code> from the <code>Read</code> and
 <code>Write</code> traits.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -176,20 +188,22 @@ notification when it would otherwise make progress.</p></li>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

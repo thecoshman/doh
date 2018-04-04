@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bytes-0.4.5/src/bytes.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/bytes-0.4.6/src/bytes.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bytes.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -2614,6 +2625,194 @@
 <span id="2569">2569</span>
 <span id="2570">2570</span>
 <span id="2571">2571</span>
+<span id="2572">2572</span>
+<span id="2573">2573</span>
+<span id="2574">2574</span>
+<span id="2575">2575</span>
+<span id="2576">2576</span>
+<span id="2577">2577</span>
+<span id="2578">2578</span>
+<span id="2579">2579</span>
+<span id="2580">2580</span>
+<span id="2581">2581</span>
+<span id="2582">2582</span>
+<span id="2583">2583</span>
+<span id="2584">2584</span>
+<span id="2585">2585</span>
+<span id="2586">2586</span>
+<span id="2587">2587</span>
+<span id="2588">2588</span>
+<span id="2589">2589</span>
+<span id="2590">2590</span>
+<span id="2591">2591</span>
+<span id="2592">2592</span>
+<span id="2593">2593</span>
+<span id="2594">2594</span>
+<span id="2595">2595</span>
+<span id="2596">2596</span>
+<span id="2597">2597</span>
+<span id="2598">2598</span>
+<span id="2599">2599</span>
+<span id="2600">2600</span>
+<span id="2601">2601</span>
+<span id="2602">2602</span>
+<span id="2603">2603</span>
+<span id="2604">2604</span>
+<span id="2605">2605</span>
+<span id="2606">2606</span>
+<span id="2607">2607</span>
+<span id="2608">2608</span>
+<span id="2609">2609</span>
+<span id="2610">2610</span>
+<span id="2611">2611</span>
+<span id="2612">2612</span>
+<span id="2613">2613</span>
+<span id="2614">2614</span>
+<span id="2615">2615</span>
+<span id="2616">2616</span>
+<span id="2617">2617</span>
+<span id="2618">2618</span>
+<span id="2619">2619</span>
+<span id="2620">2620</span>
+<span id="2621">2621</span>
+<span id="2622">2622</span>
+<span id="2623">2623</span>
+<span id="2624">2624</span>
+<span id="2625">2625</span>
+<span id="2626">2626</span>
+<span id="2627">2627</span>
+<span id="2628">2628</span>
+<span id="2629">2629</span>
+<span id="2630">2630</span>
+<span id="2631">2631</span>
+<span id="2632">2632</span>
+<span id="2633">2633</span>
+<span id="2634">2634</span>
+<span id="2635">2635</span>
+<span id="2636">2636</span>
+<span id="2637">2637</span>
+<span id="2638">2638</span>
+<span id="2639">2639</span>
+<span id="2640">2640</span>
+<span id="2641">2641</span>
+<span id="2642">2642</span>
+<span id="2643">2643</span>
+<span id="2644">2644</span>
+<span id="2645">2645</span>
+<span id="2646">2646</span>
+<span id="2647">2647</span>
+<span id="2648">2648</span>
+<span id="2649">2649</span>
+<span id="2650">2650</span>
+<span id="2651">2651</span>
+<span id="2652">2652</span>
+<span id="2653">2653</span>
+<span id="2654">2654</span>
+<span id="2655">2655</span>
+<span id="2656">2656</span>
+<span id="2657">2657</span>
+<span id="2658">2658</span>
+<span id="2659">2659</span>
+<span id="2660">2660</span>
+<span id="2661">2661</span>
+<span id="2662">2662</span>
+<span id="2663">2663</span>
+<span id="2664">2664</span>
+<span id="2665">2665</span>
+<span id="2666">2666</span>
+<span id="2667">2667</span>
+<span id="2668">2668</span>
+<span id="2669">2669</span>
+<span id="2670">2670</span>
+<span id="2671">2671</span>
+<span id="2672">2672</span>
+<span id="2673">2673</span>
+<span id="2674">2674</span>
+<span id="2675">2675</span>
+<span id="2676">2676</span>
+<span id="2677">2677</span>
+<span id="2678">2678</span>
+<span id="2679">2679</span>
+<span id="2680">2680</span>
+<span id="2681">2681</span>
+<span id="2682">2682</span>
+<span id="2683">2683</span>
+<span id="2684">2684</span>
+<span id="2685">2685</span>
+<span id="2686">2686</span>
+<span id="2687">2687</span>
+<span id="2688">2688</span>
+<span id="2689">2689</span>
+<span id="2690">2690</span>
+<span id="2691">2691</span>
+<span id="2692">2692</span>
+<span id="2693">2693</span>
+<span id="2694">2694</span>
+<span id="2695">2695</span>
+<span id="2696">2696</span>
+<span id="2697">2697</span>
+<span id="2698">2698</span>
+<span id="2699">2699</span>
+<span id="2700">2700</span>
+<span id="2701">2701</span>
+<span id="2702">2702</span>
+<span id="2703">2703</span>
+<span id="2704">2704</span>
+<span id="2705">2705</span>
+<span id="2706">2706</span>
+<span id="2707">2707</span>
+<span id="2708">2708</span>
+<span id="2709">2709</span>
+<span id="2710">2710</span>
+<span id="2711">2711</span>
+<span id="2712">2712</span>
+<span id="2713">2713</span>
+<span id="2714">2714</span>
+<span id="2715">2715</span>
+<span id="2716">2716</span>
+<span id="2717">2717</span>
+<span id="2718">2718</span>
+<span id="2719">2719</span>
+<span id="2720">2720</span>
+<span id="2721">2721</span>
+<span id="2722">2722</span>
+<span id="2723">2723</span>
+<span id="2724">2724</span>
+<span id="2725">2725</span>
+<span id="2726">2726</span>
+<span id="2727">2727</span>
+<span id="2728">2728</span>
+<span id="2729">2729</span>
+<span id="2730">2730</span>
+<span id="2731">2731</span>
+<span id="2732">2732</span>
+<span id="2733">2733</span>
+<span id="2734">2734</span>
+<span id="2735">2735</span>
+<span id="2736">2736</span>
+<span id="2737">2737</span>
+<span id="2738">2738</span>
+<span id="2739">2739</span>
+<span id="2740">2740</span>
+<span id="2741">2741</span>
+<span id="2742">2742</span>
+<span id="2743">2743</span>
+<span id="2744">2744</span>
+<span id="2745">2745</span>
+<span id="2746">2746</span>
+<span id="2747">2747</span>
+<span id="2748">2748</span>
+<span id="2749">2749</span>
+<span id="2750">2750</span>
+<span id="2751">2751</span>
+<span id="2752">2752</span>
+<span id="2753">2753</span>
+<span id="2754">2754</span>
+<span id="2755">2755</span>
+<span id="2756">2756</span>
+<span id="2757">2757</span>
+<span id="2758">2758</span>
+<span id="2759">2759</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> {<span class="ident">IntoBuf</span>, <span class="ident">Buf</span>, <span class="ident">BufMut</span>};
 <span class="kw">use</span> <span class="ident">buf</span>::<span class="ident">Iter</span>;
@@ -2624,6 +2823,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Cursor</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="self">self</span>, <span class="ident">AtomicUsize</span>, <span class="ident">AtomicPtr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">Ordering</span>::{<span class="ident">Relaxed</span>, <span class="ident">Acquire</span>, <span class="ident">Release</span>, <span class="ident">AcqRel</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::{<span class="ident">FromIterator</span>, <span class="ident">Iterator</span>};
 
 <span class="doccomment">/// A reference counted contiguous slice of memory.</span>
 <span class="doccomment">///</span>
@@ -2718,7 +2918,7 @@
 <span class="doccomment">/// [1] Small enough: 31 bytes on 64 bit systems, 15 on 32 bit systems.</span>
 <span class="doccomment">///</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Bytes</span> {
-    <span class="ident">inner</span>: <span class="ident">Inner2</span>,
+    <span class="ident">inner</span>: <span class="ident">Inner</span>,
 }
 
 <span class="doccomment">/// A unique reference to a contiguous slice of memory.</span>
@@ -2764,7 +2964,7 @@
 <span class="doccomment">/// assert_eq!(&amp;b[..], b&quot;hello&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BytesMut</span> {
-    <span class="ident">inner</span>: <span class="ident">Inner2</span>,
+    <span class="ident">inner</span>: <span class="ident">Inner</span>,
 }
 
 <span class="comment">// Both `Bytes` and `BytesMut` are backed by `Inner` and functions are delegated</span>
@@ -2911,6 +3111,8 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;little&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">struct</span> <span class="ident">Inner</span> {
+    <span class="comment">// WARNING: Do not access the fields directly unless you know what you are</span>
+    <span class="comment">// doing. Instead, use the fns. See implementation comment above.</span>
     <span class="ident">arc</span>: <span class="ident">AtomicPtr</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&gt;</span>,
     <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>,
     <span class="ident">len</span>: <span class="ident">usize</span>,
@@ -2920,20 +3122,12 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">struct</span> <span class="ident">Inner</span> {
+    <span class="comment">// WARNING: Do not access the fields directly unless you know what you are</span>
+    <span class="comment">// doing. Instead, use the fns. See implementation comment above.</span>
     <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>,
     <span class="ident">len</span>: <span class="ident">usize</span>,
     <span class="ident">cap</span>: <span class="ident">usize</span>,
     <span class="ident">arc</span>: <span class="ident">AtomicPtr</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&gt;</span>,
-}
-
-<span class="comment">// This struct is only here to make older versions of Rust happy. In older</span>
-<span class="comment">// versions of `Rust`, `repr(C)` structs could not have drop functions. While</span>
-<span class="comment">// this is no longer the case for newer rust versions, a number of major Rust</span>
-<span class="comment">// libraries still support older versions of Rust for which it is the case. To</span>
-<span class="comment">// get around this, `Inner` (the actual struct) is wrapped by `Inner2` which has</span>
-<span class="comment">// the drop fn implementation.</span>
-<span class="kw">struct</span> <span class="ident">Inner2</span> {
-    <span class="ident">inner</span>: <span class="ident">Inner</span>,
 }
 
 <span class="comment">// Thread-safe reference-counted container for the shared storage. This mostly</span>
@@ -2947,7 +3141,7 @@
 <span class="comment">// other shenanigans to make it work.</span>
 <span class="kw">struct</span> <span class="ident">Shared</span> {
     <span class="ident">vec</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
-    <span class="ident">original_capacity</span>: <span class="ident">usize</span>,
+    <span class="ident">original_capacity_repr</span>: <span class="ident">usize</span>,
     <span class="ident">ref_count</span>: <span class="ident">AtomicUsize</span>,
 }
 
@@ -2958,7 +3152,24 @@
 <span class="kw">const</span> <span class="ident">KIND_VEC</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0b11</span>;
 <span class="kw">const</span> <span class="ident">KIND_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0b11</span>;
 
-<span class="kw">const</span> <span class="ident">MAX_ORIGINAL_CAPACITY</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>;
+<span class="comment">// The max original capacity value. Any `Bytes` allocated with a greater initial</span>
+<span class="comment">// capacity will default to this.</span>
+<span class="kw">const</span> <span class="ident">MAX_ORIGINAL_CAPACITY_WIDTH</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">17</span>;
+<span class="comment">// The original capacity algorithm will not take effect unless the originally</span>
+<span class="comment">// allocated capacity was at least 1kb in size.</span>
+<span class="kw">const</span> <span class="ident">MIN_ORIGINAL_CAPACITY_WIDTH</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">10</span>;
+<span class="comment">// The original capacity is stored in powers of 2 starting at 1kb to a max of</span>
+<span class="comment">// 64kb. Representing it as such requires only 3 bits of storage.</span>
+<span class="kw">const</span> <span class="ident">ORIGINAL_CAPACITY_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0b11100</span>;
+<span class="kw">const</span> <span class="ident">ORIGINAL_CAPACITY_OFFSET</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">2</span>;
+
+<span class="comment">// When the storage is in the `Vec` representation, the pointer can be advanced</span>
+<span class="comment">// at most this value. This is due to the amount of storage available to track</span>
+<span class="comment">// the offset is usize - number of KIND bits and number of ORIGINAL_CAPACITY</span>
+<span class="comment">// bits.</span>
+<span class="kw">const</span> <span class="ident">VEC_POS_OFFSET</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">const</span> <span class="ident">MAX_VEC_POS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">MAX</span> <span class="op">&gt;&gt;</span> <span class="ident">VEC_POS_OFFSET</span>;
+<span class="kw">const</span> <span class="ident">NOT_VEC_POS_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0b11111</span>;
 
 <span class="comment">// Bit op constants for extracting the inline length value from the `arc` field.</span>
 <span class="kw">const</span> <span class="ident">INLINE_LEN_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0b11111100</span>;
@@ -2972,6 +3183,11 @@
 <span class="kw">const</span> <span class="ident">INLINE_DATA_OFFSET</span>: <span class="ident">isize</span> <span class="op">=</span> <span class="number">1</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_endian</span> <span class="op">=</span> <span class="string">&quot;big&quot;</span>)]</span>
 <span class="kw">const</span> <span class="ident">INLINE_DATA_OFFSET</span>: <span class="ident">isize</span> <span class="op">=</span> <span class="number">0</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
+<span class="kw">const</span> <span class="ident">PTR_WIDTH</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">64</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
+<span class="kw">const</span> <span class="ident">PTR_WIDTH</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">32</span>;
 
 <span class="comment">// Inline buffer capacity. This is the size of `Inner` minus 1 byte for the</span>
 <span class="comment">// metadata.</span>
@@ -2990,7 +3206,7 @@
     <span class="doccomment">/// Creates a new `Bytes` with the specified capacity.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The returned `Bytes` will be able to hold at least `capacity` bytes</span>
-    <span class="doccomment">/// without reallocating. If `capacity` is under `3 * size_of::&lt;usize&gt;()`,</span>
+    <span class="doccomment">/// without reallocating. If `capacity` is under `4 * size_of::&lt;usize&gt;() - 1`,</span>
     <span class="doccomment">/// then `BytesMut` will not allocate.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// It is important to note that this function does not specify the length</span>
@@ -3013,9 +3229,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">capacity</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Bytes</span> {
         <span class="ident">Bytes</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>),
-            },
+            <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>),
         }
     }
 
@@ -3052,9 +3266,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_static</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">Bytes</span> {
         <span class="ident">Bytes</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">from_static</span>(<span class="ident">bytes</span>),
-            }
+            <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">from_static</span>(<span class="ident">bytes</span>),
         }
     }
 
@@ -3212,9 +3424,7 @@
         }
 
         <span class="ident">Bytes</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_off</span>(<span class="ident">at</span>),
-            }
+            <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_off</span>(<span class="ident">at</span>),
         }
     }
 
@@ -3253,9 +3463,7 @@
         }
 
         <span class="ident">Bytes</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_to</span>(<span class="ident">at</span>),
-            }
+            <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_to</span>(<span class="ident">at</span>),
         }
     }
 
@@ -3287,6 +3495,22 @@
     <span class="doccomment">/// [`split_off`]: #method.split_off</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">truncate</span>(<span class="ident">len</span>);
+    }
+
+    <span class="doccomment">/// Shortens the buffer, dropping the first `cnt` bytes and keeping the</span>
+    <span class="doccomment">/// rest.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the same function as `Buf::advance`, and in the next breaking</span>
+    <span class="doccomment">/// release of `bytes`, this implementation will be removed in favor of</span>
+    <span class="doccomment">/// having `Bytes` implement `Buf`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function panics if `cnt` is greater than `self.len()`</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">advance</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cnt</span>: <span class="ident">usize</span>) {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cnt</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">len</span>(), <span class="string">&quot;cannot advance past `remaining`&quot;</span>);
+        <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_start</span>(<span class="ident">cnt</span>); }
     }
 
     <span class="doccomment">/// Clears the buffer, removing all data.</span>
@@ -3402,9 +3626,7 @@
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Bytes</span> {
     <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Bytes</span> {
         <span class="ident">Bytes</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">shallow_clone</span>(),
-            }
+            <span class="ident">inner</span>: <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">shallow_clone</span>(<span class="bool-val">false</span>) },
         }
     }
 }
@@ -3452,6 +3674,27 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Bytes</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Bytes</span> {
         <span class="ident">BytesMut</span>::<span class="ident">from</span>(<span class="ident">src</span>).<span class="ident">freeze</span>()
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BytesMut</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">u8</span><span class="op">&gt;&gt;</span>(<span class="ident">into_iter</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">into_iter</span>.<span class="ident">into_iter</span>();
+        <span class="kw">let</span> (<span class="ident">min</span>, <span class="ident">maybe_max</span>) <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">size_hint</span>();
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">BytesMut</span>::<span class="ident">with_capacity</span>(<span class="ident">maybe_max</span>.<span class="ident">unwrap_or</span>(<span class="ident">min</span>));
+
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
+            <span class="ident">out</span>.<span class="ident">put</span>(<span class="ident">i</span>);
+        }
+
+        <span class="ident">out</span>
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Bytes</span> {
+    <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">u8</span><span class="op">&gt;&gt;</span>(<span class="ident">into_iter</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">BytesMut</span>::<span class="ident">from_iter</span>(<span class="ident">into_iter</span>).<span class="ident">freeze</span>()
     }
 }
 
@@ -3562,7 +3805,7 @@
     <span class="doccomment">/// Creates a new `BytesMut` with the specified capacity.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The returned `BytesMut` will be able to hold at least `capacity` bytes</span>
-    <span class="doccomment">/// without reallocating. If `capacity` is under `3 * size_of::&lt;usize&gt;()`,</span>
+    <span class="doccomment">/// without reallocating. If `capacity` is under `4 * size_of::&lt;usize&gt;() - 1`,</span>
     <span class="doccomment">/// then `BytesMut` will not allocate.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// It is important to note that this function does not specify the length</span>
@@ -3585,9 +3828,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">capacity</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BytesMut</span> {
         <span class="ident">BytesMut</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>),
-            },
+            <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>),
         }
     }
 
@@ -3717,9 +3958,7 @@
     <span class="doccomment">/// Panics if `at &gt; capacity`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">split_off</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">at</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BytesMut</span> {
         <span class="ident">BytesMut</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_off</span>(<span class="ident">at</span>),
-            }
+            <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_off</span>(<span class="ident">at</span>),
         }
     }
 
@@ -3787,9 +4026,7 @@
     <span class="doccomment">/// Panics if `at &gt; len`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">split_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">at</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">BytesMut</span> {
         <span class="ident">BytesMut</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_to</span>(<span class="ident">at</span>),
-            }
+            <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">split_to</span>(<span class="ident">at</span>),
         }
     }
 
@@ -3821,6 +4058,22 @@
     <span class="doccomment">/// [`split_off`]: #method.split_off</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">truncate</span>(<span class="ident">len</span>);
+    }
+
+    <span class="doccomment">/// Shortens the buffer, dropping the first `cnt` bytes and keeping the</span>
+    <span class="doccomment">/// rest.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the same function as `Buf::advance`, and in the next breaking</span>
+    <span class="doccomment">/// release of `bytes`, this implementation will be removed in favor of</span>
+    <span class="doccomment">/// having `BytesMut` implement `Buf`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Panics</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function panics if `cnt` is greater than `self.len()`</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">advance</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cnt</span>: <span class="ident">usize</span>) {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cnt</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">len</span>(), <span class="string">&quot;cannot advance past `remaining`&quot;</span>);
+        <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">set_start</span>(<span class="ident">cnt</span>); }
     }
 
     <span class="doccomment">/// Clears the buffer, removing all data.</span>
@@ -3945,6 +4198,55 @@
         <span class="self">self</span>.<span class="ident">reserve</span>(<span class="ident">extend</span>.<span class="ident">len</span>());
         <span class="self">self</span>.<span class="ident">put_slice</span>(<span class="ident">extend</span>);
     }
+
+    <span class="doccomment">/// Combine splitted BytesMut objects back as contiguous.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If `BytesMut` objects were not contiguous originally, they will be extended.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use bytes::BytesMut;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut buf = BytesMut::with_capacity(64);</span>
+    <span class="doccomment">/// buf.extend_from_slice(b&quot;aaabbbcccddd&quot;);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let splitted = buf.split_off(6);</span>
+    <span class="doccomment">/// assert_eq!(b&quot;aaabbb&quot;, &amp;buf[..]);</span>
+    <span class="doccomment">/// assert_eq!(b&quot;cccddd&quot;, &amp;splitted[..]);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// buf.unsplit(splitted);</span>
+    <span class="doccomment">/// assert_eq!(b&quot;aaabbbcccddd&quot;, &amp;buf[..]);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unsplit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">BytesMut</span>) {
+        <span class="kw">let</span> <span class="ident">ptr</span>;
+
+        <span class="kw">if</span> <span class="ident">other</span>.<span class="ident">is_empty</span>() {
+            <span class="kw">return</span>;
+        }
+
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_empty</span>() {
+            <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">other</span>;
+            <span class="kw">return</span>;
+        }
+
+        <span class="kw">unsafe</span> {
+            <span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">len</span> <span class="kw">as</span> <span class="ident">isize</span>); 
+        }
+        <span class="kw">if</span> <span class="ident">ptr</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">ptr</span> <span class="op">&amp;&amp;</span>
+           <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">KIND_ARC</span> <span class="op">&amp;&amp;</span>
+           <span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">kind</span>() <span class="op">==</span> <span class="ident">KIND_ARC</span>
+        {
+            <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">arc</span>.<span class="ident">load</span>(<span class="ident">Acquire</span>),
+                             <span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">arc</span>.<span class="ident">load</span>(<span class="ident">Acquire</span>));
+            <span class="comment">// Contiguous blocks, just combine directly</span>
+            <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">len</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">len</span>;
+            <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">cap</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">cap</span>;
+        }
+        <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>);
+        }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">BufMut</span> <span class="kw">for</span> <span class="ident">BytesMut</span> {
@@ -4040,9 +4342,7 @@
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">BytesMut</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">src</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">BytesMut</span> {
         <span class="ident">BytesMut</span> {
-            <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">from_vec</span>(<span class="ident">src</span>),
-            },
+            <span class="ident">inner</span>: <span class="ident">Inner</span>::<span class="ident">from_vec</span>(<span class="ident">src</span>),
         }
     }
 }
@@ -4069,9 +4369,7 @@
                 <span class="ident">inner</span>.<span class="ident">as_raw</span>()[<span class="number">0</span>..<span class="ident">len</span>].<span class="ident">copy_from_slice</span>(<span class="ident">src</span>);
 
                 <span class="ident">BytesMut</span> {
-                    <span class="ident">inner</span>: <span class="ident">Inner2</span> {
-                        <span class="ident">inner</span>: <span class="ident">inner</span>,
-                    }
+                    <span class="ident">inner</span>: <span class="ident">inner</span>,
                 }
             }
         } <span class="kw">else</span> {
@@ -4233,8 +4531,8 @@
 
         <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">src</span>);
 
-        <span class="kw">let</span> <span class="ident">original_capacity</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">cap</span>, <span class="ident">MAX_ORIGINAL_CAPACITY</span>);
-        <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> (<span class="ident">original_capacity</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">KIND_MASK</span>) <span class="op">|</span> <span class="ident">KIND_VEC</span>;
+        <span class="kw">let</span> <span class="ident">original_capacity_repr</span> <span class="op">=</span> <span class="ident">original_capacity_to_repr</span>(<span class="ident">cap</span>);
+        <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> (<span class="ident">original_capacity_repr</span> <span class="op">&lt;&lt;</span> <span class="ident">ORIGINAL_CAPACITY_OFFSET</span>) <span class="op">|</span> <span class="ident">KIND_VEC</span>;
 
         <span class="ident">Inner</span> {
             <span class="ident">arc</span>: <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">arc</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Shared</span>),
@@ -4249,10 +4547,9 @@
         <span class="kw">if</span> <span class="ident">capacity</span> <span class="op">&lt;=</span> <span class="ident">INLINE_CAP</span> {
             <span class="kw">unsafe</span> {
                 <span class="comment">// Using uninitialized memory is ~30% faster</span>
-                <span class="ident">Inner</span> {
-                    <span class="ident">arc</span>: <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">KIND_INLINE</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Shared</span>),
-                    .. <span class="ident">mem</span>::<span class="ident">uninitialized</span>()
-                }
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">Inner</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">uninitialized</span>();
+                <span class="ident">inner</span>.<span class="ident">arc</span> <span class="op">=</span> <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">KIND_INLINE</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Shared</span>);
+                <span class="ident">inner</span>
             }
         } <span class="kw">else</span> {
             <span class="ident">Inner</span>::<span class="ident">from_vec</span>(<span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">capacity</span>))
@@ -4344,8 +4641,8 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">set_inline_len</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">len</span> <span class="op">&lt;=</span> <span class="ident">INLINE_CAP</span>);
-        <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">arc</span>) };
-        <span class="kw-2">*</span><span class="ident">p</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">p</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">INLINE_LEN_MASK</span>) <span class="op">|</span> (<span class="ident">len</span> <span class="op">&lt;&lt;</span> <span class="ident">INLINE_LEN_OFFSET</span>);
+        <span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">get_mut</span>();
+        <span class="kw-2">*</span><span class="ident">p</span> <span class="op">=</span> ((<span class="kw-2">*</span><span class="ident">p</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">INLINE_LEN_MASK</span>) <span class="op">|</span> (<span class="ident">len</span> <span class="op">&lt;&lt;</span> <span class="ident">INLINE_LEN_OFFSET</span>)) <span class="kw">as</span> _;
     }
 
     <span class="doccomment">/// slice.</span>
@@ -4375,7 +4672,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">split_off</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">at</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Inner</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">other</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shallow_clone</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">other</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">shallow_clone</span>(<span class="bool-val">true</span>) };
 
         <span class="kw">unsafe</span> {
             <span class="ident">other</span>.<span class="ident">set_start</span>(<span class="ident">at</span>);
@@ -4386,7 +4683,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">split_to</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">at</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Inner</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">other</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shallow_clone</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">other</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">shallow_clone</span>(<span class="bool-val">true</span>) };
 
         <span class="kw">unsafe</span> {
             <span class="ident">other</span>.<span class="ident">set_end</span>(<span class="ident">at</span>);
@@ -4403,19 +4700,17 @@
     }
 
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_start</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">start</span>: <span class="ident">usize</span>) {
-        <span class="comment">// This function should never be called when the buffer is still backed</span>
-        <span class="comment">// by a `Vec&lt;u8&gt;`</span>
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">is_shared</span>());
-
         <span class="comment">// Setting the start to 0 is a no-op, so return early if this is the</span>
         <span class="comment">// case.</span>
         <span class="kw">if</span> <span class="ident">start</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span>;
         }
 
+        <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">kind</span>();
+
         <span class="comment">// Always check `inline` first, because if the handle is using inline</span>
         <span class="comment">// data storage, all of the `Inner` struct fields will be gibberish.</span>
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_inline</span>() {
+        <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_INLINE</span> {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">start</span> <span class="op">&lt;=</span> <span class="ident">INLINE_CAP</span>);
 
             <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inline_len</span>();
@@ -4438,6 +4733,25 @@
             }
         } <span class="kw">else</span> {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">start</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">cap</span>);
+
+            <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_VEC</span> {
+                <span class="comment">// Setting the start when in vec representation is a little more</span>
+                <span class="comment">// complicated. First, we have to track how far ahead the</span>
+                <span class="comment">// &quot;start&quot; of the byte buffer from the beginning of the vec. We</span>
+                <span class="comment">// also have to ensure that we don&#39;t exceed the maximum shift.</span>
+                <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">pos</span>, <span class="ident">prev</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">uncoordinated_get_vec_pos</span>();
+                <span class="ident">pos</span> <span class="op">+=</span> <span class="ident">start</span>;
+
+                <span class="kw">if</span> <span class="ident">pos</span> <span class="op">&lt;=</span> <span class="ident">MAX_VEC_POS</span> {
+                    <span class="self">self</span>.<span class="ident">uncoordinated_set_vec_pos</span>(<span class="ident">pos</span>, <span class="ident">prev</span>);
+                } <span class="kw">else</span> {
+                    <span class="comment">// The repr must be upgraded to ARC. This will never happen</span>
+                    <span class="comment">// on 64 bit systems and will only happen on 32 bit systems</span>
+                    <span class="comment">// when shifting past 134,217,727 bytes. As such, we don&#39;t</span>
+                    <span class="comment">// worry too much about performance here.</span>
+                    <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">shallow_clone</span>(<span class="bool-val">true</span>);
+                }
+            }
 
             <span class="comment">// Updating the start of the view is setting `ptr` to point to the</span>
             <span class="comment">// new start and updating the `len` field to reflect the new length</span>
@@ -4486,36 +4800,36 @@
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_STATIC</span> {
             <span class="bool-val">false</span>
         } <span class="kw">else</span> {
-            <span class="comment">// The function requires `&amp;mut self`, which guarantees a unique</span>
-            <span class="comment">// reference to the current handle. This means that the `arc` field</span>
-            <span class="comment">// *cannot* be concurrently mutated. As such, `Relaxed` ordering is</span>
-            <span class="comment">// fine (since we aren&#39;t synchronizing with anything).</span>
-            <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">load</span>(<span class="ident">Relaxed</span>);
-
             <span class="comment">// Otherwise, the underlying buffer is potentially shared with other</span>
             <span class="comment">// handles, so the ref_count needs to be checked.</span>
-            <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="ident">arc</span>).<span class="ident">is_unique</span>() }
+            <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">get_mut</span>()).<span class="ident">is_unique</span>() }
         }
     }
 
     <span class="doccomment">/// Increments the ref count. This should only be done if it is known that</span>
     <span class="doccomment">/// it can be done safely. As such, this fn is not public, instead other</span>
     <span class="doccomment">/// fns will use this one while maintaining the guarantees.</span>
-    <span class="kw">fn</span> <span class="ident">shallow_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Inner</span> {
+    <span class="doccomment">/// Parameter `mut_self` should only be set to `true` if caller holds</span>
+    <span class="doccomment">/// `&amp;mut self` reference.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// &quot;Safely&quot; is defined as not exposing two `BytesMut` values that point to</span>
+    <span class="doccomment">/// the same byte window.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This function is thread safe.</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">shallow_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mut_self</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">Inner</span> {
         <span class="comment">// Always check `inline` first, because if the handle is using inline</span>
         <span class="comment">// data storage, all of the `Inner` struct fields will be gibberish.</span>
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_inline</span>() {
             <span class="comment">// In this case, a shallow_clone still involves copying the data.</span>
-            <span class="kw">unsafe</span> {
-                <span class="comment">// TODO: Just copy the fields</span>
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">Inner</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">uninitialized</span>();
-                <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inline_len</span>();
+            <span class="comment">//</span>
+            <span class="comment">// TODO: Just copy the fields</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span>: <span class="ident">Inner</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">uninitialized</span>();
+            <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inline_len</span>();
 
-                <span class="ident">inner</span>.<span class="ident">arc</span> <span class="op">=</span> <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">KIND_INLINE</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Shared</span>);
-                <span class="ident">inner</span>.<span class="ident">set_inline_len</span>(<span class="ident">len</span>);
-                <span class="ident">inner</span>.<span class="ident">as_raw</span>()[<span class="number">0</span>..<span class="ident">len</span>].<span class="ident">copy_from_slice</span>(<span class="self">self</span>.<span class="ident">as_ref</span>());
-                <span class="ident">inner</span>
-            }
+            <span class="ident">inner</span>.<span class="ident">arc</span> <span class="op">=</span> <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">KIND_INLINE</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Shared</span>);
+            <span class="ident">inner</span>.<span class="ident">set_inline_len</span>(<span class="ident">len</span>);
+            <span class="ident">inner</span>.<span class="ident">as_raw</span>()[<span class="number">0</span>..<span class="ident">len</span>].<span class="ident">copy_from_slice</span>(<span class="self">self</span>.<span class="ident">as_ref</span>());
+            <span class="ident">inner</span>
         } <span class="kw">else</span> {
             <span class="comment">// The function requires `&amp;self`, this means that `shallow_clone`</span>
             <span class="comment">// could be called concurrently.</span>
@@ -4531,59 +4845,74 @@
             <span class="comment">// promote the vec to an `Arc`. This could potentially be called</span>
             <span class="comment">// concurrently, so some care must be taken.</span>
             <span class="kw">if</span> <span class="ident">arc</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">KIND_MASK</span> <span class="op">==</span> <span class="ident">KIND_VEC</span> {
-                <span class="kw">unsafe</span> {
-                    <span class="comment">// First, allocate a new `Shared` instance containing the</span>
-                    <span class="comment">// `Vec` fields. It&#39;s important to note that `ptr`, `len`,</span>
-                    <span class="comment">// and `cap` cannot be mutated without having `&amp;mut self`.</span>
-                    <span class="comment">// This means that these fields will not be concurrently</span>
-                    <span class="comment">// updated and since the buffer hasn&#39;t been promoted to an</span>
-                    <span class="comment">// `Arc`, those three fields still are the components of the</span>
-                    <span class="comment">// vector.</span>
-                    <span class="kw">let</span> <span class="ident">shared</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Shared</span> {
-                        <span class="ident">vec</span>: <span class="ident">Vec</span>::<span class="ident">from_raw_parts</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">cap</span>),
-                        <span class="ident">original_capacity</span>: <span class="ident">arc</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">KIND_MASK</span>,
-                        <span class="comment">// Initialize refcount to 2. One for this reference, and one</span>
-                        <span class="comment">// for the new clone that will be returned from</span>
-                        <span class="comment">// `shallow_clone`.</span>
-                        <span class="ident">ref_count</span>: <span class="ident">AtomicUsize</span>::<span class="ident">new</span>(<span class="number">2</span>),
-                    });
+                <span class="kw">let</span> <span class="ident">original_capacity_repr</span> <span class="op">=</span>
+                    (<span class="ident">arc</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">ORIGINAL_CAPACITY_MASK</span>) <span class="op">&gt;&gt;</span> <span class="ident">ORIGINAL_CAPACITY_OFFSET</span>;
 
-                    <span class="kw">let</span> <span class="ident">shared</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">shared</span>);
+                <span class="comment">// The vec offset cannot be concurrently mutated, so there</span>
+                <span class="comment">// should be no danger reading it.</span>
+                <span class="kw">let</span> <span class="ident">off</span> <span class="op">=</span> (<span class="ident">arc</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&gt;&gt;</span> <span class="ident">VEC_POS_OFFSET</span>;
 
-                    <span class="comment">// The pointer should be aligned, so this assert should</span>
-                    <span class="comment">// always succeed.</span>
-                    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="number">0</span> <span class="op">==</span> (<span class="ident">shared</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="number">0b11</span>));
+                <span class="comment">// First, allocate a new `Shared` instance containing the</span>
+                <span class="comment">// `Vec` fields. It&#39;s important to note that `ptr`, `len`,</span>
+                <span class="comment">// and `cap` cannot be mutated without having `&amp;mut self`.</span>
+                <span class="comment">// This means that these fields will not be concurrently</span>
+                <span class="comment">// updated and since the buffer hasn&#39;t been promoted to an</span>
+                <span class="comment">// `Arc`, those three fields still are the components of the</span>
+                <span class="comment">// vector.</span>
+                <span class="kw">let</span> <span class="ident">shared</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">Shared</span> {
+                    <span class="ident">vec</span>: <span class="ident">rebuild_vec</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">cap</span>, <span class="ident">off</span>),
+                    <span class="ident">original_capacity_repr</span>: <span class="ident">original_capacity_repr</span>,
+                    <span class="comment">// Initialize refcount to 2. One for this reference, and one</span>
+                    <span class="comment">// for the new clone that will be returned from</span>
+                    <span class="comment">// `shallow_clone`.</span>
+                    <span class="ident">ref_count</span>: <span class="ident">AtomicUsize</span>::<span class="ident">new</span>(<span class="number">2</span>),
+                });
 
-                    <span class="comment">// Try compare &amp; swapping the pointer into the `arc` field.</span>
-                    <span class="comment">// `Release` is used synchronize with other threads that</span>
-                    <span class="comment">// will load the `arc` field.</span>
-                    <span class="comment">//</span>
-                    <span class="comment">// If the `compare_and_swap` fails, then the thread lost the</span>
-                    <span class="comment">// race to promote the buffer to shared. The `Acquire`</span>
-                    <span class="comment">// ordering will synchronize with the `compare_and_swap`</span>
-                    <span class="comment">// that happened in the other thread and the `Shared`</span>
-                    <span class="comment">// pointed to by `actual` will be visible.</span>
-                    <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">compare_and_swap</span>(<span class="ident">arc</span>, <span class="ident">shared</span>, <span class="ident">AcqRel</span>);
+                <span class="kw">let</span> <span class="ident">shared</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">into_raw</span>(<span class="ident">shared</span>);
 
-                    <span class="kw">if</span> <span class="ident">actual</span> <span class="op">==</span> <span class="ident">arc</span> {
-                        <span class="comment">// The upgrade was successful, the new handle can be</span>
-                        <span class="comment">// returned.</span>
-                        <span class="kw">return</span> <span class="ident">Inner</span> {
-                            <span class="ident">arc</span>: <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">shared</span>),
-                            .. <span class="kw-2">*</span><span class="self">self</span>
-                        };
-                    }
+                <span class="comment">// The pointer should be aligned, so this assert should</span>
+                <span class="comment">// always succeed.</span>
+                <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="number">0</span> <span class="op">==</span> (<span class="ident">shared</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="number">0b11</span>));
 
-                    <span class="comment">// The upgrade failed, a concurrent clone happened. Release</span>
-                    <span class="comment">// the allocation that was made in this thread, it will not</span>
-                    <span class="comment">// be needed.</span>
-                    <span class="kw">let</span> <span class="ident">shared</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">shared</span>);
-                    <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="kw-2">*</span><span class="ident">shared</span>);
-
-                    <span class="comment">// Update the `arc` local variable and fall through to a ref</span>
-                    <span class="comment">// count update</span>
-                    <span class="ident">arc</span> <span class="op">=</span> <span class="ident">actual</span>;
+                <span class="comment">// If there are no references to self in other threads,</span>
+                <span class="comment">// expensive atomic operations can be avoided.</span>
+                <span class="kw">if</span> <span class="ident">mut_self</span> {
+                    <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">store</span>(<span class="ident">shared</span>, <span class="ident">Relaxed</span>);
+                    <span class="kw">return</span> <span class="ident">Inner</span> {
+                        <span class="ident">arc</span>: <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">shared</span>),
+                        .. <span class="kw-2">*</span><span class="self">self</span>
+                    };
                 }
+
+                <span class="comment">// Try compare &amp; swapping the pointer into the `arc` field.</span>
+                <span class="comment">// `Release` is used synchronize with other threads that</span>
+                <span class="comment">// will load the `arc` field.</span>
+                <span class="comment">//</span>
+                <span class="comment">// If the `compare_and_swap` fails, then the thread lost the</span>
+                <span class="comment">// race to promote the buffer to shared. The `Acquire`</span>
+                <span class="comment">// ordering will synchronize with the `compare_and_swap`</span>
+                <span class="comment">// that happened in the other thread and the `Shared`</span>
+                <span class="comment">// pointed to by `actual` will be visible.</span>
+                <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">compare_and_swap</span>(<span class="ident">arc</span>, <span class="ident">shared</span>, <span class="ident">AcqRel</span>);
+
+                <span class="kw">if</span> <span class="ident">actual</span> <span class="op">==</span> <span class="ident">arc</span> {
+                    <span class="comment">// The upgrade was successful, the new handle can be</span>
+                    <span class="comment">// returned.</span>
+                    <span class="kw">return</span> <span class="ident">Inner</span> {
+                        <span class="ident">arc</span>: <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">shared</span>),
+                        .. <span class="kw-2">*</span><span class="self">self</span>
+                    };
+                }
+
+                <span class="comment">// The upgrade failed, a concurrent clone happened. Release</span>
+                <span class="comment">// the allocation that was made in this thread, it will not</span>
+                <span class="comment">// be needed.</span>
+                <span class="kw">let</span> <span class="ident">shared</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">from_raw</span>(<span class="ident">shared</span>);
+                <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="kw-2">*</span><span class="ident">shared</span>);
+
+                <span class="comment">// Update the `arc` local variable and fall through to a ref</span>
+                <span class="comment">// count update</span>
+                <span class="ident">arc</span> <span class="op">=</span> <span class="ident">actual</span>;
             } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">arc</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">KIND_MASK</span> <span class="op">==</span> <span class="ident">KIND_STATIC</span> {
                 <span class="comment">// Static buffer</span>
                 <span class="kw">return</span> <span class="ident">Inner</span> {
@@ -4594,14 +4923,13 @@
 
             <span class="comment">// Buffer already promoted to shared storage, so increment ref</span>
             <span class="comment">// count.</span>
-            <span class="kw">unsafe</span> {
-                <span class="comment">// Relaxed ordering is acceptable as the memory has already been</span>
-                <span class="comment">// acquired via the `Acquire` load above.</span>
-                <span class="kw">let</span> <span class="ident">old_size</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">arc</span>).<span class="ident">ref_count</span>.<span class="ident">fetch_add</span>(<span class="number">1</span>, <span class="ident">Relaxed</span>);
+            <span class="comment">//</span>
+            <span class="comment">// Relaxed ordering is acceptable as the memory has already been</span>
+            <span class="comment">// acquired via the `Acquire` load above.</span>
+            <span class="kw">let</span> <span class="ident">old_size</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">arc</span>).<span class="ident">ref_count</span>.<span class="ident">fetch_add</span>(<span class="number">1</span>, <span class="ident">Relaxed</span>);
 
-                <span class="kw">if</span> <span class="ident">old_size</span> <span class="op">==</span> <span class="ident">usize</span>::<span class="ident">MAX</span> {
-                    <span class="macro">panic</span><span class="macro">!</span>(); <span class="comment">// TODO: abort</span>
-                }
+            <span class="kw">if</span> <span class="ident">old_size</span> <span class="op">==</span> <span class="ident">usize</span>::<span class="ident">MAX</span> {
+                <span class="macro">panic</span><span class="macro">!</span>(); <span class="comment">// TODO: abort</span>
             }
 
             <span class="ident">Inner</span> {
@@ -4648,13 +4976,14 @@
         <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_VEC</span> {
             <span class="comment">// Currently backed by a vector, so just use `Vector::reserve`.</span>
             <span class="kw">unsafe</span> {
-                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from_raw_parts</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">cap</span>);
+                <span class="kw">let</span> (<span class="ident">off</span>, _) <span class="op">=</span> <span class="self">self</span>.<span class="ident">uncoordinated_get_vec_pos</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">rebuild_vec</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">cap</span>, <span class="ident">off</span>);
                 <span class="ident">v</span>.<span class="ident">reserve</span>(<span class="ident">additional</span>);
 
                 <span class="comment">// Update the info</span>
-                <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">as_mut_ptr</span>();
-                <span class="self">self</span>.<span class="ident">len</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">len</span>();
-                <span class="self">self</span>.<span class="ident">cap</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">capacity</span>();
+                <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">offset</span>(<span class="ident">off</span> <span class="kw">as</span> <span class="ident">isize</span>);
+                <span class="self">self</span>.<span class="ident">len</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">off</span>;
+                <span class="self">self</span>.<span class="ident">cap</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">capacity</span>() <span class="op">-</span> <span class="ident">off</span>;
 
                 <span class="comment">// Drop the vec reference</span>
                 <span class="ident">mem</span>::<span class="ident">forget</span>(<span class="ident">v</span>);
@@ -4663,10 +4992,7 @@
             }
         }
 
-        <span class="comment">// `Relaxed` is Ok here (and really, no synchronization is necessary)</span>
-        <span class="comment">// due to having a `&amp;mut self` pointer. The `&amp;mut self` pointer ensures</span>
-        <span class="comment">// that there is no concurrent access on `self`.</span>
-        <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">load</span>(<span class="ident">Relaxed</span>);
+        <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">get_mut</span>();
 
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_ARC</span>);
 
@@ -4676,9 +5002,11 @@
         <span class="comment">// Compute the new capacity</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_cap</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">+</span> <span class="ident">additional</span>;
         <span class="kw">let</span> <span class="ident">original_capacity</span>;
+        <span class="kw">let</span> <span class="ident">original_capacity_repr</span>;
 
         <span class="kw">unsafe</span> {
-            <span class="ident">original_capacity</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">arc</span>).<span class="ident">original_capacity</span>;
+            <span class="ident">original_capacity_repr</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">arc</span>).<span class="ident">original_capacity_repr</span>;
+            <span class="ident">original_capacity</span> <span class="op">=</span> <span class="ident">original_capacity_from_repr</span>(<span class="ident">original_capacity_repr</span>);
 
             <span class="comment">// First, try to reclaim the buffer. This is possible if the current</span>
             <span class="comment">// handle is the only outstanding handle pointing to the buffer.</span>
@@ -4731,7 +5059,7 @@
         <span class="self">self</span>.<span class="ident">len</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">len</span>();
         <span class="self">self</span>.<span class="ident">cap</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">capacity</span>();
 
-        <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> (<span class="ident">original_capacity</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">KIND_MASK</span>) <span class="op">|</span> <span class="ident">KIND_VEC</span>;
+        <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> (<span class="ident">original_capacity_repr</span> <span class="op">&lt;&lt;</span> <span class="ident">ORIGINAL_CAPACITY_OFFSET</span>) <span class="op">|</span> <span class="ident">KIND_VEC</span>;
 
         <span class="self">self</span>.<span class="ident">arc</span> <span class="op">=</span> <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">arc</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Shared</span>);
 
@@ -4804,21 +5132,56 @@
 
         <span class="ident">imp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">arc</span>)
     }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">uncoordinated_get_vec_pos</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+        <span class="comment">// Similar to above, this is a pretty crazed function. This should only</span>
+        <span class="comment">// be called when in the KIND_VEC mode. This + the &amp;mut self argument</span>
+        <span class="comment">// guarantees that there is no possibility of concurrent calls to this</span>
+        <span class="comment">// function.</span>
+        <span class="kw">let</span> <span class="ident">prev</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">AtomicPtr</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">arc</span>;
+            <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">usize</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">p</span>);
+            <span class="kw-2">*</span><span class="ident">p</span>
+        };
+
+        (<span class="ident">prev</span> <span class="op">&gt;&gt;</span> <span class="ident">VEC_POS_OFFSET</span>, <span class="ident">prev</span>)
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">uncoordinated_set_vec_pos</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">usize</span>, <span class="ident">prev</span>: <span class="ident">usize</span>) {
+        <span class="comment">// Once more... crazy</span>
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">pos</span> <span class="op">&lt;=</span> <span class="ident">MAX_VEC_POS</span>);
+
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">AtomicPtr</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">arc</span>;
+            <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">usize</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">p</span>);
+            <span class="kw-2">*</span><span class="ident">p</span> <span class="op">=</span> (<span class="ident">pos</span> <span class="op">&lt;&lt;</span> <span class="ident">VEC_POS_OFFSET</span>) <span class="op">|</span> (<span class="ident">prev</span> <span class="op">&amp;</span> <span class="ident">NOT_VEC_POS_MASK</span>);
+        }
+    }
 }
 
-<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Inner2</span> {
+<span class="kw">fn</span> <span class="ident">rebuild_vec</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="kw-2">mut</span> <span class="ident">len</span>: <span class="ident">usize</span>, <span class="kw-2">mut</span> <span class="ident">cap</span>: <span class="ident">usize</span>, <span class="ident">off</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="op">-</span>(<span class="ident">off</span> <span class="kw">as</span> <span class="ident">isize</span>));
+        <span class="ident">len</span> <span class="op">+=</span> <span class="ident">off</span>;
+        <span class="ident">cap</span> <span class="op">+=</span> <span class="ident">off</span>;
+
+        <span class="ident">Vec</span>::<span class="ident">from_raw_parts</span>(<span class="ident">ptr</span>, <span class="ident">len</span>, <span class="ident">cap</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Inner</span> {
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">kind</span>();
 
         <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_VEC</span> {
+            <span class="kw">let</span> (<span class="ident">off</span>, _) <span class="op">=</span> <span class="self">self</span>.<span class="ident">uncoordinated_get_vec_pos</span>();
+
             <span class="comment">// Vector storage, free the vector</span>
-            <span class="kw">unsafe</span> {
-                <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from_raw_parts</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">cap</span>);
-            }
+            <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">rebuild_vec</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">len</span>, <span class="self">self</span>.<span class="ident">cap</span>, <span class="ident">off</span>);
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">kind</span> <span class="op">==</span> <span class="ident">KIND_ARC</span> {
-            <span class="comment">// &amp;mut self guarantees correct ordering</span>
-            <span class="kw">let</span> <span class="ident">arc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">load</span>(<span class="ident">Relaxed</span>);
-            <span class="ident">release_shared</span>(<span class="ident">arc</span>);
+            <span class="ident">release_shared</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">arc</span>.<span class="ident">get_mut</span>());
         }
     }
 }
@@ -4850,7 +5213,7 @@
         <span class="ident">atomic</span>::<span class="ident">fence</span>(<span class="ident">Acquire</span>);
 
         <span class="comment">// Drop the data</span>
-        <span class="kw">let</span> _: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">ptr</span>);
+        <span class="ident">Box</span>::<span class="ident">from_raw</span>(<span class="ident">ptr</span>);
     }
 }
 
@@ -4870,30 +5233,54 @@
     }
 }
 
+<span class="kw">fn</span> <span class="ident">original_capacity_to_repr</span>(<span class="ident">cap</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="ident">PTR_WIDTH</span> <span class="op">-</span> ((<span class="ident">cap</span> <span class="op">&gt;&gt;</span> <span class="ident">MIN_ORIGINAL_CAPACITY_WIDTH</span>).<span class="ident">leading_zeros</span>() <span class="kw">as</span> <span class="ident">usize</span>);
+    <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">width</span>, <span class="ident">MAX_ORIGINAL_CAPACITY_WIDTH</span> <span class="op">-</span> <span class="ident">MIN_ORIGINAL_CAPACITY_WIDTH</span>)
+}
+
+<span class="kw">fn</span> <span class="ident">original_capacity_from_repr</span>(<span class="ident">repr</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">if</span> <span class="ident">repr</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">return</span> <span class="number">0</span>;
+    }
+
+    <span class="number">1</span> <span class="op">&lt;&lt;</span> (<span class="ident">repr</span> <span class="op">+</span> (<span class="ident">MIN_ORIGINAL_CAPACITY_WIDTH</span> <span class="op">-</span> <span class="number">1</span>))
+}
+
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_original_capacity_to_repr</span>() {
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">cap</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">16</span>, <span class="number">1000</span>] {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">0</span>, <span class="ident">original_capacity_to_repr</span>(<span class="ident">cap</span>));
+    }
+
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">cap</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">1024</span>, <span class="number">1025</span>, <span class="number">1100</span>, <span class="number">2000</span>, <span class="number">2047</span>] {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">original_capacity_to_repr</span>(<span class="ident">cap</span>));
+    }
+
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">cap</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">2048</span>, <span class="number">2049</span>] {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">original_capacity_to_repr</span>(<span class="ident">cap</span>));
+    }
+
+    <span class="comment">// TODO: more</span>
+
+    <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">cap</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">65536</span>, <span class="number">65537</span>, <span class="number">68000</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">17</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">18</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">20</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">30</span>] {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">7</span>, <span class="ident">original_capacity_to_repr</span>(<span class="ident">cap</span>), <span class="string">&quot;cap={}&quot;</span>, <span class="ident">cap</span>);
+    }
+}
+
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_original_capacity_from_repr</span>() {
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">0</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">0</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">1</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">2</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">2</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">4</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">3</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">8</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">4</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">16</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">5</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">32</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">6</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1024</span> <span class="op">*</span> <span class="number">64</span>, <span class="ident">original_capacity_from_repr</span>(<span class="number">7</span>));
+}
+
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Inner</span> {}
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">Inner</span> {}
-
-<span class="comment">/*
- *
- * ===== impl Inner2 =====
- *
- */</span>
-
-<span class="kw">impl</span> <span class="ident">ops</span>::<span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Inner2</span> {
-    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Inner</span>;
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Inner</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">ops</span>::<span class="ident">DerefMut</span> <span class="kw">for</span> <span class="ident">Inner2</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Inner</span> {
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">inner</span>
-    }
-}
 
 <span class="comment">/*
  *
@@ -5200,20 +5587,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

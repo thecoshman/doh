@@ -10,8 +10,11 @@
     <title>phf - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate phf</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'phf', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate phf</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'phf', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,7 +61,6 @@
                    </a>
                </span><a class='srclink' href='../src/phf/lib.rs.html#1-53' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Compile time optimized maps and sets.</p>
-
 <p>PHF data structures can be generated via the syntax extensions in the
 <code>phf_macros</code> crate or via code generation in the <code>phf_codegen</code> crate. See
 the documentation of those crates for more details.</p>
@@ -61,6 +71,7 @@ the documentation of those crates for more details.</p>
                                   title='mod phf::map'>map</a></td>
                            <td class='docblock-short'>
                                 <p>An immutable map constructed at compile time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -68,6 +79,7 @@ the documentation of those crates for more details.</p>
                                   title='mod phf::ordered_map'>ordered_map</a></td>
                            <td class='docblock-short'>
                                 <p>An order-preserving immutable map constructed at compile time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -75,6 +87,7 @@ the documentation of those crates for more details.</p>
                                   title='mod phf::ordered_set'>ordered_set</a></td>
                            <td class='docblock-short'>
                                 <p>An order-preserving immutable set constructed at compile time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -82,6 +95,7 @@ the documentation of those crates for more details.</p>
                                   title='mod phf::set'>set</a></td>
                            <td class='docblock-short'>
                                 <p>An immutable set constructed at compile time.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -90,6 +104,7 @@ the documentation of those crates for more details.</p>
                                   title='struct phf::Map'>Map</a></td>
                            <td class='docblock-short'>
                                 <p>An immutable map constructed at compile time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -97,6 +112,7 @@ the documentation of those crates for more details.</p>
                                   title='struct phf::OrderedMap'>OrderedMap</a></td>
                            <td class='docblock-short'>
                                 <p>An order-preserving immutable map constructed at compile time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -104,6 +120,7 @@ the documentation of those crates for more details.</p>
                                   title='struct phf::OrderedSet'>OrderedSet</a></td>
                            <td class='docblock-short'>
                                 <p>An order-preserving immutable set constructed at compile time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -111,6 +128,7 @@ the documentation of those crates for more details.</p>
                                   title='struct phf::Set'>Set</a></td>
                            <td class='docblock-short'>
                                 <p>An immutable set constructed at compile time.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -119,6 +137,7 @@ the documentation of those crates for more details.</p>
                                   title='trait phf::PhfHash'>PhfHash</a></td>
                            <td class='docblock-short'>
                                 <p>A trait implemented by types which can be used in PHF data structures.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -133,20 +152,22 @@ the documentation of those crates for more details.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

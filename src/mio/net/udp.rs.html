@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.12/src/net/udp.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.14/src/net/udp.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>udp.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -568,6 +579,83 @@
 <span id="523">523</span>
 <span id="524">524</span>
 <span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Primitives for working with UDP</span>
 <span class="doccomment">//!</span>
@@ -581,6 +669,7 @@
 <span class="kw">use</span> {<span class="ident">io</span>, <span class="ident">sys</span>, <span class="ident">Ready</span>, <span class="ident">Poll</span>, <span class="ident">PollOpt</span>, <span class="ident">Token</span>};
 <span class="kw">use</span> <span class="ident">event</span>::<span class="ident">Evented</span>;
 <span class="kw">use</span> <span class="ident">poll</span>::<span class="ident">SelectorId</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="self">self</span>, <span class="ident">Ipv4Addr</span>, <span class="ident">Ipv6Addr</span>, <span class="ident">SocketAddr</span>};
 
 <span class="doccomment">/// A User Datagram Protocol socket.</span>
@@ -656,7 +745,6 @@
 <span class="doccomment">/// #   try_main().unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UdpSocket</span> {
     <span class="ident">sys</span>: <span class="ident">sys</span>::<span class="ident">UdpSocket</span>,
     <span class="ident">selector_id</span>: <span class="ident">SelectorId</span>,
@@ -716,7 +804,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
+    <span class="comment">// This assertion is almost, but not quite, universal.  It fails on</span>
+    <span class="comment">// shared-IP FreeBSD jails.  It&#39;s hard for mio to know whether we&#39;re jailed,</span>
+    <span class="comment">// so simply disable the test on FreeBSD.</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>), <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;freebsd&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot; ```no_run&quot;</span>)]</span>
     <span class="doccomment">/// # use std::error::Error;</span>
     <span class="doccomment">/// #</span>
     <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
@@ -732,6 +824,7 @@
     <span class="doccomment">/// # fn main() {</span>
     <span class="doccomment">/// #   try_main().unwrap();</span>
     <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">local_addr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">sys</span>.<span class="ident">local_addr</span>()
     }
@@ -741,6 +834,28 @@
     <span class="doccomment">/// The returned `UdpSocket` is a reference to the same socket that this</span>
     <span class="doccomment">/// object references. Both handles will read and write the same port, and</span>
     <span class="doccomment">/// options set on one socket will be propagated to the other.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// use mio::net::UdpSocket;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// // We must bind it to an open address.</span>
+    <span class="doccomment">/// let socket = UdpSocket::bind(&amp;&quot;127.0.0.1:7777&quot;.parse()?)?;</span>
+    <span class="doccomment">/// let cloned_socket = socket.try_clone()?;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(socket.local_addr()?, cloned_socket.local_addr()?);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// #    Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #   try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">UdpSocket</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">sys</span>.<span class="ident">try_clone</span>()
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
@@ -954,6 +1069,29 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This value sets the time-to-live field that is used in every packet sent</span>
     <span class="doccomment">/// from this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// use mio::net::UdpSocket;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let socket = UdpSocket::bind(&amp;&quot;127.0.0.1:7777&quot;.parse()?)?;</span>
+    <span class="doccomment">/// if socket.ttl()? &lt; 255 {</span>
+    <span class="doccomment">///     socket.set_ttl(255)?;</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(socket.ttl()?, 255);</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// #    Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #   try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">sys</span>.<span class="ident">set_ttl</span>(<span class="ident">ttl</span>)
     }
@@ -963,6 +1101,27 @@
     <span class="doccomment">/// For more information about this option, see [`set_ttl`][link].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [link]: #method.set_ttl</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn try_main() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {</span>
+    <span class="doccomment">/// use mio::net::UdpSocket;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let socket = UdpSocket::bind(&amp;&quot;127.0.0.1:7777&quot;.parse()?)?;</span>
+    <span class="doccomment">/// socket.set_ttl(255)?;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(socket.ttl()?, 255);</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// #    Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #   try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">sys</span>.<span class="ident">ttl</span>()
     }
@@ -1061,6 +1220,12 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">UdpSocket</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">sys</span>, <span class="ident">f</span>)
+    }
+}
+
 <span class="comment">/*
  *
  * ===== UNIX ext =====
@@ -1108,20 +1273,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

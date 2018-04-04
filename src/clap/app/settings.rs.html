@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.29.0/src/app/settings.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.31.2/src/app/settings.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>settings.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -1094,6 +1105,89 @@
 <span id="1049">1049</span>
 <span id="1050">1050</span>
 <span id="1051">1051</span>
+<span id="1052">1052</span>
+<span id="1053">1053</span>
+<span id="1054">1054</span>
+<span id="1055">1055</span>
+<span id="1056">1056</span>
+<span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
 </pre><pre class="rust ">
 <span class="comment">// Std</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
@@ -1143,6 +1237,7 @@
         <span class="kw">const</span> <span class="ident">VALID_ARG_FOUND</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">37</span>;
         <span class="kw">const</span> <span class="ident">INFER_SUBCOMMANDS</span>    <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">38</span>;
         <span class="kw">const</span> <span class="ident">CONTAINS_LAST</span>        <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">39</span>;
+        <span class="kw">const</span> <span class="ident">ARGS_OVERRIDE_SELF</span>   <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">40</span>;
     }
 }
 
@@ -1172,6 +1267,7 @@
     <span class="macro">impl_settings</span><span class="macro">!</span> { <span class="ident">AppSettings</span>,
         <span class="ident">ArgRequiredElseHelp</span> <span class="op">=&gt;</span> <span class="ident">Flags</span>::<span class="ident">A_REQUIRED_ELSE_HELP</span>,
         <span class="ident">ArgsNegateSubcommands</span> <span class="op">=&gt;</span> <span class="ident">Flags</span>::<span class="ident">ARGS_NEGATE_SCS</span>,
+        <span class="ident">AllArgsOverrideSelf</span> <span class="op">=&gt;</span> <span class="ident">Flags</span>::<span class="ident">ARGS_OVERRIDE_SELF</span>,
         <span class="ident">AllowExternalSubcommands</span> <span class="op">=&gt;</span> <span class="ident">Flags</span>::<span class="ident">ALLOW_UNK_SC</span>,
         <span class="ident">AllowInvalidUtf8</span> <span class="op">=&gt;</span> <span class="ident">Flags</span>::<span class="ident">UTF8_NONE</span>,
         <span class="ident">AllowLeadingHyphen</span> <span class="op">=&gt;</span> <span class="ident">Flags</span>::<span class="ident">LEADING_HYPHEN</span>,
@@ -1262,6 +1358,13 @@
     <span class="doccomment">/// [`ArgMatches::lossy_values_of`]: ./struct.ArgMatches.html#method.lossy_values_of</span>
     <span class="ident">AllowInvalidUtf8</span>,
 
+    <span class="doccomment">/// Essentially sets [`Arg::overrides_with(&quot;itself&quot;)`] for all arguments.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **WARNING:** Positional arguments cannot override themselves (or we would never be able</span>
+    <span class="doccomment">/// to advance to the next positional). This setting ignores positional arguments.</span>
+    <span class="doccomment">/// [`Arg::overrides_with(&quot;itself&quot;)`]: ./struct.Arg.html#method.overrides_with</span>
+    <span class="ident">AllArgsOverrideSelf</span>,
+
     <span class="doccomment">/// Specifies that leading hyphens are allowed in argument *values*, such as negative numbers</span>
     <span class="doccomment">/// like `-10`. (which would otherwise be parsed as another flag or option)</span>
     <span class="doccomment">///</span>
@@ -1309,7 +1412,9 @@
     <span class="doccomment">/// [`AllowLeadingHyphen`]: ./enum.AppSettings.html#variant.AllowLeadingHyphen</span>
     <span class="ident">AllowNegativeNumbers</span>,
 
-    <span class="doccomment">/// Allows one to implement a CLI where the second to last positional argument is optional, but</span>
+    <span class="doccomment">/// Allows one to implement two styles of CLIs where positionals can be used out of order.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The first example is a CLI where the second to last positional argument is optional, but</span>
     <span class="doccomment">/// the final positional argument is required. Such as `$ prog [optional] &lt;required&gt;` where one</span>
     <span class="doccomment">/// of the two following usages is allowed:</span>
     <span class="doccomment">///</span>
@@ -1318,10 +1423,45 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This would otherwise not be allowed. This is useful when `[optional]` has a default value.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Note:** In addition to using this setting, the second positional argument *must* be</span>
-    <span class="doccomment">/// [required]</span>
+    <span class="doccomment">/// **Note:** when using this style of &quot;missing positionals&quot; the final positional *must* be</span>
+    <span class="doccomment">/// [required] if `--` will not be used to skip to the final positional argument.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note:** This style also only allows a single positional argument to be &quot;skipped&quot; without</span>
+    <span class="doccomment">/// the use of `--`. To skip more than one, see the second example.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The second example is when one wants to skip multiple optional positional arguments, and use</span>
+    <span class="doccomment">/// of the `--` operator is OK (but not required if all arguments will be specified anyways).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// For example, imagine a CLI which has three positional arguments `[foo] [bar] [baz]...` where</span>
+    <span class="doccomment">/// `baz` accepts multiple values (similar to man `ARGS...` style training arguments).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// With this setting the following invocations are posisble:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `$ prog foo bar baz1 baz2 baz3`</span>
+    <span class="doccomment">/// * `$ prog foo -- baz1 baz2 baz3`</span>
+    <span class="doccomment">/// * `$ prog -- baz1 baz2 baz3`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Style number one from above:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use clap::{App, Arg, AppSettings};</span>
+    <span class="doccomment">/// // Assume there is an external subcommand named &quot;subcmd&quot;</span>
+    <span class="doccomment">/// let m = App::new(&quot;myprog&quot;)</span>
+    <span class="doccomment">///     .setting(AppSettings::AllowMissingPositional)</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;arg1&quot;))</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;arg2&quot;)</span>
+    <span class="doccomment">///         .required(true))</span>
+    <span class="doccomment">///     .get_matches_from(vec![</span>
+    <span class="doccomment">///         &quot;prog&quot;, &quot;other&quot;</span>
+    <span class="doccomment">///     ]);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(m.value_of(&quot;arg1&quot;), None);</span>
+    <span class="doccomment">/// assert_eq!(m.value_of(&quot;arg2&quot;), Some(&quot;other&quot;));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Now the same example, but using a default value for the first optional positional argument</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```rust</span>
     <span class="doccomment">/// # use clap::{App, Arg, AppSettings};</span>
@@ -1333,11 +1473,48 @@
     <span class="doccomment">///     .arg(Arg::with_name(&quot;arg2&quot;)</span>
     <span class="doccomment">///         .required(true))</span>
     <span class="doccomment">///     .get_matches_from(vec![</span>
-    <span class="doccomment">///         &quot;myprog&quot;, &quot;other&quot;</span>
+    <span class="doccomment">///         &quot;prog&quot;, &quot;other&quot;</span>
     <span class="doccomment">///     ]);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(m.value_of(&quot;arg1&quot;), Some(&quot;something&quot;));</span>
     <span class="doccomment">/// assert_eq!(m.value_of(&quot;arg2&quot;), Some(&quot;other&quot;));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// Style number two from above:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use clap::{App, Arg, AppSettings};</span>
+    <span class="doccomment">/// // Assume there is an external subcommand named &quot;subcmd&quot;</span>
+    <span class="doccomment">/// let m = App::new(&quot;myprog&quot;)</span>
+    <span class="doccomment">///     .setting(AppSettings::AllowMissingPositional)</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;foo&quot;))</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;bar&quot;))</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;baz&quot;).multiple(true))</span>
+    <span class="doccomment">///     .get_matches_from(vec![</span>
+    <span class="doccomment">///         &quot;prog&quot;, &quot;foo&quot;, &quot;bar&quot;, &quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;</span>
+    <span class="doccomment">///     ]);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(m.value_of(&quot;foo&quot;), Some(&quot;foo&quot;));</span>
+    <span class="doccomment">/// assert_eq!(m.value_of(&quot;bar&quot;), Some(&quot;bar&quot;));</span>
+    <span class="doccomment">/// assert_eq!(m.values_of(&quot;baz&quot;).unwrap().collect::&lt;Vec&lt;_&gt;&gt;(), &amp;[&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;]);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Now nofice if we don&#39;t specifiy `foo` or `baz` but use the `--` operator.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use clap::{App, Arg, AppSettings};</span>
+    <span class="doccomment">/// // Assume there is an external subcommand named &quot;subcmd&quot;</span>
+    <span class="doccomment">/// let m = App::new(&quot;myprog&quot;)</span>
+    <span class="doccomment">///     .setting(AppSettings::AllowMissingPositional)</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;foo&quot;))</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;bar&quot;))</span>
+    <span class="doccomment">///     .arg(Arg::with_name(&quot;baz&quot;).multiple(true))</span>
+    <span class="doccomment">///     .get_matches_from(vec![</span>
+    <span class="doccomment">///         &quot;prog&quot;, &quot;--&quot;, &quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;</span>
+    <span class="doccomment">///     ]);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(m.value_of(&quot;foo&quot;), None);</span>
+    <span class="doccomment">/// assert_eq!(m.value_of(&quot;bar&quot;), None);</span>
+    <span class="doccomment">/// assert_eq!(m.values_of(&quot;baz&quot;).unwrap().collect::&lt;Vec&lt;_&gt;&gt;(), &amp;[&quot;baz1&quot;, &quot;baz2&quot;, &quot;baz3&quot;]);</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// [required]: ./struct.Arg.html#method.required</span>
     <span class="ident">AllowMissingPositional</span>,
@@ -1593,7 +1770,7 @@
     <span class="ident">DeriveDisplayOrder</span>,
 
     <span class="doccomment">/// Specifies to use the version of the current command for all child [`SubCommand`]s.</span>
-    <span class="doccomment">/// (Defaults to `false`; subcommands have independant version strings from their parents.)</span>
+    <span class="doccomment">/// (Defaults to `false`; subcommands have independent version strings from their parents.)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **NOTE:** The version for the current command **and** this setting must be set **prior** to</span>
     <span class="doccomment">/// adding any child subcommands</span>
@@ -1641,7 +1818,7 @@
     <span class="doccomment">/// designing CLIs which allow inferred subcommands and have potential positional/free</span>
     <span class="doccomment">/// arguments whose values could start with the same characters as subcommands. If this is the</span>
     <span class="doccomment">/// case, it&#39;s recommended to use settings such as [`AppSeettings::ArgsNegateSubcommands`] in</span>
-    <span class="doccomment">/// conjuction with this setting.</span>
+    <span class="doccomment">/// conjunction with this setting.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -2160,20 +2337,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

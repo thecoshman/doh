@@ -10,8 +10,11 @@
     <title>openssl::pkcs5::bytes_to_key - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>pkcs5</a></p><script>window.sidebarCurrent = {name: 'bytes_to_key', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,13 +61,10 @@
                    </a>
                </span><a class='srclink' href='../../src/openssl/pkcs5.rs.html#26-79' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn bytes_to_key(<br>&nbsp;&nbsp;&nbsp;&nbsp;cipher: <a class="struct" href="../../openssl/symm/struct.Cipher.html" title="struct openssl::symm::Cipher">Cipher</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;digest: <a class="struct" href="../../openssl/hash/struct.MessageDigest.html" title="struct openssl::hash::MessageDigest">MessageDigest</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;salt: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;count: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkcs5/struct.KeyIvPair.html" title="struct openssl::pkcs5::KeyIvPair">KeyIvPair</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</pre><div class='docblock'><p>Derives a key and an IV from various parameters.</p>
-
 <p>If specified, <code>salt</code> must be 8 bytes in length.</p>
-
 <p>If the total key and IV length is less than 16 bytes and MD5 is used then
 the algorithm is compatible with the key derivation algorithm from PKCS#5
 v1.5 or PBKDF1 from PKCS#5 v2.0.</p>
-
 <p>New applications should not use this and instead use
 <code>pbkdf2_hmac</code> or another more modern key derivation algorithm.</p>
 </div></section>
@@ -72,20 +80,22 @@ v1.5 or PBKDF1 from PKCS#5 v2.0.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

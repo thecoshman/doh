@@ -10,8 +10,11 @@
     <title>openssl::x509::X509Generator - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct X509Generator</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.set_valid_period">set_valid_period</a><a href="#method.add_name">add_name</a><a href="#method.add_names">add_names</a><a href="#method.add_extension">add_extension</a><a href="#method.add_extensions">add_extensions</a><a href="#method.set_sign_hash">set_sign_hash</a><a href="#method.sign">sign</a><a href="#method.request">request</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>x509</a></p><script>window.sidebarCurrent = {name: 'X509Generator', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct X509Generator</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.set_valid_period">set_valid_period</a><a href="#method.add_name">add_name</a><a href="#method.add_names">add_names</a><a href="#method.add_extension">add_extension</a><a href="#method.add_extensions">add_extensions</a><a href="#method.set_sign_hash">set_sign_hash</a><a href="#method.sign">sign</a><a href="#method.request">request</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>x509</a></p><script>window.sidebarCurrent = {name: 'X509Generator', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -58,11 +69,8 @@
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#131-138' title='goto source code'>[src]</a></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Creates a new generator with the following defaults:</p>
-
 <p>validity period: 365 days</p>
-
 <p>CN: &quot;rust-openssl&quot;</p>
-
 <p>hash: SHA1</p>
 </div><h4 id='method.set_valid_period' class="method"><span id='set_valid_period.v' class='invisible'><code>pub fn <a href='#method.set_valid_period' class='fnname'>set_valid_period</a>(self, days: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#142-145' title='goto source code'>[src]</a></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
@@ -82,7 +90,6 @@
 </div><h4 id='method.add_extension' class="method"><span id='add_extension.v' class='invisible'><code>pub fn <a href='#method.add_extension' class='fnname'>add_extension</a>(self, ext: <a class="enum" href="../../openssl/x509/extension/enum.Extension.html" title="enum openssl::x509::extension::Extension">Extension</a>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#186-189' title='goto source code'>[src]</a></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add an extension to a certificate</p>
-
 <p>If the extension already exists, it will be replaced.</p>
 
 <pre class="rust rust-example-rendered">
@@ -93,7 +100,6 @@
 </div><h4 id='method.add_extensions' class="method"><span id='add_extensions.v' class='invisible'><code>pub fn <a href='#method.add_extensions' class='fnname'>add_extensions</a>&lt;I&gt;(self, exts: I) -&gt; <a class="struct" href="../../openssl/x509/struct.X509Generator.html" title="struct openssl::x509::X509Generator">X509Generator</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="enum" href="../../openssl/x509/extension/enum.Extension.html" title="enum openssl::x509::extension::Extension">Extension</a>&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#203-212' title='goto source code'>[src]</a></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.7<p>: use X509Builder and X509ReqBuilder instead</p>
 </div></div><div class='docblock'><p>Add multiple extensions to a certificate</p>
-
 <p>If any of the extensions already exist, they will be replaced.</p>
 
 <pre class="rust rust-example-rendered">
@@ -122,20 +128,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

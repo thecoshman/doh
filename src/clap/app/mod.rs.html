@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.29.0/src/app/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.31.2/src/app/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -1884,12 +1895,8 @@
 <span id="1839">1839</span>
 <span id="1840">1840</span>
 <span id="1841">1841</span>
-<span id="1842">1842</span>
-<span id="1843">1843</span>
 </pre><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">settings</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">mod</span> <span class="ident">macros</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">parser</span>;
 <span class="kw">mod</span> <span class="ident">meta</span>;
 <span class="kw">mod</span> <span class="ident">help</span>;
@@ -2676,7 +2683,7 @@
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// Adds multiple [arguments] to the list of valid possibilties</span>
+    <span class="doccomment">/// Adds multiple [arguments] to the list of valid possibilities</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -2867,7 +2874,7 @@
     <span class="doccomment">/// Meaning any of the arguments that belong to that group will cause a failure if present with</span>
     <span class="doccomment">/// the conflicting argument.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Another added benfit of [`ArgGroup`]s is that you can extract a value from a group instead</span>
+    <span class="doccomment">/// Another added benefit of [`ArgGroup`]s is that you can extract a value from a group instead</span>
     <span class="doccomment">/// of determining exactly which argument was used.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Finally, using [`ArgGroup`]s to ensure exclusion between arguments is another very common</span>
@@ -3047,7 +3054,7 @@
     <span class="doccomment">/// [`-h` (short)]: ./struct.Arg.html#method.help</span>
     <span class="doccomment">/// [`--help` (long)]: ./struct.Arg.html#method.long_help</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_help</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ClapResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="comment">// If there are global arguments, or settings we need to propgate them down to subcommands</span>
+        <span class="comment">// If there are global arguments, or settings we need to propagate them down to subcommands</span>
         <span class="comment">// before parsing incase we run into a subcommand</span>
         <span class="self">self</span>.<span class="ident">p</span>.<span class="ident">propagate_globals</span>();
         <span class="self">self</span>.<span class="ident">p</span>.<span class="ident">propagate_settings</span>();
@@ -3077,7 +3084,7 @@
     <span class="doccomment">/// [`-h` (short)]: ./struct.Arg.html#method.help</span>
     <span class="doccomment">/// [`--help` (long)]: ./struct.Arg.html#method.long_help</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">print_long_help</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ClapResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="comment">// If there are global arguments, or settings we need to propgate them down to subcommands</span>
+        <span class="comment">// If there are global arguments, or settings we need to propagate them down to subcommands</span>
         <span class="comment">// before parsing incase we run into a subcommand</span>
         <span class="self">self</span>.<span class="ident">p</span>.<span class="ident">propagate_globals</span>();
         <span class="self">self</span>.<span class="ident">p</span>.<span class="ident">propagate_settings</span>();
@@ -3097,7 +3104,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **NOTE:** There is a known bug where this method does not write propagated global arguments</span>
     <span class="doccomment">/// or autogenerated arguments (i.e. the default help/version args). Prefer</span>
-    <span class="doccomment">/// [`App::write_long_help`] instead if possibe!</span>
+    <span class="doccomment">/// [`App::write_long_help`] instead if possible!</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -3114,7 +3121,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_help</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">w</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">ClapResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="comment">// PENDING ISSUE: 808</span>
         <span class="comment">//      https://github.com/kbknapp/clap-rs/issues/808</span>
-        <span class="comment">// If there are global arguments, or settings we need to propgate them down to subcommands</span>
+        <span class="comment">// If there are global arguments, or settings we need to propagate them down to subcommands</span>
         <span class="comment">// before parsing incase we run into a subcommand</span>
         <span class="comment">// self.p.propagate_globals();</span>
         <span class="comment">// self.p.propagate_settings();</span>
@@ -3195,7 +3202,7 @@
 
     <span class="doccomment">/// Generate a completions file for a specified shell at compile time.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **NOTE:** to generate the this file at compile time you must use a `build.rs` &quot;Build Script&quot;</span>
+    <span class="doccomment">/// **NOTE:** to generate the file at compile time you must use a `build.rs` &quot;Build Script&quot;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
@@ -3487,7 +3494,7 @@
         <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">OsString</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
     {
-        <span class="comment">// If there are global arguments, or settings we need to propgate them down to subcommands</span>
+        <span class="comment">// If there are global arguments, or settings we need to propagate them down to subcommands</span>
         <span class="comment">// before parsing incase we run into a subcommand</span>
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">p</span>.<span class="ident">is_set</span>(<span class="ident">AppSettings</span>::<span class="ident">Propagated</span>) {
             <span class="self">self</span>.<span class="ident">p</span>.<span class="ident">propagate_globals</span>();
@@ -3744,20 +3751,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

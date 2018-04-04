@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.11/src/uri.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.11.25/src/uri.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>uri.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -726,6 +737,33 @@
 <span id="681">681</span>
 <span id="682">682</span>
 <span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="self">self</span>};
@@ -771,7 +809,7 @@
 
 <span class="kw">impl</span> <span class="ident">Uri</span> {
     <span class="doccomment">/// Parse a string into a `Uri`.</span>
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">s</span>: <span class="ident">ByteStr</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Uri</span>, <span class="ident">UriError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">s</span>: <span class="ident">ByteStr</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Uri</span>, <span class="ident">UriError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
             <span class="prelude-val">Err</span>(<span class="ident">UriError</span>(<span class="ident">ErrorKind</span>::<span class="ident">Empty</span>))
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">as_bytes</span>() <span class="op">==</span> <span class="string">b&quot;*&quot;</span> {
@@ -810,8 +848,19 @@
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">UriError</span>(<span class="ident">ErrorKind</span>::<span class="ident">Malformed</span>));
                 }
             }
+
+            <span class="comment">// absolute-form must always have a path</span>
+            <span class="comment">// if there isn&#39;t a &#39;/&#39;, for consistency, add one.</span>
+            <span class="kw">let</span> <span class="ident">slash</span> <span class="op">=</span> <span class="ident">auth_end</span>;
+            <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">slash</span> {
+                <span class="ident">s</span>.<span class="ident">insert</span>(<span class="ident">slash</span>, <span class="string">&#39;/&#39;</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">as_bytes</span>()[<span class="ident">slash</span>] <span class="op">!=</span> <span class="string">b&#39;/&#39;</span> {
+                <span class="ident">s</span>.<span class="ident">insert</span>(<span class="ident">slash</span>, <span class="string">&#39;/&#39;</span>);
+            }
+
             <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">parse_query</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>);
             <span class="kw">let</span> <span class="ident">fragment</span> <span class="op">=</span> <span class="ident">parse_fragment</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>);
+
             <span class="prelude-val">Ok</span>(<span class="ident">Uri</span> {
                 <span class="ident">source</span>: <span class="ident">s</span>,
                 <span class="ident">scheme_end</span>: <span class="ident">scheme</span>,
@@ -1003,6 +1052,13 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Uri</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_str</span>() <span class="op">==</span> <span class="ident">other</span>
+    }
+}
+
+<span class="comment">// FIXME delete for 0.12</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Uri</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="op">&amp;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">source</span>.<span class="ident">as_str</span>() <span class="op">==</span> <span class="kw-2">*</span><span class="ident">other</span>
@@ -1165,7 +1221,6 @@
         <span class="attribute">#[<span class="ident">test</span>]</span>
         <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">test_name</span>() {
             <span class="kw">let</span> <span class="ident">uri</span> <span class="op">=</span> <span class="ident">Uri</span>::<span class="ident">from_str</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">str</span>).<span class="ident">unwrap</span>();
-            <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:?} = {:#?}&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">str</span>, <span class="ident">uri</span>);
             $(
             <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>, <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>));
             )<span class="op">+</span>
@@ -1208,6 +1263,8 @@
     <span class="ident">query</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">fragment</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">port</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">61761</span>),
+
+    <span class="ident">to_string</span> <span class="op">=</span> <span class="string">&quot;https://127.0.0.1:61761/&quot;</span>,
 }
 
 <span class="macro">test_parse</span><span class="macro">!</span> {
@@ -1219,6 +1276,8 @@
     <span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;*&quot;</span>,
     <span class="ident">query</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">fragment</span> <span class="op">=</span> <span class="prelude-val">None</span>,
+
+    <span class="ident">to_string</span> <span class="op">=</span> <span class="string">&quot;*&quot;</span>,
 }
 
 <span class="macro">test_parse</span><span class="macro">!</span> {
@@ -1232,6 +1291,8 @@
     <span class="ident">query</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">fragment</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">port</span> <span class="op">=</span> <span class="prelude-val">None</span>,
+
+    <span class="ident">to_string</span> <span class="op">=</span> <span class="string">&quot;localhost&quot;</span>,
 }
 
 <span class="macro">test_parse</span><span class="macro">!</span> {
@@ -1349,6 +1410,8 @@
     <span class="ident">query</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;foo=bar&quot;</span>),
     <span class="ident">fragment</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">port</span> <span class="op">=</span> <span class="prelude-val">None</span>,
+
+    <span class="ident">to_string</span> <span class="op">=</span> <span class="string">&quot;http://127.0.0.1/?foo=bar&quot;</span>,
 }
 
 <span class="macro">test_parse</span><span class="macro">!</span> {
@@ -1373,6 +1436,8 @@
     <span class="ident">query</span> <span class="op">=</span> <span class="prelude-val">None</span>,
     <span class="ident">fragment</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">&quot;foo?bar&quot;</span>),
     <span class="ident">port</span> <span class="op">=</span> <span class="prelude-val">None</span>,
+
+    <span class="ident">to_string</span> <span class="op">=</span> <span class="string">&quot;http://127.0.0.1/#foo?bar&quot;</span>,
 }
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1424,20 +1489,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

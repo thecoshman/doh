@@ -10,8 +10,11 @@
     <title>futures::sync::mpsc::spawn - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='../../index.html'>futures</a>::<wbr><a href='../index.html'>sync</a>::<wbr><a href='index.html'>mpsc</a></p><script>window.sidebarCurrent = {name: 'spawn', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,21 +59,17 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/futures/sync/mpsc/mod.rs.html#1010-1021' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/futures/sync/mpsc/mod.rs.html#1013-1027' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn spawn&lt;S, E&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;stream: S, <br>&nbsp;&nbsp;&nbsp;&nbsp;executor: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>E, <br>&nbsp;&nbsp;&nbsp;&nbsp;buffer: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><br>) -&gt; <a class="struct" href="../../../futures/sync/mpsc/struct.SpawnHandle.html" title="struct futures::sync::mpsc::SpawnHandle">SpawnHandle</a>&lt;S::<a class="type" href="../../../futures/stream/trait.Stream.html#associatedtype.Item" title="type futures::stream::Stream::Item">Item</a>, S::<a class="type" href="../../../futures/stream/trait.Stream.html#associatedtype.Error" title="type futures::stream::Stream::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../../futures/stream/trait.Stream.html" title="trait futures::stream::Stream">Stream</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../../../futures/future/trait.Executor.html" title="trait futures::future::Executor">Executor</a>&lt;<a class="struct" href="../../../futures/sync/mpsc/struct.Execute.html" title="struct futures::sync::mpsc::Execute">Execute</a>&lt;S&gt;&gt;,&nbsp;</span></pre><div class='docblock'><p>Spawns a <code>stream</code> onto the instance of <code>Executor</code> provided, <code>executor</code>,
 returning a handle representing the remote stream.</p>
-
 <p>The <code>stream</code> will be canceled if the <code>SpawnHandle</code> is dropped.</p>
-
 <p>The <code>SpawnHandle</code> returned is a stream that is a proxy for <code>stream</code> itself.
 When <code>stream</code> has additional items available, then the <code>SpawnHandle</code>
 will have those same items available.</p>
-
 <p>At most <code>buffer + 1</code> elements will be buffered at a time. If the buffer
 is full, then <code>stream</code> will stop progressing until more space is available.
 This allows the <code>SpawnHandle</code> to exert backpressure on the <code>stream</code>.</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>This function will panic if <code>executor</code> is unable spawn a <code>Future</code> containing
 the entirety of the <code>stream</code>.</p>
 </div></section>
@@ -78,20 +85,22 @@ the entirety of the <code>stream</code>.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

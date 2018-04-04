@@ -10,8 +10,11 @@
     <title>tokio_core::reactor - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module reactor</p><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>tokio_core</a></p><script>window.sidebarCurrent = {name: 'reactor', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module reactor</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>tokio_core</a></p><script>window.sidebarCurrent = {name: 'reactor', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,9 +59,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/tokio_core/reactor/mod.rs.html#1-910' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/tokio_core/reactor/mod.rs.html#1-841' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The core reactor driving all I/O</p>
-
 <p>This module contains the <code>Core</code> type which is the reactor for all I/O
 happening in <code>tokio-core</code>. This reactor (or event loop) is used to run
 futures, schedule tasks, issue I/O requests, etc.</p>
@@ -61,6 +71,7 @@ futures, schedule tasks, issue I/O requests, etc.</p>
                                   title='struct tokio_core::reactor::Core'>Core</a></td>
                            <td class='docblock-short'>
                                 <p>An event loop.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -68,6 +79,7 @@ futures, schedule tasks, issue I/O requests, etc.</p>
                                   title='struct tokio_core::reactor::CoreId'>CoreId</a></td>
                            <td class='docblock-short'>
                                 <p>An unique ID for a Core</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -76,6 +88,7 @@ futures, schedule tasks, issue I/O requests, etc.</p>
                            <td class='docblock-short'>
                                 <p>A non-sendable handle to an event loop, useful for manufacturing instances
 of <code>LoopData</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -83,6 +96,7 @@ of <code>LoopData</code>.</p>
                                   title='struct tokio_core::reactor::Interval'>Interval</a></td>
                            <td class='docblock-short'>
                                 <p>A stream representing notifications at fixed interval</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -91,6 +105,7 @@ of <code>LoopData</code>.</p>
                            <td class='docblock-short'>
                                 <p>A concrete implementation of a stream of readiness notifications for I/O
 objects that originates from an event loop.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -99,6 +114,7 @@ objects that originates from an event loop.</p>
                            <td class='docblock-short'>
                                 <p>Handle to an event loop, used to construct I/O objects, send messages, and
 otherwise interact indirectly with the event loop itself.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -106,6 +122,7 @@ otherwise interact indirectly with the event loop itself.</p>
                                   title='struct tokio_core::reactor::Timeout'>Timeout</a></td>
                            <td class='docblock-short'>
                                 <p>A future representing the notification that a timeout has occurred.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -120,20 +137,22 @@ otherwise interact indirectly with the event loop itself.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

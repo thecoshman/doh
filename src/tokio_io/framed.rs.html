@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-io-0.1.4/src/framed.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-io-0.1.6/src/framed.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>framed.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -271,13 +282,15 @@
 <span id="226">226</span>
 <span id="227">227</span>
 <span id="228">228</span>
+<span id="229">229</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
 <span class="kw">use</span> {<span class="ident">AsyncRead</span>, <span class="ident">AsyncWrite</span>};
-<span class="kw">use</span> <span class="ident">framed_read</span>::{<span class="ident">framed_read2</span>, <span class="ident">framed_read2_with_buffer</span>, <span class="ident">FramedRead2</span>, <span class="ident">Decoder</span>};
-<span class="kw">use</span> <span class="ident">framed_write</span>::{<span class="ident">framed_write2</span>, <span class="ident">framed_write2_with_buffer</span>, <span class="ident">FramedWrite2</span>, <span class="ident">Encoder</span>};
+<span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Decoder</span>, <span class="ident">Encoder</span>};
+<span class="kw">use</span> <span class="ident">framed_read</span>::{<span class="ident">framed_read2</span>, <span class="ident">framed_read2_with_buffer</span>, <span class="ident">FramedRead2</span>};
+<span class="kw">use</span> <span class="ident">framed_write</span>::{<span class="ident">framed_write2</span>, <span class="ident">framed_write2_with_buffer</span>, <span class="ident">FramedWrite2</span>};
 
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Stream</span>, <span class="ident">Sink</span>, <span class="ident">StartSend</span>, <span class="ident">Poll</span>};
 <span class="kw">use</span> <span class="ident">bytes</span>::{<span class="ident">BytesMut</span>};
@@ -499,7 +512,8 @@
     <span class="kw">pub</span> <span class="ident">readbuf</span>: <span class="ident">BytesMut</span>,
     <span class="doccomment">/// A buffer with unprocessed data which are not written yet.</span>
     <span class="kw">pub</span> <span class="ident">writebuf</span>: <span class="ident">BytesMut</span>
-}</pre>
+}
+</pre>
 </section>
     <section id='search' class="content hidden"></section>
 
@@ -513,20 +527,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

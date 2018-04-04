@@ -10,8 +10,11 @@
     <title>futures_cpupool - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate futures_cpupool</p><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'futures_cpupool', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate futures_cpupool</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'futures_cpupool', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,9 +62,8 @@
                </span><a class='srclink' href='../src/futures_cpupool/lib.rs.html#1-450' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A simple crate for executing work on a thread pool, and getting back a
 future.</p>
-
 <p>This crate provides a simple thread pool abstraction for running work
-externally from the current thread that&#39;s running. An instance of <code>Future</code>
+externally from the current thread that's running. An instance of <code>Future</code>
 is handed back to represent that the work may be done later, and further
 computations can be chained along with it as well.</p>
 
@@ -85,6 +95,7 @@ computations can be chained along with it as well.</p>
                                   title='struct futures_cpupool::Builder'>Builder</a></td>
                            <td class='docblock-short'>
                                 <p>Thread pool configuration object</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -93,6 +104,7 @@ computations can be chained along with it as well.</p>
                            <td class='docblock-short'>
                                 <p>The type of future returned from the <code>CpuPool::spawn</code> function, which
 proxies the futures running on the thread pool.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -100,6 +112,7 @@ proxies the futures running on the thread pool.</p>
                                   title='struct futures_cpupool::CpuPool'>CpuPool</a></td>
                            <td class='docblock-short'>
                                 <p>A thread pool intended to run CPU intensive work.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -114,20 +127,22 @@ proxies the futures running on the thread pool.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

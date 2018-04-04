@@ -10,8 +10,11 @@
     <title>phf_shared::PhfHash - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait PhfHash</p><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.phf_hash">phf_hash</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.phf_hash_slice">phf_hash_slice</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-PhfHash">String</a><a href="#impl-PhfHash">Vec&lt;u8&gt;</a><a href="#impl-PhfHash">&amp;&#39;a str</a><a href="#impl-PhfHash">&amp;&#39;a [u8]</a><a href="#impl-PhfHash">str</a><a href="#impl-PhfHash">[u8]</a><a href="#impl-PhfHash">UniCase&lt;S&gt;</a><a href="#impl-PhfHash">u8</a><a href="#impl-PhfHash">i8</a><a href="#impl-PhfHash">u16</a><a href="#impl-PhfHash">i16</a><a href="#impl-PhfHash">u32</a><a href="#impl-PhfHash">i32</a><a href="#impl-PhfHash">u64</a><a href="#impl-PhfHash">i64</a><a href="#impl-PhfHash">bool</a><a href="#impl-PhfHash">char</a><a href="#impl-PhfHash">[u8; 1]</a><a href="#impl-PhfHash">[u8; 2]</a><a href="#impl-PhfHash">[u8; 3]</a><a href="#impl-PhfHash">[u8; 4]</a><a href="#impl-PhfHash">[u8; 5]</a><a href="#impl-PhfHash">[u8; 6]</a><a href="#impl-PhfHash">[u8; 7]</a><a href="#impl-PhfHash">[u8; 8]</a><a href="#impl-PhfHash">[u8; 9]</a><a href="#impl-PhfHash">[u8; 10]</a><a href="#impl-PhfHash">[u8; 11]</a><a href="#impl-PhfHash">[u8; 12]</a><a href="#impl-PhfHash">[u8; 13]</a><a href="#impl-PhfHash">[u8; 14]</a><a href="#impl-PhfHash">[u8; 15]</a><a href="#impl-PhfHash">[u8; 16]</a><a href="#impl-PhfHash">[u8; 17]</a><a href="#impl-PhfHash">[u8; 18]</a><a href="#impl-PhfHash">[u8; 19]</a><a href="#impl-PhfHash">[u8; 20]</a><a href="#impl-PhfHash">[u8; 21]</a><a href="#impl-PhfHash">[u8; 22]</a><a href="#impl-PhfHash">[u8; 23]</a><a href="#impl-PhfHash">[u8; 24]</a><a href="#impl-PhfHash">[u8; 25]</a><a href="#impl-PhfHash">[u8; 26]</a><a href="#impl-PhfHash">[u8; 27]</a><a href="#impl-PhfHash">[u8; 28]</a><a href="#impl-PhfHash">[u8; 29]</a><a href="#impl-PhfHash">[u8; 30]</a><a href="#impl-PhfHash">[u8; 31]</a><a href="#impl-PhfHash">[u8; 32]</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>phf_shared</a></p><script>window.sidebarCurrent = {name: 'PhfHash', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait PhfHash</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.phf_hash">phf_hash</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.phf_hash_slice">phf_hash_slice</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-PhfHash">String</a><a href="#impl-PhfHash">Vec&lt;u8&gt;</a><a href="#impl-PhfHash">&amp;&#39;a str</a><a href="#impl-PhfHash">&amp;&#39;a [u8]</a><a href="#impl-PhfHash">str</a><a href="#impl-PhfHash">[u8]</a><a href="#impl-PhfHash">UniCase&lt;S&gt;</a><a href="#impl-PhfHash">u8</a><a href="#impl-PhfHash">i8</a><a href="#impl-PhfHash">u16</a><a href="#impl-PhfHash">i16</a><a href="#impl-PhfHash">u32</a><a href="#impl-PhfHash">i32</a><a href="#impl-PhfHash">u64</a><a href="#impl-PhfHash">i64</a><a href="#impl-PhfHash">bool</a><a href="#impl-PhfHash">char</a><a href="#impl-PhfHash">[u8; 1]</a><a href="#impl-PhfHash">[u8; 2]</a><a href="#impl-PhfHash">[u8; 3]</a><a href="#impl-PhfHash">[u8; 4]</a><a href="#impl-PhfHash">[u8; 5]</a><a href="#impl-PhfHash">[u8; 6]</a><a href="#impl-PhfHash">[u8; 7]</a><a href="#impl-PhfHash">[u8; 8]</a><a href="#impl-PhfHash">[u8; 9]</a><a href="#impl-PhfHash">[u8; 10]</a><a href="#impl-PhfHash">[u8; 11]</a><a href="#impl-PhfHash">[u8; 12]</a><a href="#impl-PhfHash">[u8; 13]</a><a href="#impl-PhfHash">[u8; 14]</a><a href="#impl-PhfHash">[u8; 15]</a><a href="#impl-PhfHash">[u8; 16]</a><a href="#impl-PhfHash">[u8; 17]</a><a href="#impl-PhfHash">[u8; 18]</a><a href="#impl-PhfHash">[u8; 19]</a><a href="#impl-PhfHash">[u8; 20]</a><a href="#impl-PhfHash">[u8; 21]</a><a href="#impl-PhfHash">[u8; 22]</a><a href="#impl-PhfHash">[u8; 23]</a><a href="#impl-PhfHash">[u8; 24]</a><a href="#impl-PhfHash">[u8; 25]</a><a href="#impl-PhfHash">[u8; 26]</a><a href="#impl-PhfHash">[u8; 27]</a><a href="#impl-PhfHash">[u8; 28]</a><a href="#impl-PhfHash">[u8; 29]</a><a href="#impl-PhfHash">[u8; 30]</a><a href="#impl-PhfHash">[u8; 31]</a><a href="#impl-PhfHash">[u8; 32]</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>phf_shared</a></p><script>window.sidebarCurrent = {name: 'PhfHash', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -55,8 +66,7 @@
     fn <a href='#method.phf_hash_slice' class='fnname'>phf_hash_slice</a>&lt;H:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html" title="trait core::hash::Hasher">Hasher</a>&gt;(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[Self]</a>, state: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>H)<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
     { ... }
 }</pre><div class='docblock'><p>A trait implemented by types which can be used in PHF data structures.</p>
-
-<p>This differs from the standard library&#39;s <code>Hash</code> trait in that <code>PhfHash</code>&#39;s
+<p>This differs from the standard library's <code>Hash</code> trait in that <code>PhfHash</code>'s
 results must be architecture independent so that hashes will be consistent
 between the host and target when cross compiling.</p>
 </div>
@@ -242,20 +252,22 @@ between the host and target when cross compiling.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

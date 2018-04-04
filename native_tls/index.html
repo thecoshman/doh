@@ -10,8 +10,11 @@
     <title>native_tls - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate native_tls</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'native_tls', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate native_tls</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'native_tls', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,58 +59,49 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/native_tls/lib.rs.html#1-580' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/native_tls/lib.rs.html#1-591' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>An abstraction over platform-specific TLS implementations.</p>
-
 <p>Many applications require TLS/SSL communication in one form or another as
-part of their implementation, but finding a library for this isn&#39;t always
+part of their implementation, but finding a library for this isn't always
 trivial! The purpose of this crate is to provide a seamless integration
 experience on all platforms with a cross-platform API that deals with all
 the underlying details for you.</p>
-
 <pre><code class="language-toml"># Cargo.toml
 [dependencies]
 native-tls = &quot;0.1&quot;
 </code></pre>
-
-<h1 id='how-is-this-implemented' class='section-header'><a href='#how-is-this-implemented'>How is this implemented?</a></h1>
+<h1 id="how-is-this-implemented" class="section-header"><a href="#how-is-this-implemented">How is this implemented?</a></h1>
 <p>This crate uses SChannel on Windows (via the <code>schannel</code> crate), Secure
 Transport on OSX (via the <code>security-framework</code> crate), and OpenSSL (via the
 <code>openssl</code> crate) on all other platforms. Future futures may also enable
 other TLS frameworks as well, but these initial libraries are likely to
 remain as the defaults.</p>
-
-<p>If you know you&#39;re on a particular platform then you can use the
+<p>If you know you're on a particular platform then you can use the
 platform-specific extension traits in this crate to configure the underlying
 details of that platform. For example OpenSSL may have more options for
 configuration than Secure Transport. By default, though, the API of this
 crate works across all platforms.</p>
-
 <p>Note that this crate also strives to be secure-by-default. For example when
 using OpenSSL it will configure validation callbacks to ensure that
 hostnames match certificates, use strong ciphers, etc. This implies that
 this crate is <em>not</em> just a thin abstraction around the underlying libraries,
 but also an implementation that strives to strike reasonable defaults.</p>
-
-<h1 id='supported-features' class='section-header'><a href='#supported-features'>Supported features</a></h1>
+<h1 id="supported-features" class="section-header"><a href="#supported-features">Supported features</a></h1>
 <p>This crate supports the following features out of the box:</p>
-
 <ul>
 <li>TLS/SSL client communication</li>
 <li>TLS/SSL server communication</li>
 <li>PKCS#12 encoded server identities</li>
 <li>Secure-by-default for client and server
-
 <ul>
 <li>Includes hostname verification for clients</li>
-</ul></li>
+</ul>
+</li>
 <li>Supports asynchronous I/O for both the server and the client</li>
 </ul>
-
 <p>Each implementation may support more features which can be accessed through
 the extension traits in the <code>backend</code> module.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>To connect as a client to a remote server:</p>
 
 <pre class="rust rust-example-rendered">
@@ -116,7 +118,6 @@ the extension traits in the <code>backend</code> module.</p>
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
 <span class="ident">stream</span>.<span class="ident">read_to_end</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>).<span class="ident">unwrap</span>();
 <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>));</pre>
-
 <p>To accept connections as a server from remote clients:</p>
 
 <pre class="rust rust-example-rendered">
@@ -159,6 +160,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='mod native_tls::backend'>backend</a></td>
                            <td class='docblock-short'>
                                 <p>TLS backend-specific functionality.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -167,6 +169,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::Certificate'>Certificate</a></td>
                            <td class='docblock-short'>
                                 <p>An X509 certificate.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -174,6 +177,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>An error returned from the TLS implementation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -181,6 +185,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::MidHandshakeTlsStream'>MidHandshakeTlsStream</a></td>
                            <td class='docblock-short'>
                                 <p>A TLS stream which has been interrupted midway through the handshake process.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -188,6 +193,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::Pkcs12'>Pkcs12</a></td>
                            <td class='docblock-short'>
                                 <p>A PKCS #12 archive.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -195,6 +201,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::TlsAcceptor'>TlsAcceptor</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for server-side TLS connections.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -202,6 +209,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::TlsAcceptorBuilder'>TlsAcceptorBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for <code>TlsAcceptor</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -209,6 +217,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::TlsConnector'>TlsConnector</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for client-side TLS connections.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -216,6 +225,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::TlsConnectorBuilder'>TlsConnectorBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for <code>TlsConnector</code>s.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -223,6 +233,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='struct native_tls::TlsStream'>TlsStream</a></td>
                            <td class='docblock-short'>
                                 <p>A stream managing a TLS session.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -231,6 +242,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='enum native_tls::HandshakeError'>HandshakeError</a></td>
                            <td class='docblock-short'>
                                 <p>An error returned from <code>ClientBuilder::handshake</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -238,6 +250,7 @@ the extension traits in the <code>backend</code> module.</p>
                                   title='enum native_tls::Protocol'>Protocol</a></td>
                            <td class='docblock-short'>
                                 <p>SSL/TLS protocol versions.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
@@ -245,7 +258,8 @@ the extension traits in the <code>backend</code> module.</p>
                            <td><a class="type" href="type.Result.html"
                                   title='type native_tls::Result'>Result</a></td>
                            <td class='docblock-short'>
-                                <p>A typedef of the result type returned by many methods.</p>
+                                <p>A typedef of the result-type returned by many methods.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -260,20 +274,22 @@ the extension traits in the <code>backend</code> module.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

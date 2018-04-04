@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.29.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/clap-2.31.2/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -700,7 +711,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The following examples show a quick example of some of the very basic functionality of `clap`.</span>
 <span class="doccomment">//! For more advanced usage, such as requirements, conflicts, groups, multiple values and</span>
-<span class="doccomment">//! occurrences see the [documentation](https://docs.rs/clap/), [examples/](examples) directory of</span>
+<span class="doccomment">//! occurrences see the [documentation](https://docs.rs/clap/), [examples/](https://github.com/kbknapp/clap-rs/tree/master/examples) directory of</span>
 <span class="doccomment">//! this repository or the [video tutorials](https://www.youtube.com/playlist?list=PLza5oFLQGTl2Z5T8g1pRkIynR3E0_pc7U).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! **NOTE:** All of these examples are functionally the same, but show different styles in which to</span>
@@ -1037,13 +1048,13 @@
 <span class="doccomment">//!  * **Red** Color: **NOT** included by default (must use cargo `features` to enable)</span>
 <span class="doccomment">//!  * **Blue** Color: Dev dependency, only used while developing.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ![clap dependencies](clap_dep_graph.png)</span>
+<span class="doccomment">//! ![clap dependencies](https://raw.githubusercontent.com/kbknapp/clap-rs/master/clap_dep_graph.png)</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### More Information</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! You can find complete documentation on the [docs.rs](https://docs.rs/clap/) for this project.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! You can also find usage examples in the [examples/](examples) directory of this repo.</span>
+<span class="doccomment">//! You can also find usage examples in the [examples/](https://github.com/kbknapp/clap-rs/tree/master/examples) directory of this repo.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! #### Video Tutorials</span>
 <span class="doccomment">//!</span>
@@ -1062,7 +1073,7 @@
 <span class="doccomment">//! `clap`. You can either add it to the [examples/](examples) directory, or file an issue and tell</span>
 <span class="doccomment">//! me. I&#39;m all about giving credit where credit is due :)</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) before you start contributing.</span>
+<span class="doccomment">//! Please read [CONTRIBUTING.md](https://raw.githubusercontent.com/kbknapp/clap-rs/master/.github/CONTRIBUTING.md) before you start contributing.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Testing Code</span>
@@ -1075,13 +1086,13 @@
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Alternatively, if you have [`just`](https://github.com/casey/just) installed you can run the</span>
-<span class="doccomment">//! prebuilt recipies. *Not* using `just` is prfeclty fine as well, it simply bundles commands</span>
+<span class="doccomment">//! prebuilt recipies. *Not* using `just` is perfectly fine as well, it simply bundles commands</span>
 <span class="doccomment">//! automatically.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For example, to test the code, as above simply run:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```text</span>
-<span class="doccomment">//! $ just run-tests`</span>
+<span class="doccomment">//! $ just run-tests</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! From here on, I will lis the appropriate `cargo` command as well as the `just` command.</span>
@@ -1184,7 +1195,7 @@
 <span class="doccomment">//! this repository for more information.</span>
 
 <span class="attribute">#![<span class="ident">crate_type</span> <span class="op">=</span> <span class="string">&quot;lib&quot;</span>]</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/clap/2.29.0&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/clap/2.31.2&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>, <span class="ident">missing_debug_implementations</span>, <span class="ident">missing_copy_implementations</span>, <span class="ident">trivial_casts</span>,
         <span class="ident">unused_import_braces</span>, <span class="ident">unused_allocation</span>)]</span>
 <span class="comment">// Lints we&#39;d like to deny but are currently failing for upstream crates</span>
@@ -1199,7 +1210,7 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;lints&quot;</span>, <span class="ident">allow</span>(<span class="ident">doc_markdown</span>))]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;lints&quot;</span>, <span class="ident">allow</span>(<span class="ident">explicit_iter_loop</span>))]</span>
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;color&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;color&quot;</span>, <span class="ident">not</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;windows&quot;</span>)))]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ansi_term</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;color&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">atty</span>;
@@ -1308,20 +1319,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/net2-0.2.31/src/ext.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/net2-0.2.32/src/ext.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ext.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     <link rel="shortcut icon" href="https://doc.rust-lang.org/favicon.ico">
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         <a href='../../net2/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -1351,6 +1362,99 @@
 <span id="1306">1306</span>
 <span id="1307">1307</span>
 <span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
+<span id="1312">1312</span>
+<span id="1313">1313</span>
+<span id="1314">1314</span>
+<span id="1315">1315</span>
+<span id="1316">1316</span>
+<span id="1317">1317</span>
+<span id="1318">1318</span>
+<span id="1319">1319</span>
+<span id="1320">1320</span>
+<span id="1321">1321</span>
+<span id="1322">1322</span>
+<span id="1323">1323</span>
+<span id="1324">1324</span>
+<span id="1325">1325</span>
+<span id="1326">1326</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
+<span id="1339">1339</span>
+<span id="1340">1340</span>
+<span id="1341">1341</span>
+<span id="1342">1342</span>
+<span id="1343">1343</span>
+<span id="1344">1344</span>
+<span id="1345">1345</span>
+<span id="1346">1346</span>
+<span id="1347">1347</span>
+<span id="1348">1348</span>
+<span id="1349">1349</span>
+<span id="1350">1350</span>
+<span id="1351">1351</span>
+<span id="1352">1352</span>
+<span id="1353">1353</span>
+<span id="1354">1354</span>
+<span id="1355">1355</span>
+<span id="1356">1356</span>
+<span id="1357">1357</span>
+<span id="1358">1358</span>
+<span id="1359">1359</span>
+<span id="1360">1360</span>
+<span id="1361">1361</span>
+<span id="1362">1362</span>
+<span id="1363">1363</span>
+<span id="1364">1364</span>
+<span id="1365">1365</span>
+<span id="1366">1366</span>
+<span id="1367">1367</span>
+<span id="1368">1368</span>
+<span id="1369">1369</span>
+<span id="1370">1370</span>
+<span id="1371">1371</span>
+<span id="1372">1372</span>
+<span id="1373">1373</span>
+<span id="1374">1374</span>
+<span id="1375">1375</span>
+<span id="1376">1376</span>
+<span id="1377">1377</span>
+<span id="1378">1378</span>
+<span id="1379">1379</span>
+<span id="1380">1380</span>
+<span id="1381">1381</span>
+<span id="1382">1382</span>
+<span id="1383">1383</span>
+<span id="1384">1384</span>
+<span id="1385">1385</span>
+<span id="1386">1386</span>
+<span id="1387">1387</span>
+<span id="1388">1388</span>
+<span id="1389">1389</span>
+<span id="1390">1390</span>
+<span id="1391">1391</span>
+<span id="1392">1392</span>
+<span id="1393">1393</span>
+<span id="1394">1394</span>
+<span id="1395">1395</span>
+<span id="1396">1396</span>
+<span id="1397">1397</span>
+<span id="1398">1398</span>
+<span id="1399">1399</span>
+<span id="1400">1400</span>
+<span id="1401">1401</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
@@ -1371,6 +1475,7 @@
 
 <span class="kw">use</span> {<span class="ident">TcpBuilder</span>, <span class="ident">UdpBuilder</span>, <span class="ident">FromInner</span>};
 <span class="kw">use</span> <span class="ident">sys</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">c</span>;
 <span class="kw">use</span> <span class="ident">socket</span>;
 
 <span class="macro">cfg_if</span><span class="macro">!</span> {
@@ -1396,8 +1501,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span> <span class="kw">use</span> <span class="ident">libc</span>::<span class="kw-2">*</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Socket</span> <span class="op">=</span> <span class="ident">SOCKET</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">windows</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">use</span> <span class="ident">ws2_32</span>::<span class="kw-2">*</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">use</span> <span class="ident">winapi</span>::<span class="kw-2">*</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">c</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">const</span> <span class="ident">SIO_KEEPALIVE_VALS</span>: <span class="ident">DWORD</span> <span class="op">=</span> <span class="number">0x98000004</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
@@ -1408,7 +1512,7 @@
     <span class="ident">keepaliveinterval</span>: <span class="ident">c_ulong</span>,
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">fn</span> <span class="ident">v</span>(<span class="ident">opt</span>: <span class="ident">IPPROTO</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> { <span class="ident">opt</span>.<span class="number">0</span> <span class="kw">as</span> <span class="ident">c_int</span> }
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">fn</span> <span class="ident">v</span>(<span class="ident">opt</span>: <span class="ident">IPPROTO</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> { <span class="ident">opt</span> <span class="kw">as</span> <span class="ident">c_int</span> }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span> <span class="kw">fn</span> <span class="ident">v</span>(<span class="ident">opt</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> { <span class="ident">opt</span> }
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_opt</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Copy</span><span class="op">&gt;</span>(<span class="ident">sock</span>: <span class="ident">Socket</span>, <span class="ident">opt</span>: <span class="ident">c_int</span>, <span class="ident">val</span>: <span class="ident">c_int</span>,
@@ -1772,6 +1876,12 @@
     <span class="doccomment">/// [link]: #tymethod.set_multicast_ttl_v4</span>
     <span class="kw">fn</span> <span class="ident">multicast_ttl_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
+    <span class="doccomment">/// Sets the value of the `IPV6_MULTICAST_HOPS` option for this socket</span>
+    <span class="kw">fn</span> <span class="ident">set_multicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hops</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Gets the value of the `IPV6_MULTICAST_HOPS` option for this socket</span>
+    <span class="kw">fn</span> <span class="ident">multicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+
     <span class="doccomment">/// Sets the value of the `IPV6_MULTICAST_LOOP` option for this socket.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Controls whether this socket sees the multicast packets it sends itself.</span>
@@ -1785,6 +1895,27 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [link]: #tymethod.set_multicast_loop_v6</span>
     <span class="kw">fn</span> <span class="ident">multicast_loop_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Sets the value of the `IP_MULTICAST_IF` option for this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Specifies the interface to use for routing multicast packets.</span>
+    <span class="kw">fn</span> <span class="ident">set_multicast_if_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Addr</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Gets the value of the `IP_MULTICAST_IF` option for this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the interface to use for routing multicast packets.</span>
+    <span class="kw">fn</span> <span class="ident">multicast_if_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Ipv4Addr</span><span class="op">&gt;</span>;
+
+
+    <span class="doccomment">/// Sets the value of the `IPV6_MULTICAST_IF` option for this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Specifies the interface to use for routing multicast packets.</span>
+    <span class="kw">fn</span> <span class="ident">set_multicast_if_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interface</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Gets the value of the `IPV6_MULTICAST_IF` option for this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the interface to use for routing multicast packets.</span>
+    <span class="kw">fn</span> <span class="ident">multicast_if_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Sets the value for the `IP_TTL` option on this socket.</span>
     <span class="doccomment">///</span>
@@ -1800,6 +1931,16 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [link]: trait.TcpStreamExt.html#tymethod.set_ttl</span>
     <span class="kw">fn</span> <span class="ident">ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Sets the value for the `IPV6_UNICAST_HOPS` option on this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Specifies the hop limit for ipv6 unicast packets</span>
+    <span class="kw">fn</span> <span class="ident">set_unicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Gets the value of the `IPV6_UNICAST_HOPS` option for this socket.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Specifies the hop limit for ipv6 unicast packets</span>
+    <span class="kw">fn</span> <span class="ident">unicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Sets the value for the `IPV6_V6ONLY` option on this socket.</span>
     <span class="doccomment">///</span>
@@ -1958,7 +2099,7 @@
 }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AsRawSocket</span><span class="op">&gt;</span> <span class="ident">AsSock</span> <span class="kw">for</span> <span class="ident">T</span> {
-    <span class="kw">fn</span> <span class="ident">as_sock</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Socket</span> { <span class="self">self</span>.<span class="ident">as_raw_socket</span>() }
+    <span class="kw">fn</span> <span class="ident">as_sock</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Socket</span> { <span class="self">self</span>.<span class="ident">as_raw_socket</span>() <span class="kw">as</span> <span class="ident">Socket</span> }
 }
 
 <span class="macro">cfg_if</span><span class="macro">!</span> {
@@ -2283,14 +2424,27 @@
         <span class="ident">get_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_MULTICAST_LOOP</span>)
             .<span class="ident">map</span>(<span class="ident">int2bool</span>)
     }
+
     <span class="kw">fn</span> <span class="ident">set_multicast_ttl_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">multicast_ttl_v4</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_MULTICAST_TTL</span>,
                <span class="ident">multicast_ttl_v4</span> <span class="kw">as</span> <span class="ident">c_int</span>)
     }
+    
     <span class="kw">fn</span> <span class="ident">multicast_ttl_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="ident">get_opt</span>::<span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_MULTICAST_TTL</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>)
     }
+
+    <span class="kw">fn</span> <span class="ident">set_multicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hops</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">v</span>(<span class="ident">IPPROTO_IPV6</span>), <span class="ident">IPV6_MULTICAST_HOPS</span>,
+               <span class="ident">hops</span> <span class="kw">as</span> <span class="ident">c_int</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">multicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+        <span class="ident">get_opt</span>::<span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">v</span>(<span class="ident">IPPROTO_IPV6</span>), <span class="ident">IPV6_MULTICAST_HOPS</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>)
+    }
+
     <span class="kw">fn</span> <span class="ident">set_multicast_loop_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">multicast_loop_v6</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">v</span>(<span class="ident">IPPROTO_IPV6</span>), <span class="ident">IPV6_MULTICAST_LOOP</span>,
                <span class="ident">multicast_loop_v6</span> <span class="kw">as</span> <span class="ident">c_int</span>)
@@ -2300,12 +2454,37 @@
             .<span class="ident">map</span>(<span class="ident">int2bool</span>)
     }
 
+    <span class="kw">fn</span> <span class="ident">set_multicast_if_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interface</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Addr</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_MULTICAST_IF</span>, <span class="ident">ip2in_addr</span>(<span class="ident">interface</span>))
+    }
+
+    <span class="kw">fn</span> <span class="ident">multicast_if_v4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Ipv4Addr</span><span class="op">&gt;</span> {
+        <span class="ident">get_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_MULTICAST_IF</span>).<span class="ident">map</span>(<span class="ident">in_addr2ip</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">set_multicast_if_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interface</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">v</span>(<span class="ident">IPPROTO_IPV6</span>), <span class="ident">IPV6_MULTICAST_IF</span>, <span class="ident">to_ipv6mr_interface</span>(<span class="ident">interface</span>))
+    }
+
+    <span class="kw">fn</span> <span class="ident">multicast_if_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+        <span class="ident">get_opt</span>::<span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">v</span>(<span class="ident">IPPROTO_IPV6</span>), <span class="ident">IPV6_MULTICAST_IF</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>)
+    }
+
     <span class="kw">fn</span> <span class="ident">set_ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_TTL</span>, <span class="ident">ttl</span> <span class="kw">as</span> <span class="ident">c_int</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">ttl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="ident">get_opt</span>::<span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IP_TTL</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">set_unicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="ident">set_opt</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">v</span>(<span class="ident">IPPROTO_IPV6</span>), <span class="ident">IPV6_UNICAST_HOPS</span>, <span class="ident">ttl</span> <span class="kw">as</span> <span class="ident">c_int</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">unicast_hops_v6</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+        <span class="ident">get_opt</span>::<span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">as_sock</span>(), <span class="ident">IPPROTO_IP</span>, <span class="ident">IPV6_UNICAST_HOPS</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>)
     }
 
@@ -2482,12 +2661,27 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
 <span class="kw">fn</span> <span class="ident">ip2in_addr</span>(<span class="ident">ip</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv4Addr</span>) <span class="op">-&gt;</span> <span class="ident">in_addr</span> {
     <span class="kw">let</span> <span class="ident">oct</span> <span class="op">=</span> <span class="ident">ip</span>.<span class="ident">octets</span>();
-    <span class="ident">in_addr</span> {
-        <span class="ident">S_un</span>: ::<span class="ident">hton</span>(((<span class="ident">oct</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">24</span>) <span class="op">|</span>
-                     ((<span class="ident">oct</span>[<span class="number">1</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">16</span>) <span class="op">|</span>
-                     ((<span class="ident">oct</span>[<span class="number">2</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span>  <span class="number">8</span>) <span class="op">|</span>
-                     ((<span class="ident">oct</span>[<span class="number">3</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span>  <span class="number">0</span>)),
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">S_un</span>: <span class="ident">in_addr_S_un</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">zeroed</span>();
+        <span class="kw-2">*</span><span class="ident">S_un</span>.<span class="ident">S_addr_mut</span>() <span class="op">=</span> ::<span class="ident">hton</span>(((<span class="ident">oct</span>[<span class="number">0</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">24</span>) <span class="op">|</span>
+                                ((<span class="ident">oct</span>[<span class="number">1</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span> <span class="number">16</span>) <span class="op">|</span>
+                                ((<span class="ident">oct</span>[<span class="number">2</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span>  <span class="number">8</span>) <span class="op">|</span>
+                                ((<span class="ident">oct</span>[<span class="number">3</span>] <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;&lt;</span>  <span class="number">0</span>));
+        <span class="ident">in_addr</span> {
+            <span class="ident">S_un</span>: <span class="ident">S_un</span>,
+        }
     }
+}
+
+<span class="kw">fn</span> <span class="ident">in_addr2ip</span>(<span class="ident">ip</span>: <span class="kw-2">&amp;</span><span class="ident">in_addr</span>) <span class="op">-&gt;</span> <span class="ident">Ipv4Addr</span> {
+    <span class="kw">let</span> <span class="ident">h_addr</span> <span class="op">=</span> <span class="ident">c</span>::<span class="ident">in_addr_to_u32</span>(<span class="ident">ip</span>);
+    
+    <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="ident">h_addr</span> <span class="op">&gt;&gt;</span> <span class="number">24</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+    <span class="kw">let</span> <span class="ident">b</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="ident">h_addr</span> <span class="op">&gt;&gt;</span> <span class="number">16</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+    <span class="kw">let</span> <span class="ident">c</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="ident">h_addr</span> <span class="op">&gt;&gt;</span> <span class="number">8</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+    <span class="kw">let</span> <span class="ident">d</span>: <span class="ident">u8</span> <span class="op">=</span> (<span class="ident">h_addr</span> <span class="op">&gt;&gt;</span> <span class="number">0</span>) <span class="kw">as</span> <span class="ident">u8</span>;
+
+    <span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="ident">a</span>,<span class="ident">b</span>,<span class="ident">c</span>,<span class="ident">d</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;android&quot;</span>)]</span>
@@ -2503,7 +2697,7 @@
 <span class="kw">fn</span> <span class="ident">ip2in6_addr</span>(<span class="ident">ip</span>: <span class="kw-2">&amp;</span><span class="ident">Ipv6Addr</span>) <span class="op">-&gt;</span> <span class="ident">in6_addr</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ret</span>: <span class="ident">in6_addr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() };
     <span class="kw">let</span> <span class="ident">seg</span> <span class="op">=</span> <span class="ident">ip</span>.<span class="ident">segments</span>();
-    <span class="ident">ret</span>.<span class="ident">s6_addr</span> <span class="op">=</span> [
+    <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> [
         (<span class="ident">seg</span>[<span class="number">0</span>] <span class="op">&gt;&gt;</span> <span class="number">8</span>) <span class="kw">as</span> <span class="ident">u8</span>,
         (<span class="ident">seg</span>[<span class="number">0</span>] <span class="op">&gt;&gt;</span> <span class="number">0</span>) <span class="kw">as</span> <span class="ident">u8</span>,
         (<span class="ident">seg</span>[<span class="number">1</span>] <span class="op">&gt;&gt;</span> <span class="number">8</span>) <span class="kw">as</span> <span class="ident">u8</span>,
@@ -2521,6 +2715,9 @@
         (<span class="ident">seg</span>[<span class="number">7</span>] <span class="op">&gt;&gt;</span> <span class="number">8</span>) <span class="kw">as</span> <span class="ident">u8</span>,
         (<span class="ident">seg</span>[<span class="number">7</span>] <span class="op">&gt;&gt;</span> <span class="number">0</span>) <span class="kw">as</span> <span class="ident">u8</span>,
     ];
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="ident">ret</span>.<span class="ident">u</span>.<span class="ident">Byte_mut</span>() <span class="op">=</span> <span class="ident">bytes</span>; }
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>   { <span class="ident">ret</span>.<span class="ident">s6_addr</span> <span class="op">=</span> <span class="ident">bytes</span>; }
+
     <span class="kw">return</span> <span class="ident">ret</span>
 }
 
@@ -2674,20 +2871,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

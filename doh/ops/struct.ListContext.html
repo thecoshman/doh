@@ -10,8 +10,11 @@
     <title>doh::ops::ListContext - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct ListContext</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.one_loop">one_loop</a></div></div><p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>ops</a></p><script>window.sidebarCurrent = {name: 'ListContext', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ListContext</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.one_loop">one_loop</a></div></div><p class='location'><a href='../index.html'>doh</a>::<wbr><a href='index.html'>ops</a></p><script>window.sidebarCurrent = {name: 'ListContext', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -59,96 +70,38 @@
 <div class='docblock'><p>Create a context, starting off at the provided URL.</p>
 </div><h4 id='method.one_loop' class="method"><span id='one_loop.v' class='invisible'><code>pub fn <a href='#method.one_loop' class='fnname'>one_loop</a>&lt;W:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;out: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>W, <br>&nbsp;&nbsp;&nbsp;&nbsp;input: &amp;<a class="enum" href="../../getch/enum.Getch.html" title="enum getch::Getch">Getch</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;term_size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/doh/ops/mod.rs.html#207-249' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Do one run of the input loop, effectively resulting in a single action.</p>
-
 <p>Returns <code>Ok(true)</code> to allow to continue next loop or <code>Ok(false)</code> to end listing.</p>
-
-<h3 id='commands' class='section-header'><a href='#commands'>Commands</a></h3>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>Enter/Right Arrow</td>
-<td>enter highlighted entry</td>
-</tr>
-<tr>
-<td>Escape/<code>&#39;Q&#39;</code>/<code>&#39;q&#39;</code></td>
-<td>end</td>
-</tr>
-<tr>
-<td><code>&#39;D&#39;</code>/<code>&#39;d&#39;</code></td>
-<td>download file</td>
-</tr>
-<tr>
-<td><code>&#39;U&#39;</code>/<code>&#39;u&#39;</code></td>
-<td>upload file</td>
-</tr>
-<tr>
-<td>Up Arrow</td>
-<td>move selection 1 entry up</td>
-</tr>
-<tr>
-<td>Down Arrow</td>
-<td>move selection 1 entry down</td>
-</tr>
-<tr>
-<td>Left Arrow</td>
-<td>go up one level, if not at root</td>
-</tr>
-<tr>
-<td>Home</td>
-<td>set selection to first item</td>
-</tr>
-<tr>
-<td>End</td>
-<td>set selection to last item</td>
-</tr>
-<tr>
-<td>Page Up</td>
-<td>move selection page&#39;s worth of entries up</td>
-</tr>
-<tr>
-<td>Page Down</td>
-<td>move selection page&#39;s worth of entries down</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td><code>DELETE</code> highlighted entry</td>
-</tr>
-</tbody>
-</table>
-
-<h3 id='entering-entries' class='section-header'><a href='#entering-entries'>Entering entries</a></h3>
+<h3 id="commands" class="section-header"><a href="#commands">Commands</a></h3><table><thead><tr><th>Key</th><th>Result</th></tr></thead><tbody>
+<tr><td>Enter/Right Arrow </td><td> enter highlighted entry</td></tr>
+<tr><td>Escape/<code>'Q'</code>/<code>'q'</code> </td><td> end</td></tr>
+<tr><td><code>'D'</code>/<code>'d'</code> </td><td> download file</td></tr>
+<tr><td><code>'U'</code>/<code>'u'</code> </td><td> upload file</td></tr>
+<tr><td>Up Arrow </td><td> move selection 1 entry up</td></tr>
+<tr><td>Down Arrow </td><td> move selection 1 entry down</td></tr>
+<tr><td>Left Arrow </td><td> go up one level, if not at root</td></tr>
+<tr><td>Home </td><td> set selection to first item</td></tr>
+<tr><td>End </td><td> set selection to last item</td></tr>
+<tr><td>Page Up </td><td> move selection page's worth of entries up</td></tr>
+<tr><td>Page Down </td><td> move selection page's worth of entries down</td></tr>
+<tr><td>Delete </td><td> <code>DELETE</code> highlighted entry</td></tr>
+</tbody></table>
+<h3 id="entering-entries" class="section-header"><a href="#entering-entries">Entering entries</a></h3>
 <p>If the entry is a directory, on the next loop the selected subdirectory wll be listed.</p>
-
 <p>If the entry is a UTF-8 file, its contents are paged, see <a href="fn.paging_copy.html"><code>paging_copy()</code></a>.</p>
-
 <p>If the entry is a non-UTF-8 file, it is <a href="#downloading-files">downloaded</a>.</p>
-
-<h3 id='downloading-files' class='section-header'><a href='#downloading-files'>Downloading files</a></h3>
+<h3 id="downloading-files" class="section-header"><a href="#downloading-files">Downloading files</a></h3>
 <p>The user is shown a file picker and let choose where to download the file to,
 then the file is downloaded and saved to the specified location.</p>
-
-<p>The file isn&#39;t saved if the user cancels the picker.</p>
-
+<p>The file isn't saved if the user cancels the picker.</p>
 <p>A progress bar is shown to the user indicating the download progress.</p>
-
-<h3 id='uploading-files' class='section-header'><a href='#uploading-files'>Uploading files</a></h3>
+<h3 id="uploading-files" class="section-header"><a href="#uploading-files">Uploading files</a></h3>
 <p>If the server, in the last RFSAPI request, specified <code>writes_supported</code> as <code>false</code>, an error is printed,
 and nothing happens.</p>
-
 <p>Otherwise:</p>
-
 <p>The user is shown a file picker and let choose which file to upload,
 then the file is streamed to the server via a <code>PUT</code> request in the currently selected directory,
 with the name of the picked file.</p>
-
-<p>The file isn&#39;t uploaded if the user cancels the picker.</p>
+<p>The file isn't uploaded if the user cancels the picker.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -162,20 +115,22 @@ with the name of the picked file.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

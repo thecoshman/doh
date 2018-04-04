@@ -10,8 +10,11 @@
     <title>openssl::pkey::PKey - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct PKey</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_rsa">from_rsa</a><a href="#method.from_dsa">from_dsa</a><a href="#method.from_dh">from_dh</a><a href="#method.from_ec_key">from_ec_key</a><a href="#method.hmac">hmac</a><a href="#method.private_key_from_pem">private_key_from_pem</a><a href="#method.private_key_from_pem_passphrase">private_key_from_pem_passphrase</a><a href="#method.private_key_from_pem_callback">private_key_from_pem_callback</a><a href="#method.public_key_from_pem">public_key_from_pem</a><a href="#method.public_key_from_der">public_key_from_der</a><a href="#method.private_key_from_der">private_key_from_der</a><a href="#method.private_key_from_pkcs8_callback">private_key_from_pkcs8_callback</a><a href="#method.private_key_from_pkcs8_passphrase">private_key_from_pkcs8_passphrase</a><a href="#method.private_key_from_pem_cb">private_key_from_pem_cb</a></div><a class="sidebar-title" href="#deref-methods">Methods from Deref&lt;Target=PKeyRef&gt;</a><div class="sidebar-links"><a href="#method.rsa">rsa</a><a href="#method.dsa">dsa</a><a href="#method.dh">dh</a><a href="#method.ec_key">ec_key</a><a href="#method.public_key_to_pem">public_key_to_pem</a><a href="#method.private_key_to_pem">private_key_to_pem</a><a href="#method.private_key_to_pem_passphrase">private_key_to_pem_passphrase</a><a href="#method.private_key_to_der">private_key_to_der</a><a href="#method.public_key_to_der">public_key_to_der</a><a href="#method.bits">bits</a><a href="#method.public_eq">public_eq</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-ForeignType">ForeignType</a><a href="#impl-Drop">Drop</a><a href="#impl-Deref">Deref</a><a href="#impl-DerefMut">DerefMut</a><a href="#impl-Borrow%3CPKeyRef%3E">Borrow&lt;PKeyRef&gt;</a><a href="#impl-AsRef%3CPKeyRef%3E">AsRef&lt;PKeyRef&gt;</a><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>pkey</a></p><script>window.sidebarCurrent = {name: 'PKey', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct PKey</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.from_rsa">from_rsa</a><a href="#method.from_dsa">from_dsa</a><a href="#method.from_dh">from_dh</a><a href="#method.from_ec_key">from_ec_key</a><a href="#method.hmac">hmac</a><a href="#method.private_key_from_pem">private_key_from_pem</a><a href="#method.private_key_from_pem_passphrase">private_key_from_pem_passphrase</a><a href="#method.private_key_from_pem_callback">private_key_from_pem_callback</a><a href="#method.public_key_from_pem">public_key_from_pem</a><a href="#method.public_key_from_der">public_key_from_der</a><a href="#method.private_key_from_der">private_key_from_der</a><a href="#method.private_key_from_pkcs8_callback">private_key_from_pkcs8_callback</a><a href="#method.private_key_from_pkcs8_passphrase">private_key_from_pkcs8_passphrase</a><a href="#method.private_key_from_pem_cb">private_key_from_pem_cb</a></div><a class="sidebar-title" href="#deref-methods">Methods from Deref&lt;Target=PKeyRef&gt;</a><div class="sidebar-links"><a href="#method.rsa">rsa</a><a href="#method.dsa">dsa</a><a href="#method.dh">dh</a><a href="#method.ec_key">ec_key</a><a href="#method.public_key_to_pem">public_key_to_pem</a><a href="#method.private_key_to_pem">private_key_to_pem</a><a href="#method.private_key_to_pem_passphrase">private_key_to_pem_passphrase</a><a href="#method.private_key_to_der">private_key_to_der</a><a href="#method.public_key_to_der">public_key_to_der</a><a href="#method.bits">bits</a><a href="#method.public_eq">public_eq</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-ForeignType">ForeignType</a><a href="#impl-Drop">Drop</a><a href="#impl-Deref">Deref</a><a href="#impl-DerefMut">DerefMut</a><a href="#impl-Borrow%3CPKeyRef%3E">Borrow&lt;PKeyRef&gt;</a><a href="#impl-AsRef%3CPKeyRef%3E">AsRef&lt;PKeyRef&gt;</a><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>pkey</a></p><script>window.sidebarCurrent = {name: 'PKey', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -64,21 +75,18 @@
 <div class='docblock'><p>Creates a new <code>PKey</code> containing an elliptic curve key.</p>
 </div><h4 id='method.hmac' class="method"><span id='hmac.v' class='invisible'><code>pub fn <a href='#method.hmac' class='fnname'>hmac</a>(key: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/pkey.rs.html#143-154' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a new <code>PKey</code> containing an HMAC key.</p>
-
-<h1 id='note' class='section-header'><a href='#note'>Note</a></h1>
+<h1 id="note" class="section-header"><a href="#note">Note</a></h1>
 <p>To compute HMAC values, use the <code>sign</code> module.</p>
 </div><h4 id='method.private_key_from_pem' class="method"><span id='private_key_from_pem.v' class='invisible'><code>pub fn <a href='#method.private_key_from_pem' class='fnname'>private_key_from_pem</a>(pem: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/macros.rs.html#193-200' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Deserializes a PEM-formatted private key.</p>
 </div><h4 id='method.private_key_from_pem_passphrase' class="method"><span id='private_key_from_pem_passphrase.v' class='invisible'><code>pub fn <a href='#method.private_key_from_pem_passphrase' class='fnname'>private_key_from_pem_passphrase</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;pem: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;passphrase: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/macros.rs.html#13-26' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Deserializes a PEM-formatted private key, using the supplied password if the key is
 encrypted.</p>
-
-<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<h1 id="panics" class="section-header"><a href="#panics">Panics</a></h1>
 <p>Panics if <code>passphrase</code> contains an embedded null.</p>
 </div><h4 id='method.private_key_from_pem_callback' class="method"><span id='private_key_from_pem_callback.v' class='invisible'><code>pub fn <a href='#method.private_key_from_pem_callback' class='fnname'>private_key_from_pem_callback</a>&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;pem: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;callback: F<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/macros.rs.html#33-48' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Deserializes a PEM-formatted private key, using a callback to retrieve a password if the
 key is encrypted.</p>
-
 <p>The callback should copy the password into the provided buffer and return the number of
 bytes written.</p>
 </div><h4 id='method.public_key_from_pem' class="method"><span id='public_key_from_pem.v' class='invisible'><code>pub fn <a href='#method.public_key_from_pem' class='fnname'>public_key_from_pem</a>(pem: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/macros.rs.html#193-200' title='goto source code'>[src]</a></span></h4>
@@ -90,14 +98,12 @@ bytes written.</p>
 </div><h4 id='method.private_key_from_pkcs8_callback' class="method"><span id='private_key_from_pkcs8_callback.v' class='invisible'><code>pub fn <a href='#method.private_key_from_pkcs8_callback' class='fnname'>private_key_from_pkcs8_callback</a>&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;der: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;callback: F<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/pkey.rs.html#166-181' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Deserializes a DER-formatted PKCS#8 private key, using a callback to retrieve the password
 if the key is encrpyted.</p>
-
 <p>The callback should copy the password into the provided buffer and return the number of
 bytes written.</p>
 </div><h4 id='method.private_key_from_pkcs8_passphrase' class="method"><span id='private_key_from_pkcs8_passphrase.v' class='invisible'><code>pub fn <a href='#method.private_key_from_pkcs8_passphrase' class='fnname'>private_key_from_pkcs8_passphrase</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;der: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;passphrase: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/pkey.rs.html#189-204' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Deserializes a DER-formatted PKCS#8 private key, using the supplied password if the key is
 encrypted.</p>
-
-<h1 id='panics-1' class='section-header'><a href='#panics-1'>Panics</a></h1>
+<h1 id="panics-1" class="section-header"><a href="#panics-1">Panics</a></h1>
 <p>Panics if <code>passphrase</code> contains an embedded null.</p>
 </div><h4 id='method.private_key_from_pem_cb' class="method"><span id='private_key_from_pem_cb.v' class='invisible'><code>pub fn <a href='#method.private_key_from_pem_cb' class='fnname'>private_key_from_pem_cb</a>&lt;F&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;pass_cb: F<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../../openssl/pkey/struct.PKey.html" title="struct openssl::pkey::PKey">PKey</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.FnOnce.html" title="trait core::ops::function::FnOnce">FnOnce</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="type" href="../../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/pkey.rs.html#207-223' title='goto source code'>[src]</a></span></h4>
 <div class='stability'><div class='stab deprecated'>Deprecated since 0.9.2<p>: use private_key_from_pem_callback</p>
@@ -126,7 +132,6 @@ passphrase.</p>
 <div class='docblock'><p>Serializes the public key to DER.</p>
 </div><h4 id='method.bits' class="method"><span id='bits.v' class='invisible'><code>pub fn <a href='#method.bits' class='fnname'>bits</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/pkey.rs.html#68-70' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the size of the key.</p>
-
 <p>This corresponds to the bit length of the modulus of an RSA key, and the bit length of the
 group order for an elliptic curve key, for example.</p>
 </div><h4 id='method.public_eq' class="method"><span id='public_eq.v' class='invisible'><code>pub fn <a href='#method.public_eq' class='fnname'>public_eq</a>(&amp;self, other: &amp;<a class="struct" href="../../openssl/pkey/struct.PKeyRef.html" title="struct openssl::pkey::PKeyRef">PKeyRef</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/pkey.rs.html#73-75' title='goto source code'>[src]</a></span></h4>
@@ -176,20 +181,22 @@ group order for an elliptic curve key, for example.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

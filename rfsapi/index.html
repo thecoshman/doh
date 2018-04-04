@@ -10,8 +10,11 @@
     <title>rfsapi - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate rfsapi</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'rfsapi', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate rfsapi</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'rfsapi', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,9 +61,8 @@
                    </a>
                </span><a class='srclink' href='../src/rfsapi/lib.rs.html#1-227' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Raw Filesystem API for Rust — enable simpler browsing with ease</p>
-
 <p>This library is to enable both servers and clients to use the RFSAPI,
-see <a href="https://github.com/thecoshman/doh">D&#39;Oh</a> for usage example.</p>
+see <a href="https://github.com/thecoshman/doh">D'Oh</a> for usage example.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -60,6 +70,7 @@ see <a href="https://github.com/thecoshman/doh">D&#39;Oh</a> for usage example.<
                                   title='mod rfsapi::util'>util</a></td>
                            <td class='docblock-short'>
                                 <p>Module containing various utility functions.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -68,6 +79,7 @@ see <a href="https://github.com/thecoshman/doh">D&#39;Oh</a> for usage example.<
                                   title='struct rfsapi::FilesetData'>FilesetData</a></td>
                            <td class='docblock-short'>
                                 <p>Basic RFSAPI response returned by the server.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -75,6 +87,7 @@ see <a href="https://github.com/thecoshman/doh">D&#39;Oh</a> for usage example.<
                                   title='struct rfsapi::RawFileData'>RawFileData</a></td>
                            <td class='docblock-short'>
                                 <p>Information about a file available through RFSAPI.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -83,6 +96,7 @@ see <a href="https://github.com/thecoshman/doh">D&#39;Oh</a> for usage example.<
                            <td class='docblock-short'>
                                 <p>Header to specify when doing a request for the Raw Filesystem API,
 designated by &quot;X-Raw-Filesystem-API&quot;.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -97,20 +111,22 @@ designated by &quot;X-Raw-Filesystem-API&quot;.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

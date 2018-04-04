@@ -10,8 +10,11 @@
     <title>futures::sink - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module sink</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>futures</a></p><script>window.sidebarCurrent = {name: 'sink', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module sink</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>futures</a></p><script>window.sidebarCurrent = {name: 'sink', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,12 +59,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/futures/sink/mod.rs.html#1-475' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/futures/sink/mod.rs.html#1-489' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Asynchronous sinks</p>
-
 <p>This module contains the <code>Sink</code> trait, along with a number of adapter types
 for it. An overview is available in the documentation for the trait itself.</p>
-
 <p>You can find more information/tutorials about streams <a href="https://tokio.rs/docs/getting-started/streams-and-sinks/">online at
 https://tokio.rs</a></p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -64,6 +73,15 @@ https://tokio.rs</a></p>
                            <td class='docblock-short'>
                                 <p>Sink for the <code>Sink::buffer</code> combinator, which buffers up to some fixed
 number of values when the underlying sink is unable to accept them.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Fanout.html"
+                                  title='struct futures::sink::Fanout'>Fanout</a></td>
+                           <td class='docblock-short'>
+                                <p>Sink that clones incoming items and forwards them to two sinks at the same time.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -72,6 +90,7 @@ number of values when the underlying sink is unable to accept them.</p>
                            <td class='docblock-short'>
                                 <p>Future for the <code>Sink::flush</code> combinator, which polls the sink until all data
 has been flushed.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -80,6 +99,7 @@ has been flushed.</p>
                            <td class='docblock-short'>
                                 <p>Future for the <code>Sink::send</code> combinator, which sends a value to a sink and
 then waits until the sink has fully flushed.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -88,6 +108,7 @@ then waits until the sink has fully flushed.</p>
                            <td class='docblock-short'>
                                 <p>Future for the <code>Sink::send_all</code> combinator, which sends a stream of values
 to a sink and then waits until the sink has fully flushed those values.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -95,6 +116,7 @@ to a sink and then waits until the sink has fully flushed those values.</p>
                                   title='struct futures::sink::SinkFromErr'>SinkFromErr</a></td>
                            <td class='docblock-short'>
                                 <p>A sink combinator to change the error type of a sink.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -102,6 +124,7 @@ to a sink and then waits until the sink has fully flushed those values.</p>
                                   title='struct futures::sink::SinkMapErr'>SinkMapErr</a></td>
                            <td class='docblock-short'>
                                 <p>Sink for the <code>Sink::sink_map_err</code> combinator.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -110,6 +133,7 @@ to a sink and then waits until the sink has fully flushed those values.</p>
                            <td class='docblock-short'>
                                 <p>A sink combinator which converts an asynchronous sink to a <strong>blocking
 sink</strong>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -118,6 +142,7 @@ sink</strong>.</p>
                            <td class='docblock-short'>
                                 <p>Sink for the <code>Sink::with</code> combinator, chaining a computation to run <em>prior</em>
 to pushing a value into the underlying sink.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -126,6 +151,7 @@ to pushing a value into the underlying sink.</p>
                            <td class='docblock-short'>
                                 <p>Sink for the <code>Sink::with_flat_map</code> combinator, chaining a computation that returns an iterator
 to run prior to pushing a value into the underlying sink</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -134,6 +160,7 @@ to run prior to pushing a value into the underlying sink</p>
                                   title='trait futures::sink::Sink'>Sink</a></td>
                            <td class='docblock-short'>
                                 <p>A <code>Sink</code> is a value into which other values can be sent, asynchronously.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
@@ -142,6 +169,7 @@ to run prior to pushing a value into the underlying sink</p>
                                   title='type futures::sink::BoxSink'>BoxSink</a></td>
                            <td class='docblock-short'>
                                 <p>A type alias for <code>Box&lt;Sink + Send&gt;</code></p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -156,20 +184,22 @@ to run prior to pushing a value into the underlying sink</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

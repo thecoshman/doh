@@ -10,8 +10,11 @@
     <title>hyper::header::HeaderView - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct HeaderView</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.is">is</a><a href="#method.name">name</a><a href="#method.value">value</a><a href="#method.value_string">value_string</a><a href="#method.raw">raw</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Display">Display</a><a href="#impl-Debug">Debug</a><a href="#impl-Extend%3CHeaderView%3C%27a%3E%3E">Extend&lt;HeaderView&lt;&#39;a&gt;&gt;</a><a href="#impl-FromIterator%3CHeaderView%3C%27a%3E%3E">FromIterator&lt;HeaderView&lt;&#39;a&gt;&gt;</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'HeaderView', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct HeaderView</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.is">is</a><a href="#method.name">name</a><a href="#method.value">value</a><a href="#method.value_string">value_string</a><a href="#method.raw">raw</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Display">Display</a><a href="#impl-Debug">Debug</a><a href="#impl-Extend%3CHeaderView%3C%27a%3E%3E">Extend&lt;HeaderView&lt;&#39;a&gt;&gt;</a><a href="#impl-FromIterator%3CHeaderView%3C%27a%3E%3E">FromIterator&lt;HeaderView&lt;&#39;a&gt;&gt;</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'HeaderView', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,43 +59,41 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/hyper/header/mod.rs.html#617' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/hyper/header/mod.rs.html#625' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct HeaderView&lt;'a&gt;(_, _);</pre><div class='docblock'><p>Returned with the <code>HeadersItems</code> iterator.</p>
 </div>
                     <h2 id='methods' class='small-section-header'>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
-                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#619-654' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.is' class="method"><span id='is.v' class='invisible'><code>pub fn <a href='#method.is' class='fnname'>is</a>&lt;H:&nbsp;<a class="trait" href="../../hyper/header/trait.Header.html" title="trait hyper::header::Header">Header</a>&gt;(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#622-624' title='goto source code'>[src]</a></span></h4>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#627-662' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.is' class="method"><span id='is.v' class='invisible'><code>pub fn <a href='#method.is' class='fnname'>is</a>&lt;H:&nbsp;<a class="trait" href="../../hyper/header/trait.Header.html" title="trait hyper::header::Header">Header</a>&gt;(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#630-632' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Check if a HeaderView is a certain Header.</p>
-</div><h4 id='method.name' class="method"><span id='name.v' class='invisible'><code>pub fn <a href='#method.name' class='fnname'>name</a>(&amp;self) -&gt; &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#628-630' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.name' class="method"><span id='name.v' class='invisible'><code>pub fn <a href='#method.name' class='fnname'>name</a>(&amp;self) -&gt; &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#636-638' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get the Header name as a slice.</p>
-</div><h4 id='method.value' class="method"><span id='value.v' class='invisible'><code>pub fn <a href='#method.value' class='fnname'>value</a>&lt;H:&nbsp;<a class="trait" href="../../hyper/header/trait.Header.html" title="trait hyper::header::Header">Header</a>&gt;(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>H&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#634-636' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.value' class="method"><span id='value.v' class='invisible'><code>pub fn <a href='#method.value' class='fnname'>value</a>&lt;H:&nbsp;<a class="trait" href="../../hyper/header/trait.Header.html" title="trait hyper::header::Header">Header</a>&gt;(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a </a>H&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#642-644' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Cast the value to a certain Header type.</p>
-</div><h4 id='method.value_string' class="method"><span id='value_string.v' class='invisible'><code>pub fn <a href='#method.value_string' class='fnname'>value_string</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#645-647' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.value_string' class="method"><span id='value_string.v' class='invisible'><code>pub fn <a href='#method.value_string' class='fnname'>value_string</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#653-655' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get just the header value as a String.</p>
-
 <p>This will join multiple values of this header with a <code>,</code>.</p>
-
 <p><strong>Warning:</strong> This may not be the format that should be used to send
 a Request or Response.</p>
-</div><h4 id='method.raw' class="method"><span id='raw.v' class='invisible'><code>pub fn <a href='#method.raw' class='fnname'>raw</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../hyper/header/struct.Raw.html" title="struct hyper::header::Raw">Raw</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#651-653' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.raw' class="method"><span id='raw.v' class='invisible'><code>pub fn <a href='#method.raw' class='fnname'>raw</a>(&amp;self) -&gt; &amp;<a class="struct" href="../../hyper/header/struct.Raw.html" title="struct hyper::header::Raw">Raw</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#659-661' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Access the raw value of the header.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>
-        <h3 id='impl-Display' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;</code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#656-661' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#658-660' title='goto source code'>[src]</a></span></h4>
+        <h3 id='impl-Display' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html" title="trait core::fmt::Display">Display</a> for <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;</code><a href='#impl-Display' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#664-669' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#666-668' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt">Read more</a></p>
-</div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#663-668' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#665-667' title='goto source code'>[src]</a></span></h4>
+</div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#671-676' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt-1' class="method"><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#673-675' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
-</div></div><h3 id='impl-Extend%3CHeaderView%3C%27a%3E%3E' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.Extend.html" title="trait core::iter::traits::Extend">Extend</a>&lt;<a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt; for <a class="struct" href="../../hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a></code><a href='#impl-Extend%3CHeaderView%3C%27a%3E%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#670-676' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.extend' class="method"><span id='extend.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.Extend.html#tymethod.extend' class='fnname'>extend</a>&lt;I:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt;&gt;(&amp;mut self, iter: I)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#671-675' title='goto source code'>[src]</a></span></h4>
+</div></div><h3 id='impl-Extend%3CHeaderView%3C%27a%3E%3E' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.Extend.html" title="trait core::iter::traits::Extend">Extend</a>&lt;<a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt; for <a class="struct" href="../../hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a></code><a href='#impl-Extend%3CHeaderView%3C%27a%3E%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#678-684' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.extend' class="method"><span id='extend.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.Extend.html#tymethod.extend' class='fnname'>extend</a>&lt;I:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt;&gt;(&amp;mut self, iter: I)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#679-683' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Extends a collection with the contents of an iterator. <a href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.Extend.html#tymethod.extend">Read more</a></p>
-</div></div><h3 id='impl-FromIterator%3CHeaderView%3C%27a%3E%3E' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html" title="trait core::iter::traits::FromIterator">FromIterator</a>&lt;<a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt; for <a class="struct" href="../../hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a></code><a href='#impl-FromIterator%3CHeaderView%3C%27a%3E%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#696-702' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.from_iter' class="method"><span id='from_iter.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html#tymethod.from_iter' class='fnname'>from_iter</a>&lt;I:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt;&gt;(iter: I) -&gt; <a class="struct" href="../../hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#697-701' title='goto source code'>[src]</a></span></h4>
+</div></div><h3 id='impl-FromIterator%3CHeaderView%3C%27a%3E%3E' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html" title="trait core::iter::traits::FromIterator">FromIterator</a>&lt;<a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt; for <a class="struct" href="../../hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a></code><a href='#impl-FromIterator%3CHeaderView%3C%27a%3E%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#704-710' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_iter' class="method"><span id='from_iter.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html#tymethod.from_iter' class='fnname'>from_iter</a>&lt;I:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = <a class="struct" href="../../hyper/header/struct.HeaderView.html" title="struct hyper::header::HeaderView">HeaderView</a>&lt;'a&gt;&gt;&gt;(iter: I) -&gt; <a class="struct" href="../../hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/mod.rs.html#705-709' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Creates a value from an iterator. <a href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.FromIterator.html#tymethod.from_iter">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -99,20 +108,22 @@ a Request or Response.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

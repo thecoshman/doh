@@ -10,8 +10,11 @@
     <title>openssl::x509::X509Builder - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct X509Builder</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.set_not_after">set_not_after</a><a href="#method.set_not_before">set_not_before</a><a href="#method.set_version">set_version</a><a href="#method.set_serial_number">set_serial_number</a><a href="#method.set_issuer_name">set_issuer_name</a><a href="#method.set_subject_name">set_subject_name</a><a href="#method.set_pubkey">set_pubkey</a><a href="#method.x509v3_context">x509v3_context</a><a href="#method.append_extension">append_extension</a><a href="#method.sign">sign</a><a href="#method.build">build</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>x509</a></p><script>window.sidebarCurrent = {name: 'X509Builder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct X509Builder</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.set_not_after">set_not_after</a><a href="#method.set_not_before">set_not_before</a><a href="#method.set_version">set_version</a><a href="#method.set_serial_number">set_serial_number</a><a href="#method.set_issuer_name">set_issuer_name</a><a href="#method.set_subject_name">set_subject_name</a><a href="#method.set_pubkey">set_pubkey</a><a href="#method.x509v3_context">x509v3_context</a><a href="#method.append_extension">append_extension</a><a href="#method.sign">sign</a><a href="#method.build">build</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>x509</a></p><script>window.sidebarCurrent = {name: 'X509Builder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -63,7 +74,6 @@
 <div class='docblock'><p>Sets the notBefore constraint on the certificate.</p>
 </div><h4 id='method.set_version' class="method"><span id='set_version.v' class='invisible'><code>pub fn <a href='#method.set_version' class='fnname'>set_version</a>(&amp;mut self, version: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#338-340' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the version of the certificate.</p>
-
 <p>Note that the version is zero-indexed; that is, a certificate corresponding to version 3 of
 the X.509 standard should pass <code>2</code> to this method.</p>
 </div><h4 id='method.set_serial_number' class="method"><span id='set_serial_number.v' class='invisible'><code>pub fn <a href='#method.set_serial_number' class='fnname'>set_serial_number</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;serial_number: &amp;<a class="struct" href="../../openssl/asn1/struct.Asn1IntegerRef.html" title="struct openssl::asn1::Asn1IntegerRef">Asn1IntegerRef</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#343-350' title='goto source code'>[src]</a></span></h4>
@@ -72,7 +82,6 @@ the X.509 standard should pass <code>2</code> to this method.</p>
 <div class='docblock'><p>Sets the issuer name of the certificate.</p>
 </div><h4 id='method.set_subject_name' class="method"><span id='set_subject_name.v' class='invisible'><code>pub fn <a href='#method.set_subject_name' class='fnname'>set_subject_name</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;subject_name: &amp;<a class="struct" href="../../openssl/x509/struct.X509NameRef.html" title="struct openssl::x509::X509NameRef">X509NameRef</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#380-387' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the subject name of the certificate.</p>
-
 <p>When building certificates, the <code>C</code>, <code>ST</code>, and <code>O</code> options are common when using the openssl command line tools.
 The <code>CN</code> field is used for the common name, such as a DNS name.</p>
 
@@ -92,7 +101,6 @@ The <code>CN</code> field is used for the common name, such as a DNS name.</p>
 <div class='docblock'><p>Sets the public key associated with the certificate.</p>
 </div><h4 id='method.x509v3_context' class="method"><span id='x509v3_context.v' class='invisible'><code>pub fn <a href='#method.x509v3_context' class='fnname'>x509v3_context</a>&lt;'a&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;'a self, <br>&nbsp;&nbsp;&nbsp;&nbsp;issuer: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="struct" href="../../openssl/x509/struct.X509Ref.html" title="struct openssl::x509::X509Ref">X509Ref</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;conf: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="struct" href="../../openssl/conf/struct.ConfRef.html" title="struct openssl::conf::ConfRef">ConfRef</a>&gt;<br>) -&gt; <a class="struct" href="../../openssl/x509/struct.X509v3Context.html" title="struct openssl::x509::X509v3Context">X509v3Context</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#397-426' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a context object which is needed to create certain X509 extension values.</p>
-
 <p>Set <code>issuer</code> to <code>None</code> if the certificate will be self-signed.</p>
 </div><h4 id='method.append_extension' class="method"><span id='append_extension.v' class='invisible'><code>pub fn <a href='#method.append_extension' class='fnname'>append_extension</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;extension: <a class="struct" href="../../openssl/x509/struct.X509Extension.html" title="struct openssl::x509::X509Extension">X509Extension</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/x509/mod.rs.html#429-437' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Adds an X509 extension value to the certificate.</p>
@@ -113,20 +121,22 @@ The <code>CN</code> field is used for the common name, such as a DNS name.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -10,8 +10,11 @@
     <title>futures::sync - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module sync</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>futures</a></p><script>window.sidebarCurrent = {name: 'sync', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module sync</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'><a href='../index.html'>futures</a></p><script>window.sidebarCurrent = {name: 'sync', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,12 +61,10 @@
                    </a>
                </span><a class='srclink' href='../../src/futures/sync/mod.rs.html#1-17' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Future-aware synchronization</p>
-
 <p>This module, which is modeled after <code>std::sync</code>, contains user-space
 synchronization tools that work with futures, streams and sinks. In
 particular, these synchronizers do <em>not</em> block physical OS threads, but
 instead work at the task level.</p>
-
 <p>More information and examples of how to use these synchronization primitives
 can be found <a href="https://tokio.rs/docs/going-deeper-futures/synchronization/">online at tokio.rs</a>.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
@@ -65,6 +74,7 @@ can be found <a href="https://tokio.rs/docs/going-deeper-futures/synchronization
                                   title='mod futures::sync::mpsc'>mpsc</a></td>
                            <td class='docblock-short'>
                                 <p>A multi-producer, single-consumer, futures-aware, FIFO queue with back pressure.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -72,6 +82,7 @@ can be found <a href="https://tokio.rs/docs/going-deeper-futures/synchronization
                                   title='mod futures::sync::oneshot'>oneshot</a></td>
                            <td class='docblock-short'>
                                 <p>A one-shot, futures-aware channel</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -81,6 +92,7 @@ can be found <a href="https://tokio.rs/docs/going-deeper-futures/synchronization
                            <td class='docblock-short'>
                                 <p>A type of futures-powered synchronization primitive which is a mutex between
 two possible owners.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -89,6 +101,7 @@ two possible owners.</p>
                            <td class='docblock-short'>
                                 <p>Future returned by <code>BiLock::lock</code> which will resolve when the lock is
 acquired.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -96,6 +109,7 @@ acquired.</p>
                                   title='struct futures::sync::BiLockAcquired'>BiLockAcquired</a></td>
                            <td class='docblock-short'>
                                 <p>Resolved value of the <code>BiLockAcquire&lt;T&gt;</code> future.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -103,6 +117,7 @@ acquired.</p>
                                   title='struct futures::sync::BiLockGuard'>BiLockGuard</a></td>
                            <td class='docblock-short'>
                                 <p>Returned RAII guard from the <code>poll_lock</code> method.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -117,20 +132,22 @@ acquired.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

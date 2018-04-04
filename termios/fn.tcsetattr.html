@@ -10,8 +10,11 @@
     <title>termios::tcsetattr - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='index.html'>termios</a></p><script>window.sidebarCurrent = {name: 'tcsetattr', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -49,32 +60,28 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/termios/lib.rs.html#463-465' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn tcsetattr(fd: <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/type.RawFd.html" title="type std::sys::imp::ext::io::RawFd">RawFd</a>, action: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>, termios: &amp;<a class="struct" href="../termios/struct.Termios.html" title="struct termios::Termios">Termios</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</pre><div class='docblock'><p>Sets a terminal device&#39;s parameters.</p>
-
+<pre class='rust fn'>pub fn tcsetattr(fd: <a class="type" href="https://doc.rust-lang.org/nightly/std/sys/unix/ext/io/type.RawFd.html" title="type std::sys::unix::ext::io::RawFd">RawFd</a>, action: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>, termios: &amp;<a class="struct" href="../termios/struct.Termios.html" title="struct termios::Termios">Termios</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</pre><div class='docblock'><p>Sets a terminal device's parameters.</p>
 <p><code>tcsetattr()</code> returns successfully if it was able to perform any of the requested actions, even
 if other requested actions could not be performed. It will set all attributes that the
 implementation supports and leave others unchanged. The <code>Termios</code> structure will not be updated
 to reflect the changes that were applied.</p>
-
 <p>In order to determine which parameters were applied to the terminal device, an application
 should use <a href="fn.tcgetattr.html"><code>tcgetattr()</code></a> to obtain the latest state of the terminal
 device. In particular, when attempting to change baud rates, <a href="fn.tcgetattr.html"><code>tcgetattr()</code></a>
 can be used to determine which baud rates were actually selected.</p>
-
 <p>If none of the requested actions could be performed, then <code>tcsetattr()</code> returns an error.</p>
-
-<h1 id='parameters' class='section-header'><a href='#parameters'>Parameters</a></h1>
+<h1 id="parameters" class="section-header"><a href="#parameters">Parameters</a></h1>
 <ul>
 <li><code>fd</code> should be an open file descriptor associated with a terminal.</li>
 <li><code>action</code> should be one of the constants:
-
 <ul>
 <li><code>TCSANOW</code> applies the change immediately.</li>
 <li><code>TCSADRAIN</code> applies the change after all output previously written to <code>fd</code> is transmitted.
 This mode should be used when changing parameters that affect output.</li>
 <li><code>TCSAFLUSH</code> applies the change after all output previously written to <code>fd</code> is transmitted.
 All data received but not read is discarded before applying the change.</li>
-</ul></li>
+</ul>
+</li>
 <li><code>termios</code> should be a mutable reference to a <code>Termios</code> structure containing the parameters to
 apply to the terminal device.</li>
 </ul>
@@ -91,20 +98,22 @@ apply to the terminal device.</li>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

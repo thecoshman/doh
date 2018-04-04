@@ -10,8 +10,11 @@
     <title>futures::unsync::mpsc - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module mpsc</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>futures</a>::<wbr><a href='../index.html'>unsync</a></p><script>window.sidebarCurrent = {name: 'mpsc', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module mpsc</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>futures</a>::<wbr><a href='../index.html'>unsync</a></p><script>window.sidebarCurrent = {name: 'mpsc', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,11 +59,10 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/futures/unsync/mpsc.rs.html#1-468' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/futures/unsync/mpsc.rs.html#1-474' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A multi-producer, single-consumer, futures-aware, FIFO queue with back
 pressure, for use communicating between tasks on the same thread.</p>
-
-<p>These queues are the same as those in <code>futures::sync</code>, except they&#39;re not
+<p>These queues are the same as those in <code>futures::sync</code>, except they're not
 intended to be sent across threads.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -61,6 +71,7 @@ intended to be sent across threads.</p>
                                   title='struct futures::unsync::mpsc::Execute'>Execute</a></td>
                            <td class='docblock-short'>
                                 <p>Type of future which <code>Executor</code> instances must be able to execute for <code>spawn</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -68,6 +79,7 @@ intended to be sent across threads.</p>
                                   title='struct futures::unsync::mpsc::Receiver'>Receiver</a></td>
                            <td class='docblock-short'>
                                 <p>The receiving end of a channel which implements the <code>Stream</code> trait.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -76,6 +88,7 @@ intended to be sent across threads.</p>
                            <td class='docblock-short'>
                                 <p>Error type for sending, used when the receiving end of a channel is
 dropped</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -83,6 +96,7 @@ dropped</p>
                                   title='struct futures::unsync::mpsc::Sender'>Sender</a></td>
                            <td class='docblock-short'>
                                 <p>The transmission end of a channel.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -90,6 +104,7 @@ dropped</p>
                                   title='struct futures::unsync::mpsc::SpawnHandle'>SpawnHandle</a></td>
                            <td class='docblock-short'>
                                 <p>Handle returned from the <code>spawn</code> function.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -97,6 +112,7 @@ dropped</p>
                                   title='struct futures::unsync::mpsc::UnboundedReceiver'>UnboundedReceiver</a></td>
                            <td class='docblock-short'>
                                 <p>The receiving end of an unbounded channel.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -104,6 +120,7 @@ dropped</p>
                                   title='struct futures::unsync::mpsc::UnboundedSender'>UnboundedSender</a></td>
                            <td class='docblock-short'>
                                 <p>The transmission end of an unbounded channel.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -112,6 +129,7 @@ dropped</p>
                                   title='fn futures::unsync::mpsc::channel'>channel</a></td>
                            <td class='docblock-short'>
                                 <p>Creates a bounded in-memory channel with buffered storage.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -120,6 +138,7 @@ dropped</p>
                            <td class='docblock-short'>
                                 <p>Spawns a <code>stream</code> onto the instance of <code>Executor</code> provided, <code>executor</code>,
 returning a handle representing the remote stream.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -128,6 +147,7 @@ returning a handle representing the remote stream.</p>
                            <td class='docblock-short'>
                                 <p>Spawns a <code>stream</code> onto the instance of <code>Executor</code> provided, <code>executor</code>,
 returning a handle representing the remote stream, with unbounded buffering.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -135,6 +155,7 @@ returning a handle representing the remote stream, with unbounded buffering.</p>
                                   title='fn futures::unsync::mpsc::unbounded'>unbounded</a></td>
                            <td class='docblock-short'>
                                 <p>Creates an unbounded in-memory channel with buffered storage.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -149,20 +170,22 @@ returning a handle representing the remote stream, with unbounded buffering.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

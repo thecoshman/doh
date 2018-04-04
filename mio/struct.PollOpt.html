@@ -10,8 +10,11 @@
     <title>mio::PollOpt - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct PollOpt</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.empty">empty</a><a href="#method.edge">edge</a><a href="#method.level">level</a><a href="#method.oneshot">oneshot</a><a href="#method.is_edge">is_edge</a><a href="#method.is_level">is_level</a><a href="#method.is_oneshot">is_oneshot</a><a href="#method.contains">contains</a><a href="#method.insert">insert</a><a href="#method.remove">remove</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Copy">Copy</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Eq">Eq</a><a href="#impl-Clone">Clone</a><a href="#impl-PartialOrd">PartialOrd</a><a href="#impl-Ord">Ord</a><a href="#impl-BitOr">BitOr</a><a href="#impl-BitXor">BitXor</a><a href="#impl-BitAnd">BitAnd</a><a href="#impl-Sub">Sub</a><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='index.html'>mio</a></p><script>window.sidebarCurrent = {name: 'PollOpt', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct PollOpt</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.empty">empty</a><a href="#method.edge">edge</a><a href="#method.level">level</a><a href="#method.oneshot">oneshot</a><a href="#method.is_edge">is_edge</a><a href="#method.is_level">is_level</a><a href="#method.is_oneshot">is_oneshot</a><a href="#method.contains">contains</a><a href="#method.insert">insert</a><a href="#method.remove">remove</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Copy">Copy</a><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Eq">Eq</a><a href="#impl-Clone">Clone</a><a href="#impl-PartialOrd">PartialOrd</a><a href="#impl-Ord">Ord</a><a href="#impl-BitOr">BitOr</a><a href="#impl-BitXor">BitXor</a><a href="#impl-BitAnd">BitAnd</a><a href="#impl-Sub">Sub</a><a href="#impl-Debug">Debug</a></div></div><p class='location'><a href='index.html'>mio</a></p><script>window.sidebarCurrent = {name: 'PollOpt', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,13 +61,10 @@
                    </a>
                </span><a class='srclink' href='../src/mio/event_imp.rs.html#178' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct PollOpt(_);</pre><div class='docblock'><p>Options supplied when registering an <code>Evented</code> handle with <code>Poll</code></p>
-
 <p><code>PollOpt</code> values can be combined together using the various bitwise
 operators.</p>
-
 <p>For high level documentation on polling and poll options, see <a href="struct.Poll.html"><code>Poll</code></a>.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -72,10 +80,8 @@ operators.</p>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#180-435' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.empty' class="method"><span id='empty.v' class='invisible'><code>pub fn <a href='#method.empty' class='fnname'>empty</a>() -&gt; <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#197-199' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return a <code>PollOpt</code> representing no set options.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
+<h1 id="examples-1" class="section-header"><a href="#examples-1">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -84,10 +90,8 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">opt</span>.<span class="ident">is_level</span>());</pre>
 </div><h4 id='method.edge' class="method"><span id='edge.v' class='invisible'><code>pub fn <a href='#method.edge' class='fnname'>edge</a>() -&gt; <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#217-219' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return a <code>PollOpt</code> representing edge-triggered notifications.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
+<h1 id="examples-2" class="section-header"><a href="#examples-2">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -96,10 +100,8 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_edge</span>());</pre>
 </div><h4 id='method.level' class="method"><span id='level.v' class='invisible'><code>pub fn <a href='#method.level' class='fnname'>level</a>() -&gt; <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#237-239' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return a <code>PollOpt</code> representing level-triggered notifications.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
+<h1 id="examples-3" class="section-header"><a href="#examples-3">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -108,10 +110,8 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_level</span>());</pre>
 </div><h4 id='method.oneshot' class="method"><span id='oneshot.v' class='invisible'><code>pub fn <a href='#method.oneshot' class='fnname'>oneshot</a>() -&gt; <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#257-259' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Return a <code>PollOpt</code> representing oneshot notifications.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
+<h1 id="examples-4" class="section-header"><a href="#examples-4">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -120,10 +120,8 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_oneshot</span>());</pre>
 </div><h4 id='method.is_edge' class="method"><span id='is_edge.v' class='invisible'><code>pub fn <a href='#method.is_edge' class='fnname'>is_edge</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#293-295' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns true if the options include edge-triggered notifications.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-5' class='section-header'><a href='#examples-5'>Examples</a></h1>
+<h1 id="examples-5" class="section-header"><a href="#examples-5">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -132,10 +130,8 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_edge</span>());</pre>
 </div><h4 id='method.is_level' class="method"><span id='is_level.v' class='invisible'><code>pub fn <a href='#method.is_level' class='fnname'>is_level</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#313-315' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns true if the options include level-triggered notifications.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-6' class='section-header'><a href='#examples-6'>Examples</a></h1>
+<h1 id="examples-6" class="section-header"><a href="#examples-6">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -144,10 +140,8 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_level</span>());</pre>
 </div><h4 id='method.is_oneshot' class="method"><span id='is_oneshot.v' class='invisible'><code>pub fn <a href='#method.is_oneshot' class='fnname'>is_oneshot</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#333-335' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns true if the options includes oneshot.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-7' class='section-header'><a href='#examples-7'>Examples</a></h1>
+<h1 id="examples-7" class="section-header"><a href="#examples-7">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -156,14 +150,11 @@ operators.</p>
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_oneshot</span>());</pre>
 </div><h4 id='method.contains' class="method"><span id='contains.v' class='invisible'><code>pub fn <a href='#method.contains' class='fnname'>contains</a>(&amp;self, other: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#394-396' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns true if <code>self</code> is a superset of <code>other</code>.</p>
-
 <p><code>other</code> may represent more than one option, in which case the function
 only returns true if <code>self</code> contains all of the options specified in
 <code>other</code>.</p>
-
 <p>See <a href="struct.Poll.html"><code>Poll</code></a> for more documentation on polling.</p>
-
-<h1 id='examples-8' class='section-header'><a href='#examples-8'>Examples</a></h1>
+<h1 id="examples-8" class="section-header"><a href="#examples-8">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -190,10 +181,8 @@ only returns true if <code>self</code> contains all of the options specified in
 <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">opt</span> <span class="op">|</span> <span class="ident">PollOpt</span>::<span class="ident">level</span>()).<span class="ident">contains</span>(<span class="ident">opt</span>));</pre>
 </div><h4 id='method.insert' class="method"><span id='insert.v' class='invisible'><code>pub fn <a href='#method.insert' class='fnname'>insert</a>(&amp;mut self, other: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#413-415' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Adds all options represented by <code>other</code> into <code>self</code>.</p>
-
 <p>This is equivalent to <code>*self = *self | other</code>.</p>
-
-<h1 id='examples-9' class='section-header'><a href='#examples-9'>Examples</a></h1>
+<h1 id="examples-9" class="section-header"><a href="#examples-9">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -203,10 +192,8 @@ only returns true if <code>self</code> contains all of the options specified in
 <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">opt</span>.<span class="ident">is_oneshot</span>());</pre>
 </div><h4 id='method.remove' class="method"><span id='remove.v' class='invisible'><code>pub fn <a href='#method.remove' class='fnname'>remove</a>(&amp;mut self, other: <a class="struct" href="../mio/struct.PollOpt.html" title="struct mio::PollOpt">PollOpt</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/mio/event_imp.rs.html#432-434' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Removes all options represented by <code>other</code> from <code>self</code>.</p>
-
 <p>This is equivalent to <code>*self = *self &amp; !other</code>.</p>
-
-<h1 id='examples-10' class='section-header'><a href='#examples-10'>Examples</a></h1>
+<h1 id="examples-10" class="section-header"><a href="#examples-10">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mio</span>::<span class="ident">PollOpt</span>;
 
@@ -284,20 +271,22 @@ only returns true if <code>self</code> contains all of the options specified in
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.12/src/net/tcp.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mio-0.6.14/src/net/tcp.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tcp.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -761,6 +772,23 @@
 <span id="716">716</span>
 <span id="717">717</span>
 <span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
+<span id="722">722</span>
+<span id="723">723</span>
+<span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Primitives for working with TCP</span>
 <span class="doccomment">//!</span>
@@ -771,7 +799,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">/// [portability guidelines]: ../struct.Poll.html#portability</span>
 
-
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="ident">Read</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="self">self</span>, <span class="ident">SocketAddr</span>, <span class="ident">SocketAddrV4</span>, <span class="ident">SocketAddrV6</span>, <span class="ident">Ipv4Addr</span>, <span class="ident">Ipv6Addr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
@@ -824,7 +852,6 @@
 <span class="doccomment">/// #     try_main().unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpStream</span> {
     <span class="ident">sys</span>: <span class="ident">sys</span>::<span class="ident">TcpStream</span>,
     <span class="ident">selector_id</span>: <span class="ident">SelectorId</span>,
@@ -1218,6 +1245,12 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">TcpStream</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">sys</span>, <span class="ident">f</span>)
+    }
+}
+
 <span class="comment">/*
  *
  * ===== TcpListener =====
@@ -1254,7 +1287,6 @@
 <span class="doccomment">/// #     try_main().unwrap();</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpListener</span> {
     <span class="ident">sys</span>: <span class="ident">sys</span>::<span class="ident">TcpListener</span>,
     <span class="ident">selector_id</span>: <span class="ident">SelectorId</span>,
@@ -1293,9 +1325,17 @@
         <span class="comment">// listen</span>
         <span class="kw">let</span> <span class="ident">listener</span> <span class="op">=</span> <span class="ident">sock</span>.<span class="ident">listen</span>(<span class="number">1024</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">TcpListener</span> {
-            <span class="ident">sys</span>: <span class="ident">sys</span>::<span class="ident">TcpListener</span>::<span class="ident">new</span>(<span class="ident">listener</span>, <span class="ident">addr</span>)<span class="question-mark">?</span>,
+            <span class="ident">sys</span>: <span class="ident">sys</span>::<span class="ident">TcpListener</span>::<span class="ident">new</span>(<span class="ident">listener</span>)<span class="question-mark">?</span>,
             <span class="ident">selector_id</span>: <span class="ident">SelectorId</span>::<span class="ident">new</span>(),
         })
+    }
+
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.13&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use from_std instead&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-deprecated&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_listener</span>(<span class="ident">listener</span>: <span class="ident">net</span>::<span class="ident">TcpListener</span>, _: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>)
+                         <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
+        <span class="ident">TcpListener</span>::<span class="ident">from_std</span>(<span class="ident">listener</span>)
     }
 
     <span class="doccomment">/// Creates a new `TcpListener` from an instance of a</span>
@@ -1307,9 +1347,8 @@
     <span class="doccomment">/// loop.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The address provided must be the address that the listener is bound to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_listener</span>(<span class="ident">listener</span>: <span class="ident">net</span>::<span class="ident">TcpListener</span>, <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">SocketAddr</span>)
-                         <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
-        <span class="ident">sys</span>::<span class="ident">TcpListener</span>::<span class="ident">new</span>(<span class="ident">listener</span>, <span class="ident">addr</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_std</span>(<span class="ident">listener</span>: <span class="ident">net</span>::<span class="ident">TcpListener</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TcpListener</span><span class="op">&gt;</span> {
+        <span class="ident">sys</span>::<span class="ident">TcpListener</span>::<span class="ident">new</span>(<span class="ident">listener</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
             <span class="ident">TcpListener</span> {
                 <span class="ident">sys</span>: <span class="ident">s</span>,
                 <span class="ident">selector_id</span>: <span class="ident">SelectorId</span>::<span class="ident">new</span>(),
@@ -1424,6 +1463,12 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">TcpListener</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">sys</span>, <span class="ident">f</span>)
+    }
+}
+
 <span class="comment">/*
  *
  * ===== UNIX ext =====
@@ -1494,20 +1539,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

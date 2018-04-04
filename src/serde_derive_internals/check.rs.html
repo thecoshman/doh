@@ -4,14 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_derive_internals-0.19.0/src/check.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde_derive_internals-0.23.0/src/check.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>check.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -214,6 +225,116 @@
 <span id="169">169</span>
 <span id="170">170</span>
 <span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -223,33 +344,79 @@
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="kw">use</span> <span class="ident">ast</span>::{<span class="ident">Body</span>, <span class="ident">Container</span>, <span class="ident">Style</span>};
-<span class="kw">use</span> <span class="ident">attr</span>::<span class="ident">Identifier</span>;
+<span class="kw">use</span> <span class="ident">ast</span>::{<span class="ident">Data</span>, <span class="ident">Container</span>, <span class="ident">Style</span>};
+<span class="kw">use</span> <span class="ident">attr</span>::{<span class="ident">Identifier</span>, <span class="ident">EnumTag</span>};
 <span class="kw">use</span> <span class="ident">Ctxt</span>;
 
 <span class="doccomment">/// Cross-cutting checks that require looking at more than a single attrs</span>
 <span class="doccomment">/// object. Simpler checks should happen when parsing and building the attrs.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check</span>(<span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>, <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>) {
     <span class="ident">check_getter</span>(<span class="ident">cx</span>, <span class="ident">cont</span>);
+    <span class="ident">check_flatten</span>(<span class="ident">cx</span>, <span class="ident">cont</span>);
     <span class="ident">check_identifier</span>(<span class="ident">cx</span>, <span class="ident">cont</span>);
     <span class="ident">check_variant_skip_attrs</span>(<span class="ident">cx</span>, <span class="ident">cont</span>);
+    <span class="ident">check_internal_tag_field_name_conflict</span>(<span class="ident">cx</span>, <span class="ident">cont</span>);
+    <span class="ident">check_adjacent_tag_conflict</span>(<span class="ident">cx</span>, <span class="ident">cont</span>);
 }
 
 <span class="doccomment">/// Getters are only allowed inside structs (not enums) with the `remote`</span>
 <span class="doccomment">/// attribute.</span>
 <span class="kw">fn</span> <span class="ident">check_getter</span>(<span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>, <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>) {
-    <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">body</span> {
-        <span class="ident">Body</span>::<span class="ident">Enum</span>(_) <span class="op">=&gt;</span> {
-            <span class="kw">if</span> <span class="ident">cont</span>.<span class="ident">body</span>.<span class="ident">has_getter</span>() {
+    <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">data</span> {
+        <span class="ident">Data</span>::<span class="ident">Enum</span>(_) <span class="op">=&gt;</span> {
+            <span class="kw">if</span> <span class="ident">cont</span>.<span class="ident">data</span>.<span class="ident">has_getter</span>() {
                 <span class="ident">cx</span>.<span class="ident">error</span>(<span class="string">&quot;#[serde(getter = \&quot;...\&quot;)] is not allowed in an enum&quot;</span>);
             }
         }
-        <span class="ident">Body</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> {
-            <span class="kw">if</span> <span class="ident">cont</span>.<span class="ident">body</span>.<span class="ident">has_getter</span>() <span class="op">&amp;&amp;</span> <span class="ident">cont</span>.<span class="ident">attrs</span>.<span class="ident">remote</span>().<span class="ident">is_none</span>() {
+        <span class="ident">Data</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> {
+            <span class="kw">if</span> <span class="ident">cont</span>.<span class="ident">data</span>.<span class="ident">has_getter</span>() <span class="op">&amp;&amp;</span> <span class="ident">cont</span>.<span class="ident">attrs</span>.<span class="ident">remote</span>().<span class="ident">is_none</span>() {
                 <span class="ident">cx</span>.<span class="ident">error</span>(
                     <span class="string">&quot;#[serde(getter = \&quot;...\&quot;)] can only be used in structs \
                      that have #[serde(remote = \&quot;...\&quot;)]&quot;</span>,
                 );
+            }
+        }
+    }
+}
+
+<span class="doccomment">/// Flattening has some restrictions we can test.</span>
+<span class="kw">fn</span> <span class="ident">check_flatten</span>(<span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>, <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>) {
+    <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">data</span> {
+        <span class="ident">Data</span>::<span class="ident">Enum</span>(_) <span class="op">=&gt;</span> {
+            <span class="kw">if</span> <span class="ident">cont</span>.<span class="ident">attrs</span>.<span class="ident">has_flatten</span>() {
+                <span class="ident">cx</span>.<span class="ident">error</span>(<span class="string">&quot;#[serde(flatten)] cannot be used within enums&quot;</span>);
+            }
+        }
+        <span class="ident">Data</span>::<span class="ident">Struct</span>(<span class="ident">style</span>, _) <span class="op">=&gt;</span> {
+            <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="ident">cont</span>.<span class="ident">data</span>.<span class="ident">all_fields</span>() {
+                <span class="kw">if</span> <span class="op">!</span><span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">flatten</span>() {
+                    <span class="kw">continue</span>;
+                }
+                <span class="kw">match</span> <span class="ident">style</span> {
+                    <span class="ident">Style</span>::<span class="ident">Tuple</span> <span class="op">=&gt;</span> {
+                        <span class="ident">cx</span>.<span class="ident">error</span>(<span class="string">&quot;#[serde(flatten)] cannot be used on tuple structs&quot;</span>);
+                    }
+                    <span class="ident">Style</span>::<span class="ident">Newtype</span> <span class="op">=&gt;</span> {
+                        <span class="ident">cx</span>.<span class="ident">error</span>(<span class="string">&quot;#[serde(flatten)] cannot be used on newtype structs&quot;</span>);
+                    }
+                    _ <span class="op">=&gt;</span> {}
+                }
+                <span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">skip_serializing</span>() {
+                    <span class="ident">cx</span>.<span class="ident">error</span>(
+                        <span class="string">&quot;#[serde(flatten] can not be combined with \
+                         #[serde(skip_serializing)]&quot;</span>
+                    );
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">skip_serializing_if</span>().<span class="ident">is_some</span>() {
+                    <span class="ident">cx</span>.<span class="ident">error</span>(
+                        <span class="string">&quot;#[serde(flatten] can not be combined with \
+                         #[serde(skip_serializing_if = \&quot;...\&quot;)]&quot;</span>
+                    );
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">skip_deserializing</span>() {
+                    <span class="ident">cx</span>.<span class="ident">error</span>(
+                        <span class="string">&quot;#[serde(flatten] can not be combined with \
+                         #[serde(skip_deserializing)]&quot;</span>
+                    );
+                }
             }
         }
     }
@@ -262,9 +429,9 @@
 <span class="doccomment">/// `field_identifier` all but possibly one variant must be unit variants. The</span>
 <span class="doccomment">/// last variant may be a newtype variant which is an implicit &quot;other&quot; case.</span>
 <span class="kw">fn</span> <span class="ident">check_identifier</span>(<span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>, <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>) {
-    <span class="kw">let</span> <span class="ident">variants</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">body</span> {
-        <span class="ident">Body</span>::<span class="ident">Enum</span>(<span class="kw-2">ref</span> <span class="ident">variants</span>) <span class="op">=&gt;</span> <span class="ident">variants</span>,
-        <span class="ident">Body</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> {
+    <span class="kw">let</span> <span class="ident">variants</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">data</span> {
+        <span class="ident">Data</span>::<span class="ident">Enum</span>(<span class="kw-2">ref</span> <span class="ident">variants</span>) <span class="op">=&gt;</span> <span class="ident">variants</span>,
+        <span class="ident">Data</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> {
             <span class="kw">return</span>;
         }
     };
@@ -319,9 +486,9 @@
 <span class="doccomment">/// Skip-(de)serializing attributes are not allowed on variants marked</span>
 <span class="doccomment">/// (de)serialize_with.</span>
 <span class="kw">fn</span> <span class="ident">check_variant_skip_attrs</span>(<span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>, <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>) {
-    <span class="kw">let</span> <span class="ident">variants</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">body</span> {
-        <span class="ident">Body</span>::<span class="ident">Enum</span>(<span class="kw-2">ref</span> <span class="ident">variants</span>) <span class="op">=&gt;</span> <span class="ident">variants</span>,
-        <span class="ident">Body</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> {
+    <span class="kw">let</span> <span class="ident">variants</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">data</span> {
+        <span class="ident">Data</span>::<span class="ident">Enum</span>(<span class="kw-2">ref</span> <span class="ident">variants</span>) <span class="op">=&gt;</span> <span class="ident">variants</span>,
+        <span class="ident">Data</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> {
             <span class="kw">return</span>;
         }
     };
@@ -386,6 +553,70 @@
         }
     }
 }
+
+<span class="doccomment">/// The tag of an internally-tagged struct variant must not be</span>
+<span class="doccomment">/// the same as either one of its fields, as this would result in</span>
+<span class="doccomment">/// duplicate keys in the serialized output and/or ambiguity in</span>
+<span class="doccomment">/// the to-be-deserialized input.</span>
+<span class="kw">fn</span> <span class="ident">check_internal_tag_field_name_conflict</span>(
+    <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>,
+    <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>,
+) {
+    <span class="kw">let</span> <span class="ident">variants</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">cont</span>.<span class="ident">data</span> {
+        <span class="ident">Data</span>::<span class="ident">Enum</span>(<span class="kw-2">ref</span> <span class="ident">variants</span>) <span class="op">=&gt;</span> <span class="ident">variants</span>,
+        <span class="ident">Data</span>::<span class="ident">Struct</span>(_, _) <span class="op">=&gt;</span> <span class="kw">return</span>,
+    };
+
+    <span class="kw">let</span> <span class="ident">tag</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">cont</span>.<span class="ident">attrs</span>.<span class="ident">tag</span>() {
+        <span class="ident">EnumTag</span>::<span class="ident">Internal</span> { <span class="kw-2">ref</span> <span class="ident">tag</span> } <span class="op">=&gt;</span> <span class="ident">tag</span>.<span class="ident">as_str</span>(),
+        <span class="ident">EnumTag</span>::<span class="ident">External</span> <span class="op">|</span> <span class="ident">EnumTag</span>::<span class="ident">Adjacent</span> { .. } <span class="op">|</span> <span class="ident">EnumTag</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span>,
+    };
+
+    <span class="kw">let</span> <span class="ident">diagnose_conflict</span> <span class="op">=</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;variant field name `{}` conflicts with internal tag&quot;</span>,
+            <span class="ident">tag</span>
+        );
+        <span class="ident">cx</span>.<span class="ident">error</span>(<span class="ident">message</span>);
+    };
+
+    <span class="kw">for</span> <span class="ident">variant</span> <span class="kw">in</span> <span class="ident">variants</span> {
+        <span class="kw">match</span> <span class="ident">variant</span>.<span class="ident">style</span> {
+            <span class="ident">Style</span>::<span class="ident">Struct</span> <span class="op">=&gt;</span> {
+                <span class="kw">for</span> <span class="ident">field</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">variant</span>.<span class="ident">fields</span> {
+                    <span class="kw">let</span> <span class="ident">check_ser</span> <span class="op">=</span> <span class="op">!</span><span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">skip_serializing</span>();
+                    <span class="kw">let</span> <span class="ident">check_de</span> <span class="op">=</span> <span class="op">!</span><span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">skip_deserializing</span>();
+                    <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">field</span>.<span class="ident">attrs</span>.<span class="ident">name</span>();
+                    <span class="kw">let</span> <span class="ident">ser_name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">serialize_name</span>();
+                    <span class="kw">let</span> <span class="ident">de_name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">deserialize_name</span>();
+
+                    <span class="kw">if</span> <span class="ident">check_ser</span> <span class="op">&amp;&amp;</span> <span class="ident">ser_name</span> <span class="op">==</span> <span class="ident">tag</span> <span class="op">||</span> <span class="ident">check_de</span> <span class="op">&amp;&amp;</span> <span class="ident">de_name</span> <span class="op">==</span> <span class="ident">tag</span> {
+                        <span class="ident">diagnose_conflict</span>();
+                        <span class="kw">return</span>;
+                    }
+                }
+            },
+            <span class="ident">Style</span>::<span class="ident">Unit</span> <span class="op">|</span> <span class="ident">Style</span>::<span class="ident">Newtype</span> <span class="op">|</span> <span class="ident">Style</span>::<span class="ident">Tuple</span> <span class="op">=&gt;</span> {},
+        }
+    }
+}
+
+<span class="doccomment">/// In the case of adjacently-tagged enums, the type and the</span>
+<span class="doccomment">/// contents tag must differ, for the same reason.</span>
+<span class="kw">fn</span> <span class="ident">check_adjacent_tag_conflict</span>(<span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Ctxt</span>, <span class="ident">cont</span>: <span class="kw-2">&amp;</span><span class="ident">Container</span>) {
+    <span class="kw">let</span> (<span class="ident">type_tag</span>, <span class="ident">content_tag</span>) <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">cont</span>.<span class="ident">attrs</span>.<span class="ident">tag</span>() {
+        <span class="ident">EnumTag</span>::<span class="ident">Adjacent</span> { <span class="kw-2">ref</span> <span class="ident">tag</span>, <span class="kw-2">ref</span> <span class="ident">content</span> } <span class="op">=&gt;</span> (<span class="ident">tag</span>, <span class="ident">content</span>),
+        <span class="ident">EnumTag</span>::<span class="ident">Internal</span> { .. } <span class="op">|</span> <span class="ident">EnumTag</span>::<span class="ident">External</span> <span class="op">|</span> <span class="ident">EnumTag</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span>,
+    };
+
+    <span class="kw">if</span> <span class="ident">type_tag</span> <span class="op">==</span> <span class="ident">content_tag</span> {
+        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;enum tags `{}` for type and content conflict with each other&quot;</span>,
+            <span class="ident">type_tag</span>
+        );
+        <span class="ident">cx</span>.<span class="ident">error</span>(<span class="ident">message</span>);
+    }
+}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -400,20 +631,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

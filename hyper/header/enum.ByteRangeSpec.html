@@ -10,8 +10,11 @@
     <title>hyper::header::ByteRangeSpec - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Enum ByteRangeSpec</p><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.FromTo">FromTo</a><a href="#variant.AllFrom">AllFrom</a><a href="#variant.Last">Last</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.to_satisfiable_range">to_satisfiable_range</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-Display">Display</a><a href="#impl-FromStr">FromStr</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'ByteRangeSpec', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum ByteRangeSpec</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.FromTo">FromTo</a><a href="#variant.AllFrom">AllFrom</a><a href="#variant.Last">Last</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.to_satisfiable_range">to_satisfiable_range</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-PartialEq">PartialEq</a><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-Display">Display</a><a href="#impl-FromStr">FromStr</a></div></div><p class='location'><a href='../index.html'>hyper</a>::<wbr><a href='index.html'>header</a></p><script>window.sidebarCurrent = {name: 'ByteRangeSpec', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -68,20 +79,16 @@ Each <code>ByteRangeSpec</code> defines a range of bytes to fetch</p>
 <div class='impl-items'><h4 id='method.to_satisfiable_range' class="method"><span id='to_satisfiable_range.v' class='invisible'><code>pub fn <a href='#method.to_satisfiable_range' class='fnname'>to_satisfiable_range</a>(&amp;self, full_length: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/header/common/range.rs.html#116-151' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Given the full length of the entity, attempt to normalize the byte range
 into an satisfiable end-inclusive (from, to) range.</p>
-
 <p>The resulting range is guaranteed to be a satisfiable range within the bounds
 of <code>0 &lt;= from &lt;= to &lt; full_length</code>.</p>
-
 <p>If the byte range is deemed unsatisfiable, <code>None</code> is returned.
 An unsatisfiable range is generally cause for a server to either reject
 the client request with a <code>416 Range Not Satisfiable</code> status code, or to
 simply ignore the range header and serve the full entity using a <code>200 OK</code>
 status code.</p>
-
 <p>This function closely follows <a href="https://tools.ietf.org/html/rfc7233">RFC 7233</a> section 2.1.
 As such, it considers ranges to be satisfiable if they meet the following
-conditions: </p>
-
+conditions:</p>
 <blockquote>
 <p>If a valid byte-range-set includes at least one byte-range-spec with
 a first-byte-pos that is less than the current length of the
@@ -89,9 +96,7 @@ representation, or at least one suffix-byte-range-spec with a
 non-zero suffix-length, then the byte-range-set is satisfiable.
 Otherwise, the byte-range-set is unsatisfiable.</p>
 </blockquote>
-
 <p>The function also computes remainder ranges based on the RFC:</p>
-
 <blockquote>
 <p>If the last-byte-pos value is
 absent, or if the value is greater than or equal to the current
@@ -138,20 +143,22 @@ length of the selected representation).</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

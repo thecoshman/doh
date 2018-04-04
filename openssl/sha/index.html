@@ -10,8 +10,11 @@
     <title>openssl::sha - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module sha</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a></p><script>window.sidebarCurrent = {name: 'sha', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module sha</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>openssl</a></p><script>window.sidebarCurrent = {name: 'sha', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,7 +61,6 @@
                    </a>
                </span><a class='srclink' href='../../src/openssl/sha.rs.html#1-388' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The SHA family of hashes.</p>
-
 <p>SHA, or Secure Hash Algorithms, are a family of cryptographic hashing algorithms published by
 the National Institute of Standards and Technology (NIST).  Hash algorithms such as those in
 the SHA family are used to map data of an arbitrary size to a fixed-size string of bytes.
@@ -58,8 +68,7 @@ As cryptographic hashing algorithms, these mappings have the property of being i
 This property makes hash algorithms like these excellent for uses such as verifying the
 contents of a file- if you know the hash you expect beforehand, then you can verify that the
 data you have is correct if it hashes to the same value.</p>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <p>When dealing with data that becomes available in chunks, such as while buffering data from IO,
 you can create a hasher that you can repeatedly update to add bytes to.</p>
 
@@ -79,7 +88,6 @@ you can create a hasher that you can repeatedly update to add bytes to.</p>
     <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">hasher</span>.<span class="ident">finish</span>();
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Hashed \&quot;Hello, world\&quot; to {}&quot;</span>, <span class="ident">hash</span>.<span class="ident">to_hex</span>());
 }</pre>
-
 <p>On the other hand, if you already have access to all of the data you woud like to hash, you
 may prefer to use the slightly simpler method of simply calling the hash function corresponding
 to the algorithm you want to use.</p>
@@ -102,6 +110,7 @@ to the algorithm you want to use.</p>
                                   title='struct openssl::sha::Sha1'>Sha1</a></td>
                            <td class='docblock-short'>
                                 <p>An object which calculates a SHA1 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -109,6 +118,7 @@ to the algorithm you want to use.</p>
                                   title='struct openssl::sha::Sha224'>Sha224</a></td>
                            <td class='docblock-short'>
                                 <p>An object which calculates a SHA224 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -116,6 +126,7 @@ to the algorithm you want to use.</p>
                                   title='struct openssl::sha::Sha256'>Sha256</a></td>
                            <td class='docblock-short'>
                                 <p>An object which calculates a SHA256 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -123,6 +134,7 @@ to the algorithm you want to use.</p>
                                   title='struct openssl::sha::Sha384'>Sha384</a></td>
                            <td class='docblock-short'>
                                 <p>An object which calculates a SHA384 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -130,6 +142,7 @@ to the algorithm you want to use.</p>
                                   title='struct openssl::sha::Sha512'>Sha512</a></td>
                            <td class='docblock-short'>
                                 <p>An object which calculates a SHA512 hash of some data.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -138,6 +151,7 @@ to the algorithm you want to use.</p>
                                   title='fn openssl::sha::sha1'>sha1</a></td>
                            <td class='docblock-short'>
                                 <p>Computes the SHA1 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -145,6 +159,7 @@ to the algorithm you want to use.</p>
                                   title='fn openssl::sha::sha224'>sha224</a></td>
                            <td class='docblock-short'>
                                 <p>Computes the SHA224 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -152,6 +167,7 @@ to the algorithm you want to use.</p>
                                   title='fn openssl::sha::sha256'>sha256</a></td>
                            <td class='docblock-short'>
                                 <p>Computes the SHA256 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -159,6 +175,7 @@ to the algorithm you want to use.</p>
                                   title='fn openssl::sha::sha384'>sha384</a></td>
                            <td class='docblock-short'>
                                 <p>Computes the SHA384 hash of some data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -166,6 +183,7 @@ to the algorithm you want to use.</p>
                                   title='fn openssl::sha::sha512'>sha512</a></td>
                            <td class='docblock-short'>
                                 <p>Computes the SHA512 hash of some data.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -180,20 +198,22 @@ to the algorithm you want to use.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

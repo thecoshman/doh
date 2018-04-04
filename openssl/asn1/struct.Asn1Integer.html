@@ -10,8 +10,11 @@
     <title>openssl::asn1::Asn1Integer - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct Asn1Integer</p><div class="block items"><a class="sidebar-title" href="#deref-methods">Methods from Deref&lt;Target=Asn1IntegerRef&gt;</a><div class="sidebar-links"><a href="#method.get">get</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-ForeignType">ForeignType</a><a href="#impl-Drop">Drop</a><a href="#impl-Deref">Deref</a><a href="#impl-DerefMut">DerefMut</a><a href="#impl-Borrow%3CAsn1IntegerRef%3E">Borrow&lt;Asn1IntegerRef&gt;</a><a href="#impl-AsRef%3CAsn1IntegerRef%3E">AsRef&lt;Asn1IntegerRef&gt;</a><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>asn1</a></p><script>window.sidebarCurrent = {name: 'Asn1Integer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Asn1Integer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#deref-methods">Methods from Deref&lt;Target=Asn1IntegerRef&gt;</a><div class="sidebar-links"><a href="#method.get">get</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-ForeignType">ForeignType</a><a href="#impl-Drop">Drop</a><a href="#impl-Deref">Deref</a><a href="#impl-DerefMut">DerefMut</a><a href="#impl-Borrow%3CAsn1IntegerRef%3E">Borrow&lt;Asn1IntegerRef&gt;</a><a href="#impl-AsRef%3CAsn1IntegerRef%3E">AsRef&lt;Asn1IntegerRef&gt;</a><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>openssl</a>::<wbr><a href='index.html'>asn1</a></p><script>window.sidebarCurrent = {name: 'Asn1Integer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,10 +61,8 @@
                    </a>
                </span></span></h1>
 <pre class='rust struct'>pub struct Asn1Integer(_);</pre><div class='docblock'><p>Numeric representation</p>
-
 <p>Integers in ASN.1 may include BigNum, int64 or uint64.  BigNum implementation
 can be found within <a href="../bn/index.html"><code>bn</code></a> module.</p>
-
 <p>OpenSSL documentation includes <a href="https://www.openssl.org/docs/man1.1.0/crypto/ASN1_INTEGER_set.html"><code>ASN1_INTEGER_set</code></a>.</p>
 </div>
                     <h2 id='deref-methods' class='small-section-header'>
@@ -61,12 +70,10 @@ can be found within <a href="../bn/index.html"><code>bn</code></a> module.</p>
                     </h2>
                 <div class='impl-items'><h4 id='method.get' class="method"><span id='get.v' class='invisible'><code>pub fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#199-201' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns value of ASN.1 integer, or -1 if there is an error, and 0 if the integer is Null.</p>
-
 <p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/ASN1_INTEGER_get.html"><code>ASN1_INTEGER_get</code></a>.</p>
 </div><h4 id='method.set' class="method"><span id='set.v' class='invisible'><code>pub fn <a href='#method.set' class='fnname'>set</a>(&amp;mut self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../openssl/error/struct.ErrorStack.html" title="struct openssl::error::ErrorStack">ErrorStack</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/openssl/asn1.rs.html#209-211' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the ASN.1 value to the value of a signed 32-bit integer, for larger numbers
 see <a href="../bn/struct.BigNumRef.html#method.to_asn1_integer"><code>bn</code></a>.</p>
-
 <p>OpenSSL documentation at <a href="https://www.openssl.org/docs/man1.1.0/crypto/ASN1_INTEGER_set.html"><code>ASN1_INTEGER_set</code></a></p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
@@ -113,20 +120,22 @@ see <a href="../bn/struct.BigNumRef.html#method.to_asn1_integer"><code>bn</code>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

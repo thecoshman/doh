@@ -10,8 +10,11 @@
     <title>tokio_proto - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate tokio_proto</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'tokio_proto', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate tokio_proto</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'tokio_proto', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,66 +62,53 @@
                </span><a class='srclink' href='../src/tokio_proto/lib.rs.html#1-280' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This library provides a toolkit for rapid protocol development and usage,
 working with the rest of the Tokio stack.</p>
-
 <p>You can find extensive documentation and tutorials in addition to this
 documentation at <a href="https://tokio.rs">https://tokio.rs</a></p>
-
-<h1 id='protocols' class='section-header'><a href='#protocols'>Protocols</a></h1>
+<h1 id="protocols" class="section-header"><a href="#protocols">Protocols</a></h1>
 <p>Here, a <strong>protocol</strong> is a way of providing or consuming a service. Protocols
 are implemented via traits, which are arranged into a taxonomy:</p>
-
 <ul>
 <li><code>pipeline::{ClientProto, ServerProto}</code></li>
 <li><code>multiplex::{ClientProto, ServerProto}</code></li>
 <li><code>streaming::pipeline::{ClientProto, ServerProto}</code></li>
 <li><code>streaming::multiplex::{ClientProto, ServerProto}</code></li>
 </ul>
-
-<h3 id='pipeline-vs-multiplex' class='section-header'><a href='#pipeline-vs-multiplex'>Pipeline vs multiplex</a></h3>
+<h3 id="pipeline-vs-multiplex" class="section-header"><a href="#pipeline-vs-multiplex">Pipeline vs multiplex</a></h3>
 <p>By default, protocols allow a client to transmit multiple requests without
 waiting for the corresponding responses, which is commonly used to improve
 the throughput of single connections.</p>
-
 <p>In a <strong>pipelined protocol</strong>, the server responds to client requests in the
 order they were sent. Example pipelined protocols include HTTP/1.1 and Redis.
 Pipelining with the max number of in-flight requests set to 1 implies that
 for each request, the response must be received before sending another
 request on the same connection.</p>
-
 <p>In a <strong>multiplexed protocol</strong>, the server responds to client requests in the
 order of completion. Request IDs are used to match responses back to requests.</p>
-
 <p>In both cases, if multiple requests are sent, the service running on the
 server <em>may</em> process them concurrently, although many services will impose
 some restrictions depending on the request type.</p>
-
-<h3 id='streaming' class='section-header'><a href='#streaming'>Streaming</a></h3>
+<h3 id="streaming" class="section-header"><a href="#streaming">Streaming</a></h3>
 <p>In a non-streaming protocols, the client sends a complete request in a
 single message, and the server provides a complete response in a single
 message. Protocol tools in this style are available in the top-level <code>pipeline</code>
 and <code>multiplex</code> modules.</p>
-
 <p>In a <strong>streaming protocol</strong>, requests and responses can carry <strong>body
 streams</strong>, which allows partial processing before the complete body has been
 transferred. Streaming protocol tools are found within the <code>streaming</code>
 submodule.</p>
-
-<h1 id='transports' class='section-header'><a href='#transports'>Transports</a></h1>
+<h1 id="transports" class="section-header"><a href="#transports">Transports</a></h1>
 <p>A key part of any protocol is its <strong>transport</strong>, which is the way that it
 sends and receives <em>frames</em> on its connection. For simple protocols, these
 frames correspond directly to complete requests and responses. For more
 complicated protocols, they carry additional metadata, and may only be one
 part of a request or response body.</p>
-
 <p>Transports are defined by implementing the <code>transport::Transport</code> trait. The
 <code>transport::CodecTransport</code> type can be used to wrap a <code>Codec</code> (from
 <code>tokio-core</code>), which is a simple way to build a transport.</p>
-
-<h1 id='an-example-server' class='section-header'><a href='#an-example-server'>An example server</a></h1>
+<h1 id="an-example-server" class="section-header"><a href="#an-example-server">An example server</a></h1>
 <p>The following code shows how to implement a simple server that receives
 newline-separated integer values, doubles them, and returns them. It
 illustrates several aspects of the Tokio stack:</p>
-
 <ul>
 <li>Implementing a codec <code>IntCodec</code> for reading and writing integers from a
 byte buffer.</li>
@@ -226,6 +224,7 @@ byte buffer.</li>
                                   title='mod tokio_proto::multiplex'>multiplex</a></td>
                            <td class='docblock-short'>
                                 <p>Multiplexed RPC protocols.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -233,6 +232,7 @@ byte buffer.</li>
                                   title='mod tokio_proto::pipeline'>pipeline</a></td>
                            <td class='docblock-short'>
                                 <p>Pipelined RPC protocols.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -240,6 +240,7 @@ byte buffer.</li>
                                   title='mod tokio_proto::streaming'>streaming</a></td>
                            <td class='docblock-short'>
                                 <p>Streaming protocols.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -247,6 +248,7 @@ byte buffer.</li>
                                   title='mod tokio_proto::util'>util</a></td>
                            <td class='docblock-short'>
                                 <p>Utilities for building protocols</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -255,6 +257,7 @@ byte buffer.</li>
                                   title='struct tokio_proto::Connect'>Connect</a></td>
                            <td class='docblock-short'>
                                 <p>A future for establishing a client connection.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -262,6 +265,7 @@ byte buffer.</li>
                                   title='struct tokio_proto::TcpClient'>TcpClient</a></td>
                            <td class='docblock-short'>
                                 <p>Builds client connections to external services.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -269,6 +273,7 @@ byte buffer.</li>
                                   title='struct tokio_proto::TcpServer'>TcpServer</a></td>
                            <td class='docblock-short'>
                                 <p>A builder for TCP servers.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -277,6 +282,7 @@ byte buffer.</li>
                                   title='trait tokio_proto::BindClient'>BindClient</a></td>
                            <td class='docblock-short'>
                                 <p>Binds an I/O object as a client of a service.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -284,6 +290,7 @@ byte buffer.</li>
                                   title='trait tokio_proto::BindServer'>BindServer</a></td>
                            <td class='docblock-short'>
                                 <p>Binds a service to an I/O object.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -298,20 +305,22 @@ byte buffer.</li>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

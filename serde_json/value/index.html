@@ -10,8 +10,11 @@
     <title>serde_json::value - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module value</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>serde_json</a></p><script>window.sidebarCurrent = {name: 'value', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module value</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>serde_json</a></p><script>window.sidebarCurrent = {name: 'value', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -48,10 +59,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/serde_json/value/mod.rs.html#9-1064' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/serde_json/value/mod.rs.html#9-1080' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>The Value enum, a loosely typed way of representing any valid JSON value.</p>
-
-<h1 id='constructing-json' class='section-header'><a href='#constructing-json'>Constructing JSON</a></h1>
+<h1 id="constructing-json" class="section-header"><a href="#constructing-json">Constructing JSON</a></h1>
 <p>Serde JSON provides a <a href="https://docs.serde.rs/serde_json/macro.json.html"><code>json!</code> macro</a> to build <code>serde_json::Value</code>
 objects with very natural JSON syntax. In order to use this macro,
 <code>serde_json</code> needs to be imported with the <code>#[macro_use]</code> attribute.</p>
@@ -76,10 +86,8 @@ objects with very natural JSON syntax. In order to use this macro,
     <span class="comment">// Convert to a string of JSON and print it out</span>
     <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">john</span>.<span class="ident">to_string</span>());
 }</pre>
-
 <p>The <code>Value::to_string()</code> function converts a <code>serde_json::Value</code> into a
 <code>String</code> of JSON text.</p>
-
 <p>One neat thing about the <code>json!</code> macro is that variables and expressions can
 be interpolated directly into the JSON value as you are building it. Serde
 will check at compile time that the value you are interpolating is able to
@@ -97,7 +105,6 @@ be represented as JSON.</p>
     <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;+44 {}&quot;</span>, <span class="ident">random_phone</span>())
   ]
 });</pre>
-
 <p>A string of JSON data can be parsed into a <code>serde_json::Value</code> by the
 <a href="https://docs.serde.rs/serde_json/de/fn.from_str.html"><code>serde_json::from_str</code></a> function. There is also
 <a href="https://docs.serde.rs/serde_json/de/fn.from_slice.html"><code>from_slice</code></a> for parsing from a byte slice &amp;[u8] and
@@ -128,7 +135,7 @@ a TCP stream.</p>
 
     <span class="prelude-val">Ok</span>(())
 }</pre>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use map::<a class="struct" href="../../serde_json/map/struct.Map.html" title="struct serde_json::map::Map">Map</a>;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -136,6 +143,7 @@ a TCP stream.</p>
                                   title='struct serde_json::value::Number'>Number</a></td>
                            <td class='docblock-short'>
                                 <p>Represents a JSON number, whether integer or floating point.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -144,6 +152,7 @@ a TCP stream.</p>
                                   title='enum serde_json::value::Value'>Value</a></td>
                            <td class='docblock-short'>
                                 <p>Represents any valid JSON value.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -152,6 +161,7 @@ a TCP stream.</p>
                                   title='trait serde_json::value::Index'>Index</a></td>
                            <td class='docblock-short'>
                                 <p>A type that can be used to index into a <code>serde_json::Value</code>.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -160,6 +170,7 @@ a TCP stream.</p>
                                   title='fn serde_json::value::from_value'>from_value</a></td>
                            <td class='docblock-short'>
                                 <p>Interpret a <code>serde_json::Value</code> as an instance of type <code>T</code>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -168,6 +179,7 @@ a TCP stream.</p>
                            <td class='docblock-short'>
                                 <p>Convert a <code>T</code> into <code>serde_json::Value</code> which is an enum that can represent
 any valid JSON data.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -182,20 +194,22 @@ any valid JSON data.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
