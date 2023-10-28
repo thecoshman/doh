@@ -143,7 +143,7 @@ pub fn parse_rfc3339<S: AsRef<str>>(from: S) -> Result<Tm, time::ParseError> {
 
 /// Construct string representing a human-readable size.
 ///
-/// Stolen, adapted and inlined from [fielsize.js](http://filesizejs.com).
+/// Stolen, adapted and inlined from [filesize.js](http://filesizejs.com).
 pub fn human_readable_size(s: u64) -> String {
     static LN_KIB: f64 = 6.9314718055994530941723212145817656807550; // 1024f64.log(f64::consts::E);
 

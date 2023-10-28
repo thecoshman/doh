@@ -1,11 +1,11 @@
 use self::super::util::{human_readable_size, max_listing_lines, percent_decode, parent_url, GETCH_SPECIAL_PREFIX, GETCH_ARROW_RIGHT, GETCH_ARROW_LEFT,
                         GETCH_ARROW_DOWN, GETCH_ARROW_UP, GETCH_PAGE_DOWN, GETCH_PAGE_UP, TAB_SPACING, GETCH_DELETE, GETCH_ENTER, USER_AGENT, GETCH_HOME,
                         GETCH_ESC, GETCH_END};
+use reqwest::header::{HeaderValue, HeaderName, USER_AGENT as USER_AGENT_HEADER};
+use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
 use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
-use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
 use pbr::{Units as ProgressBarUnits, ProgressBar};
-use reqwest::header::{ContentLength, UserAgent};
 use std::path::{PathBuf, Path};
 use itertools::Itertools;
 use tabwriter::TabWriter;
@@ -20,12 +20,12 @@ pub mod term;
 
 /// PUT a resource.
 pub fn upload<U: IntoUrl>(u: U, f: File) -> Response {
-    client().put(u).header(UserAgent::new(USER_AGENT)).body(f).send().unwrap()
+    client().put(u).header(USER_AGENT_HEADER, HeaderValue::from_static(USER_AGENT)).body(f).send().unwrap()
 }
 
 /// DELETE a resource.
 pub fn delete<U: IntoUrl>(u: U) -> Response {
-    client().delete(u).header(UserAgent::new(USER_AGENT)).send().unwrap()
+    client().delete(u).header(USER_AGENT_HEADER, HeaderValue::from_static(USER_AGENT)).send().unwrap()
 }
 
 /// GET a resource with the RFSAPI header, auto-unpacking gzip.
@@ -39,7 +39,13 @@ pub fn download_raw<U: IntoUrl>(u: U) -> Response {
 }
 
 fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
-    client().get(u).header(RawFsApiHeader(raw)).header(UserAgent::new(USER_AGENT)).send().unwrap()
+    let rfsapi = RawFsApiHeader(raw);
+    client()
+        .get(u)
+        .header(HeaderName::from_static("X-Raw-Filesystem-API"), HeaderValue::from_static(if raw { "1" } else { "0" }))
+        .header(USER_AGENT_HEADER, HeaderValue::from_static(USER_AGENT))
+        .send()
+        .unwrap()
 }
 
 fn client() -> Client {
@@ -424,7 +430,7 @@ impl ListContext {
 
             let mut resp = download_raw(u);
             let mut outf = try!(File::create(&outp));
-            if let Some(size) = resp.headers().get::<ContentLength>().map(|cl| cl.0) {
+            if let Some(size) = resp.content_length() {
                 let (tx, _) = term_size;
                 let mut pb = ProgressBar::on(&mut out, size);
                 pb.set_units(ProgressBarUnits::Bytes);
