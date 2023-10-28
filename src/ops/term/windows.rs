@@ -50,7 +50,7 @@ pub fn show_cursor(show: bool) -> &'static str {
 /// Show a file picker to let user choose where to save a file with the specified filename and optional extension.
 pub fn save_file_picker(filename: &OsStr, extension: Option<&OsStr>) -> Option<PathBuf> {
     let ext: Vec<WCHAR> = if let Some(extension) = extension {
-        extension.encode_wide().chain([0].into_iter().cloned()).collect()
+        extension.encode_wide().chain([0].iter().cloned()).collect()
     } else {
         vec![]
     };

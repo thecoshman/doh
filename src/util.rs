@@ -1,9 +1,9 @@
 //! Module containing various utility functions.
 
 
+use std::{f64, cmp};
 use time::{self, Tm};
 use std::borrow::Cow;
-use std::{iter, f64, cmp};
 use url::{percent_encoding, Url};
 
 

@@ -3,9 +3,9 @@ use self::super::util::{human_readable_size, max_listing_lines, percent_decode, 
                         GETCH_ESC, GETCH_END};
 use reqwest::header::{HeaderValue, HeaderName, USER_AGENT as USER_AGENT_HEADER};
 use reqwest::{ClientBuilder, Response, IntoUrl, Client, Url};
-use rfsapi::{RawFsApiHeader, FilesetData, RawFileData};
 use std::io::{self, BufReader, BufRead, Write, Read};
 use pbr::{Units as ProgressBarUnits, ProgressBar};
+use rfsapi::{FilesetData, RawFileData};
 use std::path::{PathBuf, Path};
 use itertools::Itertools;
 use tabwriter::TabWriter;
@@ -39,7 +39,6 @@ pub fn download_raw<U: IntoUrl>(u: U) -> Response {
 }
 
 fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
-    let rfsapi = RawFsApiHeader(raw);
     client()
         .get(u)
         .header(HeaderName::from_static("X-Raw-Filesystem-API"), HeaderValue::from_static(if raw { "1" } else { "0" }))
