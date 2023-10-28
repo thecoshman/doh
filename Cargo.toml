@@ -13,7 +13,6 @@ authors = ["thecoshman <thecoshman@gmail.com>",
            "nabijaczleweli <nabijaczleweli@gmail.com>"]
 
 [dependencies]
-lazy_static = "0.2"
 tabwriter = "1.0"
 itertools = "0.6"
 term_size = "0.3"

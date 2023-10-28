@@ -1,7 +1,5 @@
 pub extern crate rfsapi;
 
-#[macro_use]
-extern crate lazy_static;
 extern crate itertools;
 extern crate tabwriter;
 extern crate reqwest;

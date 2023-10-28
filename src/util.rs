@@ -40,10 +40,8 @@ pub const GETCH_PAGE_DOWN: u8 = 81;
 /// Provided by @Ell, so flame him.
 /// <span title=":noel:">![:noel:](https://cdn.discordapp.com/emojis/230277422006796288.png)</span>
 pub const TAB_WIDTH: usize = 4;
-lazy_static! {
-    /// Filler to replace tabs with of length [`TAB_WIDTH`](constant.TAB_WIDTH.html).
-    pub static ref TAB_SPACING: String = iter::repeat(' ').take(TAB_WIDTH).collect();
-}
+/// Filler to replace tabs with of length [`TAB_WIDTH`](constant.TAB_WIDTH.html).
+pub static TAB_SPACING: &str = "    ";
 
 
 /// A RAII guard object, calling a function when it's created and when it's destroyed.
@@ -147,15 +145,13 @@ pub fn parse_rfc3339<S: AsRef<str>>(from: S) -> Result<Tm, time::ParseError> {
 ///
 /// Stolen, adapted and inlined from [fielsize.js](http://filesizejs.com).
 pub fn human_readable_size(s: u64) -> String {
-    lazy_static! {
-        static ref LN_KIB: f64 = 1024f64.log(f64::consts::E);
-    }
+    static LN_KIB: f64 = 6.9314718055994530941723212145817656807550; // 1024f64.log(f64::consts::E);
 
     if s == 0 {
         "0B".to_string()
     } else {
         let num = s as f64;
-        let exp = cmp::min(cmp::max((num.log(f64::consts::E) / *LN_KIB) as i32, 0), 8);
+        let exp = cmp::min(cmp::max((num.log(f64::consts::E) / LN_KIB) as i32, 0), 8);
 
         let val = num / 2f64.powi(exp * 10);
 
