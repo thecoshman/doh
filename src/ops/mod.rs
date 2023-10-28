@@ -7,6 +7,7 @@ use std::io::{self, BufReader, BufRead, Write, Read};
 use pbr::{Units as ProgressBarUnits, ProgressBar};
 use rfsapi::{FilesetData, RawFileData};
 use std::path::{PathBuf, Path};
+use std::time::SystemTime;
 use itertools::Itertools;
 use tabwriter::TabWriter;
 use std::time::Duration;
@@ -20,7 +21,15 @@ pub mod term;
 
 /// PUT a resource.
 pub fn upload<U: IntoUrl>(u: U, f: File) -> Response {
-    client().put(u).header(USER_AGENT_HEADER, HeaderValue::from_static(USER_AGENT)).body(f).send().unwrap()
+    let c = client().put(u).header(USER_AGENT_HEADER, HeaderValue::from_static(USER_AGENT));
+    if let Some(m) = f.metadata().and_then(|m| m.modified()).ok().and_then(|m| m.duration_since(SystemTime::UNIX_EPOCH).ok()) {
+            c.header(HeaderName::from_static("x-last-modified"), m.as_millis() as u64)
+        } else {
+            c
+        }
+        .body(f)
+        .send()
+        .unwrap()
 }
 
 /// DELETE a resource.
@@ -41,7 +50,7 @@ pub fn download_raw<U: IntoUrl>(u: U) -> Response {
 fn really_download<U: IntoUrl>(u: U, raw: bool) -> Response {
     client()
         .get(u)
-        .header(HeaderName::from_static("X-Raw-Filesystem-API"),
+        .header(HeaderName::from_static("x-raw-filesystem-api"),
                 HeaderValue::from_static(if raw { "1" } else { "0" }))
         .header(USER_AGENT_HEADER, HeaderValue::from_static(USER_AGENT))
         .send()
